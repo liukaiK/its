@@ -28,14 +28,14 @@
         <smiley-http-proxy-servlet.version>1.11</smiley-http-proxy-servlet.version>
     </properties>
 
-<!--    <modules>-->
-<!--        <module>its-web</module>-->
-<!--        <module>its-api</module>-->
+    <modules>
+        <module>web</module>
+<!--        <module>api</module>-->
 <!--        <module>its-service</module>-->
 <!--        <module>its-dao</module>-->
 <!--        <module>its-pojo</module>-->
-<!--        <module>its-common</module>-->
-<!--    </modules>-->
+<!--        <module>common</module>-->
+    </modules>
 
     <dependencyManagement>
         <dependencies>
