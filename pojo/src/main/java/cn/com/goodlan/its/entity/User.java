@@ -2,10 +2,7 @@ package cn.com.goodlan.its.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 用户实体
@@ -25,6 +22,10 @@ public class User extends BaseEntity {
     private String password;
 
 
+
+
+
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
@@ -36,7 +37,7 @@ public class User extends BaseEntity {
         this.id = id;
     }
 
-
+    @Column(nullable = false, length = 20)
     public String getUsername() {
         return username;
     }
@@ -53,6 +54,7 @@ public class User extends BaseEntity {
         this.name = name;
     }
 
+    @Column(nullable = false, columnDefinition = "char(60)")
     public String getPassword() {
         return password;
     }
