@@ -28,7 +28,7 @@ public class SecurityUserBean implements UserDetails {
 
     private SecurityDeptBean dept;
 
-    private Set<SecurityRoleBean> roleList;
+    private Set<SecurityAuthorityBean> roleList;
 
     private Integer sts;
 

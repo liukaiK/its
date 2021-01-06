@@ -2,6 +2,7 @@ package cn.com.goodlan.its.web.security;
 
 import cn.com.goodlan.its.common.constant.SystemConstant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,6 +15,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
  * @author liukai
  */
 @EnableWebSecurity(debug = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -43,3 +45,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
 }
+

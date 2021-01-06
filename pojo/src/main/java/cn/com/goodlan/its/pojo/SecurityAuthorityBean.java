@@ -11,7 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
  */
 @Data
 @ToString
-public class SecurityRoleBean implements GrantedAuthority {
+public class SecurityAuthorityBean implements GrantedAuthority {
 
     private String id;
 

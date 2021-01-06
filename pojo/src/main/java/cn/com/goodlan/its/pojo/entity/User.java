@@ -3,6 +3,7 @@ package cn.com.goodlan.its.pojo.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * 用户实体
@@ -21,9 +22,7 @@ public class User extends BaseEntity {
 
     private String password;
 
-
-
-
+    private List<Role> roleList;
 
 
     @Id
@@ -63,5 +62,15 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "sys_user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
+    }
 
 }
