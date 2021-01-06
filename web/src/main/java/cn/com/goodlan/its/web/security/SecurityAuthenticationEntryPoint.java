@@ -1,8 +1,9 @@
 package cn.com.goodlan.its.web.security;
 
-import cn.com.goodlan.its.pojo.Result;
+import cn.com.goodlan.its.common.constant.SystemConstant;
 import cn.com.goodlan.its.common.exception.authentication.UsernameMoreThanOneException;
 import cn.com.goodlan.its.common.util.HttpUtil;
+import cn.com.goodlan.its.pojo.Result;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class SecurityAuthenticationEntryPoint implements AuthenticationEntryPoin
             writer.write(objectMapper.writeValueAsString(responseBody));
             writer.close();
         } else {
-//            response.sendRedirect(SystemConstant.DEFAULT_LOGIN_PAGE);
+            response.sendRedirect(SystemConstant.LOGIN_PAGE);
         }
     }
 
