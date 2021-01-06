@@ -16,6 +16,12 @@
     <dependencies>
 
         <dependency>
+            <groupId>cn.com.goodlan.its</groupId>
+            <artifactId>common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>

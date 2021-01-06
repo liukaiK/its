@@ -1,0 +1,18 @@
+package cn.com.goodlan.its.common.exception;
+
+/**
+ * 业务异常
+ *
+ * @author liukai
+ */
+public class BusinessException extends BaseException {
+
+    public BusinessException(String message) {
+        super(message);
+    }
+
+    public BusinessException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+}
