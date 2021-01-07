@@ -1,8 +1,10 @@
 package cn.com.goodlan.its.pojo.entity;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -23,6 +25,11 @@ public class User extends BaseEntity {
     private String password;
 
     private List<Role> roleList;
+
+    /**
+     * 最后登录时间
+     */
+    private LocalDateTime lastLoginTime;
 
 
     @Id
@@ -73,4 +80,12 @@ public class User extends BaseEntity {
         this.roleList = roleList;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    public LocalDateTime getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(LocalDateTime lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
 }

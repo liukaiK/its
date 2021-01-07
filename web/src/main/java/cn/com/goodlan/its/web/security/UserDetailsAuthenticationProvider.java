@@ -92,15 +92,15 @@ public class UserDetailsAuthenticationProvider implements AuthenticationProvider
      */
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordCaptchaAuthenticationToken authentication) throws AuthenticationException {
 
-        if (authentication.getCredentials() == null) {
-            throw new BadCredentialsException("必须提供密码");
-        }
-
-        String originPassword = getOriginPassword(authentication.getCredentials().toString());
-
-        if (!passwordEncoder.matches(originPassword, userDetails.getPassword())) {
-            throw new BadCredentialsException("密码匹配失败");
-        }
+//        if (authentication.getCredentials() == null) {
+//            throw new BadCredentialsException("必须提供密码");
+//        }
+//
+//        String originPassword = getOriginPassword(authentication.getCredentials().toString());
+//
+//        if (!passwordEncoder.matches(originPassword, userDetails.getPassword())) {
+//            throw new BadCredentialsException("密码匹配失败");
+//        }
 
 
     }
@@ -118,19 +118,19 @@ public class UserDetailsAuthenticationProvider implements AuthenticationProvider
      * 校验验证码
      */
     private void checkCaptcha(Authentication authentication) {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-
-        String captcha = ((UsernamePasswordCaptchaAuthenticationToken) authentication).getCaptcha();
-
-        Captcha captchaInSession = (Captcha) request.getSession().getAttribute(CaptchaConstant.CAPTCHA_SESSION_KEY);
-
-        if (captchaInSession == null || captchaInSession.isExpired()) {
-            throw new CaptchaExpiredException("验证码已经过期");
-        }
-
-        if (!captcha.equalsIgnoreCase(captchaInSession.getCode())) {
-            throw new BadCaptchaException("验证码错误");
-        }
+//        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+//
+//        String captcha = ((UsernamePasswordCaptchaAuthenticationToken) authentication).getCaptcha();
+//
+//        Captcha captchaInSession = (Captcha) request.getSession().getAttribute(CaptchaConstant.CAPTCHA_SESSION_KEY);
+//
+//        if (captchaInSession == null || captchaInSession.isExpired()) {
+//            throw new CaptchaExpiredException("验证码已经过期");
+//        }
+//
+//        if (!captcha.equalsIgnoreCase(captchaInSession.getCode())) {
+//            throw new BadCaptchaException("验证码错误");
+//        }
 
     }
 

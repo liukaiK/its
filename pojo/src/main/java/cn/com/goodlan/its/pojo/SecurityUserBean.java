@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 /**
  * 存放在SpringSecurity中的实体用户对象
@@ -28,7 +28,7 @@ public class SecurityUserBean implements UserDetails {
 
     private SecurityDeptBean dept;
 
-    private Set<SecurityAuthorityBean> roleList;
+    private List<SecurityAuthorityBean> authorities;
 
     private Integer sts;
 
@@ -43,7 +43,7 @@ public class SecurityUserBean implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roleList;
+        return authorities;
     }
 
     public User castToUser() {

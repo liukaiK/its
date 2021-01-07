@@ -2,8 +2,6 @@ package cn.com.goodlan.its.pojo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -18,41 +16,70 @@ import java.time.LocalDateTime;
 /**
  * @author liukai
  */
-@Setter
-@Getter
 @MappedSuperclass
 @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity implements Serializable {
+
+    private LocalDateTime createTime;
+
+    private LocalDateTime updateTime;
+
+    /**
+     * 创建用户
+     */
+    private User createBy;
+
+    /**
+     * 修改用户
+     */
+    private User updateBy;
 
 
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
-    private LocalDateTime createTime;
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
 
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
 
     @LastModifiedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false)
-    private LocalDateTime updateTime;
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
 
-    /**
-     * 创建用户
-     */
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
+
     @CreatedBy
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "create_by")
-    private User createBy;
+    public User getCreateBy() {
+        return createBy;
+    }
 
-    /**
-     * 修改用户
-     */
+    public void setCreateBy(User createBy) {
+        this.createBy = createBy;
+    }
+
     @LastModifiedBy
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "update_by")
-    private User updateBy;
+    public User getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(User updateBy) {
+        this.updateBy = updateBy;
+    }
 
 }

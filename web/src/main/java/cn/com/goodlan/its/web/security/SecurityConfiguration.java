@@ -31,16 +31,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(SystemConstant.LOGIN_PAGE).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .headers().frameOptions().sameOrigin()
-                .and()
-                .csrf().disable();
+                .headers().frameOptions().sameOrigin();
         http.apply(browserSecurityConfigurer);
         http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        super.configure(web);
+        web.ignoring().antMatchers(
+                "/js/**",
+                "/css/**",
+                "/img/**",
+                "/fonts/**",
+                "/ruoyi.png",
+                "/ruoyi/**",
+                "/ajax/**",
+                "/captcha.jpeg",
+                "/plugins/**",
+                "/favicon.ico"
+        );
     }
 
 
