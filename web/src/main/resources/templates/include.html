@@ -1,12 +1,14 @@
 <!-- 通用CSS -->
 <head th:fragment=header(title)>
 	<meta charset="utf-8">
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="keywords" content="">
 	<meta name="description" content="">
 	<title th:text="${title}"></title>
-	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="shortcut icon" th:href="@{/favicon.ico}">
 	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
 	<link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
 	<!-- bootstrap-table 表格插件样式 -->
@@ -18,9 +20,13 @@
 
 <!-- 通用JS -->
 <div th:fragment="footer">
-    <script th:inline="javascript"> var ctx = [[@{/}]]; var lockscreen = [[${session.lockscreen}]]; if(lockscreen){window.top.location=ctx+"lockscreen";} </script>
     <a id="scroll-up" href="#" class="btn btn-sm display"><i class="fa fa-angle-double-up"></i></a>
 	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:inline="javascript">
+		var ctx = [[@{/}]]; var lockscreen = [[${session.lockscreen}]]; if(lockscreen){window.top.location=ctx+"lockscreen";}
+		var csrfToken = $("meta[name='_csrf']").attr("content");
+		var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+	</script>
 	<script th:src="@{/js/bootstrap.min.js}"></script>
 	<!-- bootstrap-table 表格插件 -->
 	<script th:src="@{/ajax/libs/bootstrap-table/bootstrap-table.min.js?v=20201129}"></script>
@@ -39,6 +45,7 @@
 	<script th:src="@{/ajax/libs/layui/layui.js}"></script>
 	<script th:src="@{/ruoyi/js/common.js?v=4.6.0}"></script>
 	<script th:src="@{/ruoyi/js/ry-ui.js?v=4.6.0}"></script>
+
 </div>
 
 <!-- ztree树插件 -->

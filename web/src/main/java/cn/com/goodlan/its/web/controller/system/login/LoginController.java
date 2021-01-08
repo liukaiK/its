@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.web.controller.login;
+package cn.com.goodlan.its.web.controller.system.login;
 
 import cn.com.goodlan.its.common.constant.CaptchaConstant;
 import cn.com.goodlan.its.common.util.RSAUtil;

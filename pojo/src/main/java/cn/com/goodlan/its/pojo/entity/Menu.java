@@ -32,6 +32,8 @@ public class Menu extends BaseEntity {
 
     private String icon;
 
+    private String visible;
+
     /**
      * 菜单类型 M目录 C菜单 F按钮
      */
@@ -146,6 +148,15 @@ public class Menu extends BaseEntity {
 
     public void setRoleList(List<Role> roleList) {
         this.roleList = roleList;
+    }
+
+    @Column(columnDefinition = "char(1)")
+    public String getVisible() {
+        return visible;
+    }
+
+    public void setVisible(String visible) {
+        this.visible = visible;
     }
 
 

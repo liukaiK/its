@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.web.controller.user;
+package cn.com.goodlan.its.web.controller.system.user;
 
 import cn.com.goodlan.its.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

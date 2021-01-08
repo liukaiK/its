@@ -164,6 +164,11 @@
                     url: options.url,
                     data: parms ? parms : options.ajaxParams,
                     dataType: "JSON",
+                    beforeSend: function (request) {
+                        if (csrfToken && csrfHeader) {
+                            request.setRequestHeader(csrfHeader, csrfToken);
+                        }
+                    },
                     success: function(data, textStatus, jqXHR) {
                     	data = calculateObjectValue(options, options.responseHandler, [data], data);
                         renderTable(data);

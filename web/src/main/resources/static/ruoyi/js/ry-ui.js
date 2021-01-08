@@ -170,10 +170,12 @@ var table = {
             },
             // 请求获取数据后处理回调函数
             responseHandler: function(res) {
+                debugger;
+                console.log(res);
             	if (typeof table.get(this.id).responseHandler == "function") {
                     table.get(this.id).responseHandler(res);
                 }
-                if (res.code == web_status.SUCCESS) {
+                if (res.code === web_status.SUCCESS) {
                     if ($.common.isNotEmpty(table.options.sidePagination) && table.options.sidePagination == 'client') {
                     	return res.rows;
                     } else {
