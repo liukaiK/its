@@ -6,8 +6,10 @@
     <meta name="renderer" content="webkit">
     <title>哈工大校园交通管理系统</title>
     <!-- 避免IE使用兼容模式 -->
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link th:href="@{favicon.ico}" rel="shortcut icon"/>
+    <link th:href="@{/favicon.ico}" rel="shortcut icon"/>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/jquery.contextMenu.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
@@ -187,7 +189,7 @@
                     </a>
                 </div>
                 <ul class="nav navbar-top-links navbar-right welcome-message">
-<!--                    <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="开发文档" href="http://doc.ruoyi.vip/ruoyi" target="_blank"><i class="fa fa-question-circle"></i> 文档</a></li>-->
+                    <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="开发文档" href="http://doc.ruoyi.vip/ruoyi" target="_blank"><i class="fa fa-question-circle"></i> 文档</a></li>
                     <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="锁定屏幕" href="#" id="lockScreen"><i class="fa fa-lock"></i> 锁屏</a></li>
 	                <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="全屏显示" href="#" id="fullScreen"><i class="fa fa-arrows-alt"></i> 全屏</a></li>
                     <li class="dropdown user-menu">
@@ -204,17 +206,17 @@
 								<a onclick="resetPwd()">
 								<i class="fa fa-key"></i> 修改密码</a>
 							</li>
-<!--							<li>-->
-<!--								<a onclick="switchSkin()">-->
-<!--								<i class="fa fa-dashboard"></i> 切换主题</a>-->
-<!--							</li>-->
-<!--							<li>-->
-<!--								<a onclick="toggleMenu()">-->
-<!--								<i class="fa fa-toggle-off"></i> 横向菜单</a>-->
-<!--							</li>-->
+							<li>
+								<a onclick="switchSkin()">
+								<i class="fa fa-dashboard"></i> 切换主题</a>
+							</li>
+							<li>
+								<a onclick="toggleMenu()">
+								<i class="fa fa-toggle-off"></i> 横向菜单</a>
+							</li>
 							<li class="divider"></li>
 							<li>
-								<a th:href="@{/logout}">
+								<a onclick="logout()">
 								<i class="fa fa-sign-out"></i> 退出登录</a>
 							</li>
 						</ul>
@@ -263,6 +265,32 @@
 <script type="text/javascript" th:src="@{/ruoyi/index.js?v=20201208}"></script>
 <script type="text/javascript" th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
 <script type="text/javascript" th:inline="javascript">
+
+
+	let logoutUrl = /*[[@{/logout}]]*/ "";
+
+	let loginUrl = /*[[@{/login}]]*/ "";
+
+
+	function logout() {
+		let csrfToken = $("meta[name='_csrf']").attr("content");
+		let csrfHeader = $("meta[name='_csrf_header']").attr("content");
+
+		$.ajax({
+			type: 'POST',
+			url: logoutUrl,
+			beforeSend: function (request) {
+				if (csrfToken && csrfHeader) {
+					request.setRequestHeader(csrfHeader, csrfToken);
+				}
+			},
+			success: function (result) {
+				window.location.href = loginUrl;
+			}
+		});
+	}
+
+
 window.history.forward(1);
 var ctx = [[@{/}]]; 
 var lockscreen = [[${session.lockscreen}]]; 
@@ -364,6 +392,7 @@ $(function() {
 	}
 	$("[data-toggle='tooltip']").tooltip();
 });
+
 </script>
 </body>
 </html>

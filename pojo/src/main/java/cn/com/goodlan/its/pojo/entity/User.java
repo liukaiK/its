@@ -16,6 +16,8 @@ import java.util.List;
 @Table(name = "sys_user")
 public class User extends BaseEntity {
 
+    public final static String ADMIN_ID = "1b3c1438-beb2-4bab-af86-b6b8dfb91114";
+
     private String id;
 
     private String username;
@@ -30,6 +32,21 @@ public class User extends BaseEntity {
      * 最后登录时间
      */
     private LocalDateTime lastLoginTime;
+
+
+    @Transient
+    public void addRole(Role role) {
+        roleList.add(role);
+    }
+
+
+    /**
+     * 判断是否为超级管理员
+     */
+    @Transient
+    public boolean isAdmin() {
+        return ADMIN_ID.equals(this.id);
+    }
 
 
     @Id
@@ -88,4 +105,6 @@ public class User extends BaseEntity {
     public void setLastLoginTime(LocalDateTime lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
+
+
 }
