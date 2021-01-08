@@ -32,7 +32,7 @@
 <!--                    <h1><img alt="[ 若依 ]" th:src="@{/ruoyi.png}"></h1>-->
                 </div>
                 <div class="m-b"></div>
-                <h4>欢迎使用 <strong>后台管理系统</strong></h4>
+<!--                <h4>欢迎使用 <strong>后台管理系统</strong></h4>-->
             </div>
         </div>
         <div class="col-sm-5">
@@ -60,7 +60,7 @@
     </div>
     <div class="signup-footer">
         <div class="pull-left">
-            Copyright © 2018-2021  All Rights Reserved. <br>
+<!--            Copyright © 2018-2021  All Rights Reserved. <br>-->
         </div>
     </div>
 </div>
@@ -73,6 +73,7 @@
 <script type="text/javascript" th:src="@{/plugins/jquery-validation/dist/jquery.validate.js}"></script>
 <script type="text/javascript" th:src="@{/plugins/jquery-validation/dist/additional-methods.js}"></script>
 <script type="text/javascript" th:src="@{/plugins/jquery-validation/dist/localization/messages_zh.js}"></script>
+<script type="text/javascript" th:src="@{/ruoyi/js/ry-ui.js}"></script>
 
 <script type="text/javascript" th:inline="javascript">
 
@@ -133,11 +134,11 @@
                 layer.msg('正在登录 请稍后...', {icon: 16, shade: 0.5, time: 0});
             },
             success: function (result) {
-                if (result.code === 0) {
+                if (result.code === web_status.SUCCESS) {
                     window.location.href = indexUrl;
                 } else {
-                    // changeCaptcha();
-                    // layer.msg(result.message);
+                    changeCaptcha();
+                    layer.msg(result.message);
                 }
             }
         });
