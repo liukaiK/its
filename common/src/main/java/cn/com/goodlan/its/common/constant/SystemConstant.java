@@ -8,8 +8,6 @@ package cn.com.goodlan.its.common.constant;
 public class SystemConstant {
 
 
-    public final static String PAGE = "page";
-
     /**
      * 登录页面的URL
      */

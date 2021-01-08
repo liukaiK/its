@@ -1,7 +1,6 @@
 package cn.com.goodlan.its.web.controller.login;
 
 import cn.com.goodlan.its.common.constant.CaptchaConstant;
-import cn.com.goodlan.its.common.constant.SystemConstant;
 import cn.com.goodlan.its.common.util.RSAUtil;
 import cn.com.goodlan.its.web.security.captcha.CaptchaGenerator;
 import cn.hutool.captcha.ICaptcha;
@@ -34,7 +33,7 @@ public class LoginController {
 
     private String toLoginPage(Model model) {
         model.addAttribute("PUBLIC_KEY", RSAUtil.PUBLIC_KEY);
-        return SystemConstant.PAGE + "/login/login";
+        return "/login";
     }
 
     private String toMainPage() {

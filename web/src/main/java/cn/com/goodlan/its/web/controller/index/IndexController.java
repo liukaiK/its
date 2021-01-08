@@ -1,6 +1,5 @@
 package cn.com.goodlan.its.web.controller.index;
 
-import cn.com.goodlan.its.common.constant.SystemConstant;
 import cn.com.goodlan.its.pojo.entity.Menu;
 import cn.com.goodlan.its.service.index.IndexService;
 import cn.com.goodlan.its.util.TreeUtils;
@@ -27,7 +26,7 @@ public class IndexController {
 
         model.addAttribute("menus", findMenu());
 
-        return SystemConstant.PAGE + "/index";
+        return "/index";
     }
 
     /**
