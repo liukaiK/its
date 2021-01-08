@@ -14,7 +14,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
  *
  * @author liukai
  */
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(debug = false)
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 

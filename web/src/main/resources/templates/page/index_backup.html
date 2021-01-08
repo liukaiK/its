@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
-    <title>哈工大校园交通管理系统</title>
+    <title>若依系统首页</title>
     <!-- 避免IE使用兼容模式 -->
  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link th:href="@{favicon.ico}" rel="shortcut icon"/>
@@ -14,7 +14,7 @@
     <link th:href="@{/css/animate.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
     <link th:href="@{/css/skins.css}" rel="stylesheet"/>
-    <link th:href="@{/ruoyi/css/common.css}" rel="stylesheet"/>
+    <link th:href="@{/ruoyi/css/ry-ui.css?v=4.6.0}" rel="stylesheet"/>
 </head>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden">
 <div id="wrapper">
@@ -26,7 +26,7 @@
         </div>
         <a th:href="@{/index}">
             <li class="logo hidden-xs">
-                <span class="logo-lg">交通管理系统</span>
+                <span class="logo-lg">RuoYi</span>
             </li>
          </a>
         <div class="sidebar-collapse">
@@ -36,11 +36,11 @@
             			<a class="menuItem noactive" title="个人中心" th:href="@{/system/user/profile}">
             				<div class="hide" th:text="个人中心"></div>
 					        <div class="pull-left image">
-		                    	<img th:src="(${#strings.isEmpty('')}) ? @{/img/profile.jpg} : @{${''}}" th:onerror="this.src='img/profile.jpg'" class="img-circle" alt="User Image">
+		                    	<img th:src="(${#strings.isEmpty(user.avatar)}) ? @{/img/profile.jpg} : @{${user.avatar}}" th:onerror="this.src='img/profile.jpg'" class="img-circle" alt="User Image">
 					        </div>
 				        </a>
 				        <div class="pull-left info">
-				          <p>admin</p>
+				          <p>[[${user.loginName}]]</p>
 				          <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
 				          <a th:href="@{logout}" style="padding-left:5px;"><i class="fa fa-sign-out text-danger"></i> 注销</a>
 				        </div>
@@ -71,7 +71,7 @@
 						</li>
 					</ul>
                 </li>
-                <li>
+                <li th:if="${demoEnabled}">
                     <a href="#"><i class="fa fa-desktop"></i><span class="nav-label">实例演示</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level collapse">
                         <li> <a>表单<span class="fa arrow"></span></a>
@@ -192,8 +192,8 @@
 	                <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="全屏显示" href="#" id="fullScreen"><i class="fa fa-arrows-alt"></i> 全屏</a></li>
                     <li class="dropdown user-menu">
 						<a href="javascript:void(0)" class="dropdown-toggle" data-hover="dropdown">
-							<img th:src="(${#strings.isEmpty('')}) ? @{/img/profile.jpg} : @{${''}}" th:onerror="this.src='img/profile.jpg'" class="user-image">
-							<span class="hidden-xs">[[${#strings.defaultString('', '-')}]]</span>
+							<img th:src="(${#strings.isEmpty(user.avatar)}) ? @{/img/profile.jpg} : @{${user.avatar}}" th:onerror="this.src='img/profile.jpg'" class="user-image">
+							<span class="hidden-xs">[[${#strings.defaultString(user.userName, '-')}]]</span>
 						</a>
 						<ul class="dropdown-menu">
 							<li class="mt5">
@@ -239,30 +239,30 @@
 
         <a id="ax_close_max" class="ax_close_max" href="#" title="关闭全屏"> <i class="fa fa-times-circle-o"></i> </a>
 
-        <div class="row mainContent" id="content-main" th:style="${#bools.isFalse(false)} ? |height: calc(100% - 91px)|">
+        <div class="row mainContent" id="content-main" th:style="${#bools.isFalse(ignoreFooter)} ? |height: calc(100% - 91px)|">
             <iframe class="RuoYi_iframe" name="iframe0" width="100%" height="100%" th:data-id="@{/system/main}"
                     th:src="@{/system/main}" frameborder="0" seamless></iframe>
         </div>
         
-        <div th:if="${true}" class="footer">
-            <div class="pull-right">© 2020 Copyright </div>
+        <div th:if="${ignoreFooter}" class="footer">
+            <div class="pull-right">© [[${copyrightYear}]] RuoYi Copyright </div>
         </div>
     </div>
     <!--右侧部分结束-->
 </div>
 <!-- 全局js -->
-<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
-<script type="text/javascript" th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/jquery.contextMenu.min.js}"></script>
-<script type="text/javascript" th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
-<script type="text/javascript" th:src="@{/ajax/libs/layer/layer.min.js}"></script>
-<script type="text/javascript" th:src="@{/ruoyi/js/ry-ui.js?v=4.6.0}"></script>
-<script type="text/javascript" th:src="@{/ruoyi/js/common.js?v=4.6.0}"></script>
-<script type="text/javascript" th:src="@{/ruoyi/index.js?v=20201208}"></script>
-<script type="text/javascript" th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
-<script type="text/javascript" th:inline="javascript">
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/js/jquery.contextMenu.min.js}"></script>
+<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script th:src="@{/ruoyi/js/ry-ui.js?v=4.6.0}"></script>
+<script th:src="@{/ruoyi/js/common.js?v=4.6.0}"></script>
+<script th:src="@{/ruoyi/index.js?v=20201208}"></script>
+<script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
+<script th:inline="javascript">
 window.history.forward(1);
 var ctx = [[@{/}]]; 
 var lockscreen = [[${session.lockscreen}]]; 
