@@ -14,6 +14,12 @@ import java.util.List;
 @Table(name = "sys_menu")
 public class Menu extends BaseEntity {
 
+    public static final String M = "M";
+
+    public static final String C = "C";
+
+    public static final String F = "F";
+
     private String id;
 
     private String name;
@@ -24,7 +30,23 @@ public class Menu extends BaseEntity {
 
     private Menu parent;
 
+    private String icon;
+
+    /**
+     * 菜单类型 M目录 C菜单 F按钮
+     */
+    private String menuType;
+
+    private String isRefresh;
+
+    /**
+     * 打开方式 页签 或是 新窗口
+     */
+    private String target;
+
     private List<Menu> children;
+
+    private List<Role> roleList;
 
 
     @Id
@@ -79,6 +101,51 @@ public class Menu extends BaseEntity {
 
     public void setChildren(List<Menu> children) {
         this.children = children;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+
+    public String getIsRefresh() {
+        return isRefresh;
+    }
+
+    public void setIsRefresh(String isRefresh) {
+        this.isRefresh = isRefresh;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
+    }
+
+    @Column(columnDefinition = "char(1)")
+    public String getMenuType() {
+        return menuType;
+    }
+
+    public void setMenuType(String menuType) {
+        this.menuType = menuType;
+    }
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "sys_role_menu", joinColumns = @JoinColumn(name = "menu_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 
 

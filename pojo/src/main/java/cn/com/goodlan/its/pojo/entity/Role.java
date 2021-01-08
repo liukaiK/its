@@ -18,6 +18,8 @@ public class Role extends BaseEntity {
 
     private String name;
 
+    private List<User> userList;
+
     private List<Menu> menuList;
 
 
@@ -51,4 +53,13 @@ public class Role extends BaseEntity {
         this.menuList = menuList;
     }
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "sys_user_role", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
 }

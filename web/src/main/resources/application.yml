@@ -24,5 +24,14 @@ spring:
     properties:
       hibernate:
         format_sql: true                  # 格式化SQL
-        use_sql_comments: false           # 显示JPQL语句
+        use_sql_comments: true            # 生成JPQL语句
         generate_statistics: false        # 显示SQL性能分析日志
+
+logging:
+  level:
+    com.unicom: info
+    org.springframework: info
+    org.activiti.engine: info
+    com.github.tobato: info
+    com.github.tobato.fastdfs.domain.proto: info
+    org.hibernate.type.descriptor.sql.BasicBinder: info
