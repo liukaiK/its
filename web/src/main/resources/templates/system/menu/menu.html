@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<th:block th:include="include :: header('菜单列表')" />
 </head>
@@ -13,12 +13,12 @@
 							<li>
 								菜单名称：<input type="text" name="menuName"/>
 							</li>
-							<li>
-								菜单状态：<select name="visible" th:with="type=${@dict.getType('sys_show_hide')}">
-									<option value="">所有</option>
-									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-								</select>
-							</li>
+<!--							<li>-->
+<!--								菜单状态：<select name="visible" th:with="type=${@dict.getType('sys_show_hide')}">-->
+<!--									<option value="">所有</option>-->
+<!--									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>-->
+<!--								</select>-->
+<!--							</li>-->
 							<li>
 								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.treeTable.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -29,10 +29,10 @@
 			</div>
                 
             <div class="btn-group-sm" id="toolbar" role="group">
-		        <a class="btn btn-success" onclick="$.operate.add(0)" shiro:hasPermission="system:menu:add">
+		        <a class="btn btn-success" onclick="$.operate.add(0)" sec:authorize="hasAuthority('system:menu:add')">
                     <i class="fa fa-plus"></i> 新增
                 </a>
-                <a class="btn btn-primary" onclick="$.operate.edit()" shiro:hasPermission="system:menu:edit">
+                <a class="btn btn-primary" onclick="$.operate.edit()" sec:authorize="hasAuthority('system:menu:edit')">
 		            <i class="fa fa-edit"></i> 修改
 		        </a>
                 <a class="btn btn-info" id="expandAllBtn">
@@ -51,7 +51,8 @@
 		var editFlag = [[${@permission.hasPermi('system:menu:edit')}]];
 		var removeFlag = [[${@permission.hasPermi('system:menu:remove')}]];
 		var datas = [[${@dict.getType('sys_show_hide')}]];
-		var prefix = ctx + "system/menu";
+
+		let searchUrl = /*[[@{/system/menu/search}]]*/ "";
 
 		$(function() {
 		    var options = {
@@ -60,7 +61,7 @@
 		        uniqueId: "menuId",
 		        expandAll: false,
 		        expandFirst: false,
-		        url: prefix + "/list",
+		        url: searchUrl,
 		        createUrl: prefix + "/add/{id}",
 		        updateUrl: prefix + "/edit/{id}",
 		        removeUrl: prefix + "/remove/{id}",
