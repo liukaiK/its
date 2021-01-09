@@ -18,9 +18,19 @@ public class Role extends BaseEntity {
 
     private String name;
 
+    /**
+     * 备注
+     */
+    private String remark;
+
     private List<User> userList;
 
     private List<Menu> menuList;
+
+    @Transient
+    public void addMenu(Menu menu) {
+        menuList.add(menu);
+    }
 
 
     @Id
@@ -61,5 +71,13 @@ public class Role extends BaseEntity {
 
     public void setUserList(List<User> userList) {
         this.userList = userList;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

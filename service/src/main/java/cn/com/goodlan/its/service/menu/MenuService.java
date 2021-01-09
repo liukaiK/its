@@ -1,7 +1,9 @@
 package cn.com.goodlan.its.service.menu;
 
 import cn.com.goodlan.its.pojo.entity.Menu;
+import cn.com.goodlan.its.pojo.entity.Role;
 import cn.com.goodlan.its.pojo.vo.MenuVO;
+import cn.com.goodlan.its.pojo.vo.Ztree;
 
 import java.util.List;
 
@@ -26,4 +28,5 @@ public interface MenuService {
 
     List<MenuVO> findAll();
 
+    List<Ztree> roleMenuTreeData(Role role);
 }
