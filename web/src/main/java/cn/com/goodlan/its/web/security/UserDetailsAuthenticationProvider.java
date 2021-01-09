@@ -92,15 +92,15 @@ public class UserDetailsAuthenticationProvider implements AuthenticationProvider
      */
     protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordCaptchaAuthenticationToken authentication) throws AuthenticationException {
 
-//        if (authentication.getCredentials() == null) {
-//            throw new BadCredentialsException("必须提供密码");
-//        }
-//
-//        String originPassword = getOriginPassword(authentication.getCredentials().toString());
-//
-//        if (!passwordEncoder.matches(originPassword, userDetails.getPassword())) {
-//            throw new BadCredentialsException("密码匹配失败");
-//        }
+        if (authentication.getCredentials() == null) {
+            throw new BadCredentialsException("必须提供密码");
+        }
+
+        String originPassword = getOriginPassword(authentication.getCredentials().toString());
+
+        if (!passwordEncoder.matches(originPassword, userDetails.getPassword())) {
+            throw new BadCredentialsException("密码匹配失败");
+        }
 
 
     }
