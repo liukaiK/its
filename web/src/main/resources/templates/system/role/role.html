@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<th:block th:include="include :: header('角色列表')" />
 </head>
@@ -16,12 +16,12 @@
 							<li>
 								权限字符：<input type="text" name="roleKey"/>
 							</li>
-							<li>
-								角色状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">
-									<option value="">所有</option>
-									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-								</select>
-							</li>
+<!--							<li>-->
+<!--								角色状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">-->
+<!--									<option value="">所有</option>-->
+<!--									<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>-->
+<!--								</select>-->
+<!--							</li>-->
 							<li class="select-time">
 								<label>创建时间： </label>
 								<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
@@ -38,16 +38,16 @@
 			</div>
 		
 			<div class="btn-group-sm" id="toolbar" role="group">
-				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:role:add">
+				<a class="btn btn-success" onclick="$.operate.add()" sec:authorize="hasAuthority('system:role:add')">
 	                <i class="fa fa-plus"></i> 新增
 	            </a>
-	            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:role:edit">
+	            <a class="btn btn-primary single disabled" onclick="$.operate.edit()" sec:authorize="hasAuthority('system:role:edit')">
 		            <i class="fa fa-edit"></i> 修改
 		        </a>
-				<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:role:remove">
+				<a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" sec:authorize="hasAuthority('system:role:remove')">
 		            <i class="fa fa-remove"></i> 删除
 		        </a>
-		        <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:role:export">
+		        <a class="btn btn-warning" onclick="$.table.exportExcel()" sec:authorize="hasAuthority('system:role:export')">
 		            <i class="fa fa-download"></i> 导出
 		        </a>
 	        </div>
@@ -59,71 +59,78 @@
 	</div>
 	<th:block th:include="include :: footer" />
 	<script th:inline="javascript">
-		var editFlag = [[${@permission.hasPermi('system:role:edit')}]];
-		var removeFlag = [[${@permission.hasPermi('system:role:remove')}]];
-		var prefix = ctx + "system/role";
-		
 
-		$(function() {
-		    var options = {
-		        url: prefix + "/list",
-		        createUrl: prefix + "/add",
-		        updateUrl: prefix + "/edit/{id}",
-		        removeUrl: prefix + "/remove",
-		        exportUrl: prefix + "/export",
-		        sortName: "roleSort",
-		        modalName: "角色",
-		        columns: [{
-		            checkbox: true
-		        },
-		        {
-		            field: 'roleId',
-		            title: '角色编号'
-		        },
-		        {
-		            field: 'roleName',
-		            title: '角色名称',
-		            sortable: true
-		        },
-		        {
-		            field: 'roleKey',
-		            title: '权限字符',
-		            sortable: true
-		        },
-		        {
-		            field: 'roleSort',
-		            title: '显示顺序',
-		            sortable: true
-		        },
-		        {
-		        	visible: editFlag == 'hidden' ? false : true,
-		        	title: '角色状态',
-		        	align: 'center',
-		        	formatter: function (value, row, index) {
-		        		return statusTools(row);
-		        	}
-		        },
-		        {
-		            field: 'createTime',
-		            title: '创建时间',
-		            sortable: true
-		        },
-		        {
-		            title: '操作',
-		            align: 'center',
-		            formatter: function(value, row, index) {
-		                var actions = [];
-		                actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.roleId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-		                actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.roleId + '\')"><i class="fa fa-remove"></i>删除</a> ');
-		                var more = [];
-		                more.push("<a class='btn btn-default btn-xs " + editFlag + "' href='javascript:void(0)' onclick='authDataScope(" + row.roleId + ")'><i class='fa fa-check-square-o'></i>数据权限</a> ");
-		                more.push("<a class='btn btn-default btn-xs " + editFlag + "' href='javascript:void(0)' onclick='authUser(" + row.roleId + ")'><i class='fa fa-user'></i>分配用户</a>");
-		                actions.push('<a tabindex="0" class="btn btn-info btn-xs" role="button" data-container="body" data-placement="left" data-toggle="popover" data-html="true" data-trigger="hover" data-content="' + more.join('') + '"><i class="fa fa-chevron-circle-right"></i>更多操作</a>');
-		                return actions.join('');
-		            }
-		        }]
-		    };
-		    $.table.init(options);
+		let searchUrl = /*[[@{/system/role/search}]]*/ "";
+		let createUrl = /*[[@{/system/role/add}]]*/ "";
+		let updateUrl = /*[[@{/system/role/edit/{id}}]]*/ "";
+		let removeUrl = /*[[@{/system/role/remove}]]*/ "";
+
+
+		$(function () {
+			var options = {
+				url: searchUrl,
+				createUrl: createUrl,
+				updateUrl: updateUrl,
+				removeUrl: removeUrl,
+				exportUrl: "/export",
+				sortName: "createTime",
+				modalName: "角色",
+				columns: [{
+					checkbox: true
+				},
+					// {
+					// 	field: 'id',
+					// 	title: '角色编号'
+					// },
+					{
+						field: 'name',
+						title: '角色名称',
+						sortable: true
+					},
+					// {
+					// 	field: 'roleKey',
+					// 	title: '权限字符',
+					// 	sortable: true
+					// },
+					// {
+					// 	field: 'roleSort',
+					// 	title: '显示顺序',
+					// 	sortable: true
+					// },
+					// {
+					// 	visible: editFlag == 'hidden' ? false : true,
+					// 	title: '角色状态',
+					// 	align: 'center',
+					// 	formatter: function (value, row, index) {
+					// 		return statusTools(row);
+					// 	}
+					// },
+					{
+						field: 'createTime',
+						title: '创建时间',
+						sortable: true
+					},
+					{
+						field: 'updateTime',
+						title: '修改时间',
+						sortable: true
+					},
+					{
+						title: '操作',
+						align: 'center',
+						formatter: function (value, row, index) {
+							var actions = [];
+							// actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.roleId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+							// actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.roleId + '\')"><i class="fa fa-remove"></i>删除</a> ');
+							// var more = [];
+							// more.push("<a class='btn btn-default btn-xs " + editFlag + "' href='javascript:void(0)' onclick='authDataScope(" + row.roleId + ")'><i class='fa fa-check-square-o'></i>数据权限</a> ");
+							// more.push("<a class='btn btn-default btn-xs " + editFlag + "' href='javascript:void(0)' onclick='authUser(" + row.roleId + ")'><i class='fa fa-user'></i>分配用户</a>");
+							// actions.push('<a tabindex="0" class="btn btn-info btn-xs" role="button" data-container="body" data-placement="left" data-toggle="popover" data-html="true" data-trigger="hover" data-content="' + more.join('') + '"><i class="fa fa-chevron-circle-right"></i>更多操作</a>');
+							return actions.join('');
+						}
+					}]
+			};
+			$.table.init(options);
 		});
 		
 		/* 角色管理-分配数据权限 */

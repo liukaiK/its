@@ -144,6 +144,7 @@ var table = {
                     exportOptions: options.exportOptions,               // 前端导出忽略列索引
                     printPageBuilder: options.printPageBuilder,         // 自定义打印页面模板
                     detailFormatter: options.detailFormatter,           // 在行下面展示其他数据列表
+                    ajaxOptions: {headers: {'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content")}} // 自定义请求信息
                 });
             },
             // 获取实例ID，如存在多个返回#id1,#id2 delimeter分隔符
@@ -170,8 +171,6 @@ var table = {
             },
             // 请求获取数据后处理回调函数
             responseHandler: function(res) {
-                debugger;
-                console.log(res);
             	if (typeof table.get(this.id).responseHandler == "function") {
                     table.get(this.id).responseHandler(res);
                 }
@@ -185,7 +184,7 @@ var table = {
                                 row.state = $.inArray(row[column], table.rememberSelectedIds[table.options.id]) !== -1;
                             })
                     	}
-                        return { rows: res.rows, total: res.total };
+                        return {rows: res.data.content, total: res.data.totalElements};
                     }
                 } else {
                     $.modal.alertWarning(res.msg);
