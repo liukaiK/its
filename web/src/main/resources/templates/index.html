@@ -305,12 +305,13 @@ var historyPath = storage.get("historyPath");
 var isLinkage = true;
 
 // 本地主题优先，未设置取系统配置
-if($.common.isNotEmpty(skin)){
+// if($.common.isNotEmpty(skin)){
+if(false){
 	$("body").addClass(skin.split('|')[0]);
 	$("body").addClass(skin.split('|')[1]);
 } else {
-	$("body").addClass([[${sideTheme}]]);
-	$("body").addClass([[${skinName}]]);
+	$("body").addClass('theme-dark');
+	$("body").addClass('skin-blue');
 }
 
 /* 用户管理-重置密码 */
