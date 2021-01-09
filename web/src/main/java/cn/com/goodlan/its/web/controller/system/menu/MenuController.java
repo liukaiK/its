@@ -3,7 +3,7 @@ package cn.com.goodlan.its.web.controller.system.menu;
 import cn.com.goodlan.its.pojo.entity.Role;
 import cn.com.goodlan.its.pojo.vo.MenuVO;
 import cn.com.goodlan.its.pojo.vo.Ztree;
-import cn.com.goodlan.its.service.menu.MenuService;
+import cn.com.goodlan.its.service.system.menu.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;

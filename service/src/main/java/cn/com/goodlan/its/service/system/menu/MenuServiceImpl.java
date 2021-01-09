@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.service.menu;
+package cn.com.goodlan.its.service.system.menu;
 
 import cn.com.goodlan.its.dao.menu.MenuRepository;
 import cn.com.goodlan.its.pojo.entity.Menu;

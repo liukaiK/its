@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.web.controller.system.index;
 
 import cn.com.goodlan.its.pojo.entity.Menu;
-import cn.com.goodlan.its.service.index.IndexService;
+import cn.com.goodlan.its.service.system.index.IndexService;
 import cn.com.goodlan.its.util.TreeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

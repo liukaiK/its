@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.service.user;
+package cn.com.goodlan.its.service.system.user;
 
 
 import cn.com.goodlan.its.dao.user.UserRepository;

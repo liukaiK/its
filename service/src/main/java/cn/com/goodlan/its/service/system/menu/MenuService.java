@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.service.menu;
+package cn.com.goodlan.its.service.system.menu;
 
 import cn.com.goodlan.its.pojo.entity.Menu;
 import cn.com.goodlan.its.pojo.entity.Role;

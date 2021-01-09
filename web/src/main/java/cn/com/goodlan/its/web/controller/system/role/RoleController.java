@@ -4,7 +4,7 @@ import cn.com.goodlan.its.common.annotations.ResponseResultBody;
 import cn.com.goodlan.its.pojo.dto.RoleDTO;
 import cn.com.goodlan.its.pojo.entity.Role;
 import cn.com.goodlan.its.pojo.vo.RoleVO;
-import cn.com.goodlan.its.service.role.RoleService;
+import cn.com.goodlan.its.service.system.role.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

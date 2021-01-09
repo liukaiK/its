@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.web.controller.system.user;
 
-import cn.com.goodlan.its.service.user.UserService;
+import cn.com.goodlan.its.service.system.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

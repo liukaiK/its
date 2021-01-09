@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.service.role;
+package cn.com.goodlan.its.service.system.role;
 
 import cn.com.goodlan.its.pojo.dto.RoleDTO;
 import cn.com.goodlan.its.pojo.entity.Role;
