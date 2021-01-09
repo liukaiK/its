@@ -24,6 +24,8 @@ public class MenuVO {
 
     private String parentId;
 
+    private Integer sort;
+
     /**
      * 打开方式 页签 或是 新窗口
      */

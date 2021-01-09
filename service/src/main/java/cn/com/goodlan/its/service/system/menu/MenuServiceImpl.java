@@ -40,7 +40,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<MenuVO> findAll() {
-        List<Menu> menuList = menuRepository.findAll();
+        List<Menu> menuList = menuRepository.findByOrderByParent();
         return MenuMapper.INSTANCE.convertList(menuList);
     }
 

@@ -53,7 +53,7 @@ public class Role extends BaseEntity {
     }
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "sys_role_menu", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "menu_id"))
     public List<Menu> getMenuList() {
         return menuList;

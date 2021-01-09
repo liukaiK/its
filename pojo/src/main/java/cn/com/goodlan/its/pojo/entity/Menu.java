@@ -34,6 +34,13 @@ public class Menu extends BaseEntity {
 
     private String visible;
 
+    private Integer sort;
+
+    /**
+     * 备注
+     */
+    private String remark;
+
     /**
      * 菜单类型 M目录 C菜单 F按钮
      */
@@ -140,7 +147,7 @@ public class Menu extends BaseEntity {
     }
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "sys_role_menu", joinColumns = @JoinColumn(name = "menu_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     public List<Role> getRoleList() {
         return roleList;
@@ -157,6 +164,22 @@ public class Menu extends BaseEntity {
 
     public void setVisible(String visible) {
         this.visible = visible;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 
 
