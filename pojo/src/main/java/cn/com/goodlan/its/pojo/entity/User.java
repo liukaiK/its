@@ -39,6 +39,13 @@ public class User extends BaseEntity {
         roleList.add(role);
     }
 
+    public User(String id) {
+        this.id = id;
+    }
+
+    public User() {
+
+    }
 
     /**
      * 判断是否为超级管理员
@@ -47,6 +54,11 @@ public class User extends BaseEntity {
     public boolean isAdmin() {
         return ADMIN_ID.equals(this.id);
     }
+
+
+
+
+
 
 
     @Id

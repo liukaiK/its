@@ -47,9 +47,7 @@ public class SecurityUserBean implements UserDetails {
     }
 
     public User castToUser() {
-        User user = new User();
-        user.setId(this.id);
-        return user;
+        return new User(this.id);
     }
 
     @Override
