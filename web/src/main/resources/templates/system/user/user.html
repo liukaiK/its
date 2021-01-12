@@ -35,10 +35,10 @@
 						<div class="select-list">
 							<ul>
 								<li>
-									登录名称：<input type="text" name="loginName"/>
+									账号：<input type="text" name="username"/>
 								</li>
 								<li>
-									手机号码：<input type="text" name="phonenumber"/>
+									手机号码：<input type="text" name="phoneNumber"/>
 								</li>
 <!--								<li>-->
 <!--									用户状态：<select name="status" th:with="type=${@dict.getType('sys_normal_disable')}">-->
@@ -46,16 +46,16 @@
 <!--										<option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>-->
 <!--									</select>-->
 <!--								</li>-->
-								<li class="select-time">
-									<label>创建时间： </label>
-									<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>
-									<span>-</span>
-									<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>
-								</li>
-								<li>
-									<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-								    <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-								</li>
+<!--								<li class="select-time">-->
+<!--									<label>创建时间： </label>-->
+<!--									<input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"/>-->
+<!--									<span>-</span>-->
+<!--									<input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"/>-->
+<!--								</li>-->
+<!--								<li>-->
+<!--									<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>-->
+<!--								    <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>-->
+<!--								</li>-->
 							</ul>
 						</div>
 					</form>
@@ -113,7 +113,7 @@
 		let searchUrl = /*[[@{/system/user/search}]]*/ "";
 		let createUrl = /*[[@{/system/user/add}]]*/ "";
 		let updateUrl = /*[[@{/system/role/edit/{id}}]]*/ "";
-		let removeUrl = /*[[@{/system/role/remove}]]*/ "";
+		let removeUrl = /*[[@{/system/user/remove}]]*/ "";
 
 		function queryUserList() {
 			var options = {
@@ -136,13 +136,13 @@
 					//     title: '用户ID'
 					// },
 					{
-						field: 'username',
-						title: '登录名称',
-						sortable: true
-					},
-					{
 						field: 'name',
 						title: '姓名'
+					},
+					{
+						field: 'username',
+						title: '账号',
+						sortable: true
 					},
 					// {
 					//     field: 'dept.deptName',

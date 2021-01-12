@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.web.controller.system.user;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
+import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.vo.UserVO;
 import cn.com.goodlan.its.service.system.role.RoleService;
 import cn.com.goodlan.its.service.system.user.UserService;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 /**
  * 用户管理Controller
@@ -50,6 +53,14 @@ public class UserController {
     public ModelAndView add(Model model) {
         model.addAttribute("roles", roleService.selectRoleAll());
         return new ModelAndView("system/user/add");
+    }
+
+    /**
+     * 新增用户
+     */
+    @PostMapping("/add")
+    public void add(@Valid UserDTO userDTO) {
+        userService.save(userDTO);
     }
 
 

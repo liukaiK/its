@@ -1161,7 +1161,10 @@ var table = {
             	    type: "post",
             	    dataType: "json",
             	    data: data,
-            	    beforeSend: function () {
+            	    beforeSend: function (request) {
+                        if (csrfToken && csrfHeader) {
+                            request.setRequestHeader(csrfHeader, csrfToken);
+                        }
             	        $.modal.loading("正在处理中，请稍后...");
             	    },
             	    success: function(result) {
