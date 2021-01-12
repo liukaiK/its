@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.pojo.entity;
 
+import cn.hutool.core.collection.CollectionUtil;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -34,6 +35,13 @@ public class Role extends BaseEntity {
 
     public Role(String id) {
         this.id = id;
+    }
+
+    /**
+     * 角色下面是否有人
+     */
+    public boolean hasUser() {
+        return CollectionUtil.isNotEmpty(this.userList);
     }
 
     @Transient

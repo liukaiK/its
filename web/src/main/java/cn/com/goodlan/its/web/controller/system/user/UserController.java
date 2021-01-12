@@ -44,6 +44,7 @@ public class UserController {
      * 跳转到新增页面
      */
     @GetMapping("/add")
+    @PreAuthorize("hasAuthority('system:user:add')")
     public ModelAndView add(Model model) {
         model.addAttribute("roles", roleService.selectRoleAll());
         return new ModelAndView("system/user/add");
@@ -52,14 +53,15 @@ public class UserController {
     /**
      * 新增用户
      */
-    @PreAuthorize("hasAuthority('system:user:add')")
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('system:user:add')")
     public void add(@Valid UserDTO userDTO) {
         userService.save(userDTO);
     }
 
 
     @PostMapping("/search")
+    @PreAuthorize("hasAuthority('system:user:search')")
     public Page<UserVO> search(@PageableDefault Pageable pageable) {
         return userService.search(pageable);
     }
@@ -67,8 +69,8 @@ public class UserController {
     /**
      * 删除用户
      */
-    @PreAuthorize("hasAuthority('system:user:remove')")
     @PostMapping("/remove")
+    @PreAuthorize("hasAuthority('system:user:remove')")
     public void remove(String ids) {
         userService.remove(ids);
     }

@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.pojo.entity;
 
+import cn.hutool.core.collection.CollectionUtil;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -62,6 +63,13 @@ public class Menu extends BaseEntity {
 
     public Menu(String id) {
         this.id = id;
+    }
+
+    /**
+     * 是否存在子节点
+     */
+    public boolean hasChildren() {
+        return CollectionUtil.isNotEmpty(this.children);
     }
 
     @Id

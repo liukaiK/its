@@ -1,6 +1,8 @@
 package cn.com.goodlan.its.web.configuration;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
+import cn.com.goodlan.its.common.exception.BusinessException;
+import cn.com.goodlan.its.common.util.HttpUtil;
 import cn.com.goodlan.its.pojo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
@@ -16,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.lang.annotation.Annotation;
 
 /**
@@ -70,15 +71,30 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
 //        return new ModelAndView(SystemConstant.PAGE + "/error/500");
 //    }
 //
-//    /**
-//     * 系统业务异常
-//     */
-//    @ExceptionHandler(BusinessException.class)
-//    public Result businessException(BusinessException exception) {
-//        return Result.fail(500, ExceptionUtils.getStackTrace(exception));
-//    }
-//
-//
+    @ExceptionHandler(BusinessException.class)
+    public Object businessException(HttpServletRequest request, BusinessException e) {
+        log.error(e.getMessage(), e);
+        if (HttpUtil.isAjaxRequest(request)) {
+            return Result.fail(500, e.getMessage());
+        } else {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("errorMessage", e.getMessage());
+            modelAndView.setViewName("error/business");
+            return modelAndView;
+        }
+    }
+
+
+    /**
+     * 自定义验证异常
+     */
+    @ExceptionHandler(BindException.class)
+    public Result validatedBindException(BindException e) {
+        log.error(e.getMessage(), e);
+        String message = e.getAllErrors().get(0).getDefaultMessage();
+        return Result.fail(500, message);
+    }
+
 //    /**
 //     * 自定义验证异常
 //     */
@@ -97,50 +113,4 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
 //        return Result.fail(400, e.getMessage());
 //    }
 //
-//
-//    public static boolean isAjaxRequest(HttpServletRequest request) {
-//        String accept = request.getHeader("accept");
-//        if (accept != null && accept.indexOf("application/json") != -1) {
-//            return true;
-//        }
-//
-//        String xRequestedWith = request.getHeader("X-Requested-With");
-//        if (xRequestedWith != null && xRequestedWith.indexOf("XMLHttpRequest") != -1) {
-//            return true;
-//        }
-//
-//        String uri = request.getRequestURI();
-//        if (inStringIgnoreCase(uri, ".json", ".xml")) {
-//            return true;
-//        }
-//
-//        String ajax = request.getParameter("__ajax");
-//        if (inStringIgnoreCase(ajax, "json", "xml")) {
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    /**
-//     * 是否包含字符串
-//     *
-//     * @param str  验证字符串
-//     * @param strs 字符串组
-//     * @return 包含返回true
-//     */
-//    public static boolean inStringIgnoreCase(String str, String... strs) {
-//        if (str != null && strs != null) {
-//            for (String s : strs) {
-//                if (str.equalsIgnoreCase(trim(s))) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
-//
-//    public static String trim(String str) {
-//        return (str == null ? "" : str.trim());
-//    }
-
 }

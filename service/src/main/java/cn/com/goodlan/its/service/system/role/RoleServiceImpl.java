@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.service.system.role;
 
+import cn.com.goodlan.its.common.exception.BusinessException;
 import cn.com.goodlan.its.dao.role.RoleRepository;
 import cn.com.goodlan.its.pojo.dto.RoleDTO;
 import cn.com.goodlan.its.pojo.entity.Menu;
@@ -82,7 +83,11 @@ public class RoleServiceImpl implements RoleService {
     public void remove(String ids) {
         String[] roleIds = Convert.toStrArray(ids);
         for (String roleId : roleIds) {
-            roleRepository.delete(new Role(roleId));
+            Role role = roleRepository.getOne(roleId);
+            if (role.hasUser()) {
+                throw new BusinessException(String.format("%1$s已分配,不能删除", role.getName()));
+            }
+            roleRepository.delete(role);
         }
     }
 
