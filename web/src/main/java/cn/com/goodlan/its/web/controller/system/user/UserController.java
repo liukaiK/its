@@ -35,12 +35,6 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
-    @PreAuthorize("hasAuthority('system:user:create')")
-    @GetMapping("/save")
-    public void save() {
-
-    }
-
     @GetMapping
     public ModelAndView user() {
         return new ModelAndView("system/user/user");
@@ -58,6 +52,7 @@ public class UserController {
     /**
      * 新增用户
      */
+    @PreAuthorize("hasAuthority('system:user:add')")
     @PostMapping("/add")
     public void add(@Valid UserDTO userDTO) {
         userService.save(userDTO);
@@ -67,6 +62,15 @@ public class UserController {
     @PostMapping("/search")
     public Page<UserVO> search(@PageableDefault Pageable pageable) {
         return userService.search(pageable);
+    }
+
+    /**
+     * 删除用户
+     */
+    @PreAuthorize("hasAuthority('system:user:remove')")
+    @PostMapping("/remove")
+    public void remove(String ids) {
+        userService.remove(ids);
     }
 
 }

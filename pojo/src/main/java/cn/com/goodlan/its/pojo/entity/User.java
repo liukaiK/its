@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class User extends BaseEntity {
 
     private String phoneNumber;
 
-    private List<Role> roleList;
+    private List<Role> roleList = new ArrayList<>();
 
     /**
      * 最后登录时间

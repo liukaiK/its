@@ -76,51 +76,51 @@
 		var checkRoleName = /*[[@{/system/role/checkRoleNameUnique}]]*/ "";
 
 		$("#form-role-add").validate({
-			rules:{
-				onkeyup: false,
-				roleName:{
-					remote: {
-		                url: checkRoleName,
-		                type: "post",
-		                dataType: "json",
-		                data: {
-		                	"roleName" : function() {
-		                		return $.common.trim($("#roleName").val());
-		                    }
-		                },
-		                dataFilter: function(data, type) {
-		                	return $.validate.unique(data);
-		                }
-		            }
-				},
-				roleKey:{
-					remote: {
-		                url: ctx + "system/role/checkRoleKeyUnique",
-		                type: "post",
-		                dataType: "json",
-		                data: {
-		                	"roleKey" : function() {
-		                        return $.common.trim($("#roleKey").val());
-		                    }
-		                },
-		                dataFilter: function(data, type) {
-		                	return $.validate.unique(data);
-		                }
-		            }
-				},
-				roleSort:{
-					digits:true
-				},
-			},
-			messages: {
-		        "roleName": {
-		            remote: "角色名称已经存在"
-		        },
-		        "roleKey": {
-		            remote: "角色权限已经存在"
-		        }
-		    },
-		    focusCleanup: true
+			// rules:{
+			// 	onkeyup: false,
+			// 	roleName:{
+			// 		remote: {
+		    //             url: checkRoleName,
+		    //             type: "post",
+		    //             dataType: "json",
+		    //             data: {
+		    //             	"roleName" : function() {
+		    //             		return $.common.trim($("#roleName").val());
+		    //                 }
+		    //             },
+		    //             dataFilter: function(data, type) {
+		    //             	return $.validate.unique(data);
+		    //             }
+		    //         }
+			// 	},
+			// 	roleKey:{
+			// 		remote: {
+		    //             url: ctx + "system/role/checkRoleKeyUnique",
+		    //             type: "post",
+		    //             dataType: "json",
+		    //             data: {
+		    //             	"roleKey" : function() {
+		    //                     return $.common.trim($("#roleKey").val());
+		    //                 }
+		    //             },
+		    //             dataFilter: function(data, type) {
+		    //             	return $.validate.unique(data);
+		    //             }
+		    //         }
+			// 	},
+			// 	roleSort:{
+			// 		digits:true
+			// 	},
+			// },
+			// messages: {
+		    //     "roleName": {
+		    //         remote: "角色名称已经存在"
+		    //     },
+		    //     "roleKey": {
+		    //         remote: "角色权限已经存在"
+		    //     }
+		    // },
+		    // focusCleanup: true
 		});
 		
 		$('input').on('ifChanged', function(obj){
@@ -157,9 +157,9 @@
 
 		function add() {
 			var roleName = $("input[name='roleName']").val();
-			var roleKey = $("input[name='roleKey']").val();
-			var roleSort = $("input[name='roleSort']").val();
-			var status = $("input[id='status']").is(':checked') == true ? 0 : 1;
+			// var roleKey = $("input[name='roleKey']").val();
+			// var roleSort = $("input[name='roleSort']").val();
+			// var status = $("input[id='status']").is(':checked') == true ? 0 : 1;
 			var remark = $("input[name='remark']").val();
 			var menuIds = $.tree.getCheckedNodes();
 			$.ajax({
@@ -168,9 +168,9 @@
 				url : createUrl,
 				data : {
 					"roleName": roleName,
-					"roleKey": roleKey,
-					"roleSort": roleSort,
-					"status": status,
+					// "roleKey": roleKey,
+					// "roleSort": roleSort,
+					// "status": status,
 					"remark": remark,
 					"menuIds": menuIds
 				},

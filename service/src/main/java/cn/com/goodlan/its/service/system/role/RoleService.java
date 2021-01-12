@@ -31,4 +31,8 @@ public interface RoleService {
      */
     String checkRoleNameUnique(Role role);
 
+    /**
+     * 删除角色
+     */
+    void remove(String ids);
 }

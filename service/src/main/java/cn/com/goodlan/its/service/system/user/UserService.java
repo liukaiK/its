@@ -11,4 +11,6 @@ public interface UserService {
 
     void save(UserDTO userDTO);
 
+    void remove(String ids);
+
 }

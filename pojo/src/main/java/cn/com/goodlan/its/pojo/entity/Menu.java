@@ -57,6 +57,12 @@ public class Menu extends BaseEntity {
 
     private List<Role> roleList;
 
+    public Menu() {
+    }
+
+    public Menu(String id) {
+        this.id = id;
+    }
 
     @Id
     @GeneratedValue(generator = "uuid2")

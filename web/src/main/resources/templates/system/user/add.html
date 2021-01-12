@@ -68,7 +68,7 @@
                         <label class="col-sm-4 control-label is-required">登录密码：</label>
                         <div class="col-sm-8">
                             <div class="input-group">
-                                <input id="password" name="password" placeholder="请输入登录密码" class="form-control" type="password" value="123qwe!@#" required>
+                                <input id="password" name="password" placeholder="请输入登录密码" class="form-control" type="password" th:value="${@config.getKey('sys.user.initPassword')}" required>
                                 <span class="input-group-addon" title="登录密码,鼠标按下显示密码"
                                     onmousedown="$('#password').attr('type','text')"
                                     onmouseup="$('#password').attr('type','password')"><i class="fa fa-key"></i></span>
@@ -227,7 +227,7 @@
         let createUrl = /*[[@{/system/user/add}]]*/ "";
 
         function submitHandler() {
-            var chrtype = 4;
+            var chrtype = [[${#strings.defaultString(@config.getKey('sys.account.chrtype'), 0)}]];
             var password = $("#password").val();
             if ($.validate.form() && checkpwd(chrtype, password)) {
                 var data = $("#form-user-add").serializeArray();

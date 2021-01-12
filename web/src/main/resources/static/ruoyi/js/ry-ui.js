@@ -945,7 +945,10 @@ var table = {
                     type: type,
                     dataType: dataType,
                     data: data,
-                    beforeSend: function () {
+                    beforeSend: function (request) {
+                        if (csrfToken && csrfHeader) {
+                            request.setRequestHeader(csrfHeader, csrfToken);
+                        }
                         $.modal.loading("正在处理中，请稍后...");
                     },
                     success: function(result) {
@@ -1179,17 +1182,17 @@ var table = {
             // 保存结果弹出msg刷新table表格
             ajaxSuccess: function (result) {
             	if (result.code == web_status.SUCCESS && table.options.type == table_type.bootstrapTable) {
-            	    $.modal.msgSuccess(result.msg);
+            	    $.modal.msgSuccess(result.message);
             	    $.table.refresh();
                 } else if (result.code == web_status.SUCCESS && table.options.type == table_type.bootstrapTreeTable) {
-            	    $.modal.msgSuccess(result.msg);
+            	    $.modal.msgSuccess(result.message);
             	    $.treeTable.refresh();
                 } else if (result.code == web_status.SUCCESS && $.common.isEmpty(table.options.type)) {
-            	    $.modal.msgSuccess(result.msg)
+            	    $.modal.msgSuccess(result.message)
                 }  else if (result.code == web_status.WARNING) {
-            	    $.modal.alertWarning(result.msg)
+            	    $.modal.alertWarning(result.message)
                 }  else {
-            	    $.modal.alertError(result.msg);
+            	    $.modal.alertError(result.message);
                 }
             	$.modal.closeLoading();
             },
@@ -1198,9 +1201,9 @@ var table = {
             	if (result.code == web_status.SUCCESS) {
             	    $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
                 } else if (result.code == web_status.WARNING) {
-            	    $.modal.alertWarning(result.msg)
+            	    $.modal.alertWarning(result.message)
                 }  else {
-            	    $.modal.alertError(result.msg);
+            	    $.modal.alertError(result.message);
                 }
             	$.modal.closeLoading();
             },
@@ -1210,19 +1213,19 @@ var table = {
                     var parent = window.parent;
                     if (parent.table.options.type == table_type.bootstrapTable) {
                         $.modal.close();
-                        parent.$.modal.msgSuccess(result.msg);
+                        parent.$.modal.msgSuccess(result.message);
                         parent.$.table.refresh();
                     } else if (parent.table.options.type == table_type.bootstrapTreeTable) {
                         $.modal.close();
-                        parent.$.modal.msgSuccess(result.msg);
+                        parent.$.modal.msgSuccess(result.message);
                         parent.$.treeTable.refresh();
                     } else {
                         $.modal.msgReload("保存成功,正在刷新数据请稍后……", modal_status.SUCCESS);
                     }
                 } else if (result.code == web_status.WARNING) {
-                    $.modal.alertWarning(result.msg)
+                    $.modal.alertWarning(result.message)
                 }  else {
-                    $.modal.alertError(result.msg);
+                    $.modal.alertError(result.message);
                 }
                 $.modal.closeLoading();
                 $.modal.enable();
@@ -1234,7 +1237,7 @@ var table = {
     	            var currentId = $('.page-tabs-content', topWindow).find('.active').attr('data-panel');
     	            var $contentWindow = $('.RuoYi_iframe[data-id="' + currentId + '"]', topWindow)[0].contentWindow;
     	            $.modal.close();
-    	            $contentWindow.$.modal.msgSuccess(result.msg);
+    	            $contentWindow.$.modal.msgSuccess(result.message);
     	            $contentWindow.$(".layui-layer-padding").removeAttr("style");
     	            if ($contentWindow.table.options.type == table_type.bootstrapTable) {
     	                $contentWindow.$.table.refresh();
@@ -1243,9 +1246,9 @@ var table = {
     	            }
     	            $.modal.closeTab();
                 } else if (result.code == web_status.WARNING) {
-                    $.modal.alertWarning(result.msg)
+                    $.modal.alertWarning(result.message)
                 } else {
-                    $.modal.alertError(result.msg);
+                    $.modal.alertError(result.message);
                 }
                 $.modal.closeLoading();
             }

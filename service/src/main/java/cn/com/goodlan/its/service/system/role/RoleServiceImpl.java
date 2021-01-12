@@ -2,9 +2,11 @@ package cn.com.goodlan.its.service.system.role;
 
 import cn.com.goodlan.its.dao.role.RoleRepository;
 import cn.com.goodlan.its.pojo.dto.RoleDTO;
+import cn.com.goodlan.its.pojo.entity.Menu;
 import cn.com.goodlan.its.pojo.entity.Role;
 import cn.com.goodlan.its.pojo.vo.RoleVO;
 import cn.com.goodlan.mapstruct.RoleMapper;
+import cn.hutool.core.convert.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,6 +34,11 @@ public class RoleServiceImpl implements RoleService {
     public void save(RoleDTO roleDTO) {
         Role role = new Role();
         role.setName(roleDTO.getRoleName());
+        String[] menuIds = Convert.toStrArray(roleDTO.getMenuIds());
+        for (String menuId : menuIds) {
+            role.addMenu(new Menu(menuId));
+        }
+        role.setRemark(roleDTO.getRemark());
         roleRepository.save(role);
     }
 
@@ -50,6 +57,14 @@ public class RoleServiceImpl implements RoleService {
 //        }
 //        return UserConstants.ROLE_NAME_UNIQUE;
         return null;
+    }
+
+    @Override
+    public void remove(String ids) {
+        String[] roleIds = Convert.toStrArray(ids);
+        for (String roleId : roleIds) {
+            roleRepository.delete(new Role(roleId));
+        }
     }
 
 }

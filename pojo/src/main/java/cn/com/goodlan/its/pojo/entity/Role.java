@@ -3,6 +3,7 @@ package cn.com.goodlan.its.pojo.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +26,15 @@ public class Role extends BaseEntity {
 
     private List<User> userList;
 
-    private List<Menu> menuList;
+    private List<Menu> menuList = new ArrayList<>();
+
+
+    public Role() {
+    }
+
+    public Role(String id) {
+        this.id = id;
+    }
 
     @Transient
     public void addMenu(Menu menu) {
