@@ -24,7 +24,13 @@ public class User extends BaseEntity {
 
     private String name;
 
+    private String sex;
+
+    private String email;
+
     private String password;
+
+    private String phoneNumber;
 
     private List<Role> roleList;
 
@@ -54,11 +60,6 @@ public class User extends BaseEntity {
     public boolean isAdmin() {
         return ADMIN_ID.equals(this.id);
     }
-
-
-
-
-
 
 
     @Id
@@ -118,5 +119,30 @@ public class User extends BaseEntity {
         this.lastLoginTime = lastLoginTime;
     }
 
+    @Column(nullable = false, columnDefinition = "char(1)")
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Column(nullable = false, columnDefinition = "char(11)")
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
 }

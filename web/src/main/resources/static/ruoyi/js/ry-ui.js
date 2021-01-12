@@ -170,25 +170,25 @@ var table = {
             	return $.extend(curParams, $.common.formToJSON(currentId)); 
             },
             // 请求获取数据后处理回调函数
-            responseHandler: function(res) {
-            	if (typeof table.get(this.id).responseHandler == "function") {
+            responseHandler: function (res) {
+                if (typeof table.get(this.id).responseHandler == "function") {
                     table.get(this.id).responseHandler(res);
                 }
                 if (res.code === web_status.SUCCESS) {
-                    if ($.common.isNotEmpty(table.options.sidePagination) && table.options.sidePagination == 'client') {
-                    	return res.rows;
+                    if ($.common.isNotEmpty(table.options.sidePagination) && table.options.sidePagination === 'client') {
+                        return res.rows;
                     } else {
-                    	if ($.common.isNotEmpty(table.options.rememberSelected) && table.options.rememberSelected) {
+                        if ($.common.isNotEmpty(table.options.rememberSelected) && table.options.rememberSelected) {
                             var column = $.common.isEmpty(table.options.uniqueId) ? table.options.columns[1].field : table.options.uniqueId;
-                            $.each(res.rows, function(i, row) {
+                            $.each(res.rows, function (i, row) {
                                 row.state = $.inArray(row[column], table.rememberSelectedIds[table.options.id]) !== -1;
                             })
-                    	}
+                        }
                         return {rows: res.data.content, total: res.data.totalElements};
                     }
                 } else {
-                    $.modal.alertWarning(res.msg);
-                    return { rows: [], total: 0 };
+                    $.modal.alertWarning(res.message);
+                    return {rows: [], total: 0};
                 }
             },
             // 初始化事件

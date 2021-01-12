@@ -6,6 +6,8 @@ import cn.com.goodlan.its.pojo.vo.RoleVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface RoleService {
 
     Page<RoleVO> search(Pageable pageable);
@@ -14,6 +16,11 @@ public interface RoleService {
      * 保存角色
      */
     void save(RoleDTO roleDTO);
+
+    /**
+     * 角色下拉框
+     */
+    List<RoleVO> selectRoleAll();
 
 
     /**
