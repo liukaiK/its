@@ -24,7 +24,7 @@ public class Role extends BaseEntity {
      */
     private String remark;
 
-    private List<User> userList;
+    private List<User> userList = new ArrayList<>();
 
     private List<Menu> menuList = new ArrayList<>();
 
@@ -41,6 +41,11 @@ public class Role extends BaseEntity {
         menuList.add(menu);
     }
 
+
+    @Transient
+    public void deleteMenu() {
+        this.menuList = new ArrayList<>();
+    }
 
     @Id
     @GeneratedValue(generator = "uuid2")

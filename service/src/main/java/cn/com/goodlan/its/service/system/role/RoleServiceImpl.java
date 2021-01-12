@@ -31,6 +31,25 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public RoleVO getById(String roleId) {
+        Role role = roleRepository.getOne(roleId);
+        return RoleMapper.INSTANCE.convert(role);
+    }
+
+    @Override
+    public void update(RoleDTO roleDTO) {
+        String[] menuIds = Convert.toStrArray(roleDTO.getMenuIds());
+        Role role = roleRepository.getOne(roleDTO.getId());
+        role.deleteMenu();
+        for (String menuId : menuIds) {
+            role.addMenu(new Menu(menuId));
+        }
+        role.setName(roleDTO.getRoleName());
+        role.setRemark(roleDTO.getRemark());
+        roleRepository.save(role);
+    }
+
+    @Override
     public void save(RoleDTO roleDTO) {
         Role role = new Role();
         role.setName(roleDTO.getRoleName());

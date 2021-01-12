@@ -1,6 +1,5 @@
 package cn.com.goodlan.its.web.controller.system.menu;
 
-import cn.com.goodlan.its.pojo.entity.Role;
 import cn.com.goodlan.its.pojo.vo.MenuVO;
 import cn.com.goodlan.its.pojo.vo.Ztree;
 import cn.com.goodlan.its.service.system.menu.MenuService;
@@ -56,8 +55,8 @@ public class MenuController {
 //        return "system/menu/add";
 //    }
     @GetMapping("/roleMenuTreeData")
-    public List<Ztree> roleMenuTreeData(Role role) {
-        List<Ztree> ztrees = menuService.roleMenuTreeData(role);
+    public List<Ztree> roleMenuTreeData(String roleId) {
+        List<Ztree> ztrees = menuService.roleMenuTreeData(roleId);
         return ztrees;
     }
 

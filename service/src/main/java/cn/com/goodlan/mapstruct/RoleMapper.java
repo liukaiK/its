@@ -14,5 +14,6 @@ public interface RoleMapper {
 
     List<RoleVO> convertList(List<Role> roleList);
 
+    RoleVO convert(Role role);
 
 }

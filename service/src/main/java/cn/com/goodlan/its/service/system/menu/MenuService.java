@@ -28,5 +28,5 @@ public interface MenuService {
 
     List<MenuVO> findAll();
 
-    List<Ztree> roleMenuTreeData(Role role);
+    List<Ztree> roleMenuTreeData(String roleId);
 }

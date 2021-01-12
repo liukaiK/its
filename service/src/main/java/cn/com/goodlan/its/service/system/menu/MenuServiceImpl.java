@@ -2,12 +2,12 @@ package cn.com.goodlan.its.service.system.menu;
 
 import cn.com.goodlan.its.dao.menu.MenuRepository;
 import cn.com.goodlan.its.pojo.entity.Menu;
-import cn.com.goodlan.its.pojo.entity.Role;
 import cn.com.goodlan.its.pojo.vo.MenuVO;
 import cn.com.goodlan.its.pojo.vo.Ztree;
 import cn.com.goodlan.its.util.SecurityUtil;
 import cn.com.goodlan.mapstruct.MenuMapper;
 import cn.hutool.core.collection.CollectionUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,9 +45,14 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<Ztree> roleMenuTreeData(Role role) {
+    public List<Ztree> roleMenuTreeData(String roleId) {
         List<Menu> menuList = menuRepository.findAll();
-        return initZtree(menuList, null, true);
+        if (StringUtils.isNotEmpty(roleId)) {
+            List<String> menus = menuRepository.findAllByRoleId(roleId);
+            return initZtree(menuList, menus, true);
+        } else {
+            return initZtree(menuList, null, true);
+        }
     }
 
     /**
@@ -59,7 +64,7 @@ public class MenuServiceImpl implements MenuService {
      * @return 树结构列表
      */
     public List<Ztree> initZtree(List<Menu> menuList, List<String> roleMenuList, boolean permsFlag) {
-        List<Ztree> ztrees = new ArrayList<Ztree>();
+        List<Ztree> ztrees = new ArrayList<>();
         boolean isCheck = CollectionUtil.isNotEmpty(roleMenuList);
         for (Menu menu : menuList) {
             Ztree ztree = new Ztree();

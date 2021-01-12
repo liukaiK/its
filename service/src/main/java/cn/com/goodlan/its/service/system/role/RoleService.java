@@ -12,6 +12,10 @@ public interface RoleService {
 
     Page<RoleVO> search(Pageable pageable);
 
+    RoleVO getById(String roleId);
+
+    void update(RoleDTO roleDTO);
+
     /**
      * 保存角色
      */
