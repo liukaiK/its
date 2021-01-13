@@ -11,6 +11,8 @@ public interface UserService {
 
     void save(UserDTO userDTO);
 
+    void update(UserDTO userDTO);
+
     void remove(String ids);
 
     UserVO getById(String id);

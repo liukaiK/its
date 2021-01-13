@@ -79,6 +79,15 @@ public class UserController {
     }
 
     /**
+     * 修改保存
+     */
+    @PostMapping("/edit")
+    @PreAuthorize("hasAuthority('system:user:edit')")
+    public void edit(@Valid UserDTO userDTO) {
+        userService.update(userDTO);
+    }
+
+    /**
      * 删除用户
      */
     @PostMapping("/remove")

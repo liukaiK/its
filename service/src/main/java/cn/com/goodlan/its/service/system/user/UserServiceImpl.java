@@ -69,6 +69,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void update(UserDTO userDTO) {
+        User user = userRepository.getOne(userDTO.getId());
+        user.setRemark(userDTO.getRemark());
+        user.setSex(userDTO.getSex());
+        user.setEmail(userDTO.getEmail());
+        user.setPhoneNumber(userDTO.getPhoneNumber());
+        userRepository.save(user);
+    }
+
+    @Override
     public void remove(String ids) {
         String[] userIds = Convert.toStrArray(ids);
         for (String userId : userIds) {
