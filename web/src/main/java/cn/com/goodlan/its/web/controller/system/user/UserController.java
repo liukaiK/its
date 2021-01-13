@@ -36,9 +36,20 @@ public class UserController {
     private RoleService roleService;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('system:user:view')")
     public ModelAndView user() {
         return new ModelAndView("system/user/user");
     }
+
+    /**
+     * 分页查询
+     */
+    @PostMapping("/search")
+    @PreAuthorize("hasAuthority('system:user:search')")
+    public Page<UserVO> search(@PageableDefault Pageable pageable) {
+        return userService.search(pageable);
+    }
+
 
     /**
      * 跳转到新增页面
@@ -59,15 +70,6 @@ public class UserController {
         userService.save(userDTO);
     }
 
-
-    /**
-     * 分页查询
-     */
-    @PostMapping("/search")
-    @PreAuthorize("hasAuthority('system:user:search')")
-    public Page<UserVO> search(@PageableDefault Pageable pageable) {
-        return userService.search(pageable);
-    }
 
     /**
      * 删除用户

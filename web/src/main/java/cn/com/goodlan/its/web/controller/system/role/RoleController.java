@@ -31,14 +31,26 @@ public class RoleController {
 
 
     @GetMapping
+    @PreAuthorize("hasAuthority('system:role:view')")
     public ModelAndView role() {
         return new ModelAndView("system/role/role");
     }
 
     /**
+     * 分页查询
+     */
+    @PostMapping("/search")
+    @PreAuthorize("hasAuthority('system:role:search')")
+    public Page<RoleVO> search(@PageableDefault Pageable pageable) {
+        return roleService.search(pageable);
+    }
+
+
+    /**
      * 跳转到新增页面
      */
     @GetMapping("/add")
+    @PreAuthorize("hasAuthority('system:role:add')")
     public ModelAndView add() {
         return new ModelAndView("system/role/add");
     }
@@ -53,36 +65,22 @@ public class RoleController {
     }
 
     /**
-     * 分页查询
-     */
-    @PostMapping("/search")
-    @PreAuthorize("hasAuthority('system:role:search')")
-    public Page<RoleVO> search(@PageableDefault Pageable pageable) {
-        return roleService.search(pageable);
-    }
-
-
-    /**
      * 跳转到修改页面
      */
     @GetMapping("/edit/{id}")
+    @PreAuthorize("hasAuthority('system:role:edit')")
     public ModelAndView edit(@PathVariable String id, Model model) {
         model.addAttribute("role", roleService.getById(id));
         return new ModelAndView("system/role/edit");
     }
 
+    /**
+     * 修改保存
+     */
     @PostMapping("/edit")
     @PreAuthorize("hasAuthority('system:role:edit')")
     public void edit(RoleDTO roleDTO) {
         roleService.update(roleDTO);
-    }
-
-    /**
-     * 检查角色名称是否重复
-     */
-    @PostMapping("/checkRoleNameUnique")
-    public String checkRoleNameUnique(Role role) {
-        return "";
     }
 
     /**
@@ -93,6 +91,16 @@ public class RoleController {
     public void remove(String ids) {
         roleService.remove(ids);
     }
+
+
+    /**
+     * 检查角色名称是否重复
+     */
+    @PostMapping("/checkRoleNameUnique")
+    public String checkRoleNameUnique(Role role) {
+        return "";
+    }
+
 
 }
 
