@@ -1,10 +1,11 @@
 package cn.com.goodlan.its.service.system.menu;
 
+import cn.com.goodlan.its.common.exception.BusinessException;
 import cn.com.goodlan.its.dao.menu.MenuRepository;
+import cn.com.goodlan.its.pojo.dto.MenuDTO;
 import cn.com.goodlan.its.pojo.entity.Menu;
 import cn.com.goodlan.its.pojo.vo.MenuVO;
 import cn.com.goodlan.its.pojo.vo.Ztree;
-import cn.com.goodlan.its.util.SecurityUtil;
 import cn.com.goodlan.mapstruct.MenuMapper;
 import cn.hutool.core.collection.CollectionUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 菜单Service
@@ -27,17 +29,6 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     private MenuRepository menuRepository;
 
-
-    @Override
-    public List<Menu> findMenuByCurrentUser() {
-        return findMenuByUser(SecurityUtil.getUserId());
-    }
-
-    @Override
-    public List<Menu> findMenuByUser(String userId) {
-        return null;
-    }
-
     @Override
     public List<MenuVO> findAll() {
         List<Menu> menuList = menuRepository.findByOrderByParent();
@@ -45,8 +36,9 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Menu getByParentId(String parentId) {
-        return null;
+    public MenuVO getMenuById(String id) {
+        Menu menu = menuRepository.getOne(id);
+        return MenuMapper.INSTANCE.convert(menu);
     }
 
     @Override
@@ -58,6 +50,65 @@ public class MenuServiceImpl implements MenuService {
         } else {
             return initZtree(menuList, null, true);
         }
+    }
+
+    /**
+     * 查询所有菜单
+     *
+     * @return 菜单列表
+     */
+    @Override
+    public List<Ztree> menuTreeData() {
+        List<Menu> menuList = menuRepository.findAll();
+        return initZtree(menuList);
+    }
+
+    @Override
+    public void save(MenuDTO menuDTO) {
+        Menu menu = new Menu();
+        menu.setName(menuDTO.getName());
+        menu.setTarget(menuDTO.getTarget());
+        menu.setAuthority(menuDTO.getAuthority());
+        menu.setIcon(menuDTO.getIcon());
+        menu.setUrl(menuDTO.getUrl());
+        menu.setMenuType(menuDTO.getMenuType());
+
+        if (StringUtils.isEmpty(menuDTO.getUrl())) {
+            menu.setUrl("#");
+        } else {
+            menu.setUrl(menuDTO.getUrl());
+        }
+
+        if (!"0".equals(menuDTO.getParentId())) {
+            menu.addParent(menuDTO.getParentId());
+        }
+        menuRepository.save(menu);
+    }
+
+    @Override
+    public void deleteMenuById(String menuId) {
+        Optional<Menu> menu = menuRepository.findById(menuId);
+        if (menu.isPresent()) {
+            if (menu.get().hasChildren()) {
+                throw new BusinessException("存在子菜单,不允许删除");
+            }
+            if (menu.get().hasRole()) {
+                throw new BusinessException("菜单已分配角色,不允许删除");
+            }
+            menuRepository.deleteById(menuId);
+        }
+
+    }
+
+
+    /**
+     * 对象转菜单树
+     *
+     * @param menuList 菜单列表
+     * @return 树结构列表
+     */
+    public List<Ztree> initZtree(List<Menu> menuList) {
+        return initZtree(menuList, null, false);
     }
 
     /**

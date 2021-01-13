@@ -1,16 +1,17 @@
 package cn.com.goodlan.its.web.controller.system.menu;
 
-import cn.com.goodlan.its.pojo.entity.Menu;
+import cn.com.goodlan.its.pojo.Result;
+import cn.com.goodlan.its.pojo.dto.MenuDTO;
 import cn.com.goodlan.its.pojo.vo.MenuVO;
 import cn.com.goodlan.its.pojo.vo.Ztree;
 import cn.com.goodlan.its.service.system.menu.MenuService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -48,16 +49,38 @@ public class MenuController {
     @GetMapping("/add/{parentId}")
     @PreAuthorize("hasAuthority('system:menu:add')")
     public ModelAndView add(@PathVariable("parentId") String parentId, Model model) {
-        Menu menu;
-        if (StringUtils.isEmpty(parentId)) {
-//            menu = menuService.selectMenuById(parentId);
+        String rootId = "0";
+        MenuVO menuVO;
+        if (!rootId.equals(parentId)) {
+            menuVO = menuService.getMenuById(parentId);
         } else {
-            menu = new Menu();
-            menu.setId(null);
-            menu.setName("主目录");
+            menuVO = new MenuVO();
+            menuVO.setId(rootId);
+            menuVO.setName("主目录");
         }
-//        model.addAttribute("menu", menu);
+        model.addAttribute("menu", menuVO);
         return new ModelAndView("system/menu/add");
+    }
+
+    /**
+     * 新增保存
+     */
+    @PostMapping("/create")
+    @PreAuthorize("hasAuthority('system:menu:add')")
+    public Result add(@Valid MenuDTO menuDTO) {
+        menuService.save(menuDTO);
+        return Result.success();
+    }
+
+
+    /**
+     * 删除菜单
+     */
+    @GetMapping("/remove/{id}")
+    @PreAuthorize("hasAuthority('system:menu:remove')")
+    public Result remove(@PathVariable String id) {
+        menuService.deleteMenuById(id);
+        return Result.success();
     }
 
     /**
@@ -67,6 +90,31 @@ public class MenuController {
     public List<Ztree> roleMenuTreeData(String roleId) {
         return menuService.roleMenuTreeData(roleId);
     }
+
+
+    /**
+     * 加载所有菜单列表树
+     */
+    @GetMapping("/menuTreeData")
+    public List<Ztree> menuTreeData() {
+        return menuService.menuTreeData();
+    }
+
+
+    /**
+     * 选择菜单树
+     */
+    @GetMapping("/selectMenuTree/{menuId}")
+    public ModelAndView selectMenuTree(@PathVariable("menuId") String menuId, Model model) {
+        String rootId = "0";
+        if (rootId.equals(menuId)) {
+            model.addAttribute("menu", new MenuVO());
+        } else {
+            model.addAttribute("menu", menuService.getMenuById(menuId));
+        }
+        return new ModelAndView("system/menu/tree");
+    }
+
 
 }
 

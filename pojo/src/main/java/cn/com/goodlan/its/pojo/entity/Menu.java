@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollectionUtil;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,9 +55,10 @@ public class Menu extends BaseEntity {
      */
     private String target;
 
-    private List<Menu> children;
+    private List<Menu> children = new ArrayList<>();
 
-    private List<Role> roleList;
+
+    private List<Role> roleList = new ArrayList<>();
 
     public Menu() {
     }
@@ -79,6 +81,22 @@ public class Menu extends BaseEntity {
     @Transient
     public boolean hasParent() {
         return this.parent != null;
+    }
+
+    /**
+     * 添加父节点
+     */
+    @Transient
+    public void addParent(String parentId) {
+        this.parent = new Menu(parentId);
+    }
+
+    /**
+     * 是否已经分配了角色
+     */
+    @Transient
+    public boolean hasRole() {
+        return CollectionUtil.isNotEmpty(this.roleList);
     }
 
     @Id

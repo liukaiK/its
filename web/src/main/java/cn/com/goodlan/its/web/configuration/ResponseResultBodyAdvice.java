@@ -12,6 +12,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.ModelAndView;
@@ -71,6 +72,13 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
 //        return new ModelAndView(SystemConstant.PAGE + "/error/500");
 //    }
 //
+    @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
+    public Result handleException(HttpRequestMethodNotSupportedException e) {
+        log.error(e.getMessage(), e);
+        return Result.fail(500, "不支持' " + e.getMethod() + "'请求");
+    }
+
+
     @ExceptionHandler(BusinessException.class)
     public Object businessException(HttpServletRequest request, BusinessException e) {
         log.error(e.getMessage(), e);

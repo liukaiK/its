@@ -50,8 +50,8 @@
 
 		let searchUrl = /*[[@{/system/menu/search}]]*/ "";
 		let createUrl = /*[[@{/system/menu/add/{id}}]]*/ "";
-		let updateUrl = /*[[@{/system/menu/search}]]*/ "";
-		let removeUrl = /*[[@{/system/menu/search}]]*/ "";
+		let updateUrl = /*[[@{/system/menu/edit/{id}}]]*/ "";
+		let removeUrl = /*[[@{/system/menu/remove/{id}}]]*/ "";
 
 
 		$(function () {
@@ -73,7 +73,7 @@
 					},
 					{
 						title: '菜单名称',
-						field: 'menuName',
+						field: 'name',
 						width: '20',
 						widthUnit: '%',
 						formatter: function (value, row, index) {
