@@ -8,14 +8,18 @@ import cn.com.goodlan.its.pojo.entity.User;
 import cn.com.goodlan.its.pojo.vo.UserVO;
 import cn.com.goodlan.mapstruct.UserMapper;
 import cn.hutool.core.convert.Convert;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,8 +34,19 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Page<UserVO> search(Pageable pageable) {
-        Page<User> userPage = userRepository.findAll(pageable);
+    public Page<UserVO> search(UserDTO userDTO, Pageable pageable) {
+        Specification<User> specification = (root, query, criteriaBuilder) -> {
+            List<Predicate> list = new ArrayList<>();
+            if (StringUtils.isNotEmpty(userDTO.getPhoneNumber())) {
+                list.add(criteriaBuilder.like(root.get("phoneNumber").as(String.class), userDTO.getPhoneNumber() + "%"));
+            }
+            if (StringUtils.isNotEmpty(userDTO.getUsername())) {
+                list.add(criteriaBuilder.like(root.get("username").as(String.class), userDTO.getUsername() + "%"));
+            }
+            Predicate[] p = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(p));
+        };
+        Page<User> userPage = userRepository.findAll(specification, pageable);
         List<UserVO> userVOS = UserMapper.INSTANCE.convertList(userPage.getContent());
         return new PageImpl<>(userVOS, userPage.getPageable(), userPage.getTotalElements());
     }

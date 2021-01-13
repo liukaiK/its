@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-    Page<UserVO> search(Pageable pageable);
+    Page<UserVO> search(UserDTO userDTO, Pageable pageable);
 
     void save(UserDTO userDTO);
 

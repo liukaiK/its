@@ -43,8 +43,8 @@ public class UserController {
      */
     @PostMapping("/search")
     @PreAuthorize("hasAuthority('system:user:search')")
-    public Page<UserVO> search(@PageableDefault Pageable pageable) {
-        return userService.search(pageable);
+    public Page<UserVO> search(UserDTO userDTO, @PageableDefault Pageable pageable) {
+        return userService.search(userDTO, pageable);
     }
 
 
