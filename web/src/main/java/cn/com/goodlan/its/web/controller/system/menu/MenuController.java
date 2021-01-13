@@ -74,6 +74,27 @@ public class MenuController {
 
 
     /**
+     * 修改保存
+     */
+    @PostMapping("/update")
+    @PreAuthorize("hasAuthority('system:menu:edit')")
+    public Result update(@Valid MenuDTO menuDTO) {
+        menuService.update(menuDTO);
+        return Result.success();
+    }
+
+    /**
+     * 跳转到修改页面
+     */
+    @GetMapping("/edit/{id}")
+    @PreAuthorize("hasAuthority('system:menu:edit')")
+    public ModelAndView edit(@PathVariable String id, Model model) {
+        model.addAttribute("menu", menuService.getMenuById(id));
+        return new ModelAndView("system/menu/edit");
+    }
+
+
+    /**
      * 删除菜单
      */
     @GetMapping("/remove/{id}")

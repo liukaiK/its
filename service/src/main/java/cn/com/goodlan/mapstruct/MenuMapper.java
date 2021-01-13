@@ -4,6 +4,7 @@ import cn.com.goodlan.its.pojo.entity.Menu;
 import cn.com.goodlan.its.pojo.vo.MenuVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -15,7 +16,10 @@ public interface MenuMapper {
 
     List<MenuVO> convertList(List<Menu> menuList);
 
-    @Mapping(source = "parent.id", target = "parentId")
+    @Mappings({
+            @Mapping(source = "parent.id", target = "parentId"),
+            @Mapping(source = "parent.name", target = "parentName")
+    })
     MenuVO convert(Menu menu);
 
 }

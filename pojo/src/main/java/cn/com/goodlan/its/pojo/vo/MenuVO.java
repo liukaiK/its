@@ -24,6 +24,8 @@ public class MenuVO {
 
     private String parentId;
 
+    private String parentName;
+
     private Integer sort;
 
     /**

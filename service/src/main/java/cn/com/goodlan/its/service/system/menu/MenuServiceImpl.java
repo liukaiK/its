@@ -81,6 +81,25 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public void update(MenuDTO menuDTO) {
+        Optional<Menu> menu = menuRepository.findById(menuDTO.getId());
+        if (menu.isPresent()) {
+            Menu menuFormDatabase = menu.get();
+            menuFormDatabase.setName(menuDTO.getName());
+            menuFormDatabase.setTarget(menuDTO.getTarget());
+            menuFormDatabase.setAuthority(menuDTO.getAuthority());
+            menuFormDatabase.setIcon(menuDTO.getIcon());
+            menuFormDatabase.setUrl(menuDTO.getUrl());
+            menuFormDatabase.setMenuType(menuDTO.getMenuType());
+            menuFormDatabase.setUrl(menuDTO.getUrl());
+            menuFormDatabase.setSort(menuDTO.getSort());
+            if (StringUtils.isNotEmpty(menuDTO.getParentId())) {
+                menuFormDatabase.addParent(menuDTO.getParentId());
+            }
+        }
+    }
+
+    @Override
     public void deleteMenuById(String menuId) {
         Optional<Menu> menu = menuRepository.findById(menuId);
         if (menu.isPresent()) {
