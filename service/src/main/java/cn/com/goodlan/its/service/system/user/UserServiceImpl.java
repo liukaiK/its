@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userDTO.getUsername());
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setSex(userDTO.getSex());
+        user.setRemark(userDTO.getRemark());
         String[] roleIds = Convert.toStrArray(userDTO.getRoleIds());
         for (String roleId : roleIds) {
             user.addRole(new Role(roleId));
@@ -68,6 +69,12 @@ public class UserServiceImpl implements UserService {
 //        userRepository.deleteAll(Arrays.);
 
 
+    }
+
+    @Override
+    public UserVO getById(String id) {
+        User user = userRepository.getOne(id);
+        return UserMapper.INSTANCE.convert(user);
     }
 
 }

@@ -28,4 +28,7 @@ public class UserDTO {
 
     private String roleIds;
 
+    private String remark;
+
+
 }

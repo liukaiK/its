@@ -11,10 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -70,6 +67,16 @@ public class UserController {
         userService.save(userDTO);
     }
 
+
+    /**
+     * 跳转到修改页面
+     */
+    @GetMapping("/edit/{id}")
+    @PreAuthorize("hasAuthority('system:user:edit')")
+    public ModelAndView edit(@PathVariable String id, Model model) {
+        model.addAttribute("user", userService.getById(id));
+        return new ModelAndView("system/user/edit");
+    }
 
     /**
      * 删除用户

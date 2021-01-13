@@ -13,4 +13,6 @@ public interface UserService {
 
     void remove(String ids);
 
+    UserVO getById(String id);
+
 }

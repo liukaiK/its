@@ -14,5 +14,6 @@ public interface UserMapper {
 
     List<UserVO> convertList(List<User> userList);
 
+    UserVO convert(User user);
 
 }

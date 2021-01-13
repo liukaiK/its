@@ -33,6 +33,8 @@ public class User extends BaseEntity {
 
     private String phoneNumber;
 
+    private String remark;
+
     private List<Role> roleList = new ArrayList<>();
 
     /**
@@ -144,6 +146,15 @@ public class User extends BaseEntity {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    @Column
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
 }
