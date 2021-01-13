@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
 <!-- 通用CSS -->
 <head th:fragment=header(title)>
 	<meta charset="utf-8">
@@ -54,6 +57,7 @@
 </div>
 <div th:fragment="ztree-js">
     <script th:src="@{/plugins/zTree/js/jquery.ztree.all.js}"></script>
+    <script th:src="@{/plugins/zTree/js/jquery.ztree.exhide.js}"></script>
 	<script th:src="@{/plugins/zTree/ztreetools.js}"></script>
 </div>
 
