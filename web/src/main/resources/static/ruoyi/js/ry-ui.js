@@ -158,13 +158,12 @@ var table = {
             },
             // 查询条件
             queryParams: function(params) {
-                var curParams = {
+                let curParams = {
                     // 传递参数查询参数
-                    pageSize:       params.limit,
-                    pageNum:        params.offset / params.limit + 1,
-                    searchValue:    params.search,
-                    orderByColumn:  params.sort,
-                    isAsc:          params.order
+                    size: params.limit,
+                    page: params.offset / params.limit,
+                    sort: params.sort + ',' + params.order,
+                    searchValue: params.search,
                 };
             	var currentId = $.common.isEmpty(table.options.formId) ? $('form').attr('id') : table.options.formId;
             	return $.extend(curParams, $.common.formToJSON(currentId)); 

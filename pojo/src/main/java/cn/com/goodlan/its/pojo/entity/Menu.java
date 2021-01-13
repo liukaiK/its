@@ -68,8 +68,17 @@ public class Menu extends BaseEntity {
     /**
      * 是否存在子节点
      */
+    @Transient
     public boolean hasChildren() {
         return CollectionUtil.isNotEmpty(this.children);
+    }
+
+    /**
+     * 是否有父节点
+     */
+    @Transient
+    public boolean hasParent() {
+        return this.parent != null;
     }
 
     @Id

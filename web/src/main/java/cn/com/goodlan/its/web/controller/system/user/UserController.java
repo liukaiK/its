@@ -60,6 +60,9 @@ public class UserController {
     }
 
 
+    /**
+     * 分页查询
+     */
     @PostMapping("/search")
     @PreAuthorize("hasAuthority('system:user:search')")
     public Page<UserVO> search(@PageableDefault Pageable pageable) {

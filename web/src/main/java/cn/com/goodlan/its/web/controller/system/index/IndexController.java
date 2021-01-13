@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.web.controller.system.index;
 
 import cn.com.goodlan.its.pojo.entity.Menu;
+import cn.com.goodlan.its.service.framework.ConfigService;
 import cn.com.goodlan.its.service.system.index.IndexService;
 import cn.com.goodlan.its.util.TreeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,17 @@ public class IndexController {
     @Autowired
     private IndexService indexService;
 
+    @Autowired
+    private ConfigService configService;
+
 
     @GetMapping({"/index", "/"})
     public String index(Model model) {
 
         model.addAttribute("menus", findMenu());
-
+        model.addAttribute("sideTheme", configService.selectConfigByKey("sys.index.sideTheme"));
+        model.addAttribute("skinName", configService.selectConfigByKey("sys.index.skinName"));
+        model.addAttribute("ignoreFooter", configService.selectConfigByKey("sys.index.ignoreFooter"));
         return "/index";
     }
 

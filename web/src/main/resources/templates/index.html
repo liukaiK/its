@@ -241,12 +241,12 @@
 
         <a id="ax_close_max" class="ax_close_max" href="#" title="关闭全屏"> <i class="fa fa-times-circle-o"></i> </a>
 
-        <div class="row mainContent" id="content-main" th:style="${#bools.isFalse(true)} ? |height: calc(100% - 91px)|">
+        <div class="row mainContent" id="content-main" th:style="${#bools.isFalse(ignoreFooter)} ? |height: calc(100% - 91px)|">
             <iframe class="RuoYi_iframe" name="iframe0" width="100%" height="100%" th:data-id="@{/system/main}"
                     th:src="@{/system/main}" frameborder="0" seamless></iframe>
         </div>
         
-        <div th:if="${true}" class="footer">
+        <div th:if="${ignoreFooter}" class="footer">
             <div class="pull-right">© 2021 Copyright </div>
         </div>
     </div>
@@ -291,28 +291,29 @@
 	}
 
 
-window.history.forward(1);
-var ctx = [[@{/}]]; 
-var lockscreen = [[${session.lockscreen}]]; 
-if(lockscreen){window.top.location=ctx+"lockscreen";}
-// 皮肤缓存
-var skin = storage.get("skin");
-// history（表示去掉地址的#）否则地址以"#"形式展示
-var mode = "history";
-// 历史访问路径缓存
-var historyPath = storage.get("historyPath");
-// 是否页签与菜单联动
-var isLinkage = true;
+	window.history.forward(1);
+	var ctx = [[@{/}]];
+	var lockscreen = [[${session.lockscreen}]];
+	if (lockscreen) {
+		window.top.location = ctx + "lockscreen";
+	}
+	// 皮肤缓存
+	var skin = storage.get("skin");
+	// history（表示去掉地址的#）否则地址以"#"形式展示
+	var mode = "history";
+	// 历史访问路径缓存
+	var historyPath = storage.get("historyPath");
+	// 是否页签与菜单联动
+	var isLinkage = true;
 
-// 本地主题优先，未设置取系统配置
-// if($.common.isNotEmpty(skin)){
-if(false){
-	$("body").addClass(skin.split('|')[0]);
-	$("body").addClass(skin.split('|')[1]);
-} else {
-	$("body").addClass('theme-dark');
-	$("body").addClass('skin-blue');
-}
+	// 本地主题优先，未设置取系统配置
+	if ($.common.isNotEmpty(skin)) {
+		$("body").addClass(skin.split('|')[0]);
+		$("body").addClass(skin.split('|')[1]);
+	} else {
+		$("body").addClass([[${sideTheme}]]);
+		$("body").addClass([[${skinName}]]);
+	}
 
 /* 用户管理-重置密码 */
 function resetPwd() {

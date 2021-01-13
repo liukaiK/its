@@ -6,12 +6,12 @@
 <body class="white-bg">
 	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
 		<form class="form-horizontal m" id="form-menu-add">
-			<input id="treeId" name="parentId" type="hidden" th:value="${menu.menuId}" />
+<!--			<input id="treeId" name="parentId" type="hidden" th:value="${menu.menuId}" />-->
 			<div class="form-group">
 				<label class="col-sm-3 control-label">上级菜单：</label>
 				<div class="col-sm-8">
 				    <div class="input-group">
-					    <input class="form-control" type="text" onclick="selectMenuTree()" id="treeName" readonly="true" th:value="${menu.menuName}">
+<!--					    <input class="form-control" type="text" onclick="selectMenuTree()" id="treeName" readonly="true" th:value="${menu.menuName}">-->
 				        <span class="input-group-addon"><i class="fa fa-search"></i></span>
 				    </div>
 				</div>
@@ -69,67 +69,67 @@
                     </div>
 				</div>
 			</div>
-			<div class="form-group">
-				<label class="col-sm-3 control-label">菜单状态：</label>
-				<div class="col-sm-3">
-				    <div class="radio-box" th:each="dict : ${@dict.getType('sys_show_hide')}">
-						<input type="radio" th:id="${dict.dictCode}" name="visible" th:value="${dict.dictValue}" th:checked="${dict.default}">
-						<label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
-					</div>
-				</div>
-				<label class="col-sm-2 control-label is-refresh" title="打开菜单选项卡是否刷新页面">是否刷新：<i class="fa fa-question-circle-o"></i></label>
-				<div class="col-sm-3 is-refresh">
-				    <div class="radio-box">
-						<input type="radio" id="refresh-no" name="isRefresh" value="1" checked>
-						<label for="refresh-no">否</label>
-					</div>
-					<div class="radio-box">
-						<input type="radio" id="refresh-yes" name="isRefresh" value="0">
-						<label for="refresh-yes">是</label>
-					</div>
-				</div>
-			</div>
+<!--			<div class="form-group">-->
+<!--				<label class="col-sm-3 control-label">菜单状态：</label>-->
+<!--				<div class="col-sm-3">-->
+<!--				    <div class="radio-box" th:each="dict : ${@dict.getType('sys_show_hide')}">-->
+<!--						<input type="radio" th:id="${dict.dictCode}" name="visible" th:value="${dict.dictValue}" th:checked="${dict.default}">-->
+<!--						<label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--				<label class="col-sm-2 control-label is-refresh" title="打开菜单选项卡是否刷新页面">是否刷新：<i class="fa fa-question-circle-o"></i></label>-->
+<!--				<div class="col-sm-3 is-refresh">-->
+<!--				    <div class="radio-box">-->
+<!--						<input type="radio" id="refresh-no" name="isRefresh" value="1" checked>-->
+<!--						<label for="refresh-no">否</label>-->
+<!--					</div>-->
+<!--					<div class="radio-box">-->
+<!--						<input type="radio" id="refresh-yes" name="isRefresh" value="0">-->
+<!--						<label for="refresh-yes">是</label>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
 		</form>
 	</div>
 	<th:block th:include="include :: footer" />
 	 <script>
         var prefix = ctx + "system/menu";
         
-        $("#form-menu-add").validate({
-        	onkeyup: false,
-        	rules:{
-        		menuType:{
-        			required:true,
-        		},
-        		menuName:{
-        			remote: {
-                        url: prefix + "/checkMenuNameUnique",
-                        type: "post",
-                        dataType: "json",
-                        data: {
-                        	"parentId": function() {
-		                		return $("input[name='parentId']").val();
-		                    },
-                        	"menuName" : function() {
-                                return $.common.trim($("#menuName").val());
-                            }
-                        },
-                        dataFilter: function(data, type) {
-                        	return $.validate.unique(data);
-                        }
-                    }
-        		},
-        		orderNum:{
-        			digits:true
-        		},
-        	},
-        	messages: {
-                "menuName": {
-                    remote: "菜单已经存在"
-                }
-            },
-            focusCleanup: true
-        });
+        // $("#form-menu-add").validate({
+        // 	onkeyup: false,
+        // 	rules:{
+        // 		menuType:{
+        // 			required:true,
+        // 		},
+        // 		menuName:{
+        // 			remote: {
+        //                 url: prefix + "/checkMenuNameUnique",
+        //                 type: "post",
+        //                 dataType: "json",
+        //                 data: {
+        //                 	"parentId": function() {
+		//                 		return $("input[name='parentId']").val();
+		//                     },
+        //                 	"menuName" : function() {
+        //                         return $.common.trim($("#menuName").val());
+        //                     }
+        //                 },
+        //                 dataFilter: function(data, type) {
+        //                 	return $.validate.unique(data);
+        //                 }
+        //             }
+        // 		},
+        // 		orderNum:{
+        // 			digits:true
+        // 		},
+        // 	},
+        // 	messages: {
+        //         "menuName": {
+        //             remote: "菜单已经存在"
+        //         }
+        //     },
+        //     focusCleanup: true
+        // });
         
         function submitHandler() {
 	        if ($.validate.form()) {
@@ -137,45 +137,45 @@
 	        }
 	    }
 
-        $(function() {
-        	$("input[name='icon']").focus(function() {
-                $(".icon-drop").show();
-            });
-        	$("#form-menu-add").click(function(event) {
-        	    var obj = event.srcElement || event.target;
-        	    if (!$(obj).is("input[name='icon']")) {
-        	    	$(".icon-drop").hide();
-        	    }
-        	});
-        	$(".icon-drop").find(".ico-list i").on("click", function() {
-        		$('#icon').val($(this).attr('class'));
-            });
-        	$('input').on('ifChecked', function(event){  
-        		var menuType = $(event.target).val();
-        		if (menuType == "M") {
-                    $("#url").parents(".form-group").hide();
-                    $("#perms").parents(".form-group").hide();
-                    $("#icon").parents(".form-group").show();
-                    $("#target").parents(".form-group").hide();
-                    $("input[name='visible']").parents(".form-group").show();
-                    $(".is-refresh").hide();
-                } else if (menuType == "C") {
-                	$("#url").parents(".form-group").show();
-                    $("#perms").parents(".form-group").show();
-                    $("#icon").parents(".form-group").show();
-                    $("#target").parents(".form-group").show();
-                    $("input[name='visible']").parents(".form-group").show();
-                    $(".is-refresh").show();
-                } else if (menuType == "F") {
-                	$("#url").parents(".form-group").hide();
-                    $("#perms").parents(".form-group").show();
-                    $("#icon").parents(".form-group").hide();
-                    $("#target").parents(".form-group").hide();
-                    $("input[name='visible']").parents(".form-group").hide();
-                    $(".is-refresh").hide();
-                }
-        	});  
-        });
+		$(function () {
+			$("input[name='icon']").focus(function () {
+				$(".icon-drop").show();
+			});
+			$("#form-menu-add").click(function (event) {
+				var obj = event.srcElement || event.target;
+				if (!$(obj).is("input[name='icon']")) {
+					$(".icon-drop").hide();
+				}
+			});
+			$(".icon-drop").find(".ico-list i").on("click", function () {
+				$('#icon').val($(this).attr('class'));
+			});
+			$('input').on('ifChecked', function (event) {
+				var menuType = $(event.target).val();
+				if (menuType == "M") {
+					$("#url").parents(".form-group").hide();
+					$("#perms").parents(".form-group").hide();
+					$("#icon").parents(".form-group").show();
+					$("#target").parents(".form-group").hide();
+					$("input[name='visible']").parents(".form-group").show();
+					$(".is-refresh").hide();
+				} else if (menuType == "C") {
+					$("#url").parents(".form-group").show();
+					$("#perms").parents(".form-group").show();
+					$("#icon").parents(".form-group").show();
+					$("#target").parents(".form-group").show();
+					$("input[name='visible']").parents(".form-group").show();
+					$(".is-refresh").show();
+				} else if (menuType == "F") {
+					$("#url").parents(".form-group").hide();
+					$("#perms").parents(".form-group").show();
+					$("#icon").parents(".form-group").hide();
+					$("#target").parents(".form-group").hide();
+					$("input[name='visible']").parents(".form-group").hide();
+					$(".is-refresh").hide();
+				}
+			});
+		});
 
         /*菜单管理-新增-选择菜单树*/
         function selectMenuTree() {

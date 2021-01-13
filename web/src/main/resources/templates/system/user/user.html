@@ -24,7 +24,7 @@
 <!--			</div>-->
 <!--		</div>-->
 <!--	</div>-->
-	
+
 	<div class="ui-layout-center">
 		<div class="container-div">
 			<div class="row">
@@ -60,7 +60,7 @@
 						</div>
 					</form>
 				</div>
-				
+
 		        <div class="btn-group-sm" id="toolbar" role="group">
 		        	<a class="btn btn-success" onclick="$.operate.addTab()" sec:authorize="hasAuthority('system:user:add')">
 		                <i class="fa fa-plus"></i> 新增
@@ -78,14 +78,14 @@
 <!--			            <i class="fa fa-download"></i> 导出-->
 <!--			        </a>-->
 		        </div>
-		        
+
 		        <div class="col-sm-12 select-table table-striped">
 				    <table id="bootstrap-table"></table>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<th:block th:include="include :: footer" />
 	<th:block th:include="include :: layout-latest-js" />
 	<th:block th:include="include :: ztree-js" />
@@ -128,6 +128,7 @@
 				// exportUrl: prefix + "/export",
 				// importUrl: prefix + "/importData",
 				// importTemplateUrl: prefix + "/importTemplate",
+                uniqueId: 'id',
 				sortName: "createTime",
 				sortOrder: "desc",
 				modalName: "用户",
@@ -135,10 +136,6 @@
 					{
 						checkbox: true
 					},
-					// {
-					//     field: 'userId',
-					//     title: '用户ID'
-					// },
 					{
 						field: 'name',
 						title: '姓名'
@@ -159,7 +156,7 @@
 					},
 					{
 					    field: 'phoneNumber',
-					    title: '手机'
+					    title: '手机号码'
 					},
 					// {
 					// 	visible: editFlag == 'hidden' ? false : true,
@@ -180,15 +177,20 @@
 						sortable: true
 					},
 					{
+						field: 'lastLoginTime',
+						title: '最后登录时间',
+						sortable: true
+					},
+					{
 						title: '操作',
 						align: 'center',
 						formatter: function (value, row, index) {
 							var actions = [];
-							actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.editTab(\'' + row.userId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+							actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.editTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
 							actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a> ');
 							var more = [];
-							more.push("<a class='btn btn-default btn-xs " + resetPwdFlag + "' href='javascript:void(0)' onclick='resetPwd(" + row.userId + ")'><i class='fa fa-key'></i>重置密码</a> ");
-							more.push("<a class='btn btn-default btn-xs " + editFlag + "' href='javascript:void(0)' onclick='authRole(" + row.userId + ")'><i class='fa fa-check-square-o'></i>分配角色</a>");
+							more.push("<a class='btn btn-default btn-xs " + resetPwdFlag + "' href='javascript:void(0)' onclick='resetPwd(" + row.id + ")'><i class='fa fa-key'></i>重置密码</a> ");
+							more.push("<a class='btn btn-default btn-xs " + editFlag + "' href='javascript:void(0)' onclick='authRole(" + row.id + ")'><i class='fa fa-check-square-o'></i>分配角色</a>");
 							actions.push('<a tabindex="0" class="btn btn-info btn-xs" role="button" data-container="body" data-placement="left" data-toggle="popover" data-html="true" data-trigger="hover" data-content="' + more.join('') + '"><i class="fa fa-chevron-circle-right"></i>更多操作</a>');
 							return actions.join('');
 						}
@@ -212,19 +214,19 @@
 				$.table.search();
 			}
 		}
-		
+
 		$('#btnExpand').click(function() {
 			$._tree.expandAll(true);
 		    $(this).hide();
 		    $('#btnCollapse').show();
 		});
-		
+
 		$('#btnCollapse').click(function() {
 			$._tree.expandAll(false);
 		    $(this).hide();
 		    $('#btnExpand').show();
 		});
-		
+
 		$('#btnRefresh').click(function() {
 			queryDeptTree();
 		});
@@ -240,13 +242,13 @@
 		//     var url = prefix + '/resetPwd/' + userId;
 		//     $.modal.open("重置密码", url, '800', '300');
 		// }
-		
+
 		/* 用户管理-分配角色 */
 		// function authRole(userId) {
 		//     var url = prefix + '/authRole/' + userId;
 		//     $.modal.openTab("用户分配角色", url);
 		// }
-		
+
 		/* 用户状态显示 */
 		function statusTools(row) {
 		    if (row.status == 1) {
@@ -255,7 +257,7 @@
     			return '<i class=\"fa fa-toggle-on text-info fa-2x\" onclick="disable(\'' + row.userId + '\')"></i> ';
     		}
 		}
-		
+
 		/* 用户管理-停用 */
 		// function disable(userId) {
 		// 	$.modal.confirm("确认要停用用户吗？", function() {

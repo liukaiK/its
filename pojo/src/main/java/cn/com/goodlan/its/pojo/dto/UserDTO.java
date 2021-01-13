@@ -1,5 +1,7 @@
 package cn.com.goodlan.its.pojo.dto;
 
+import cn.com.goodlan.its.common.annotations.MobileNumber;
+import cn.com.goodlan.its.common.annotations.Password;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -13,11 +15,13 @@ public class UserDTO {
 
     private String username;
 
+    @Password
     private String password;
 
     @Email
     private String email;
 
+    @MobileNumber
     private String phoneNumber;
 
     private String sex;

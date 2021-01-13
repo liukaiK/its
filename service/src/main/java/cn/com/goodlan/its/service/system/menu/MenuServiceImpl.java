@@ -45,6 +45,11 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public Menu getByParentId(String parentId) {
+        return null;
+    }
+
+    @Override
     public List<Ztree> roleMenuTreeData(String roleId) {
         List<Menu> menuList = menuRepository.findAll();
         if (StringUtils.isNotEmpty(roleId)) {

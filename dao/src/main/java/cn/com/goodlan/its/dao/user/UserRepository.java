@@ -5,6 +5,7 @@ import cn.com.goodlan.its.dao.CustomizeRepository;
 import cn.com.goodlan.its.pojo.entity.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +17,8 @@ public interface UserRepository extends CustomizeRepository<User, String> {
     User getByUsername(String username);
 
     @Modifying
+    @Transactional
     @Query("update User set lastLoginTime = ?1 where id = ?2")
-    User updateLastLoginTime(LocalDateTime localDateTime, String userId);
+    void updateLastLoginTime(LocalDateTime localDateTime, String userId);
 
 }

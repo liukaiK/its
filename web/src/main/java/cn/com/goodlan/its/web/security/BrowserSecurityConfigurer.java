@@ -7,7 +7,6 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -30,8 +29,8 @@ public class BrowserSecurityConfigurer extends SecurityConfigurerAdapter<Default
     @Autowired
     private AuthenticationFailureHandler authenticationFailureHandler;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -51,7 +50,7 @@ public class BrowserSecurityConfigurer extends SecurityConfigurerAdapter<Default
     private UserDetailsAuthenticationProvider getUserDetailsAuthenticationProvider() {
         UserDetailsAuthenticationProvider authenticationProvider = new UserDetailsAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService);
-        authenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
         return authenticationProvider;
     }
 
