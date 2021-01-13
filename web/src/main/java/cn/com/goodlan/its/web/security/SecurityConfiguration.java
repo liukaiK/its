@@ -43,7 +43,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/css/**",
                 "/img/**",
                 "/fonts/**",
-                "/ruoyi.png",
                 "/ruoyi/**",
                 "/ajax/**",
                 "/captcha.jpeg",
