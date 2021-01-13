@@ -2,6 +2,7 @@ package cn.com.goodlan.its.pojo.entity;
 
 import cn.hutool.core.collection.CollectionUtil;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -131,7 +132,11 @@ public class Menu extends BaseEntity {
     }
 
     public void setUrl(String url) {
-        this.url = url;
+        if (StringUtils.isEmpty(url)) {
+            this.url = "#";
+        } else {
+            this.url = url;
+        }
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

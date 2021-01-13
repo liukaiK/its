@@ -72,13 +72,8 @@ public class MenuServiceImpl implements MenuService {
         menu.setIcon(menuDTO.getIcon());
         menu.setUrl(menuDTO.getUrl());
         menu.setMenuType(menuDTO.getMenuType());
-
-        if (StringUtils.isEmpty(menuDTO.getUrl())) {
-            menu.setUrl("#");
-        } else {
-            menu.setUrl(menuDTO.getUrl());
-        }
-
+        menu.setUrl(menuDTO.getUrl());
+        menu.setSort(menuDTO.getSort());
         if (!"0".equals(menuDTO.getParentId())) {
             menu.addParent(menuDTO.getParentId());
         }

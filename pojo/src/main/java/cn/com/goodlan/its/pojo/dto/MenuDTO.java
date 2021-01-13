@@ -28,5 +28,7 @@ public class MenuDTO {
 
     private String icon;
 
+    private Integer sort;
+
 
 }
