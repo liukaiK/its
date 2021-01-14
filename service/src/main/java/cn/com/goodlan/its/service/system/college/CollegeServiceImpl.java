@@ -7,6 +7,7 @@ import cn.com.goodlan.its.pojo.entity.College;
 import cn.com.goodlan.its.pojo.vo.CollegeVO;
 import cn.com.goodlan.its.pojo.vo.Ztree;
 import cn.com.goodlan.mapstruct.CollegeMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,13 +53,24 @@ public class CollegeServiceImpl implements CollegeService {
             if (college.get().hasChildren()) {
                 throw new BusinessException("存在子学院,不允许删除");
             }
+            if (college.get().hasUser()) {
+                throw new BusinessException("此学院存在用户,不允许删除");
+            }
             collegeRepository.deleteById(id);
         }
     }
 
     @Override
     public void update(CollegeDTO collegeDTO) {
-
+        Optional<College> college = collegeRepository.findById(collegeDTO.getId());
+        if (college.isPresent()) {
+            College collegeFormDatabase = college.get();
+            collegeFormDatabase.setName(collegeDTO.getName());
+            collegeFormDatabase.setSort(collegeDTO.getSort());
+            if (StringUtils.isNotEmpty(collegeDTO.getParentId())) {
+                collegeFormDatabase.addParent(collegeDTO.getParentId());
+            }
+        }
     }
 
     @Override

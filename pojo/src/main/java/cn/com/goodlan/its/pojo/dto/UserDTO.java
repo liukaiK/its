@@ -26,6 +26,8 @@ public class UserDTO {
 
     private String sex;
 
+    private String collegeId;
+
     private String roleIds;
 
     private String remark;

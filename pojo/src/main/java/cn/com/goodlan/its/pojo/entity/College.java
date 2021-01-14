@@ -25,6 +25,8 @@ public class College extends BaseEntity {
 
     private List<College> children;
 
+    private List<User> userList;
+
     public College() {
     }
 
@@ -55,6 +57,13 @@ public class College extends BaseEntity {
     public void addParent(String parentId) {
         this.parent = new College(parentId);
     }
+
+
+    @Transient
+    public boolean hasUser() {
+        return CollectionUtil.isNotEmpty(this.userList);
+    }
+
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -101,4 +110,15 @@ public class College extends BaseEntity {
     public void setSort(Integer sort) {
         this.sort = sort;
     }
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "college_id")
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
 }

@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.setSex(userDTO.getSex());
         user.setRemark(userDTO.getRemark());
+        user.addCollege(userDTO.getCollegeId());
         String[] roleIds = Convert.toStrArray(userDTO.getRoleIds());
         for (String roleId : roleIds) {
             user.addRole(new Role(roleId));
@@ -75,6 +76,7 @@ public class UserServiceImpl implements UserService {
         user.setSex(userDTO.getSex());
         user.setEmail(userDTO.getEmail());
         user.setPhoneNumber(userDTO.getPhoneNumber());
+        user.addCollege(userDTO.getCollegeId());
         userRepository.save(user);
     }
 

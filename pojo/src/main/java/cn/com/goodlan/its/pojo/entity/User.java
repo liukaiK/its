@@ -37,6 +37,8 @@ public class User extends BaseEntity {
 
     private List<Role> roleList = new ArrayList<>();
 
+    private College college;
+
     /**
      * 最后登录时间
      */
@@ -46,6 +48,11 @@ public class User extends BaseEntity {
     @Transient
     public void addRole(Role role) {
         roleList.add(role);
+    }
+
+    @Transient
+    public void addCollege(String collegeId) {
+        this.college = new College(collegeId);
     }
 
     public User(String id) {
@@ -155,6 +162,16 @@ public class User extends BaseEntity {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "college_id")
+    public College getCollege() {
+        return college;
+    }
+
+    public void setCollege(College college) {
+        this.college = college;
     }
 
 }

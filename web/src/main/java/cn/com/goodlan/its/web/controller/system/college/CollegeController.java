@@ -5,7 +5,6 @@ import cn.com.goodlan.its.pojo.dto.CollegeDTO;
 import cn.com.goodlan.its.pojo.vo.CollegeVO;
 import cn.com.goodlan.its.pojo.vo.Ztree;
 import cn.com.goodlan.its.service.system.college.CollegeService;
-import cn.com.goodlan.its.service.system.menu.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
@@ -23,10 +22,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/college")
 public class CollegeController {
-
-
-    @Autowired
-    private MenuService menuService;
 
     @Autowired
     private CollegeService collegeService;
@@ -93,8 +88,8 @@ public class CollegeController {
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasAuthority('system:college:edit')")
     public ModelAndView edit(@PathVariable String id, Model model) {
-        model.addAttribute("menu", menuService.getMenuById(id));
-        return new ModelAndView("system/menu/edit");
+        model.addAttribute("college", collegeService.getCollegeById(id));
+        return new ModelAndView("system/college/edit");
     }
 
 

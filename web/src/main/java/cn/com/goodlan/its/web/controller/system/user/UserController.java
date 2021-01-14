@@ -75,6 +75,7 @@ public class UserController {
     @PreAuthorize("hasAuthority('system:user:edit')")
     public ModelAndView edit(@PathVariable String id, Model model) {
         model.addAttribute("user", userService.getById(id));
+        model.addAttribute("roles", roleService.selectRoleAll());
         return new ModelAndView("system/user/edit");
     }
 
