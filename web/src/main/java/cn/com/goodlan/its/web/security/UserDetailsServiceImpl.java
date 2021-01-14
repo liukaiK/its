@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.web.security;
 
-import cn.com.goodlan.its.dao.user.UserRepository;
+import cn.com.goodlan.its.dao.system.user.UserRepository;
 import cn.com.goodlan.its.pojo.SecurityAuthorityBean;
 import cn.com.goodlan.its.pojo.SecurityUserBean;
 import cn.com.goodlan.its.pojo.entity.Menu;

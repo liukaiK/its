@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.service.system.role;
 
 import cn.com.goodlan.its.common.exception.BusinessException;
-import cn.com.goodlan.its.dao.role.RoleRepository;
+import cn.com.goodlan.its.dao.system.role.RoleRepository;
 import cn.com.goodlan.its.pojo.dto.RoleDTO;
 import cn.com.goodlan.its.pojo.entity.Menu;
 import cn.com.goodlan.its.pojo.entity.Role;

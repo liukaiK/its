@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.dao.config;
+package cn.com.goodlan.its.dao.system.config;
 
 import cn.com.goodlan.its.dao.CustomizeRepository;
 import cn.com.goodlan.its.pojo.entity.Config;

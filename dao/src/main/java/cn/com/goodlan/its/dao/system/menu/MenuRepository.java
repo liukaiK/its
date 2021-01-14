@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.dao.menu;
+package cn.com.goodlan.its.dao.system.menu;
 
 import cn.com.goodlan.its.dao.CustomizeRepository;
 import cn.com.goodlan.its.pojo.entity.Menu;

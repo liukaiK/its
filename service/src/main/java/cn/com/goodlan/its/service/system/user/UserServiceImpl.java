@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.service.system.user;
 
 
-import cn.com.goodlan.its.dao.user.UserRepository;
+import cn.com.goodlan.its.dao.system.user.UserRepository;
 import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.entity.Role;
 import cn.com.goodlan.its.pojo.entity.User;

@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.service.system.college;
 
 import cn.com.goodlan.its.common.exception.BusinessException;
-import cn.com.goodlan.its.dao.college.CollegeRepository;
+import cn.com.goodlan.its.dao.system.college.CollegeRepository;
 import cn.com.goodlan.its.pojo.dto.CollegeDTO;
 import cn.com.goodlan.its.pojo.entity.College;
 import cn.com.goodlan.its.pojo.vo.CollegeVO;

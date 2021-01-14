@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.dao.college;
+package cn.com.goodlan.its.dao.system.college;
 
 import cn.com.goodlan.its.dao.CustomizeRepository;
 import cn.com.goodlan.its.pojo.entity.College;
