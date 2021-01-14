@@ -35,7 +35,7 @@ public class MenuController {
 
 
     /**
-     * 分页查询
+     * 查询
      */
     @PostMapping("/search")
     @PreAuthorize("hasAuthority('system:menu:search')")
