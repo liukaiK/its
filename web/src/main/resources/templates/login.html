@@ -90,6 +90,10 @@
         $('#captchaImg').attr('src', captchaUrl + new Date().getTime() + '');
     }
 
+    if (window.top !== window.self) {
+        alert('未登录或登录超时。请重新登录');
+        window.top.location = loginUrl;
+    }
 
     function login() {
         let csrfToken = $("meta[name='_csrf']").attr("content");
