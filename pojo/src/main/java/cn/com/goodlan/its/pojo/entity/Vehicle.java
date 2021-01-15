@@ -15,21 +15,31 @@ public class Vehicle extends BaseEntity {
 
     private String id;
 
-    private String name;
+    /**
+     * 车牌号
+     */
+    private String number;
 
-    private String owner;
-
-    private String color;
-
-//    private String tezheng;
 
     /**
      * 校内车还是校外车
      */
-//    private String type;
+    private Integer type;
 
 
     private College college;
+
+    public Vehicle() {
+    }
+
+    public Vehicle(String id) {
+        this.id = id;
+    }
+
+    @Transient
+    public void addCollege(String collegeId) {
+        this.college = new College(collegeId);
+    }
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -40,14 +50,6 @@ public class Vehicle extends BaseEntity {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -61,20 +63,20 @@ public class Vehicle extends BaseEntity {
     }
 
 
-    public String getOwner() {
-        return owner;
+    @Column(columnDefinition = "tinyint")
+    public Integer getType() {
+        return type;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
-    public String getColor() {
-        return color;
+    public String getNumber() {
+        return number;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setNumber(String number) {
+        this.number = number;
     }
-
 }

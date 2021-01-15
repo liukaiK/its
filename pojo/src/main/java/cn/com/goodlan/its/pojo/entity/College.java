@@ -66,6 +66,11 @@ public class College extends BaseEntity {
         return CollectionUtil.isNotEmpty(this.userList);
     }
 
+    @Transient
+    public boolean hasVehicle() {
+        return CollectionUtil.isNotEmpty(this.vehicleList);
+    }
+
 
     @Id
     @GeneratedValue(generator = "uuid2")
