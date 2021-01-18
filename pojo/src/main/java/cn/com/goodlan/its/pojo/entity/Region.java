@@ -22,6 +22,13 @@ public class Region extends BaseEntity {
     private String name;
 
 
+    public Region() {
+    }
+
+    public Region(String id) {
+        this.id = id;
+    }
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
