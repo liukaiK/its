@@ -2,6 +2,7 @@ package cn.com.goodlan.its.web.security;
 
 import cn.com.goodlan.its.dao.system.user.UserRepository;
 import cn.com.goodlan.its.pojo.SecurityAuthorityBean;
+import cn.com.goodlan.its.pojo.SecurityRoleBean;
 import cn.com.goodlan.its.pojo.SecurityUserBean;
 import cn.com.goodlan.its.pojo.entity.Menu;
 import cn.com.goodlan.its.pojo.entity.Role;
@@ -37,6 +38,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         List<SecurityAuthorityBean> authorities = obtainAuthorities(user);
 
+//        obtainRoles(user);
+
         SecurityUserBean securityUserBean = new SecurityUserBean();
         securityUserBean.setId(user.getId());
         securityUserBean.setName(user.getName());
@@ -45,6 +48,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         securityUserBean.setAuthorities(authorities);
         return securityUserBean;
     }
+
+//    private void obtainRoles(User user) {
+//        List<Role> roleList = user.getRoleList();
+//        List<SecurityRoleBean> securityRoleBeanList = new ArrayList<>();
+//        for (Role role : roleList) {
+//            SecurityRoleBean roleBean = new SecurityRoleBean();
+//            roleBean.setId(role.getId());
+//            roleBean.setName();
+//        }
+//
+//    }
 
     private List<SecurityAuthorityBean> obtainAuthorities(User user) {
         List<SecurityAuthorityBean> grantedAuthorities = new ArrayList<>();

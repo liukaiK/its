@@ -26,6 +26,8 @@ public interface RoleService {
      */
     List<RoleVO> selectRoleAll();
 
+    List<RoleVO> selectRoleByUser(String userId);
+
 
     /**
      * 校验角色名称是否唯一

@@ -12,6 +12,8 @@ public class RoleVO {
 
     private String name;
 
+    private Boolean check;
+
     private String remark;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

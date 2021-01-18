@@ -46,6 +46,11 @@ public class User extends BaseEntity {
 
 
     @Transient
+    public void cleanRole() {
+        this.roleList = new ArrayList<>();
+    }
+
+    @Transient
     public void addRole(Role role) {
         roleList.add(role);
     }

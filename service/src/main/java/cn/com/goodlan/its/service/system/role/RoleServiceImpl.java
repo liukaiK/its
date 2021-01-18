@@ -69,6 +69,20 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public List<RoleVO> selectRoleByUser(String userId) {
+        List<RoleVO> roleVOList = selectRoleAll();
+        List<Role> roleList = roleRepository.findByUserList(userId);
+        for (RoleVO roleVO : roleVOList) {
+            for (Role role : roleList) {
+                if (roleVO.getId().equals(role.getId())) {
+                    roleVO.setCheck(true);
+                }
+            }
+        }
+        return roleVOList;
+    }
+
+    @Override
     public String checkRoleNameUnique(Role role) {
 //        Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
 //        Role info = roleMapper.checkRoleNameUnique(role.getRoleName());

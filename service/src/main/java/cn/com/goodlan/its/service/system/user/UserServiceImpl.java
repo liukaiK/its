@@ -77,6 +77,11 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDTO.getEmail());
         user.setPhoneNumber(userDTO.getPhoneNumber());
         user.addCollege(userDTO.getCollegeId());
+        String[] roleIds = Convert.toStrArray(userDTO.getRoleIds());
+        user.cleanRole();
+        for (String roleId : roleIds) {
+            user.addRole(new Role(roleId));
+        }
         userRepository.save(user);
     }
 

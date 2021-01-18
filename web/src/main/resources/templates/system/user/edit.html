@@ -110,7 +110,7 @@
                         <div class="col-xs-10">
                             <label th:each="role:${roles}" class="check-box">
 <!--								<input name="role" type="checkbox" th:value="${role.id}" th:text="${role.name}" th:checked="${role.flag}">-->
-								<input name="role" type="checkbox" th:value="${role.id}" th:text="${role.name}">
+								<input name="role" type="checkbox" th:value="${role.id}" th:text="${role.name}" th:checked="${role.check}">
 							</label>
                         </div>
                     </div>
