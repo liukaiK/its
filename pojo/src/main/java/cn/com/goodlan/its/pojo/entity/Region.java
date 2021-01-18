@@ -2,10 +2,8 @@ package cn.com.goodlan.its.pojo.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * 区域实体
@@ -21,6 +19,7 @@ public class Region extends BaseEntity {
 
     private String name;
 
+    private List<Camera> cameraList;
 
     public Region() {
     }
@@ -46,5 +45,15 @@ public class Region extends BaseEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "college_id")
+    public List<Camera> getCameraList() {
+        return cameraList;
+    }
+
+    public void setCameraList(List<Camera> cameraList) {
+        this.cameraList = cameraList;
     }
 }
