@@ -23,6 +23,8 @@ public class Region extends BaseEntity {
 
     private List<Camera> cameraList = new ArrayList<>();
 
+    private List<Score> scoreList = new ArrayList<>();
+
 
     public Region() {
     }
@@ -63,5 +65,15 @@ public class Region extends BaseEntity {
 
     public void setCameraList(List<Camera> cameraList) {
         this.cameraList = cameraList;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id")
+    public List<Score> getScoreList() {
+        return scoreList;
+    }
+
+    public void setScoreList(List<Score> scoreList) {
+        this.scoreList = scoreList;
     }
 }
