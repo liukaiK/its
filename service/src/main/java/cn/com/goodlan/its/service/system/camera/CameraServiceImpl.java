@@ -3,8 +3,10 @@ package cn.com.goodlan.its.service.system.camera;
 import cn.com.goodlan.its.dao.system.camera.CameraRepository;
 import cn.com.goodlan.its.pojo.dto.CameraDTO;
 import cn.com.goodlan.its.pojo.entity.Camera;
+import cn.com.goodlan.its.pojo.entity.Region;
 import cn.com.goodlan.its.pojo.vo.CameraVO;
 import cn.com.goodlan.mapstruct.CameraMapper;
+import cn.hutool.core.convert.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -35,17 +37,32 @@ public class CameraServiceImpl implements CameraService {
 
     @Override
     public void save(CameraDTO cameraDTO) {
-
+        Camera camera = new Camera();
+        camera.setName(cameraDTO.getName());
+        camera.setFactory(cameraDTO.getFactory());
+        camera.setIp(cameraDTO.getIp());
+        camera.setPosition(cameraDTO.getPosition());
+        camera.setRegion(new Region(cameraDTO.getRegionId()));
+        cameraRepository.save(camera);
     }
 
     @Override
     public void update(CameraDTO cameraDTO) {
-
+        Camera camera = cameraRepository.getOne(cameraDTO.getId());
+        camera.setName(cameraDTO.getName());
+        camera.setFactory(cameraDTO.getFactory());
+        camera.setIp(cameraDTO.getIp());
+        camera.setPosition(cameraDTO.getPosition());
+        camera.setRegion(new Region(cameraDTO.getRegionId()));
+        cameraRepository.save(camera);
     }
 
     @Override
     public void remove(String ids) {
-
+        String[] cameraIds = Convert.toStrArray(ids);
+        for (String cameraId : cameraIds) {
+            cameraRepository.delete(new Camera(cameraId));
+        }
     }
 
     @Override

@@ -1,5 +1,7 @@
 package cn.com.goodlan.its.pojo.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,6 +11,8 @@ import javax.persistence.*;
  *
  * @author liukai
  */
+@DynamicUpdate
+@DynamicInsert
 @Entity
 @Table(name = "sys_camera")
 public class Camera extends BaseEntity {
@@ -31,6 +35,12 @@ public class Camera extends BaseEntity {
      */
     private String position;
 
+    public Camera() {
+    }
+
+    public Camera(String id) {
+        this.id = id;
+    }
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -68,7 +78,7 @@ public class Camera extends BaseEntity {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "college_id")
+    @JoinColumn(name = "region_id")
     public Region getRegion() {
         return region;
     }

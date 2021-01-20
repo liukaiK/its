@@ -8,9 +8,19 @@ import java.time.LocalDateTime;
 @Data
 public class CameraVO {
 
+
     private String id;
 
     private String name;
+
+    private String ip;
+
+    private String factory;
+
+    /**
+     * 位置
+     */
+    private String position;
 
     private String regionId;
 

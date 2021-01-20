@@ -57,6 +57,12 @@ public class RegionServiceImpl implements RegionService {
     }
 
     @Override
+    public List<RegionVO> findAll() {
+        List<Region> all = regionRepository.findAll();
+        return RegionMapper.INSTANCE.convertList(all);
+    }
+
+    @Override
     public void update(RegionDTO regionDTO) {
         Region region = regionRepository.getOne(regionDTO.getId());
         region.setName(regionDTO.getName());

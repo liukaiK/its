@@ -48,7 +48,7 @@ public class Region extends BaseEntity {
     }
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "college_id")
+    @JoinColumn(name = "region_id")
     public List<Camera> getCameraList() {
         return cameraList;
     }

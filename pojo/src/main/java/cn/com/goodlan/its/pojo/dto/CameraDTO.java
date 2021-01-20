@@ -11,6 +11,10 @@ public class CameraDTO {
 
     private String ip;
 
+    private String factory;
+
     private String regionId;
+
+    private String position;
 
 }
