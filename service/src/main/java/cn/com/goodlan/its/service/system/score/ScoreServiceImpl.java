@@ -49,4 +49,20 @@ public class ScoreServiceImpl implements ScoreService {
         }
     }
 
+    @Override
+    public ScoreVO getById(String id) {
+        Score score = scoreRepository.getOne(id);
+        return ScoreMapper.INSTANCE.convert(score);
+    }
+
+    @Override
+    public void update(ScoreDTO scoreDTO) {
+        Score score = scoreRepository.getOne(scoreDTO.getId());
+        score.setName(scoreDTO.getName());
+        score.setNumber(scoreDTO.getNumber());
+        score.setRegion(new Region(scoreDTO.getRegionId()));
+        score.setViolation(new Violation(scoreDTO.getViolationId()));
+        scoreRepository.save(score);
+    }
+
 }

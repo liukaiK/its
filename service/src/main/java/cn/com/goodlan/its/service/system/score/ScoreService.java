@@ -12,4 +12,8 @@ public interface ScoreService {
     void save(ScoreDTO scoreDTO);
 
     void remove(String ids);
+
+    ScoreVO getById(String id);
+
+    void update(ScoreDTO scoreDTO);
 }

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-	<th:block th:include="include :: header('修改摄像头')" />
+	<th:block th:include="include :: header('修改扣分设置')" />
 	<th:block th:include="include :: select2-css" />
 </head>
 <body>
     <div class="main-content">
-        <form class="form-horizontal" id="form-user-edit" th:object="${camera}">
+        <form class="form-horizontal" id="form-user-edit" th:object="${score}">
             <input name="id" type="hidden" th:value="*{id}"/>
             <h4 class="form-header h4">基本信息</h4>
             <div class="row">
@@ -23,7 +23,7 @@
                         <label class="col-sm-4 control-label">归属区域：</label>
                         <div class="col-sm-8">
                             <select name="regionId" class="form-control m-b">
-                                <option th:each="region : ${region}" th:text="${region.name}" th:value="${region.id}" th:selected="${region.id eq camera.regionId}">区域</option>
+                                <option th:each="region : ${region}" th:text="${region.name}" th:value="${region.id}" th:selected="${region.id eq score.regionId}">区域</option>
                             </select>
                         </div>
                     </div>
@@ -32,17 +32,19 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">厂家：</label>
+                        <label class="col-sm-4 control-label">分值：</label>
                         <div class="col-sm-8">
-                            <input name="factory" placeholder="请输入厂家" class="form-control" type="text" maxlength="11" th:value="*{factory}">
+                            <input name="number" placeholder="请输入分值" class="form-control" type="text" maxlength="11" th:value="*{number}">
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">ip：</label>
+                        <label class="col-sm-4 control-label">违规类型：</label>
                         <div class="col-sm-8">
-                            <input name="ip" class="form-control" type="text" maxlength="50" placeholder="请输入IP地址" th:value="*{ip}">
+                            <select name="violationId" class="form-control m-b">
+                                <option th:each="violation : ${violation}" th:text="${violation.name}" th:value="${violation.id}" th:selected="${violation.id eq score.violationId}">违规类型</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -175,7 +177,7 @@
         // });
 
 
-        let updateUrl = /*[[@{/system/camera/edit}]]*/ "";
+        let updateUrl = /*[[@{/system/score/edit}]]*/ "";
 
         function submitHandler() {
             if ($.validate.form()) {

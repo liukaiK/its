@@ -1,10 +1,8 @@
 package cn.com.goodlan.its.web.controller.system.score;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
-import cn.com.goodlan.its.pojo.dto.CameraDTO;
 import cn.com.goodlan.its.pojo.dto.ScoreDTO;
 import cn.com.goodlan.its.pojo.vo.ScoreVO;
-import cn.com.goodlan.its.service.system.camera.CameraService;
 import cn.com.goodlan.its.service.system.region.RegionService;
 import cn.com.goodlan.its.service.system.score.ScoreService;
 import cn.com.goodlan.its.service.system.violation.ViolationService;
@@ -31,9 +29,6 @@ public class ScoreController {
 
     @Autowired
     private ScoreService scoreService;
-
-    @Autowired
-    private CameraService cameraService;
 
     @Autowired
     private RegionService regionService;
@@ -85,9 +80,10 @@ public class ScoreController {
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasAuthority('system:score:edit')")
     public ModelAndView edit(@PathVariable String id, Model model) {
-        model.addAttribute("camera", cameraService.getById(id));
-//        model.addAttribute("region", regionService.findAll());
-        return new ModelAndView("system/camera/edit");
+        model.addAttribute("score", scoreService.getById(id));
+        model.addAttribute("violation", violationService.findAll());
+        model.addAttribute("region", regionService.findAll());
+        return new ModelAndView("system/score/edit");
     }
 
 
@@ -96,8 +92,8 @@ public class ScoreController {
      */
     @PostMapping("/edit")
     @PreAuthorize("hasAuthority('system:score:edit')")
-    public void edit(@Valid CameraDTO cameraDTO) {
-        cameraService.update(cameraDTO);
+    public void edit(@Valid ScoreDTO scoreDTO) {
+        scoreService.update(scoreDTO);
     }
 
     /**
