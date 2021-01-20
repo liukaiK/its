@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.service.system.region;
 
+import cn.com.goodlan.its.common.exception.BusinessException;
 import cn.com.goodlan.its.dao.system.region.RegionRepository;
 import cn.com.goodlan.its.pojo.dto.RegionDTO;
 import cn.com.goodlan.its.pojo.entity.Region;
@@ -44,10 +45,14 @@ public class RegionServiceImpl implements RegionService {
 
     @Override
     public void remove(String ids) {
-        String[] regionIds = Convert.toStrArray(ids);
-        for (String regionId : regionIds) {
-            regionRepository.delete(new Region(regionId));
+        List<String> regionIds = Convert.toList(String.class, ids);
+        List<Region> regionList = regionRepository.findAllById(regionIds);
+        for (Region region : regionList) {
+            if (region.hasCamera()) {
+                throw new BusinessException("存在摄像头,不允许删除");
+            }
         }
+        regionRepository.deleteInBatch(regionList);
     }
 
     @Override

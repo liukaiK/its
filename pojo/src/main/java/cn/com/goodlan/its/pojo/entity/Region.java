@@ -1,8 +1,10 @@
 package cn.com.goodlan.its.pojo.entity;
 
+import cn.hutool.core.collection.CollectionUtil;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,13 +21,19 @@ public class Region extends BaseEntity {
 
     private String name;
 
-    private List<Camera> cameraList;
+    private List<Camera> cameraList = new ArrayList<>();
+
 
     public Region() {
     }
 
     public Region(String id) {
         this.id = id;
+    }
+
+    @Transient
+    public boolean hasCamera() {
+        return CollectionUtil.isNotEmpty(this.cameraList);
     }
 
     @Id
