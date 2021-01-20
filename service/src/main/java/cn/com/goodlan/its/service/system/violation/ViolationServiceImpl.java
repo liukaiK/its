@@ -66,4 +66,10 @@ public class ViolationServiceImpl implements ViolationService {
         violation.setName(violationDTO.getName());
         violationRepository.save(violation);
     }
+
+    @Override
+    public List<ViolationVO> findAll() {
+        List<Violation> violationList = violationRepository.findAll();
+        return ViolationMapper.INSTANCE.convertList(violationList);
+    }
 }

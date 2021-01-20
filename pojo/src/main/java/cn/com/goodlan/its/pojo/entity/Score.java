@@ -15,11 +15,21 @@ public class Score extends BaseEntity {
 
     private String id;
 
+    private String name;
+
     private Integer number;
 
     private Violation violation;
 
     private Region region;
+
+
+    public Score() {
+    }
+
+    public Score(String scoreId) {
+        this.id = scoreId;
+    }
 
 
     @Id
@@ -59,5 +69,13 @@ public class Score extends BaseEntity {
 
     public void setRegion(Region region) {
         this.region = region;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -46,7 +46,7 @@ public class User extends BaseEntity {
 
 
     @Transient
-    public void cleanRole() {
+    public void removeAllRole() {
         this.roleList = new ArrayList<>();
     }
 
