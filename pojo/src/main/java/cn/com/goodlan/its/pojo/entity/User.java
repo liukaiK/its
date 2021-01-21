@@ -44,6 +44,14 @@ public class User extends BaseEntity {
      */
     private LocalDateTime lastLoginTime;
 
+    public User(String id) {
+        this.id = id;
+    }
+
+    public User() {
+
+    }
+
 
     @Transient
     public void removeAllRole() {
@@ -60,13 +68,6 @@ public class User extends BaseEntity {
         this.college = new College(collegeId);
     }
 
-    public User(String id) {
-        this.id = id;
-    }
-
-    public User() {
-
-    }
 
     /**
      * 判断是否为超级管理员

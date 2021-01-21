@@ -2,6 +2,7 @@ package cn.com.goodlan.its.pojo.dto;
 
 import cn.com.goodlan.its.common.annotations.MobileNumber;
 import cn.com.goodlan.its.common.annotations.Password;
+import cn.com.goodlan.its.common.annotations.Sex;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
@@ -24,6 +25,7 @@ public class UserDTO {
     @MobileNumber
     private String phoneNumber;
 
+    @Sex
     private String sex;
 
     private String collegeId;

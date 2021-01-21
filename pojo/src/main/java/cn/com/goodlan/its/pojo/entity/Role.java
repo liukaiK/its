@@ -51,7 +51,7 @@ public class Role extends BaseEntity {
 
 
     @Transient
-    public void deleteMenu() {
+    public void removeAllMenu() {
         this.menuList = new ArrayList<>();
     }
 

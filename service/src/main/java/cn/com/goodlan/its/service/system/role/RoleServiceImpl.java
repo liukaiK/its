@@ -41,7 +41,7 @@ public class RoleServiceImpl implements RoleService {
     public void update(RoleDTO roleDTO) {
         String[] menuIds = Convert.toStrArray(roleDTO.getMenuIds());
         Role role = roleRepository.getOne(roleDTO.getId());
-        role.deleteMenu();
+        role.removeAllMenu();
         for (String menuId : menuIds) {
             role.addMenu(new Menu(menuId));
         }
