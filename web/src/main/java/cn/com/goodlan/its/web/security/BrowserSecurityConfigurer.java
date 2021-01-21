@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.web.security;
 
 
+import cn.com.goodlan.its.web.security.xss.XssFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.ProviderManager;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
 import org.springframework.security.web.savedrequest.RequestCacheAwareFilter;
 
 import java.util.Collections;
@@ -43,7 +45,7 @@ public class BrowserSecurityConfigurer extends SecurityConfigurerAdapter<Default
         usernamePasswordCaptchaAuthenticationFilter.setAuthenticationManager(new ProviderManager(Collections.singletonList(getUserDetailsAuthenticationProvider())));
 
         http.addFilterBefore(usernamePasswordCaptchaAuthenticationFilter, RequestCacheAwareFilter.class);
-//        http.addFilterBefore(new XssFilter(), WebAsyncManagerIntegrationFilter.class);
+        http.addFilterBefore(new XssFilter(), WebAsyncManagerIntegrationFilter.class);
 
     }
 
