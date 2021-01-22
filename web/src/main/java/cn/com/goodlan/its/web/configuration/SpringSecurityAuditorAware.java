@@ -1,7 +1,6 @@
 package cn.com.goodlan.its.web.configuration;
 
 
-import cn.com.goodlan.its.pojo.entity.User;
 import cn.com.goodlan.its.util.SecurityUtil;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
@@ -19,11 +18,11 @@ import java.util.Optional;
  * @date 2020/6/10 16:11
  */
 @Component
-public class SpringSecurityAuditorAware implements AuditorAware<User> {
+public class SpringSecurityAuditorAware implements AuditorAware<String> {
 
     @Override
-    public Optional<User> getCurrentAuditor() {
-        return Optional.of(SecurityUtil.getUser().castToUser());
+    public Optional<String> getCurrentAuditor() {
+        return Optional.of(SecurityUtil.getUserId());
     }
 
 }

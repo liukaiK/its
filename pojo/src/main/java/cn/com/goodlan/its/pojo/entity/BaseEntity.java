@@ -9,7 +9,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -28,12 +30,12 @@ public class BaseEntity implements Serializable {
     /**
      * 创建用户
      */
-    private User createBy;
+    private String createBy;
 
     /**
      * 修改用户
      */
-    private User updateBy;
+    private String updateBy;
 
 
     @CreatedDate
@@ -61,24 +63,22 @@ public class BaseEntity implements Serializable {
     }
 
     @CreatedBy
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "create_by")
-    public User getCreateBy() {
+    @Column(name = "create_by")
+    public String getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(User createBy) {
+    public void setCreateBy(String createBy) {
         this.createBy = createBy;
     }
 
     @LastModifiedBy
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "update_by")
-    public User getUpdateBy() {
+    @Column(name = "update_by")
+    public String getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(User updateBy) {
+    public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }
 
