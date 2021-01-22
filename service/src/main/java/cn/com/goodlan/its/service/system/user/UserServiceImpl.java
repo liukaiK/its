@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.service.system.user;
 
 
+import cn.com.goodlan.its.common.util.AESUtil;
 import cn.com.goodlan.its.dao.system.user.UserRepository;
 import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.entity.Role;
@@ -46,9 +47,9 @@ public class UserServiceImpl implements UserService {
             Predicate[] p = new Predicate[list.size()];
             return criteriaBuilder.and(list.toArray(p));
         };
-        Page<User> userPage = userRepository.findAll(specification, pageable);
-        List<UserVO> userVOS = UserMapper.INSTANCE.convertList(userPage.getContent());
-        return new PageImpl<>(userVOS, userPage.getPageable(), userPage.getTotalElements());
+        Page<User> page = userRepository.findAll(specification, pageable);
+        List<UserVO> list = UserMapper.INSTANCE.convertList(page.getContent());
+        return new PageImpl<>(list, page.getPageable(), page.getTotalElements());
     }
 
     @Override
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setUsername(userDTO.getUsername());
-        user.setPhoneNumber(userDTO.getPhoneNumber());
+        user.setPhoneNumber(AESUtil.encrypt(userDTO.getPhoneNumber()));
         user.setSex(userDTO.getSex());
         user.setRemark(userDTO.getRemark());
         user.addCollege(userDTO.getCollegeId());
@@ -75,7 +76,7 @@ public class UserServiceImpl implements UserService {
         user.setRemark(userDTO.getRemark());
         user.setSex(userDTO.getSex());
         user.setEmail(userDTO.getEmail());
-        user.setPhoneNumber(userDTO.getPhoneNumber());
+        user.setPhoneNumber(AESUtil.encrypt(userDTO.getPhoneNumber()));
         user.addCollege(userDTO.getCollegeId());
         String[] roleIds = Convert.toStrArray(userDTO.getRoleIds());
         user.removeAllRole();
