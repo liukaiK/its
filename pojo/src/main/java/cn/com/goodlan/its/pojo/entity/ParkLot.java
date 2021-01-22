@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * @author liukai
  */
 @Entity
-@Table(name = "park_park_lot")
+@Table(name = "par_park_lot")
 public class ParkLot extends BaseEntity {
 
     private String id;
