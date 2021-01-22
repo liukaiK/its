@@ -9,4 +9,6 @@ public interface EventApprovalService {
 
     Page<EventVO> search(EventDTO eventDTO, Pageable pageable);
 
+    EventVO getById(String id);
+
 }

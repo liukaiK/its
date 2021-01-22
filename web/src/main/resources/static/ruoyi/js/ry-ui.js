@@ -1074,6 +1074,11 @@ var table = {
             	table.set();
             	$.modal.openTab("修改" + table.options.modalName, $.operate.editUrl(id));
             },
+            // 查看详情，以tab页展现
+            detailTab: function(id) {
+                table.set();
+                $.modal.openTab("查看" + table.options.modalName, $.operate.editUrl(id));
+            },
             // 修改信息 全屏
             editFull: function(id) {
             	table.set();

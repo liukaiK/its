@@ -36,6 +36,9 @@ public class Event extends BaseEntity {
     private String place;
 
 
+    private Integer status;
+
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
@@ -82,4 +85,14 @@ public class Event extends BaseEntity {
     public void setCamera(Camera camera) {
         this.camera = camera;
     }
+
+    @Column(columnDefinition = "tinyint")
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
 }

@@ -5,7 +5,6 @@ import cn.com.goodlan.its.pojo.dto.EventDTO;
 import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.vo.EventVO;
 import cn.com.goodlan.its.service.event.EventApprovalService;
-import cn.com.goodlan.its.service.system.role.RoleService;
 import cn.com.goodlan.its.service.system.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,9 +33,6 @@ public class ApprovalController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RoleService roleService;
-
     @GetMapping
     @PreAuthorize("hasAuthority('event:approval:view')")
     public ModelAndView approval() {
@@ -54,34 +50,13 @@ public class ApprovalController {
 
 
     /**
-     * 跳转到新增页面
+     * 跳转到查看详情页面
      */
-    @GetMapping("/add")
-    @PreAuthorize("hasAuthority('system:user:add')")
-    public ModelAndView add(Model model) {
-        model.addAttribute("roles", roleService.selectRoleAll());
-        return new ModelAndView("system/user/add");
-    }
-
-    /**
-     * 新增用户
-     */
-    @PostMapping("/add")
-    @PreAuthorize("hasAuthority('system:user:add')")
-    public void add(@Valid UserDTO userDTO) {
-        userService.save(userDTO);
-    }
-
-
-    /**
-     * 跳转到修改页面
-     */
-    @GetMapping("/edit/{id}")
-    @PreAuthorize("hasAuthority('system:user:edit')")
-    public ModelAndView edit(@PathVariable String id, Model model) {
-        model.addAttribute("user", userService.getById(id));
-        model.addAttribute("roles", roleService.selectRoleByUser(id));
-        return new ModelAndView("system/user/edit");
+    @GetMapping("/detail/{id}")
+    @PreAuthorize("hasAuthority('event:approval:detail')")
+    public ModelAndView detail(@PathVariable String id, Model model) {
+        model.addAttribute("event", eventApprovalService.getById(id));
+        return new ModelAndView("event/approval/detail");
     }
 
     /**

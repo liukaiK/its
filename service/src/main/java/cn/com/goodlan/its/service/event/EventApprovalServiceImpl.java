@@ -28,4 +28,10 @@ public class EventApprovalServiceImpl implements EventApprovalService {
         return new PageImpl<>(list, page.getPageable(), page.getTotalElements());
     }
 
+    @Override
+    public EventVO getById(String id) {
+        Event event = eventRepository.getOne(id);
+        return EventMapper.INSTANCE.convert(event);
+    }
+
 }
