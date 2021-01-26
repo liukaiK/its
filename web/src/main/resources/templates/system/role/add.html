@@ -73,54 +73,59 @@
 
 
 
-		var checkRoleName = /*[[@{/system/role/checkRoleNameUnique}]]*/ "";
+		let checkRoleNameUniqueUrl = /*[[@{/system/role/checkRoleNameUnique}]]*/ "";
 
 		$("#form-role-add").validate({
-			// rules:{
-			// 	onkeyup: false,
-			// 	roleName:{
-			// 		remote: {
-		    //             url: checkRoleName,
-		    //             type: "post",
-		    //             dataType: "json",
-		    //             data: {
-		    //             	"roleName" : function() {
-		    //             		return $.common.trim($("#roleName").val());
-		    //                 }
-		    //             },
-		    //             dataFilter: function(data, type) {
-		    //             	return $.validate.unique(data);
-		    //             }
-		    //         }
-			// 	},
-			// 	roleKey:{
-			// 		remote: {
-		    //             url: ctx + "system/role/checkRoleKeyUnique",
-		    //             type: "post",
-		    //             dataType: "json",
-		    //             data: {
-		    //             	"roleKey" : function() {
-		    //                     return $.common.trim($("#roleKey").val());
-		    //                 }
-		    //             },
-		    //             dataFilter: function(data, type) {
-		    //             	return $.validate.unique(data);
-		    //             }
-		    //         }
-			// 	},
-			// 	roleSort:{
-			// 		digits:true
-			// 	},
-			// },
-			// messages: {
-		    //     "roleName": {
-		    //         remote: "角色名称已经存在"
-		    //     },
-		    //     "roleKey": {
-		    //         remote: "角色权限已经存在"
-		    //     }
-		    // },
-		    // focusCleanup: true
+			rules:{
+				onkeyup: false,
+				roleName:{
+					remote: {
+		                url: checkRoleNameUniqueUrl,
+		                type: "post",
+		                dataType: "json",
+						beforeSend: function (request) {
+							if (csrfToken && csrfHeader) {
+								request.setRequestHeader(csrfHeader, csrfToken);
+							}
+						},
+		                data: {
+		                	"roleName" : function() {
+		                		return $.common.trim($("#roleName").val());
+		                    }
+		                },
+		                dataFilter: function(data, type) {
+		                	return $.validate.unique(data);
+		                }
+		            }
+				},
+				// roleKey:{
+				// 	remote: {
+		        //         url: ctx + "system/role/checkRoleKeyUnique",
+		        //         type: "post",
+		        //         dataType: "json",
+		        //         data: {
+		        //         	"roleKey" : function() {
+		        //                 return $.common.trim($("#roleKey").val());
+		        //             }
+		        //         },
+		        //         dataFilter: function(data, type) {
+		        //         	return $.validate.unique(data);
+		        //         }
+		        //     }
+				// },
+				// roleSort:{
+				// 	digits:true
+				// },
+			},
+			messages: {
+		        "roleName": {
+		            remote: "角色名称已经存在"
+		        },
+		        // "roleKey": {
+		        //     remote: "角色权限已经存在"
+		        // }
+		    },
+		    focusCleanup: true
 		});
 		
 		$('input').on('ifChanged', function(obj){

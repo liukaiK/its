@@ -38,11 +38,14 @@ public class UserServiceImpl implements UserService {
     public Page<UserVO> search(UserDTO userDTO, Pageable pageable) {
         Specification<User> specification = (root, query, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
-            if (StringUtils.isNotEmpty(userDTO.getPhoneNumber())) {
-                list.add(criteriaBuilder.like(root.get("phoneNumber").as(String.class), userDTO.getPhoneNumber() + "%"));
+            if (StringUtils.isNotEmpty(userDTO.getName())) {
+                list.add(criteriaBuilder.like(root.get("name").as(String.class), userDTO.getName() + "%"));
             }
             if (StringUtils.isNotEmpty(userDTO.getUsername())) {
                 list.add(criteriaBuilder.like(root.get("username").as(String.class), userDTO.getUsername() + "%"));
+            }
+            if (StringUtils.isNotEmpty(userDTO.getPhoneNumber())) {
+                list.add(criteriaBuilder.like(root.get("phoneNumber").as(String.class), userDTO.getPhoneNumber() + "%"));
             }
             Predicate[] p = new Predicate[list.size()];
             return criteriaBuilder.and(list.toArray(p));

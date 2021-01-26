@@ -2,9 +2,9 @@ package cn.com.goodlan.its.web.controller.system.role;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
 import cn.com.goodlan.its.pojo.dto.RoleDTO;
-import cn.com.goodlan.its.pojo.entity.Role;
 import cn.com.goodlan.its.pojo.vo.RoleVO;
 import cn.com.goodlan.its.service.system.role.RoleService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,8 +41,8 @@ public class RoleController {
      */
     @PostMapping("/search")
     @PreAuthorize("hasAuthority('system:role:search')")
-    public Page<RoleVO> search(@PageableDefault Pageable pageable) {
-        return roleService.search(pageable);
+    public Page<RoleVO> search(RoleDTO roleDTO, @PageableDefault Pageable pageable) {
+        return roleService.search(roleDTO, pageable);
     }
 
 
@@ -79,7 +79,7 @@ public class RoleController {
      */
     @PostMapping("/edit")
     @PreAuthorize("hasAuthority('system:role:edit')")
-    public void edit(RoleDTO roleDTO) {
+    public void edit(@Valid RoleDTO roleDTO) {
         roleService.update(roleDTO);
     }
 
@@ -97,8 +97,12 @@ public class RoleController {
      * 检查角色名称是否重复
      */
     @PostMapping("/checkRoleNameUnique")
-    public String checkRoleNameUnique(Role role) {
-        return "";
+    public boolean checkRoleNameUnique(String roleName, String roleId) {
+        if (StringUtils.isEmpty(roleId)) {
+            return roleService.checkRoleNameUnique(roleName);
+        } else {
+            return roleService.checkRoleNameUnique(roleId, roleName);
+        }
     }
 
 

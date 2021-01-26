@@ -8,13 +8,17 @@ import cn.com.goodlan.its.pojo.entity.Role;
 import cn.com.goodlan.its.pojo.vo.RoleVO;
 import cn.com.goodlan.mapstruct.RoleMapper;
 import cn.hutool.core.convert.Convert;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,10 +29,18 @@ public class RoleServiceImpl implements RoleService {
     private RoleRepository roleRepository;
 
     @Override
-    public Page<RoleVO> search(Pageable pageable) {
-        Page<Role> page = roleRepository.findAll(pageable);
-        List<RoleVO> roleVOS = RoleMapper.INSTANCE.convertList(page.getContent());
-        return new PageImpl<>(roleVOS, page.getPageable(), page.getTotalElements());
+    public Page<RoleVO> search(RoleDTO roleDTO, Pageable pageable) {
+        Specification<Role> specification = (root, query, criteriaBuilder) -> {
+            List<Predicate> list = new ArrayList<>();
+            if (StringUtils.isNotEmpty(roleDTO.getRoleName())) {
+                list.add(criteriaBuilder.like(root.get("name").as(String.class), roleDTO.getRoleName() + "%"));
+            }
+            Predicate[] p = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(p));
+        };
+        Page<Role> page = roleRepository.findAll(specification, pageable);
+        List<RoleVO> list = RoleMapper.INSTANCE.convertList(page.getContent());
+        return new PageImpl<>(list, page.getPageable(), page.getTotalElements());
     }
 
     @Override
@@ -83,15 +95,15 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public String checkRoleNameUnique(Role role) {
-//        Long roleId = StringUtils.isNull(role.getRoleId()) ? -1L : role.getRoleId();
-//        Role info = roleMapper.checkRoleNameUnique(role.getRoleName());
-//        if (StringUtils.isNotNull(info) && info.getRoleId().longValue() != roleId.longValue()) {
-//            return UserConstants.ROLE_NAME_NOT_UNIQUE;
-//        }
-//        return UserConstants.ROLE_NAME_UNIQUE;
-        return null;
+    public boolean checkRoleNameUnique(String roleName) {
+        return roleRepository.existsByName(roleName);
     }
+
+    @Override
+    public boolean checkRoleNameUnique(String roleId, String roleName) {
+        return roleRepository.existsByNameAndIdNot(roleName, roleId);
+    }
+
 
     @Override
     public void remove(String ids) {
