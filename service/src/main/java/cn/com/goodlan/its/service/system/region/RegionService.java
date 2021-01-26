@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface RegionService {
 
-    Page<RegionVO> search(Pageable pageable);
+    Page<RegionVO> search(RegionDTO regionDTO, Pageable pageable);
 
     void save(RegionDTO regionDTO);
 

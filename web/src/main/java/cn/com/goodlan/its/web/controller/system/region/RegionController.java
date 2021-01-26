@@ -39,8 +39,8 @@ public class RegionController {
      */
     @PostMapping("/search")
     @PreAuthorize("hasAuthority('system:region:search')")
-    public Page<RegionVO> search(@PageableDefault Pageable pageable) {
-        return regionService.search(pageable);
+    public Page<RegionVO> search(RegionDTO regionDTO, @PageableDefault Pageable pageable) {
+        return regionService.search(regionDTO, pageable);
     }
 
     /**

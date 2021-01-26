@@ -7,13 +7,17 @@ import cn.com.goodlan.its.pojo.entity.Region;
 import cn.com.goodlan.its.pojo.vo.RegionVO;
 import cn.com.goodlan.mapstruct.RegionMapper;
 import cn.hutool.core.convert.Convert;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,8 +34,16 @@ public class RegionServiceImpl implements RegionService {
 
 
     @Override
-    public Page<RegionVO> search(Pageable pageable) {
-        Page<Region> page = regionRepository.findAll(pageable);
+    public Page<RegionVO> search(RegionDTO regionDTO, Pageable pageable) {
+        Specification<Region> specification = (root, query, criteriaBuilder) -> {
+            List<Predicate> list = new ArrayList<>();
+            if (StringUtils.isNotEmpty(regionDTO.getName())) {
+                list.add(criteriaBuilder.like(root.get("name").as(String.class), regionDTO.getName() + "%"));
+            }
+            Predicate[] p = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(p));
+        };
+        Page<Region> page = regionRepository.findAll(specification, pageable);
         List<RegionVO> list = RegionMapper.INSTANCE.convertList(page.getContent());
         return new PageImpl<>(list, page.getPageable(), page.getTotalElements());
     }
