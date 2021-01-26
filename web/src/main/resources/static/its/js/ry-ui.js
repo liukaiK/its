@@ -1262,12 +1262,9 @@ var table = {
         },
         // 校验封装处理
         validate: {
-            // 判断返回标识是否唯一 false 不存在 true 存在
+            // 判断返回标识是否唯一
             unique: function (value) {
-                if (value == "0") {
-                    return true;
-                }
-                return false;
+                return "true" !== value;
             },
             // 表单验证
             form: function (formId) {

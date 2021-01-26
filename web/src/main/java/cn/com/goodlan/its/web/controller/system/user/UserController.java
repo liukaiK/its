@@ -5,6 +5,7 @@ import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.vo.UserVO;
 import cn.com.goodlan.its.service.system.role.RoleService;
 import cn.com.goodlan.its.service.system.user.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -97,4 +98,16 @@ public class UserController {
         userService.remove(ids);
     }
 
+
+    /**
+     * 校验账号是否已经存在
+     */
+    @PostMapping("/checkUsernameUnique")
+    public boolean checkUsernameUnique(String userId, String username) {
+        if (StringUtils.isEmpty(userId)) {
+            return userService.checkUsernameUnique(username);
+        } else {
+            return userService.checkUsernameUnique(userId, username);
+        }
+    }
 }

@@ -110,4 +110,14 @@ public class UserServiceImpl implements UserService {
         return UserMapper.INSTANCE.convert(user);
     }
 
+    @Override
+    public boolean checkUsernameUnique(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public boolean checkUsernameUnique(String userId, String username) {
+        return userRepository.existsByUsernameAndIdNot(username, userId);
+    }
+
 }

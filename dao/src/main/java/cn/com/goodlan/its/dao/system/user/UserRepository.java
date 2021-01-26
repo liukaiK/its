@@ -21,4 +21,9 @@ public interface UserRepository extends CustomizeRepository<User, String> {
     @Query("update User set lastLoginTime = ?1 where id = ?2")
     void updateLastLoginTime(LocalDateTime localDateTime, String userId);
 
+    boolean existsByUsername(String username);
+
+    boolean existsByUsernameAndIdNot(String username, String userId);
+
+
 }

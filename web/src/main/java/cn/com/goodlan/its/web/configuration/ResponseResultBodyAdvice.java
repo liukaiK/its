@@ -44,6 +44,11 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         // 防止重复包裹的问题出现
+
+        if (body instanceof Boolean) {
+            return body;
+        }
+
         if (body instanceof Result) {
             return body;
         }
