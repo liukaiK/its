@@ -120,7 +120,6 @@
 
 		let editFlag = [[${@authority.hasAuthority('system:region:edit')}]];
 		let removeFlag = [[${@authority.hasAuthority('system:region:remove')}]];
-		let resetPwdFlag = [[${@authority.hasAuthority('system:region:resetPwd')}]];
 
 		function queryUserList() {
 			var options = {
@@ -132,7 +131,7 @@
 				// importUrl: prefix + "/importData",
 				// importTemplateUrl: prefix + "/importTemplate",
                 uniqueId: 'id',
-				sortName: "createTime",
+				sortName: "updateTime",
 				sortOrder: "desc",
 				modalName: "区域",
 				columns: [
