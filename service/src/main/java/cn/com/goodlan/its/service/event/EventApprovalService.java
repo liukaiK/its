@@ -11,4 +11,7 @@ public interface EventApprovalService {
 
     EventVO getById(String id);
 
+    void approval(String id);
+
+    void cancel(String id);
 }

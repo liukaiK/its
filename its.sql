@@ -41,9 +41,12 @@ CREATE TABLE `eve_event` (
   `update_by` varchar(255) DEFAULT NULL,
   `update_time` datetime(6) NOT NULL,
   `status` tinyint(4) DEFAULT NULL,
+  `violation_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKkkwmjljmrrx45ng53lw3annwo` (`vehicle_id`),
   KEY `FKs6ftkjagbnlrgkuw4cjn3sehc` (`camera_id`),
+  KEY `FKfs1jwhcxqlbujxpc1eip4n4hq` (`violation_id`),
+  CONSTRAINT `FKfs1jwhcxqlbujxpc1eip4n4hq` FOREIGN KEY (`violation_id`) REFERENCES `sys_violation` (`id`),
   CONSTRAINT `FKkkwmjljmrrx45ng53lw3annwo` FOREIGN KEY (`vehicle_id`) REFERENCES `sys_vehicle` (`id`),
   CONSTRAINT `FKs6ftkjagbnlrgkuw4cjn3sehc` FOREIGN KEY (`camera_id`) REFERENCES `sys_camera` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -55,7 +58,7 @@ CREATE TABLE `eve_event` (
 
 LOCK TABLES `eve_event` WRITE;
 /*!40000 ALTER TABLE `eve_event` DISABLE KEYS */;
-INSERT INTO `eve_event` VALUES ('bb2908e6-5c79-11eb-aff3-85667207cdf0','123123123','a38de747-039e-427c-b033-dfd195ff90de',NULL,'cf139bd8-2188-4bd6-94dd-b588ae4660b9',NULL,'2021-01-22 14:19:06.000000',NULL,'2021-01-22 14:19:06.000000',NULL);
+INSERT INTO `eve_event` VALUES ('bb2908e6-5c29-11eb-aff3-85667207cdf0','123123123','a38de747-039e-427c-b033-dfd195ff90de',NULL,'cf139bd8-2188-4bd6-94dd-b588ae4660b9',NULL,'2021-01-22 14:19:06.000000',NULL,'2021-01-22 14:19:06.000000',1,'a2095ee8-a8a7-4221-beaa-42a2ae6b416d'),('bb2908e6-5c79-11eb-aff3-85667207cdf0','123123123','a38de747-039e-427c-b033-dfd195ff90de',NULL,'cf139bd8-2188-4bd6-94dd-b588ae4660b9',NULL,'2021-01-22 14:19:06.000000',NULL,'2021-01-22 14:19:06.000000',0,'a2095ee8-a8a7-4221-beaa-42a2ae6b416d');
 /*!40000 ALTER TABLE `eve_event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -588,4 +591,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-29 18:22:15
+-- Dump completed on 2021-01-29 19:33:30

@@ -8,10 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * description:
+ * 违规分类
  *
- * @author: 王硕
- * @date: 2021/1/18-16:51
+ * @author 王硕
  */
 @Entity
 @Table(name = "sys_violation")
@@ -23,6 +22,7 @@ public class Violation extends BaseEntity {
      * 违规分类
      */
     private String name;
+
     /**
      * 违规编码
      */

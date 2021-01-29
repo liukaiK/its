@@ -25,6 +25,13 @@ public class EventVO {
 
     private String regionName;
 
+    /**
+     * 违规分类
+     */
+    private String violationName;
+
+    private Integer status;
+
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;

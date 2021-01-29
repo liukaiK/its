@@ -2,7 +2,6 @@ package cn.com.goodlan.its.web.controller.event.approval;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
 import cn.com.goodlan.its.pojo.dto.EventDTO;
-import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.vo.EventVO;
 import cn.com.goodlan.its.service.event.EventApprovalService;
 import cn.com.goodlan.its.service.system.user.UserService;
@@ -14,8 +13,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.validation.Valid;
 
 /**
  * 违规审批Controller
@@ -60,21 +57,21 @@ public class ApprovalController {
     }
 
     /**
-     * 修改保存
+     * 审批功能
      */
-    @PostMapping("/edit")
-    @PreAuthorize("hasAuthority('system:user:edit')")
-    public void edit(@Valid UserDTO userDTO) {
-        userService.update(userDTO);
+    @PostMapping("/approval/{id}")
+    @PreAuthorize("hasAuthority('event:approval:approval')")
+    public void approval(@PathVariable String id) {
+        eventApprovalService.approval(id);
     }
 
     /**
-     * 删除用户
+     * 作废功能
      */
-    @PostMapping("/remove")
-    @PreAuthorize("hasAuthority('system:user:remove')")
-    public void remove(String ids) {
-        userService.remove(ids);
+    @PostMapping("/cancel/{id}")
+    @PreAuthorize("hasAuthority('event:approval:cancel')")
+    public void cancel(@PathVariable String id) {
+        eventApprovalService.cancel(id);
     }
 
 }

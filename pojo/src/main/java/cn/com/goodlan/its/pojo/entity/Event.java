@@ -1,5 +1,7 @@
 package cn.com.goodlan.its.pojo.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,8 +12,21 @@ import javax.persistence.*;
  * @author liukai
  */
 @Entity
+@DynamicUpdate
+@DynamicInsert
 @Table(name = "eve_event")
 public class Event extends BaseEntity {
+
+    /**
+     * 作废
+     */
+    public final static Integer CANCEL = 2;
+
+    /**
+     * 审批
+     */
+    public final static Integer APPROVAL = 1;
+
 
     private String id;
 
@@ -25,6 +40,8 @@ public class Event extends BaseEntity {
      */
     private Vehicle vehicle;
 
+    private Violation violation;
+
     /**
      * 摄像头
      */
@@ -36,8 +53,14 @@ public class Event extends BaseEntity {
     private String place;
 
 
-    private Integer status;
+    private Integer status = 0;
 
+    public Event() {
+    }
+
+    public Event(String id) {
+        this.id = id;
+    }
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -93,6 +116,16 @@ public class Event extends BaseEntity {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "violation_id")
+    public Violation getViolation() {
+        return violation;
+    }
+
+    public void setViolation(Violation violation) {
+        this.violation = violation;
     }
 
 }
