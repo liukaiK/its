@@ -118,6 +118,7 @@
 
 
     let searchUrl = /*[[@{/event/approval/search}]]*/ "";
+    let detailUrl = /*[[@{/event/approval/detail/{id}}]]*/ "";
     let approvalUrl = /*[[@{/event/approval/approval/{id}}]]*/ "";
     let cancelUrl = /*[[@{/event/approval/cancel/{id}}]]*/ "";
 
@@ -128,6 +129,7 @@
     function queryUserList() {
         var options = {
             url: searchUrl,
+            detailUrl: detailUrl,
             approvalUrl: approvalUrl,
             cancelUrl: cancelUrl,
             // removeUrl: removeUrl,

@@ -58,7 +58,7 @@ CREATE TABLE `eve_event` (
 
 LOCK TABLES `eve_event` WRITE;
 /*!40000 ALTER TABLE `eve_event` DISABLE KEYS */;
-INSERT INTO `eve_event` VALUES ('bb2908e6-5c29-11eb-aff3-85667207cdf0','123123123','a38de747-039e-427c-b033-dfd195ff90de',NULL,'cf139bd8-2188-4bd6-94dd-b588ae4660b9',NULL,'2021-01-22 14:19:06.000000',NULL,'2021-01-22 14:19:06.000000',1,'a2095ee8-a8a7-4221-beaa-42a2ae6b416d'),('bb2908e6-5c79-11eb-aff3-85667207cdf0','123123123','a38de747-039e-427c-b033-dfd195ff90de',NULL,'cf139bd8-2188-4bd6-94dd-b588ae4660b9',NULL,'2021-01-22 14:19:06.000000',NULL,'2021-01-22 14:19:06.000000',0,'a2095ee8-a8a7-4221-beaa-42a2ae6b416d');
+INSERT INTO `eve_event` VALUES ('bb2908e6-5c29-11eb-aff3-85667207cdf0','123123123','a38de747-039e-427c-b033-dfd195ff90de',NULL,'cf139bd8-2188-4bd6-94dd-b588ae4660b9',NULL,'2021-01-22 14:19:06.000000','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-30 13:24:33.786278',0,'a2095ee8-a8a7-4221-beaa-42a2ae6b416d'),('bb2908e6-5c79-11eb-aff3-85667207cdf0','123123123','a38de747-039e-427c-b033-dfd195ff90de',NULL,'cf139bd8-2188-4bd6-94dd-b588ae4660b9',NULL,'2021-01-22 14:19:06.000000','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-30 12:42:17.378880',0,'a2095ee8-a8a7-4221-beaa-42a2ae6b416d');
 /*!40000 ALTER TABLE `eve_event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,6 +78,7 @@ CREATE TABLE `eve_record` (
   `create_time` datetime(6) NOT NULL,
   `update_by` varchar(255) DEFAULT NULL,
   `update_time` datetime(6) NOT NULL,
+  `record` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKt4gs77cya4yvb7u5xnhe7kulk` (`college_id`),
   KEY `FKgbh9o426n2fwfsfifqtyfom8j` (`event_id`),
@@ -94,6 +95,7 @@ CREATE TABLE `eve_record` (
 
 LOCK TABLES `eve_record` WRITE;
 /*!40000 ALTER TABLE `eve_record` DISABLE KEYS */;
+INSERT INTO `eve_record` VALUES ('a4f57b9c-ddf7-4954-8f36-aab2dc2dc83f',NULL,'bb2908e6-5c29-11eb-aff3-85667207cdf0',NULL,'1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-30 13:24:33.785753','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-30 13:24:33.785753',10),('b8985e44-5335-4d97-8b9c-129eb722e3d4',NULL,'bb2908e6-5c29-11eb-aff3-85667207cdf0',NULL,'1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-30 13:20:20.671296','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-30 13:20:20.671296',6);
 /*!40000 ALTER TABLE `eve_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -440,7 +442,7 @@ CREATE TABLE `sys_score` (
 
 LOCK TABLES `sys_score` WRITE;
 /*!40000 ALTER TABLE `sys_score` DISABLE KEYS */;
-INSERT INTO `sys_score` VALUES ('248fdbc8-b9df-4b72-96ff-92d93f145825','2021-01-20 14:29:35.636907','2021-01-20 14:41:46.733515',10,'1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','a299e8e7-9053-4c0c-8a80-7c7eeeca6cdf','f0571407-fa10-4467-b260-75243ba6ab2e','违章停车10小时'),('dbe09824-06ee-4616-b9a6-bd26140db060','2021-01-20 14:31:56.102639','2021-01-20 14:31:56.102639',5,'1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','779d6d9b-fa7f-4eac-8d22-3c7020c1c5c0','a2095ee8-a8a7-4221-beaa-42a2ae6b416d','违章停车5小时');
+INSERT INTO `sys_score` VALUES ('54206af7-0cd3-4652-a28a-a5a995056e1c','2021-01-30 13:24:25.684414','2021-01-30 13:24:25.684414',10,'1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','aa8908a9-d2ad-40c7-ba3a-4630e08d9d1f','a2095ee8-a8a7-4221-beaa-42a2ae6b416d','违章停车10小时');
 /*!40000 ALTER TABLE `sys_score` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -482,7 +484,7 @@ CREATE TABLE `sys_user` (
 
 LOCK TABLES `sys_user` WRITE;
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
-INSERT INTO `sys_user` VALUES ('1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-06 16:04:50.000000','2021-01-22 17:07:36.097519','超级管理员','$2a$10$b3ezmRiBwb0nJjIRk3JWVOeTmcS7mPDOD5T887jLWfG2/GDdgZptK','admin','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-29 18:17:21.156402','男','zhizhufan@foxmail.com','043ca3fc919e4db0dfc37cecf8490f1d','','73f1218d-9249-42a2-9e78-a5c7963fbec1'),('5d9c5075-47dc-4e6c-a177-4f366f2e4ea3','2021-01-26 15:37:40.153917','2021-01-26 15:37:40.153917','王硕','$2a$10$.eKtIPjsyYGg9d24.jASoerDxLsoPmnrzUgF.VMq3t37dRT9Xs6li','wangshuo','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-26 15:38:33.931903','男','','043ca3fc919e4db0dfc37cecf8490f1d','','c76098f8-efbb-4957-a2ab-9b332a09d52d'),('d5053e06-fcb2-4855-b9d0-ac5861ac4594','2021-01-12 15:39:51.697828','2021-01-22 17:07:13.993072','刘凯','$2a$10$b3ezmRiBwb0nJjIRk3JWVOeTmcS7mPDOD5T887jLWfG2/GDdgZptK','liukai','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-13 15:20:16.633081','男','zhizhufan@foxmail.com','043ca3fc919e4db0dfc37cecf8490f1d','','fc2b34c0-bfe8-4262-9dbb-8f0d026608bc');
+INSERT INTO `sys_user` VALUES ('1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-06 16:04:50.000000','2021-01-22 17:07:36.097519','超级管理员','$2a$10$b3ezmRiBwb0nJjIRk3JWVOeTmcS7mPDOD5T887jLWfG2/GDdgZptK','admin','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-30 13:26:08.206367','男','zhizhufan@foxmail.com','043ca3fc919e4db0dfc37cecf8490f1d','','73f1218d-9249-42a2-9e78-a5c7963fbec1'),('5d9c5075-47dc-4e6c-a177-4f366f2e4ea3','2021-01-26 15:37:40.153917','2021-01-26 15:37:40.153917','王硕','$2a$10$.eKtIPjsyYGg9d24.jASoerDxLsoPmnrzUgF.VMq3t37dRT9Xs6li','wangshuo','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-26 15:38:33.931903','男','','043ca3fc919e4db0dfc37cecf8490f1d','','c76098f8-efbb-4957-a2ab-9b332a09d52d'),('d5053e06-fcb2-4855-b9d0-ac5861ac4594','2021-01-12 15:39:51.697828','2021-01-22 17:07:13.993072','刘凯','$2a$10$b3ezmRiBwb0nJjIRk3JWVOeTmcS7mPDOD5T887jLWfG2/GDdgZptK','liukai','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-13 15:20:16.633081','男','zhizhufan@foxmail.com','043ca3fc919e4db0dfc37cecf8490f1d','','fc2b34c0-bfe8-4262-9dbb-8f0d026608bc');
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -591,4 +593,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-29 19:33:30
+-- Dump completed on 2021-01-30 13:27:04

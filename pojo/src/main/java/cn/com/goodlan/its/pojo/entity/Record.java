@@ -20,6 +20,11 @@ public class Record extends BaseEntity {
 
     private Score score;
 
+    /**
+     * 扣了多少分
+     */
+    private Integer record;
+
     private College college;
 
 
@@ -62,6 +67,15 @@ public class Record extends BaseEntity {
 
     public void setCollege(College college) {
         this.college = college;
+    }
+
+
+    public Integer getRecord() {
+        return record;
+    }
+
+    public void setRecord(Integer record) {
+        this.record = record;
     }
 
 

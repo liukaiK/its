@@ -1103,7 +1103,7 @@ var table = {
             // 查看详情，以tab页展现
             detailTab: function(id) {
                 table.set();
-                $.modal.openTab("查看" + table.options.modalName, $.operate.editUrl(id));
+                $.modal.openTab("查看" + table.options.modalName, $.operate.detailUrl(id));
             },
             // 修改信息 全屏
             editFull: function(id) {
