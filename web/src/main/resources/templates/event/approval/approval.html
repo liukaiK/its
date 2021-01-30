@@ -118,9 +118,8 @@
 
 
     let searchUrl = /*[[@{/event/approval/search}]]*/ "";
-    let createUrl = /*[[@{/event/approval/add}]]*/ "";
-    let updateUrl = /*[[@{/event/approval/detail/{id}}]]*/ "";
-    let removeUrl = /*[[@{/event/approval/remove}]]*/ "";
+    let approvalUrl = /*[[@{/event/approval/approval/{id}}]]*/ "";
+    let cancelUrl = /*[[@{/event/approval/cancel/{id}}]]*/ "";
 
     let detailFlag = [[${@authority.hasAuthority('event:approval:detail')}]];
     let approvalFlag = [[${@authority.hasAuthority('event:approval:approval')}]];
@@ -129,8 +128,8 @@
     function queryUserList() {
         var options = {
             url: searchUrl,
-            createUrl: createUrl,
-            updateUrl: updateUrl,
+            approvalUrl: approvalUrl,
+            cancelUrl: cancelUrl,
             // removeUrl: removeUrl,
             // exportUrl: prefix + "/export",
             // importUrl: prefix + "/importData",
@@ -189,8 +188,8 @@
                         var actions = [];
                         actions.push('<a class="btn btn-success btn-xs ' + detailFlag + '" href="javascript:void(0)" onclick="$.operate.detailTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>查看详情</a> ');
                         if (row.status === 0) {
-                            actions.push('<a class="btn btn-info btn-xs ' + approvalFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-check"></i>审批</a> ');
-                            actions.push('<a class="btn btn-danger btn-xs ' + cancelFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>作废</a> ');
+                            actions.push('<a class="btn btn-info btn-xs ' + approvalFlag + '" href="javascript:void(0)" onclick="$.operate.approval(\'' + row.id + '\')"><i class="fa fa-check"></i>审批</a> ');
+                            actions.push('<a class="btn btn-danger btn-xs ' + cancelFlag + '" href="javascript:void(0)" onclick="$.operate.cancel(\'' + row.id + '\')"><i class="fa fa-remove"></i>作废</a> ');
                         }
                         return actions.join('');
                     }
