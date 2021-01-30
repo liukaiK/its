@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.service.event;
+package cn.com.goodlan.its.service.event.approval;
 
 import cn.com.goodlan.its.pojo.dto.EventDTO;
 import cn.com.goodlan.its.pojo.vo.EventVO;

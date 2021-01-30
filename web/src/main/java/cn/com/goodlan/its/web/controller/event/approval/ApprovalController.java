@@ -3,7 +3,7 @@ package cn.com.goodlan.its.web.controller.event.approval;
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
 import cn.com.goodlan.its.pojo.dto.EventDTO;
 import cn.com.goodlan.its.pojo.vo.EventVO;
-import cn.com.goodlan.its.service.event.EventApprovalService;
+import cn.com.goodlan.its.service.event.approval.EventApprovalService;
 import cn.com.goodlan.its.service.system.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

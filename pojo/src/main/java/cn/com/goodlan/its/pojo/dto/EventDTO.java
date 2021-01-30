@@ -9,5 +9,6 @@ public class EventDTO {
 
     private String name;
 
+    private String vehicleNumber;
 
 }
