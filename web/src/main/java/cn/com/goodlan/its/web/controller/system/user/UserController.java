@@ -5,6 +5,7 @@ import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.vo.UserVO;
 import cn.com.goodlan.its.service.system.role.RoleService;
 import cn.com.goodlan.its.service.system.user.UserService;
+import cn.com.goodlan.its.util.SecurityUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -96,6 +97,16 @@ public class UserController {
     @PreAuthorize("hasAuthority('system:user:remove')")
     public void remove(String ids) {
         userService.remove(ids);
+    }
+
+
+    /**
+     * 跳转到个人详细信息页面
+     */
+    @GetMapping("/profile")
+    public ModelAndView profile(Model model) {
+        model.addAttribute("user", userService.getById(SecurityUtil.getUserId()));
+        return new ModelAndView("system/user/profile/profile");
     }
 
 

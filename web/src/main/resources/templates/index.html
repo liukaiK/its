@@ -28,7 +28,7 @@
         </div>
         <a th:href="@{/index}">
             <li class="logo hidden-xs">
-                <span class="logo-lg">Ruoyi</span>
+                <span class="logo-lg">交通管理系统</span>
             </li>
          </a>
         <div class="sidebar-collapse">
@@ -90,10 +90,10 @@
                 <ul class="nav navbar-top-links navbar-right welcome-message">
 <!--                    <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="开发文档" href="http://doc.ruoyi.vip/ruoyi" target="_blank"><i class="fa fa-question-circle"></i> 文档</a></li>-->
 <!--                    <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="锁定屏幕" href="#" id="lockScreen"><i class="fa fa-lock"></i> 锁屏</a></li>-->
-	                <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="全屏显示" href="#" id="fullScreen"><i class="fa fa-arrows-alt"></i> 全屏</a></li>
+<!--	                <li><a data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="全屏显示" href="#" id="fullScreen"><i class="fa fa-arrows-alt"></i> 全屏</a></li>-->
                     <li class="dropdown user-menu">
 						<a href="javascript:void(0)" class="dropdown-toggle" data-hover="dropdown">
-							<img th:src="(${#strings.isEmpty('')}) ? @{/img/profile.jpg} : @{${''}}" th:onerror="this.src='img/profile.jpg'" class="user-image">
+<!--							<img th:src="(${#strings.isEmpty('')}) ? @{/img/profile.jpg} : @{${''}}" th:onerror="this.src='img/profile.jpg'" class="user-image">-->
 							<span class="hidden-xs" th:sec:authentication="principal.name">超级管理员</span>
 						</a>
 						<ul class="dropdown-menu">
@@ -105,14 +105,14 @@
 								<a onclick="resetPwd()">
 								<i class="fa fa-key"></i> 修改密码</a>
 							</li>
-							<li>
-								<a onclick="switchSkin()">
-								<i class="fa fa-dashboard"></i> 切换主题</a>
-							</li>
-							<li>
-								<a onclick="toggleMenu()">
-								<i class="fa fa-toggle-off"></i> 横向菜单</a>
-							</li>
+<!--							<li>-->
+<!--								<a onclick="switchSkin()">-->
+<!--								<i class="fa fa-dashboard"></i> 切换主题</a>-->
+<!--							</li>-->
+<!--							<li>-->
+<!--								<a onclick="toggleMenu()">-->
+<!--								<i class="fa fa-toggle-off"></i> 横向菜单</a>-->
+<!--							</li>-->
 							<li class="divider"></li>
 							<li>
 								<a onclick="logout()">
