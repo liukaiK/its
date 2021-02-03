@@ -32,7 +32,7 @@ public class IndexController {
         model.addAttribute("sideTheme", configService.selectConfigByKey("sys.index.sideTheme"));
         model.addAttribute("skinName", configService.selectConfigByKey("sys.index.skinName"));
         model.addAttribute("ignoreFooter", configService.selectConfigByKey("sys.index.ignoreFooter"));
-        return "/index";
+        return "index";
     }
 
     /**

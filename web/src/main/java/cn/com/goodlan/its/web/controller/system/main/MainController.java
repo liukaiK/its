@@ -11,7 +11,7 @@ public class MainController {
 
     @GetMapping("/system/main")
     public String main() {
-        return "/main";
+        return "main";
     }
 
 }

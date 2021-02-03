@@ -4,11 +4,9 @@ import cn.com.goodlan.its.common.exception.BusinessException;
 import cn.com.goodlan.its.dao.event.EventRepository;
 import cn.com.goodlan.its.dao.system.record.RecordRepository;
 import cn.com.goodlan.its.dao.system.score.ScoreRepository;
+import cn.com.goodlan.its.pojo.TrafficEvent;
 import cn.com.goodlan.its.pojo.dto.EventDTO;
-import cn.com.goodlan.its.pojo.entity.Event;
-import cn.com.goodlan.its.pojo.entity.Record;
-import cn.com.goodlan.its.pojo.entity.Score;
-import cn.com.goodlan.its.pojo.entity.User;
+import cn.com.goodlan.its.pojo.entity.*;
 import cn.com.goodlan.its.pojo.vo.EventVO;
 import cn.com.goodlan.mapstruct.EventMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -66,12 +64,13 @@ public class EventApprovalServiceImpl implements EventApprovalService {
     @RabbitListener(queuesToDeclare = @Queue(name = "its.traffic.event", durable = "true"))
     public void create(byte[] message) {
         String result = new String(message, StandardCharsets.UTF_8);
-        User user = objectMapper.convertValue(result, User.class);
-
+        TrafficEvent eventFromMQ = objectMapper.convertValue(result, TrafficEvent.class);
         Event event = new Event();
-//        event.setPlace();
+        event.setVehicle(new Vehicle(eventFromMQ.getM_PlateNumber()));
+//        event.setViolation(new Violation());
+        event.setPlace(eventFromMQ.getM_IllegalPlace());
+        eventRepository.save(event);
 
-        System.out.println(result);
     }
 
     @Override
