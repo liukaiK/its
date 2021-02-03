@@ -33,7 +33,7 @@ public class LoginController {
 
     private String toLoginPage(Model model) {
         model.addAttribute("PUBLIC_KEY", RSAUtil.PUBLIC_KEY);
-        return "/login";
+        return "login";
     }
 
     private String toMainPage() {
