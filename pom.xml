@@ -25,6 +25,7 @@
         <hutool-all.version>5.5.7</hutool-all.version>
         <java-uuid-generator.version>3.1.4</java-uuid-generator.version>
         <commons-io.version>2.5</commons-io.version>
+        <lombok.version>1.18.16</lombok.version>
         <smiley-http-proxy-servlet.version>1.11</smiley-http-proxy-servlet.version>
     </properties>
 

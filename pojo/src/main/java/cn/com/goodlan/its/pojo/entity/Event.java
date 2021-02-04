@@ -5,6 +5,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * 事件实体
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @DynamicUpdate
 @DynamicInsert
 @Table(name = "eve_event")
-public class Event extends BaseEntity {
+public class Event {
 
     /**
      * 作废
@@ -36,9 +37,14 @@ public class Event extends BaseEntity {
     private String name;
 
     /**
-     * 违章车辆
+     * 违章车辆 系统中存在的车辆
      */
     private Vehicle vehicle;
+
+    /**
+     * 车牌号
+     */
+    private String vehicleNumber;
 
     private Violation violation;
 
@@ -54,6 +60,10 @@ public class Event extends BaseEntity {
 
 
     private Integer status = 0;
+
+    private LocalDateTime createTime;
+
+    private LocalDateTime updateTime;
 
     public Event() {
     }
@@ -126,6 +136,15 @@ public class Event extends BaseEntity {
 
     public void setViolation(Violation violation) {
         this.violation = violation;
+    }
+
+
+    public String getVehicleNumber() {
+        return vehicleNumber;
+    }
+
+    public void setVehicleNumber(String vehicleNumber) {
+        this.vehicleNumber = vehicleNumber;
     }
 
 }

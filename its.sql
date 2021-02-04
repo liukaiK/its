@@ -33,18 +33,15 @@ DROP TABLE IF EXISTS `eve_event`;
 CREATE TABLE `eve_event` (
   `id` varchar(255) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `vehicle_id` varchar(255) DEFAULT NULL,
   `place` varchar(255) DEFAULT NULL,
-  `camera_id` varchar(255) DEFAULT NULL,
-  `create_by` varchar(255) DEFAULT NULL,
-  `create_time` datetime(6) NOT NULL,
-  `update_by` varchar(255) DEFAULT NULL,
-  `update_time` datetime(6) NOT NULL,
   `status` tinyint(4) DEFAULT NULL,
+  `camera_id` varchar(255) DEFAULT NULL,
+  `vehicle_id` varchar(255) DEFAULT NULL,
   `violation_id` varchar(255) DEFAULT NULL,
+  `vehicle_number` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKkkwmjljmrrx45ng53lw3annwo` (`vehicle_id`),
   KEY `FKs6ftkjagbnlrgkuw4cjn3sehc` (`camera_id`),
+  KEY `FKkkwmjljmrrx45ng53lw3annwo` (`vehicle_id`),
   KEY `FKfs1jwhcxqlbujxpc1eip4n4hq` (`violation_id`),
   CONSTRAINT `FKfs1jwhcxqlbujxpc1eip4n4hq` FOREIGN KEY (`violation_id`) REFERENCES `sys_violation` (`id`),
   CONSTRAINT `FKkkwmjljmrrx45ng53lw3annwo` FOREIGN KEY (`vehicle_id`) REFERENCES `sys_vehicle` (`id`),
@@ -58,7 +55,7 @@ CREATE TABLE `eve_event` (
 
 LOCK TABLES `eve_event` WRITE;
 /*!40000 ALTER TABLE `eve_event` DISABLE KEYS */;
-INSERT INTO `eve_event` VALUES ('bb2908e6-5c29-11eb-aff3-85667207cdf0','123123123','a38de747-039e-427c-b033-dfd195ff90de',NULL,'cf139bd8-2188-4bd6-94dd-b588ae4660b9',NULL,'2021-01-22 14:19:06.000000','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-30 13:42:02.177093',1,'a2095ee8-a8a7-4221-beaa-42a2ae6b416d'),('bb2908e6-5c79-11eb-aff3-85667207cdf0','123123123','a38de747-039e-427c-b033-dfd195ff90de',NULL,'cf139bd8-2188-4bd6-94dd-b588ae4660b9',NULL,'2021-01-22 14:19:06.000000','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-30 12:42:17.378880',0,'a2095ee8-a8a7-4221-beaa-42a2ae6b416d');
+INSERT INTO `eve_event` VALUES ('395cde7c-433d-4e50-86d1-778f2623a4d9',NULL,'哈工大保卫处',0,NULL,NULL,NULL,'青B.00000'),('fe0d1b9e-e923-46c9-9e1f-7c33339924a7',NULL,'哈工大保卫处',0,NULL,NULL,NULL,'青B.00000');
 /*!40000 ALTER TABLE `eve_event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -71,14 +68,14 @@ DROP TABLE IF EXISTS `eve_record`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `eve_record` (
   `id` varchar(255) NOT NULL,
-  `college_id` varchar(255) DEFAULT NULL,
-  `event_id` varchar(255) DEFAULT NULL,
-  `score_id` varchar(255) DEFAULT NULL,
   `create_by` varchar(255) DEFAULT NULL,
   `create_time` datetime(6) NOT NULL,
   `update_by` varchar(255) DEFAULT NULL,
   `update_time` datetime(6) NOT NULL,
   `record` int(11) DEFAULT NULL,
+  `college_id` varchar(255) DEFAULT NULL,
+  `event_id` varchar(255) DEFAULT NULL,
+  `score_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKt4gs77cya4yvb7u5xnhe7kulk` (`college_id`),
   KEY `FKgbh9o426n2fwfsfifqtyfom8j` (`event_id`),
@@ -95,7 +92,6 @@ CREATE TABLE `eve_record` (
 
 LOCK TABLES `eve_record` WRITE;
 /*!40000 ALTER TABLE `eve_record` DISABLE KEYS */;
-INSERT INTO `eve_record` VALUES ('1d93cb6a-b15c-486a-bf9d-0dc1ad5b8357','676cf193-fbc8-48c1-8a16-f1984c9071b9','bb2908e6-5c29-11eb-aff3-85667207cdf0','fde57d8e-c9ca-4a91-b77d-850b6a43d262','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-30 13:42:02.175750','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-30 13:42:02.175750',10);
 /*!40000 ALTER TABLE `eve_record` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -484,7 +480,7 @@ CREATE TABLE `sys_user` (
 
 LOCK TABLES `sys_user` WRITE;
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
-INSERT INTO `sys_user` VALUES ('1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-06 16:04:50.000000','2021-01-22 17:07:36.097519','超级管理员','$2a$10$b3ezmRiBwb0nJjIRk3JWVOeTmcS7mPDOD5T887jLWfG2/GDdgZptK','admin','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-02-02 10:36:14.377315','男','zhizhufan@foxmail.com','043ca3fc919e4db0dfc37cecf8490f1d','','73f1218d-9249-42a2-9e78-a5c7963fbec1'),('5d9c5075-47dc-4e6c-a177-4f366f2e4ea3','2021-01-26 15:37:40.153917','2021-01-26 15:37:40.153917','王硕','$2a$10$.eKtIPjsyYGg9d24.jASoerDxLsoPmnrzUgF.VMq3t37dRT9Xs6li','wangshuo','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-26 15:38:33.931903','男','','043ca3fc919e4db0dfc37cecf8490f1d','','c76098f8-efbb-4957-a2ab-9b332a09d52d'),('d5053e06-fcb2-4855-b9d0-ac5861ac4594','2021-01-12 15:39:51.697828','2021-01-22 17:07:13.993072','刘凯','$2a$10$b3ezmRiBwb0nJjIRk3JWVOeTmcS7mPDOD5T887jLWfG2/GDdgZptK','liukai','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-13 15:20:16.633081','男','zhizhufan@foxmail.com','043ca3fc919e4db0dfc37cecf8490f1d','','fc2b34c0-bfe8-4262-9dbb-8f0d026608bc');
+INSERT INTO `sys_user` VALUES ('1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-06 16:04:50.000000','2021-01-22 17:07:36.097519','超级管理员','$2a$10$b3ezmRiBwb0nJjIRk3JWVOeTmcS7mPDOD5T887jLWfG2/GDdgZptK','admin','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-02-04 13:49:08.575819','男','zhizhufan@foxmail.com','043ca3fc919e4db0dfc37cecf8490f1d','','73f1218d-9249-42a2-9e78-a5c7963fbec1'),('5d9c5075-47dc-4e6c-a177-4f366f2e4ea3','2021-01-26 15:37:40.153917','2021-01-26 15:37:40.153917','王硕','$2a$10$.eKtIPjsyYGg9d24.jASoerDxLsoPmnrzUgF.VMq3t37dRT9Xs6li','wangshuo','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-26 15:38:33.931903','男','','043ca3fc919e4db0dfc37cecf8490f1d','','c76098f8-efbb-4957-a2ab-9b332a09d52d'),('d5053e06-fcb2-4855-b9d0-ac5861ac4594','2021-01-12 15:39:51.697828','2021-01-22 17:07:13.993072','刘凯','$2a$10$b3ezmRiBwb0nJjIRk3JWVOeTmcS7mPDOD5T887jLWfG2/GDdgZptK','liukai','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-13 15:20:16.633081','男','zhizhufan@foxmail.com','043ca3fc919e4db0dfc37cecf8490f1d','','fc2b34c0-bfe8-4262-9dbb-8f0d026608bc');
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -532,6 +528,7 @@ CREATE TABLE `sys_vehicle` (
   `update_by` varchar(255) DEFAULT NULL,
   `college_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_iik8klcph48940klfc8xv48hb` (`number`),
   KEY `FKjwiu4tppuxd6yi0tv5ixwuert` (`create_by`),
   KEY `FKb16f6dhwax0cvugpvubf2h3y1` (`update_by`),
   KEY `FKtprj36fx1c1rr7skrml2hmswb` (`college_id`),
@@ -547,7 +544,7 @@ CREATE TABLE `sys_vehicle` (
 
 LOCK TABLES `sys_vehicle` WRITE;
 /*!40000 ALTER TABLE `sys_vehicle` DISABLE KEYS */;
-INSERT INTO `sys_vehicle` VALUES ('3be4717d-da13-43eb-bc8b-be3ada5d52f6','2021-01-15 15:33:38.848561','2021-01-15 15:33:38.848561','fffffff',1,'1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','676cf193-fbc8-48c1-8a16-f1984c9071b9'),('a38de747-039e-427c-b033-dfd195ff90de','2021-01-15 15:33:26.349946','2021-01-15 15:42:26.035909','8888888',0,'1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','676cf193-fbc8-48c1-8a16-f1984c9071b9');
+INSERT INTO `sys_vehicle` VALUES ('3be4717d-da13-43eb-bc8b-be3ada5d52f6','2021-01-15 15:33:38.848561','2021-01-15 15:33:38.848561','fffffff',1,'1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','676cf193-fbc8-48c1-8a16-f1984c9071b9'),('a38de747-039e-427c-b033-dfd195ff90de','2021-01-15 15:33:26.349946','2021-02-04 12:04:32.841859','青A.00000',0,'1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','676cf193-fbc8-48c1-8a16-f1984c9071b9');
 /*!40000 ALTER TABLE `sys_vehicle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -593,4 +590,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-02 10:46:15
+-- Dump completed on 2021-02-04 14:02:07

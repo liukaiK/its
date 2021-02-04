@@ -62,8 +62,8 @@ public class BaseEntity implements Serializable {
         this.updateTime = updateTime;
     }
 
-    @CreatedBy
-    @Column(name = "create_by")
+//    @CreatedBy
+//    @Column(name = "create_by")
     public String getCreateBy() {
         return createBy;
     }
@@ -72,8 +72,8 @@ public class BaseEntity implements Serializable {
         this.createBy = createBy;
     }
 
-    @LastModifiedBy
-    @Column(name = "update_by")
+//    @LastModifiedBy
+//    @Column(name = "update_by")
     public String getUpdateBy() {
         return updateBy;
     }
