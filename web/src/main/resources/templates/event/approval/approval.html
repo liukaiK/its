@@ -147,7 +147,13 @@
                 },
                 {
                     field: 'collegeName',
-                    title: '所属学院'
+                    title: '所属学院',
+                    formatter: function (value, row, index) {
+                        if (row.collegeName === null) {
+                            return '未知';
+                        }
+                        return value;
+                    },
                 },
                 {
                     field: 'regionName',
@@ -173,16 +179,11 @@
                     },
                     sortable: true
                 },
-                // {
-                //     field: 'createTime',
-                //     title: '创建时间',
-                //     sortable: true
-                // },
-                // {
-                //     field: 'updateTime',
-                //     title: '修改时间',
-                //     sortable: true
-                // },
+                {
+                    field: 'violationTime',
+                    title: '违规时间',
+                    sortable: true
+                },
                 {
                     title: '操作',
                     align: 'center',

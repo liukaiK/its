@@ -3,6 +3,7 @@ package cn.com.goodlan.its.pojo.entity;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -58,12 +59,12 @@ public class Event {
      */
     private String place;
 
+    /**
+     * 违规时间
+     */
+    private LocalDateTime violationTime;
 
     private Integer status = 0;
-
-    private LocalDateTime createTime;
-
-    private LocalDateTime updateTime;
 
     public Event() {
     }
@@ -145,6 +146,15 @@ public class Event {
 
     public void setVehicleNumber(String vehicleNumber) {
         this.vehicleNumber = vehicleNumber;
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    public LocalDateTime getViolationTime() {
+        return violationTime;
+    }
+
+    public void setViolationTime(LocalDateTime violationTime) {
+        this.violationTime = violationTime;
     }
 
 }

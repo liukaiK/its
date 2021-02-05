@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Predicate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +76,7 @@ public class EventApprovalServiceImpl implements EventApprovalService {
         event.setVehicle(vehicleRepository.getByNumber(trafficEvent.getM_PlateNumber()));
         event.setPlace(trafficEvent.getM_IllegalPlace());
         event.setVehicleNumber(trafficEvent.getM_PlateNumber());
+        event.setViolationTime(LocalDateTime.now());
         eventRepository.save(event);
 
     }
