@@ -35,7 +35,7 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                车牌号：<input type="text" name="name"/>
+                                车牌号：<input type="text" name="vehicleNumber"/>
                             </li>
                             <li>
                                 <!--									账号：<input type="text" name="username"/>-->
@@ -112,7 +112,7 @@
             };
             $('#scroll-up').toTop(opt);
         }
-        queryUserList();
+        search();
         queryDeptTree();
     });
 
@@ -126,7 +126,7 @@
     let approvalFlag = [[${@authority.hasAuthority('event:approval:approval')}]];
     let cancelFlag = [[${@authority.hasAuthority('event:approval:cancel')}]];
 
-    function queryUserList() {
+    function search() {
         var options = {
             url: searchUrl,
             detailUrl: detailUrl,

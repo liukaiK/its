@@ -57,7 +57,7 @@ public class EventApprovalServiceImpl implements EventApprovalService {
         Specification<Event> specification = (root, query, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
             if (StringUtils.isNotEmpty(eventDTO.getVehicleNumber())) {
-                list.add(criteriaBuilder.like(root.get("name").as(String.class), eventDTO.getVehicleNumber() + "%"));
+                list.add(criteriaBuilder.like(root.get("vehicleNumber").as(String.class), eventDTO.getVehicleNumber() + "%"));
             }
             Predicate[] p = new Predicate[list.size()];
             return criteriaBuilder.and(list.toArray(p));
