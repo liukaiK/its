@@ -3,10 +3,12 @@ package cn.com.goodlan.its.service.system.user;
 
 import cn.com.goodlan.its.common.util.AESUtil;
 import cn.com.goodlan.its.dao.system.user.UserRepository;
+import cn.com.goodlan.its.pojo.dto.UpdateProfileDTO;
 import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.entity.Role;
 import cn.com.goodlan.its.pojo.entity.User;
 import cn.com.goodlan.its.pojo.vo.UserVO;
+import cn.com.goodlan.its.util.SecurityUtil;
 import cn.com.goodlan.mapstruct.UserMapper;
 import cn.hutool.core.convert.Convert;
 import org.apache.commons.lang3.StringUtils;
@@ -111,6 +113,15 @@ public class UserServiceImpl implements UserService {
     public UserVO getById(String id) {
         User user = userRepository.getOne(id);
         return UserMapper.INSTANCE.convert(user);
+    }
+
+    @Override
+    public void updateProfile(UpdateProfileDTO updateProfileDTO) {
+        User user = userRepository.getOne(SecurityUtil.getUserId());
+        user.setEmail(updateProfileDTO.getEmail());
+        user.setSex(updateProfileDTO.getSex());
+        user.setPhoneNumber(AESUtil.encrypt(updateProfileDTO.getPhoneNumber()));
+        userRepository.save(user);
     }
 
     @Override

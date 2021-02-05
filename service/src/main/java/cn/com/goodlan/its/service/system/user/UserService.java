@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.service.system.user;
 
+import cn.com.goodlan.its.pojo.dto.UpdateProfileDTO;
 import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.vo.UserVO;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,8 @@ public interface UserService {
     void remove(String ids);
 
     UserVO getById(String id);
+
+    void updateProfile(UpdateProfileDTO updateProfileDTO);
 
     /**
      * 检查账号是否已经存在

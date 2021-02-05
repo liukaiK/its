@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.web.controller.system.user;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
+import cn.com.goodlan.its.pojo.dto.UpdateProfileDTO;
 import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.vo.UserVO;
 import cn.com.goodlan.its.service.system.role.RoleService;
@@ -107,6 +108,14 @@ public class UserController {
     public ModelAndView profile(Model model) {
         model.addAttribute("user", userService.getById(SecurityUtil.getUserId()));
         return new ModelAndView("system/user/profile/profile");
+    }
+
+    /**
+     * 修改个人信息
+     */
+    @PostMapping("/profile/update")
+    public void updateProfile(@Valid UpdateProfileDTO updateProfileDTO) {
+        userService.updateProfile(updateProfileDTO);
     }
 
 

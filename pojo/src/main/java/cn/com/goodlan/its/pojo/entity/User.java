@@ -1,5 +1,7 @@
 package cn.com.goodlan.its.pojo.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,6 +16,8 @@ import java.util.List;
  * @author liukai
  */
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Table(name = "sys_user")
 public class User extends BaseEntity {
 

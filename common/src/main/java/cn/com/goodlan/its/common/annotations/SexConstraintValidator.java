@@ -8,10 +8,10 @@ import javax.validation.ConstraintValidatorContext;
  *
  * @author liukai
  */
-public class SexConstraintValidator implements ConstraintValidator<MobileNumber, String> {
+public class SexConstraintValidator implements ConstraintValidator<Sex, String> {
 
     @Override
-    public void initialize(MobileNumber constraintAnnotation) {
+    public void initialize(Sex constraintAnnotation) {
 
     }
 
