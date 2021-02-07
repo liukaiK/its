@@ -11,8 +11,6 @@ import lombok.ToString;
 @AllArgsConstructor
 public class TrafficEvent {
 
-    private String id;
-
     /**
      * 事件名称
      */
@@ -27,16 +25,33 @@ public class TrafficEvent {
      * 车牌类型
      */
     private String m_PlateType;
-//
-//    // 车牌颜色
-//    private String m_PlateColor;
-//
-//    // 车身颜色
-//    private String m_VehicleColor;
-//    // 车身类型
-//    private String m_VehicleType;
-//    // 车辆大小
-//    private String m_VehicleSize;
+
+    /**
+     * 车牌颜色 Other
+     */
+    private String m_PlateColor;
+
+    /**
+     * 车身颜色 Black
+     */
+    private String m_VehicleColor;
+
+    /**
+     * 车身类型  例Motorcycle
+     */
+    private String m_VehicleType;
+
+    /**
+     * 车辆大小 小型车
+     */
+    private String m_VehicleSize;
+
+    /**
+     * 违法地点
+     */
+    private String m_IllegalPlace;
+
+
 //    // 文件总数
 //    private String m_FileCount;
 //
@@ -45,10 +60,7 @@ public class TrafficEvent {
 //
 //    // 组ID
 //    private String m_GroupID;
-    /**
-     * 违法地点
-     */
-    private String m_IllegalPlace;
+
 //
 //    // 通道号
 //    private String m_LaneNumber;
