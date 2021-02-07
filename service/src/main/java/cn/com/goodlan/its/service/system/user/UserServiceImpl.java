@@ -3,6 +3,7 @@ package cn.com.goodlan.its.service.system.user;
 
 import cn.com.goodlan.its.common.util.AESUtil;
 import cn.com.goodlan.its.dao.system.user.UserRepository;
+import cn.com.goodlan.its.pojo.dto.ChangePasswordDTO;
 import cn.com.goodlan.its.pojo.dto.UpdateProfileDTO;
 import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.entity.Role;
@@ -132,6 +133,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkUsernameUnique(String userId, String username) {
         return userRepository.existsByUsernameAndIdNot(username, userId);
+    }
+
+    @Override
+    public void changePassword(ChangePasswordDTO changePasswordDTO) {
+        User user = userRepository.getOne(SecurityUtil.getUserId());
+        user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+        userRepository.save(user);
     }
 
 }

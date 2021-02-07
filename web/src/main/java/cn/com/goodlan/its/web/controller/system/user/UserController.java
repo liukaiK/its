@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.web.controller.system.user;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
+import cn.com.goodlan.its.pojo.dto.ChangePasswordDTO;
 import cn.com.goodlan.its.pojo.dto.UpdateProfileDTO;
 import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.vo.UserVO;
@@ -118,6 +119,14 @@ public class UserController {
         userService.updateProfile(updateProfileDTO);
     }
 
+
+    /**
+     * 修改密码
+     */
+    @PostMapping("/profile/changePassword")
+    public void changePassword(@Valid ChangePasswordDTO changePasswordDTO) {
+        userService.changePassword(changePasswordDTO);
+    }
 
     /**
      * 校验账号是否已经存在

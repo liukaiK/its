@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.service.system.user;
 
+import cn.com.goodlan.its.pojo.dto.ChangePasswordDTO;
 import cn.com.goodlan.its.pojo.dto.UpdateProfileDTO;
 import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.vo.UserVO;
@@ -36,5 +37,10 @@ public interface UserService {
      * @return 是否存在
      */
     boolean checkUsernameUnique(String userId, String username);
+
+    /**
+     * 修改密码
+     */
+    void changePassword(ChangePasswordDTO changePasswordDTO);
 
 }
