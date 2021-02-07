@@ -5,4 +5,6 @@ import cn.com.goodlan.its.pojo.entity.Camera;
 
 public interface CameraRepository extends CustomizeRepository<Camera, String> {
 
+    Camera getByIp(String ip);
+
 }

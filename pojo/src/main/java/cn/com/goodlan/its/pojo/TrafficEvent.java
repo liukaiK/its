@@ -61,6 +61,8 @@ public class TrafficEvent {
      */
     private long m_Utc;
 
+    private String ip;
+
 //    // 文件总数
 //    private String m_FileCount;
 //

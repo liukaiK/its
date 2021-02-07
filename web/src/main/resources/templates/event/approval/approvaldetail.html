@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('违规审批')" />
+	<th:block th:include="include :: select2-css" />
+</head>
+<body>
+    <div class="main-content">
+        <form class="form-horizontal" id="form-user-edit" th:object="${event}">
+            <input name="id" type="hidden" th:value="*{id}"/>
+            <h4 class="form-header h4">违规审批</h4>
+            <div class="row">
+            	<div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车牌号：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="*{vehicleNumber}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车辆类型：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="*{vehicleNumber}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            	<div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">预约人：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="*{vehicleNumber}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">所在学院：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="*{collegeName}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">联系电话：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="*{collegeName}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-5 col-sm-10">
+            <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>审 批</button>&nbsp;
+            <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+        </div>
+    </div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: select2-js" />
+    <script th:inline="javascript">
+
+        // $("#form-user-edit").validate({
+        // 	onkeyup: false,
+        // 	rules:{
+        // 		email:{
+        //             email:true,
+        //             remote: {
+        //                 url: prefix + "/checkEmailUnique",
+        //                 type: "post",
+        //                 dataType: "json",
+        //                 data: {
+        //                 	"userId": function() {
+        //                         return $("#userId").val();
+        //                     },
+        //         			"email": function() {
+        //                         return $.common.trim($("#email").val());
+        //                     }
+        //                 },
+        //                 dataFilter: function (data, type) {
+        //                 	return $.validate.unique(data);
+        //                 }
+        //             }
+        // 		},
+        // 		phonenumber:{
+        // 			isPhone:true,
+        //             remote: {
+        //                 url: prefix + "/checkPhoneUnique",
+        //                 type: "post",
+        //                 dataType: "json",
+        //                 data: {
+        //                 	"userId": function() {
+        //                 		return $("#userId").val();
+        //                     },
+        //         			"phonenumber": function() {
+        //                         return $.common.trim($("#phonenumber").val());
+        //                     }
+        //                 },
+        //                 dataFilter: function (data, type) {
+        //                 	return $.validate.unique(data);
+        //                 }
+        //             }
+        // 		},
+        // 	},
+        // 	messages: {
+        // 		"email": {
+        //             remote: "Email已经存在"
+        //         },
+        // 		"phonenumber":{
+        //         	remote: "手机号码已经存在"
+        // 		}
+        //     },
+        //     focusCleanup: true
+        // });
+
+
+        let approvalUrl = /*[[@{/event/approval/approval}]]*/ "";
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                var data = $("#form-user-edit").serializeArray();
+                $.operate.saveTab(approvalUrl, data);
+            }
+        }
+
+		function doSubmit(index, layero){
+			var tree = layero.find("iframe")[0].contentWindow.$._tree;
+   			var body = layer.getChildFrame('body', index);
+   			$("#treeId").val(body.find('#treeId').val());
+   			$("#treeName").val(body.find('#treeName').val());
+   			layer.close(index);
+		}
+
+    </script>
+</body>
+</html>

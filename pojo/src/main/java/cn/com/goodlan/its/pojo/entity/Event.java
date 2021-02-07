@@ -74,6 +74,11 @@ public class Event {
      */
     private LocalDateTime time;
 
+    /**
+     * 处理时间
+     */
+    private LocalDateTime approvalTime;
+
     private Integer status = 0;
 
     public Event() {
@@ -180,6 +185,15 @@ public class Event {
 
     public void setVehicleColor(String vehicleColor) {
         this.vehicleColor = vehicleColor;
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    public LocalDateTime getApprovalTime() {
+        return approvalTime;
+    }
+
+    public void setApprovalTime(LocalDateTime approvalTime) {
+        this.approvalTime = approvalTime;
     }
 
 }

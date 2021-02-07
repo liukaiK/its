@@ -4,7 +4,6 @@ import cn.com.goodlan.its.common.annotations.ResponseResultBody;
 import cn.com.goodlan.its.pojo.dto.EventDTO;
 import cn.com.goodlan.its.pojo.vo.EventVO;
 import cn.com.goodlan.its.service.event.approval.EventApprovalService;
-import cn.com.goodlan.its.service.system.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,9 +25,6 @@ public class ApprovalController {
 
     @Autowired
     private EventApprovalService eventApprovalService;
-
-    @Autowired
-    private UserService userService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('event:approval:view')")
@@ -56,12 +52,24 @@ public class ApprovalController {
         return new ModelAndView("event/approval/detail");
     }
 
+
+    /**
+     * 跳转到审批页面
+     */
+    @GetMapping("/approvaldetail/{id}")
+    @PreAuthorize("hasAuthority('event:approval:approval')")
+    public ModelAndView approval(@PathVariable String id, Model model) {
+        model.addAttribute("event", eventApprovalService.getById(id));
+        return new ModelAndView("event/approval/approvaldetail");
+    }
+
+
     /**
      * 审批功能
      */
-    @PostMapping("/approval/{id}")
+    @PostMapping("/approval")
     @PreAuthorize("hasAuthority('event:approval:approval')")
-    public void approval(@PathVariable String id) {
+    public void approval(String id) {
         eventApprovalService.approval(id);
     }
 

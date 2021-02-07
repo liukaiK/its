@@ -1012,18 +1012,25 @@ var table = {
                     }
             	});
             },
-            // 审批信息
-            approval: function(id) {
-            	table.set();
-            	$.modal.confirm("确定审批该条信息吗？", function() {
-                    var url = $.common.isEmpty(id) ? table.options.approvalUrl : table.options.approvalUrl.replace("{id}", id);
-                    if(table.options.type == table_type.bootstrapTreeTable) {
-                    	$.operate.get(url);
-                    } else {
-                    	var data = { "ids": id };
-                    	$.operate.submit(url, "post", "json", data);
+            // 跳转到审批信息
+            approvalTab: function(id) {
+                table.set();
+                $.modal.openTab("违规" + table.options.modalName, $.operate.approvalUrl(id));
+            },
+            // 详细访问地址
+            approvalUrl: function(id) {
+                var url = "/404.html";
+                if ($.common.isNotEmpty(id)) {
+                    url = table.options.approvalUrl.replace("{id}", id);
+                } else {
+                    var id = $.common.isEmpty(table.options.uniqueId) ? $.table.selectFirstColumns() : $.table.selectColumns(table.options.uniqueId);
+                    if (id.length == 0) {
+                        $.modal.alertWarning("请至少选择一条记录");
+                        return;
                     }
-            	});
+                    url = table.options.approvalUrl.replace("{id}", id);
+                }
+                return url;
             },
             // 作废信息
             cancel: function(id) {

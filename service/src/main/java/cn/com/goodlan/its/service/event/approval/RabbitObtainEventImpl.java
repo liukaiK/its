@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.service.event.approval;
 
 import cn.com.goodlan.its.dao.event.EventRepository;
+import cn.com.goodlan.its.dao.system.camera.CameraRepository;
 import cn.com.goodlan.its.dao.system.vehicle.VehicleRepository;
 import cn.com.goodlan.its.pojo.TrafficEvent;
 import cn.com.goodlan.its.pojo.entity.Event;
@@ -28,6 +29,9 @@ public class RabbitObtainEventImpl {
     private EventRepository eventRepository;
 
     @Autowired
+    private CameraRepository cameraRepository;
+
+    @Autowired
     private ObjectMapper objectMapper;
 
     @RabbitHandler
@@ -36,6 +40,7 @@ public class RabbitObtainEventImpl {
         TrafficEvent trafficEvent = objectMapper.readValue(message, TrafficEvent.class);
         log.debug(trafficEvent.toString());
         Event event = new Event();
+        event.setCamera(cameraRepository.getByIp(trafficEvent.getIp()));
         event.setVehicle(vehicleRepository.getByLicensePlateNumber(trafficEvent.getM_PlateNumber()));
         event.setPlace(trafficEvent.getM_IllegalPlace());
         event.setLicensePlateNumber(trafficEvent.getM_PlateNumber());
