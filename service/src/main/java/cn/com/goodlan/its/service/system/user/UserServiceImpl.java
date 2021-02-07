@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.service.system.user;
 
 
+import cn.com.goodlan.its.common.exception.BusinessException;
 import cn.com.goodlan.its.common.util.AESUtil;
 import cn.com.goodlan.its.dao.system.user.UserRepository;
 import cn.com.goodlan.its.pojo.dto.ChangePasswordDTO;
@@ -138,8 +139,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changePassword(ChangePasswordDTO changePasswordDTO) {
         User user = userRepository.getOne(SecurityUtil.getUserId());
+        if (passwordIsError(changePasswordDTO, user)) {
+            throw new BusinessException("原密码错误!");
+        }
+        if (!StringUtils.equals(changePasswordDTO.getNewPassword(), changePasswordDTO.getConfigPassword())) {
+            throw new BusinessException("确认密码与新密码不一致!");
+        }
         user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
         userRepository.save(user);
+    }
+
+    private boolean passwordIsError(ChangePasswordDTO changePasswordDTO, User user) {
+        return !passwordEncoder.matches(changePasswordDTO.getOldPassword(), user.getPassword());
     }
 
 }

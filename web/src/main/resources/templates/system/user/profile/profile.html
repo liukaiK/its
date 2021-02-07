@@ -295,11 +295,13 @@
 	        focusCleanup: true
 		});
 
+        let changePasswordUrl = /*[[@{/system/user/profile/changePassword}]]*/ "";
+
 		function submitChangPassword () {
 			var chrtype = [[${#strings.defaultString(@config.getKey('sys.account.chrtype'), 0)}]];
 			var password = $("#newPassword").val();
 	        if ($.validate.form("form-user-resetPwd") && checkpwd(chrtype, password)) {
-	        	$.operate.saveModal(ctx + "system/user/profile/resetPwd", $('#form-user-resetPwd').serialize());
+	        	$.operate.saveModal(changePasswordUrl, $('#form-user-resetPwd').serialize());
 	        }
 	    }
 	</script>
