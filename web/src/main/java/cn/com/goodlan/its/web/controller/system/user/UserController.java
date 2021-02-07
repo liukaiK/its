@@ -103,6 +103,14 @@ public class UserController {
         userService.remove(ids);
     }
 
+    /**
+     * 重置密码
+     */
+    @PostMapping("/resetPassword")
+    @PreAuthorize("hasAuthority('system:user:resetPassword')")
+    public void resetPassword() {
+
+    }
 
     /**
      * 跳转到个人详细信息页面

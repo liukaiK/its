@@ -19,6 +19,13 @@ public interface UserService {
 
     UserVO getById(String id);
 
+    /**
+     * 重置密码
+     *
+     * @param id 用户ID
+     */
+    void resetPassword(String id);
+
     void updateProfile(UpdateProfileDTO updateProfileDTO);
 
     /**

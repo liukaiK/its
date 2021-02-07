@@ -3,6 +3,7 @@ package cn.com.goodlan.its.service.system.user;
 
 import cn.com.goodlan.its.common.exception.BusinessException;
 import cn.com.goodlan.its.common.util.AESUtil;
+import cn.com.goodlan.its.dao.system.config.ConfigRepository;
 import cn.com.goodlan.its.dao.system.user.UserRepository;
 import cn.com.goodlan.its.pojo.dto.ChangePasswordDTO;
 import cn.com.goodlan.its.pojo.dto.UpdateProfileDTO;
@@ -36,6 +37,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ConfigRepository configRepository;
 
 
     @Override
@@ -115,6 +119,13 @@ public class UserServiceImpl implements UserService {
     public UserVO getById(String id) {
         User user = userRepository.getOne(id);
         return UserMapper.INSTANCE.convert(user);
+    }
+
+    @Override
+    public void resetPassword(String id) {
+        User user = userRepository.getOne(id);
+        user.setPassword(passwordEncoder.encode("123123"));
+        userRepository.save(user);
     }
 
     @Override
