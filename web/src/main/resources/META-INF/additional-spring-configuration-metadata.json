@@ -1,9 +1,19 @@
 {
   "properties": [
     {
-      "name": "fdfs.nginx-url",
+      "name": "sms.application-id",
       "type": "java.lang.String",
-      "description": "fastdfs nginx附件回显地址."
+      "description": "发送短信application-id."
+    },
+    {
+      "name": "sms.application-password",
+      "type": "java.lang.String",
+      "description": "发送短信application-password."
+    },
+    {
+      "name": "sms.send-sms-url",
+      "type": "java.lang.String",
+      "description": "发送短信信息接口."
     }
   ]
 }

@@ -32,3 +32,7 @@ spring:
     username: its
     password: its@123456
     virtual-host: /its
+sms:
+  application-id: 11111
+  application-password: 222222
+  send-sms-url: http://uc.hit.edu.cn:8099/HitGateWay/SendSms
