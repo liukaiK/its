@@ -55,6 +55,11 @@ public class Event {
     private Violation violation;
 
     /**
+     * 违规车辆的颜色
+     */
+    private String vehicleColor;
+
+    /**
      * 摄像头
      */
     private Camera camera;
@@ -167,6 +172,14 @@ public class Event {
 
     public void setLaneNumber(String laneNumber) {
         this.laneNumber = laneNumber;
+    }
+
+    public String getVehicleColor() {
+        return vehicleColor;
+    }
+
+    public void setVehicleColor(String vehicleColor) {
+        this.vehicleColor = vehicleColor;
     }
 
 }

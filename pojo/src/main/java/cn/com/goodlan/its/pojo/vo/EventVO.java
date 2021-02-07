@@ -32,6 +32,8 @@ public class EventVO {
 
     private String laneNumber;
 
+    private String vehicleColor;
+
     private Integer status;
 
 

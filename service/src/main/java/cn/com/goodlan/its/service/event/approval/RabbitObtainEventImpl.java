@@ -39,6 +39,7 @@ public class RabbitObtainEventImpl {
         event.setLicensePlateNumber(trafficEvent.getM_PlateNumber());
         event.setViolationTime(LocalDateTime.now());
         event.setLaneNumber(trafficEvent.getM_LaneNumber());
+        event.setVehicleColor(trafficEvent.getM_VehicleColor());
         eventRepository.save(event);
     }
 
