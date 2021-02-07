@@ -51,6 +51,11 @@ public class TrafficEvent {
      */
     private String m_IllegalPlace;
 
+    /**
+     * 通道号
+     */
+    private String m_LaneNumber;
+
 
 //    // 文件总数
 //    private String m_FileCount;
@@ -61,9 +66,7 @@ public class TrafficEvent {
 //    // 组ID
 //    private String m_GroupID;
 
-//
-//    // 通道号
-//    private String m_LaneNumber;
+
 //    // 车牌对应信息，BOOL类型
 //    private int m_bPicEnble;
 //    // 车牌偏移量

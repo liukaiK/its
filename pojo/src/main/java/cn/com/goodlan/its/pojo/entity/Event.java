@@ -47,6 +47,11 @@ public class Event {
      */
     private String licensePlateNumber;
 
+    /**
+     * 车道号
+     */
+    private String laneNumber;
+
     private Violation violation;
 
     /**
@@ -155,4 +160,13 @@ public class Event {
     public void setLicensePlateNumber(String licensePlateNumber) {
         this.licensePlateNumber = licensePlateNumber;
     }
+
+    public String getLaneNumber() {
+        return laneNumber;
+    }
+
+    public void setLaneNumber(String laneNumber) {
+        this.laneNumber = laneNumber;
+    }
+
 }

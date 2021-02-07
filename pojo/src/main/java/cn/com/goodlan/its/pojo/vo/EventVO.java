@@ -30,6 +30,8 @@ public class EventVO {
      */
     private String violationName;
 
+    private String laneNumber;
+
     private Integer status;
 
 
