@@ -13,7 +13,9 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Slf4j
 @Component
@@ -37,7 +39,7 @@ public class RabbitObtainEventImpl {
         event.setVehicle(vehicleRepository.getByLicensePlateNumber(trafficEvent.getM_PlateNumber()));
         event.setPlace(trafficEvent.getM_IllegalPlace());
         event.setLicensePlateNumber(trafficEvent.getM_PlateNumber());
-        event.setViolationTime(LocalDateTime.now());
+        event.setTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(trafficEvent.getM_Utc()), ZoneId.of("Asia/Shanghai")));
         event.setLaneNumber(trafficEvent.getM_LaneNumber());
         event.setVehicleColor(trafficEvent.getM_VehicleColor());
         eventRepository.save(event);

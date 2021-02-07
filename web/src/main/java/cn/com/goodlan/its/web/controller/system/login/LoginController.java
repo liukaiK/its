@@ -43,6 +43,7 @@ public class LoginController {
         event.setM_EventName("22222222");
         event.setM_PlateNumber("青A.00000");
         event.setM_IllegalPlace("哈工大保卫处");
+        event.setM_Utc(1612336801000L);
         rabbitTemplate.convertAndSend("its.traffic.event", objectMapper.writeValueAsString(event));
 
         return alreadyLogin() ? toMainPage() : toLoginPage(model);

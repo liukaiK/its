@@ -70,9 +70,9 @@ public class Event {
     private String place;
 
     /**
-     * 违规时间
+     * 违规发生的时间
      */
-    private LocalDateTime violationTime;
+    private LocalDateTime time;
 
     private Integer status = 0;
 
@@ -150,12 +150,12 @@ public class Event {
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    public LocalDateTime getViolationTime() {
-        return violationTime;
+    public LocalDateTime getTime() {
+        return time;
     }
 
-    public void setViolationTime(LocalDateTime violationTime) {
-        this.violationTime = violationTime;
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
     public String getLicensePlateNumber() {

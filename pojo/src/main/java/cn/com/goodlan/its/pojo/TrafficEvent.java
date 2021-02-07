@@ -56,6 +56,10 @@ public class TrafficEvent {
      */
     private String m_LaneNumber;
 
+    /**
+     * 事件时间
+     */
+    private long m_Utc;
 
 //    // 文件总数
 //    private String m_FileCount;
@@ -73,8 +77,7 @@ public class TrafficEvent {
 //    private int m_OffSet;
 //    // 文件大小
 //    private int m_FileLength;
-//    // 事件时间
-//    private Date m_Utc;
+
 //    //车速
 //    private int nSpeed;
 //    //限速范围
