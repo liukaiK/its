@@ -33,16 +33,15 @@ DROP TABLE IF EXISTS `eve_event`;
 CREATE TABLE `eve_event` (
   `id` varchar(255) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `place` varchar(255) DEFAULT NULL,
+  `place` varchar(255) DEFAULT NULL COMMENT '违规地点',
   `status` tinyint(4) DEFAULT NULL,
   `camera_id` varchar(255) DEFAULT NULL,
   `vehicle_id` varchar(255) DEFAULT NULL,
   `violation_id` varchar(255) DEFAULT NULL,
-  `vehicle_number` varchar(255) DEFAULT NULL,
   `violation_time` datetime(6) DEFAULT NULL,
-  `license_plate_number` varchar(255) DEFAULT NULL,
-  `lane_number` varchar(255) DEFAULT NULL,
-  `vehicle_color` varchar(255) DEFAULT NULL,
+  `license_plate_number` varchar(255) DEFAULT NULL COMMENT '违规车辆车牌号',
+  `lane_number` varchar(255) DEFAULT NULL COMMENT '车道号',
+  `vehicle_color` varchar(255) DEFAULT NULL COMMENT '违规车辆颜色',
   PRIMARY KEY (`id`),
   KEY `FKs6ftkjagbnlrgkuw4cjn3sehc` (`camera_id`),
   KEY `FKkkwmjljmrrx45ng53lw3annwo` (`vehicle_id`),
@@ -59,7 +58,7 @@ CREATE TABLE `eve_event` (
 
 LOCK TABLES `eve_event` WRITE;
 /*!40000 ALTER TABLE `eve_event` DISABLE KEYS */;
-INSERT INTO `eve_event` VALUES ('1a2ebd57-f387-4edd-8c52-acf2906c51fb',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-07 09:49:02.816734',NULL,NULL,NULL),('1be71c9a-a992-4903-92f8-500a48bb01af',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 14:10:15.964039',NULL,NULL,NULL),('1f1f04ff-1a18-421e-a5dc-33d2a339aacb',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 12:48:13.907883',NULL,NULL,NULL),('4e8f478b-60a0-40ab-a67c-feb420998f92',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 13:54:30.592751',NULL,NULL,NULL),('6eb0d7c6-94cf-47b1-a202-6bf4335ad21e',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 13:09:31.439873',NULL,NULL,NULL),('7c886de1-1541-4ccf-b5c8-f99d57f2313f',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 13:58:14.945233',NULL,NULL,NULL),('8c103c37-fe95-4a91-8724-af279f062633',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 13:54:30.194562',NULL,NULL,NULL),('8f1f4b66-f15b-4af6-a5ec-970bb27b6495',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 10:16:52.261684',NULL,NULL,NULL),('9a0e9e88-6aa1-4602-b9a7-964c6e5a4be8',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 12:48:16.580503',NULL,NULL,NULL),('a0d8ed3c-a851-4bbe-a70b-b41f6ad2fddc',NULL,'哈工大保卫处',2,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-07 10:36:17.579750',NULL,NULL,NULL),('a8232308-967c-4187-99f2-e1368c60042d',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 10:16:50.412434',NULL,NULL,NULL),('b65900f2-0f83-42b6-b005-d34c50031eaf',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 19:18:46.382469',NULL,NULL,NULL),('b742e3a9-c6d8-4ea7-98d7-36f2543b2cc8',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-07 09:29:01.034331',NULL,NULL,NULL),('b8ac6e28-5546-4dcc-acfc-b1271661678b',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 13:58:15.395111',NULL,NULL,NULL),('bc47a88c-1711-4b0d-9322-70fd92b00af0',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 22:12:00.311007',NULL,NULL,NULL),('be04157a-f363-4c9c-91be-37ebecf85e19',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 14:05:54.943006',NULL,NULL,NULL),('d0d535a2-011e-4014-8f71-81bf432b103a',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 14:05:54.929382',NULL,NULL,NULL),('ee9c3cd9-e541-4350-adb5-ca976a16d542',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 13:09:31.884988',NULL,NULL,NULL),('f8e57d13-8713-46eb-a8bb-4d9066fa8d8a',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 11:15:26.085030',NULL,NULL,NULL);
+INSERT INTO `eve_event` VALUES ('1a2ebd57-f387-4edd-8c52-acf2906c51fb',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-07 09:49:02.816734',NULL,NULL,NULL),('1be71c9a-a992-4903-92f8-500a48bb01af',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 14:10:15.964039',NULL,NULL,NULL),('1f1f04ff-1a18-421e-a5dc-33d2a339aacb',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 12:48:13.907883',NULL,NULL,NULL),('4e8f478b-60a0-40ab-a67c-feb420998f92',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 13:54:30.592751',NULL,NULL,NULL),('6eb0d7c6-94cf-47b1-a202-6bf4335ad21e',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 13:09:31.439873',NULL,NULL,NULL),('7c886de1-1541-4ccf-b5c8-f99d57f2313f',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 13:58:14.945233',NULL,NULL,NULL),('8c103c37-fe95-4a91-8724-af279f062633',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 13:54:30.194562',NULL,NULL,NULL),('8f1f4b66-f15b-4af6-a5ec-970bb27b6495',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 10:16:52.261684',NULL,NULL,NULL),('9a0e9e88-6aa1-4602-b9a7-964c6e5a4be8',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 12:48:16.580503',NULL,NULL,NULL),('a0d8ed3c-a851-4bbe-a70b-b41f6ad2fddc',NULL,'哈工大保卫处',2,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-07 10:36:17.579750',NULL,NULL,NULL),('a8232308-967c-4187-99f2-e1368c60042d',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 10:16:50.412434',NULL,NULL,NULL),('b65900f2-0f83-42b6-b005-d34c50031eaf',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 19:18:46.382469',NULL,NULL,NULL),('b742e3a9-c6d8-4ea7-98d7-36f2543b2cc8',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-07 09:29:01.034331',NULL,NULL,NULL),('b8ac6e28-5546-4dcc-acfc-b1271661678b',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 13:58:15.395111',NULL,NULL,NULL),('bc47a88c-1711-4b0d-9322-70fd92b00af0',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 22:12:00.311007',NULL,NULL,NULL),('be04157a-f363-4c9c-91be-37ebecf85e19',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 14:05:54.943006',NULL,NULL,NULL),('d0d535a2-011e-4014-8f71-81bf432b103a',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 14:05:54.929382',NULL,NULL,NULL),('ee9c3cd9-e541-4350-adb5-ca976a16d542',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 13:09:31.884988',NULL,NULL,NULL),('f8e57d13-8713-46eb-a8bb-4d9066fa8d8a',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'2021-02-05 11:15:26.085030',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `eve_event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -97,39 +96,6 @@ CREATE TABLE `eve_record` (
 LOCK TABLES `eve_record` WRITE;
 /*!40000 ALTER TABLE `eve_record` DISABLE KEYS */;
 /*!40000 ALTER TABLE `eve_record` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `par_park_lot`
---
-
-DROP TABLE IF EXISTS `par_park_lot`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `par_park_lot` (
-  `id` varchar(255) NOT NULL,
-  `create_time` datetime(6) NOT NULL,
-  `update_time` datetime(6) NOT NULL,
-  `count` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `create_by` varchar(255) DEFAULT NULL,
-  `update_by` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKdggnfx8ubeefwq5c8y6oajbtw` (`create_by`),
-  KEY `FK4pmqg8175jw780tgapef1ek64` (`update_by`),
-  CONSTRAINT `FK4pmqg8175jw780tgapef1ek64` FOREIGN KEY (`update_by`) REFERENCES `sys_user` (`id`),
-  CONSTRAINT `FKdggnfx8ubeefwq5c8y6oajbtw` FOREIGN KEY (`create_by`) REFERENCES `sys_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `par_park_lot`
---
-
-LOCK TABLES `par_park_lot` WRITE;
-/*!40000 ALTER TABLE `par_park_lot` DISABLE KEYS */;
-INSERT INTO `par_park_lot` VALUES ('24443b28-a611-40eb-b6aa-9f4426cf799c','2021-01-21 11:36:40.798658','2021-01-21 11:36:40.798658',30,'停车场3','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114'),('8cdd7104-7625-4f5f-9bfc-6c63ae9cef9d','2021-01-21 11:36:29.377397','2021-01-21 11:36:29.377397',20,'停车场2','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114'),('ab839f0b-a532-4722-9316-84525ed3565a','2021-01-21 11:34:53.207313','2021-01-21 11:39:30.885447',10,'停车场1','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114');
-/*!40000 ALTER TABLE `par_park_lot` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -316,6 +282,39 @@ INSERT INTO `sys_menu` VALUES ('0554e0d0-3bb9-4faf-b23c-f11e3bc74369','学院新
 UNLOCK TABLES;
 
 --
+-- Table structure for table `sys_park_lot`
+--
+
+DROP TABLE IF EXISTS `sys_park_lot`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sys_park_lot` (
+  `id` varchar(255) NOT NULL,
+  `create_time` datetime(6) NOT NULL,
+  `update_time` datetime(6) NOT NULL,
+  `count` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `create_by` varchar(255) DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKdggnfx8ubeefwq5c8y6oajbtw` (`create_by`),
+  KEY `FK4pmqg8175jw780tgapef1ek64` (`update_by`),
+  CONSTRAINT `FK4pmqg8175jw780tgapef1ek64` FOREIGN KEY (`update_by`) REFERENCES `sys_user` (`id`),
+  CONSTRAINT `FKdggnfx8ubeefwq5c8y6oajbtw` FOREIGN KEY (`create_by`) REFERENCES `sys_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sys_park_lot`
+--
+
+LOCK TABLES `sys_park_lot` WRITE;
+/*!40000 ALTER TABLE `sys_park_lot` DISABLE KEYS */;
+INSERT INTO `sys_park_lot` VALUES ('24443b28-a611-40eb-b6aa-9f4426cf799c','2021-01-21 11:36:40.798658','2021-01-21 11:36:40.798658',30,'停车场3','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114'),('8cdd7104-7625-4f5f-9bfc-6c63ae9cef9d','2021-01-21 11:36:29.377397','2021-01-21 11:36:29.377397',20,'停车场2','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114'),('ab839f0b-a532-4722-9316-84525ed3565a','2021-01-21 11:34:53.207313','2021-01-21 11:39:30.885447',10,'停车场1','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114');
+/*!40000 ALTER TABLE `sys_park_lot` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sys_region`
 --
 
@@ -457,17 +456,17 @@ CREATE TABLE `sys_user` (
   `id` varchar(255) NOT NULL,
   `create_time` datetime(6) NOT NULL,
   `update_time` datetime(6) NOT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `password` char(60) NOT NULL,
-  `username` varchar(20) NOT NULL,
+  `name` varchar(255) DEFAULT NULL COMMENT '姓名',
+  `password` char(60) NOT NULL COMMENT '密码',
+  `username` varchar(20) NOT NULL COMMENT '账号',
   `create_by` varchar(255) DEFAULT NULL,
   `update_by` varchar(255) DEFAULT NULL,
-  `last_login_time` datetime(6) DEFAULT NULL,
-  `sex` char(1) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `phone_number` char(32) DEFAULT NULL,
-  `remark` varchar(255) DEFAULT NULL,
-  `college_id` varchar(255) DEFAULT NULL,
+  `last_login_time` datetime(6) DEFAULT NULL COMMENT '最后一次登录时间',
+  `sex` char(1) NOT NULL COMMENT '性别',
+  `email` varchar(255) DEFAULT NULL COMMENT '邮箱',
+  `phone_number` char(32) DEFAULT NULL COMMENT '手机号码',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `college_id` varchar(255) DEFAULT NULL COMMENT '学院id',
   PRIMARY KEY (`id`),
   KEY `FK6uj38tbvf8jyy6je7oghdx8oe` (`create_by`),
   KEY `FKgnogw8c0llt9oyonwwgfhyync` (`update_by`),
@@ -595,4 +594,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-07 11:15:28
+-- Dump completed on 2021-02-07 11:52:04
