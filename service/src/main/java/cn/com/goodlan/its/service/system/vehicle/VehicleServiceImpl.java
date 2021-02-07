@@ -32,7 +32,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void save(VehicleDTO vehicleDTO) {
         Vehicle vehicle = new Vehicle();
-        vehicle.setNumber(vehicleDTO.getNumber());
+        vehicle.setLicensePlateNumber(vehicleDTO.getNumber());
         vehicle.setType(vehicleDTO.getType());
         vehicle.addCollege(vehicleDTO.getCollegeId());
         vehicleRepository.save(vehicle);
@@ -56,7 +56,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void update(VehicleDTO vehicleDTO) {
         Vehicle vehicle = vehicleRepository.getOne(vehicleDTO.getId());
-        vehicle.setNumber(vehicleDTO.getNumber());
+        vehicle.setLicensePlateNumber(vehicleDTO.getNumber());
         vehicle.setType(vehicleDTO.getType());
         vehicle.addCollege(vehicleDTO.getCollegeId());
         vehicleRepository.save(vehicle);

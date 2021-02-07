@@ -34,7 +34,7 @@ public class RabbitObtainEventImpl {
         TrafficEvent trafficEvent = objectMapper.readValue(message, TrafficEvent.class);
         log.debug(trafficEvent.toString());
         Event event = new Event();
-        event.setVehicle(vehicleRepository.getByNumber(trafficEvent.getM_PlateNumber()));
+        event.setVehicle(vehicleRepository.getByLicensePlateNumber(trafficEvent.getM_PlateNumber()));
         event.setPlace(trafficEvent.getM_IllegalPlace());
         event.setVehicleNumber(trafficEvent.getM_PlateNumber());
         event.setViolationTime(LocalDateTime.now());

@@ -18,7 +18,7 @@ public class Vehicle extends BaseEntity {
     /**
      * 车牌号
      */
-    private String number;
+    private String licensePlateNumber;
 
 
     /**
@@ -72,11 +72,13 @@ public class Vehicle extends BaseEntity {
         this.type = type;
     }
 
-    public String getNumber() {
-        return number;
+
+    public String getLicensePlateNumber() {
+        return licensePlateNumber;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setLicensePlateNumber(String licensePlateNumber) {
+        this.licensePlateNumber = licensePlateNumber;
     }
+
 }

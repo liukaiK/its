@@ -40,7 +40,6 @@ public class LoginController {
     @GetMapping("/login")
     public String login(Model model) throws JsonProcessingException {
         TrafficEvent event = new TrafficEvent();
-        event.setId("1111111");
         event.setM_EventName("22222222");
         event.setM_PlateNumber("青A.00000");
         event.setM_IllegalPlace("哈工大保卫处");

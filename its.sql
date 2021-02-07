@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: its
 -- ------------------------------------------------------
--- Server version	5.7.30
+-- Server version	5.7.30-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -39,6 +39,7 @@ CREATE TABLE `eve_event` (
   `vehicle_id` varchar(255) DEFAULT NULL,
   `violation_id` varchar(255) DEFAULT NULL,
   `vehicle_number` varchar(255) DEFAULT NULL,
+  `violation_time` datetime(6) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKs6ftkjagbnlrgkuw4cjn3sehc` (`camera_id`),
   KEY `FKkkwmjljmrrx45ng53lw3annwo` (`vehicle_id`),
@@ -55,7 +56,7 @@ CREATE TABLE `eve_event` (
 
 LOCK TABLES `eve_event` WRITE;
 /*!40000 ALTER TABLE `eve_event` DISABLE KEYS */;
-INSERT INTO `eve_event` VALUES ('395cde7c-433d-4e50-86d1-778f2623a4d9',NULL,'哈工大保卫处',0,NULL,NULL,NULL,'青B.00000'),('fe0d1b9e-e923-46c9-9e1f-7c33339924a7',NULL,'哈工大保卫处',0,NULL,NULL,NULL,'青B.00000');
+INSERT INTO `eve_event` VALUES ('1a2ebd57-f387-4edd-8c52-acf2906c51fb',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-07 09:49:02.816734'),('1be71c9a-a992-4903-92f8-500a48bb01af',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 14:10:15.964039'),('1f1f04ff-1a18-421e-a5dc-33d2a339aacb',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 12:48:13.907883'),('4e8f478b-60a0-40ab-a67c-feb420998f92',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 13:54:30.592751'),('6eb0d7c6-94cf-47b1-a202-6bf4335ad21e',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 13:09:31.439873'),('7c886de1-1541-4ccf-b5c8-f99d57f2313f',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 13:58:14.945233'),('8c103c37-fe95-4a91-8724-af279f062633',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 13:54:30.194562'),('8f1f4b66-f15b-4af6-a5ec-970bb27b6495',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 10:16:52.261684'),('9a0e9e88-6aa1-4602-b9a7-964c6e5a4be8',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 12:48:16.580503'),('a0d8ed3c-a851-4bbe-a70b-b41f6ad2fddc',NULL,'哈工大保卫处',2,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-07 10:36:17.579750'),('a8232308-967c-4187-99f2-e1368c60042d',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 10:16:50.412434'),('b65900f2-0f83-42b6-b005-d34c50031eaf',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 19:18:46.382469'),('b742e3a9-c6d8-4ea7-98d7-36f2543b2cc8',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-07 09:29:01.034331'),('b8ac6e28-5546-4dcc-acfc-b1271661678b',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 13:58:15.395111'),('bc47a88c-1711-4b0d-9322-70fd92b00af0',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 22:12:00.311007'),('be04157a-f363-4c9c-91be-37ebecf85e19',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 14:05:54.943006'),('d0d535a2-011e-4014-8f71-81bf432b103a',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 14:05:54.929382'),('ee9c3cd9-e541-4350-adb5-ca976a16d542',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 13:09:31.884988'),('f8e57d13-8713-46eb-a8bb-4d9066fa8d8a',NULL,'哈工大保卫处',0,NULL,'a38de747-039e-427c-b033-dfd195ff90de',NULL,'青A.00000','2021-02-05 11:15:26.085030');
 /*!40000 ALTER TABLE `eve_event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -438,7 +439,7 @@ CREATE TABLE `sys_score` (
 
 LOCK TABLES `sys_score` WRITE;
 /*!40000 ALTER TABLE `sys_score` DISABLE KEYS */;
-INSERT INTO `sys_score` VALUES ('fde57d8e-c9ca-4a91-b77d-850b6a43d262','2021-01-30 13:41:55.846882','2021-01-30 13:41:55.846882',10,'1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','aa8908a9-d2ad-40c7-ba3a-4630e08d9d1f','a2095ee8-a8a7-4221-beaa-42a2ae6b416d','违章停车10小时');
+INSERT INTO `sys_score` VALUES ('fee71ddd-9116-4952-b8a1-13639b3032d3','2021-02-07 10:38:59.119139','2021-02-07 10:38:59.119139',10,NULL,NULL,'779d6d9b-fa7f-4eac-8d22-3c7020c1c5c0','a2095ee8-a8a7-4221-beaa-42a2ae6b416d','违章停车10小时');
 /*!40000 ALTER TABLE `sys_score` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -480,7 +481,7 @@ CREATE TABLE `sys_user` (
 
 LOCK TABLES `sys_user` WRITE;
 /*!40000 ALTER TABLE `sys_user` DISABLE KEYS */;
-INSERT INTO `sys_user` VALUES ('1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-06 16:04:50.000000','2021-01-22 17:07:36.097519','超级管理员','$2a$10$b3ezmRiBwb0nJjIRk3JWVOeTmcS7mPDOD5T887jLWfG2/GDdgZptK','admin','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-02-04 13:49:08.575819','男','zhizhufan@foxmail.com','043ca3fc919e4db0dfc37cecf8490f1d','','73f1218d-9249-42a2-9e78-a5c7963fbec1'),('5d9c5075-47dc-4e6c-a177-4f366f2e4ea3','2021-01-26 15:37:40.153917','2021-01-26 15:37:40.153917','王硕','$2a$10$.eKtIPjsyYGg9d24.jASoerDxLsoPmnrzUgF.VMq3t37dRT9Xs6li','wangshuo','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-26 15:38:33.931903','男','','043ca3fc919e4db0dfc37cecf8490f1d','','c76098f8-efbb-4957-a2ab-9b332a09d52d'),('d5053e06-fcb2-4855-b9d0-ac5861ac4594','2021-01-12 15:39:51.697828','2021-01-22 17:07:13.993072','刘凯','$2a$10$b3ezmRiBwb0nJjIRk3JWVOeTmcS7mPDOD5T887jLWfG2/GDdgZptK','liukai','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-13 15:20:16.633081','男','zhizhufan@foxmail.com','043ca3fc919e4db0dfc37cecf8490f1d','','fc2b34c0-bfe8-4262-9dbb-8f0d026608bc');
+INSERT INTO `sys_user` VALUES ('1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-06 16:04:50.000000','2021-02-05 13:58:55.992765','超级管理员','$2a$10$b3ezmRiBwb0nJjIRk3JWVOeTmcS7mPDOD5T887jLWfG2/GDdgZptK','admin','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-02-07 10:38:30.800738','男','zhizhufan@foxmail.com','043ca3fc919e4db0dfc37cecf8490f1d','','73f1218d-9249-42a2-9e78-a5c7963fbec1'),('5d9c5075-47dc-4e6c-a177-4f366f2e4ea3','2021-01-26 15:37:40.153917','2021-01-26 15:37:40.153917','王硕','$2a$10$.eKtIPjsyYGg9d24.jASoerDxLsoPmnrzUgF.VMq3t37dRT9Xs6li','wangshuo','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-26 15:38:33.931903','男','','043ca3fc919e4db0dfc37cecf8490f1d','','c76098f8-efbb-4957-a2ab-9b332a09d52d'),('d5053e06-fcb2-4855-b9d0-ac5861ac4594','2021-01-12 15:39:51.697828','2021-01-22 17:07:13.993072','刘凯','$2a$10$b3ezmRiBwb0nJjIRk3JWVOeTmcS7mPDOD5T887jLWfG2/GDdgZptK','liukai','1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','2021-01-13 15:20:16.633081','男','zhizhufan@foxmail.com','043ca3fc919e4db0dfc37cecf8490f1d','','fc2b34c0-bfe8-4262-9dbb-8f0d026608bc');
 /*!40000 ALTER TABLE `sys_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -527,6 +528,7 @@ CREATE TABLE `sys_vehicle` (
   `create_by` varchar(255) DEFAULT NULL,
   `update_by` varchar(255) DEFAULT NULL,
   `college_id` varchar(255) DEFAULT NULL,
+  `license_plate_number` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_iik8klcph48940klfc8xv48hb` (`number`),
   KEY `FKjwiu4tppuxd6yi0tv5ixwuert` (`create_by`),
@@ -544,7 +546,7 @@ CREATE TABLE `sys_vehicle` (
 
 LOCK TABLES `sys_vehicle` WRITE;
 /*!40000 ALTER TABLE `sys_vehicle` DISABLE KEYS */;
-INSERT INTO `sys_vehicle` VALUES ('3be4717d-da13-43eb-bc8b-be3ada5d52f6','2021-01-15 15:33:38.848561','2021-01-15 15:33:38.848561','fffffff',1,'1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','676cf193-fbc8-48c1-8a16-f1984c9071b9'),('a38de747-039e-427c-b033-dfd195ff90de','2021-01-15 15:33:26.349946','2021-02-04 12:04:32.841859','青A.00000',0,'1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','676cf193-fbc8-48c1-8a16-f1984c9071b9');
+INSERT INTO `sys_vehicle` VALUES ('3be4717d-da13-43eb-bc8b-be3ada5d52f6','2021-01-15 15:33:38.848561','2021-01-15 15:33:38.848561','fffffff',1,'1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','676cf193-fbc8-48c1-8a16-f1984c9071b9',NULL),('a38de747-039e-427c-b033-dfd195ff90de','2021-01-15 15:33:26.349946','2021-02-04 12:04:32.841859','青A.00000',0,'1b3c1438-beb2-4bab-af86-b6b8dfb91114','1b3c1438-beb2-4bab-af86-b6b8dfb91114','676cf193-fbc8-48c1-8a16-f1984c9071b9',NULL);
 /*!40000 ALTER TABLE `sys_vehicle` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -590,4 +592,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-02-04 14:02:07
+-- Dump completed on 2021-02-07 10:58:07
