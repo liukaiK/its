@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.service.park.parklot;
+package cn.com.goodlan.its.service.system.park.parklot;
 
 import cn.com.goodlan.its.dao.park.parklot.ParkLotRepository;
 import cn.com.goodlan.its.pojo.dto.ParkLotDTO;

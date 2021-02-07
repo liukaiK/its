@@ -1,9 +1,9 @@
-package cn.com.goodlan.its.web.controller.park.parklot;
+package cn.com.goodlan.its.web.controller.system.park.parklot;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
 import cn.com.goodlan.its.pojo.dto.ParkLotDTO;
 import cn.com.goodlan.its.pojo.vo.ParkLotVO;
-import cn.com.goodlan.its.service.park.parklot.ParkLotService;
+import cn.com.goodlan.its.service.system.park.parklot.ParkLotService;
 import cn.com.goodlan.its.service.system.role.RoleService;
 import cn.com.goodlan.its.service.system.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
