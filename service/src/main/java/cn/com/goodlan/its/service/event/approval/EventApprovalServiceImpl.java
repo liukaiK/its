@@ -91,6 +91,7 @@ public class EventApprovalServiceImpl implements EventApprovalService {
     public void cancel(String id) {
         Event event = eventRepository.getOne(id);
         event.setStatus(Event.CANCEL);
+        event.setApprovalTime(LocalDateTime.now());
         eventRepository.save(event);
     }
 
