@@ -17,7 +17,7 @@ public interface EventMapper {
     List<EventVO> convertList(List<Event> eventList);
 
     @Mappings({
-            @Mapping(source = "vehicleNumber", target = "vehicleNumber"),
+            @Mapping(source = "licensePlateNumber", target = "vehicleNumber"),
             @Mapping(source = "vehicle.college.name", target = "collegeName"),
             @Mapping(source = "violation.name", target = "violationName"),
             @Mapping(source = "camera.region.name", target = "regionName")

@@ -45,7 +45,7 @@ public class Event {
     /**
      * 车牌号
      */
-    private String vehicleNumber;
+    private String licensePlateNumber;
 
     private Violation violation;
 
@@ -139,15 +139,6 @@ public class Event {
         this.violation = violation;
     }
 
-
-    public String getVehicleNumber() {
-        return vehicleNumber;
-    }
-
-    public void setVehicleNumber(String vehicleNumber) {
-        this.vehicleNumber = vehicleNumber;
-    }
-
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     public LocalDateTime getViolationTime() {
         return violationTime;
@@ -157,4 +148,11 @@ public class Event {
         this.violationTime = violationTime;
     }
 
+    public String getLicensePlateNumber() {
+        return licensePlateNumber;
+    }
+
+    public void setLicensePlateNumber(String licensePlateNumber) {
+        this.licensePlateNumber = licensePlateNumber;
+    }
 }
