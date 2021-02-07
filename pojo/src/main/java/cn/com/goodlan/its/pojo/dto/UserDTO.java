@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.pojo.dto;
 
+import cn.com.goodlan.its.common.annotations.Create;
 import cn.com.goodlan.its.common.annotations.MobileNumber;
 import cn.com.goodlan.its.common.annotations.Password;
 import cn.com.goodlan.its.common.annotations.Sex;
@@ -16,7 +17,10 @@ public class UserDTO {
 
     private String username;
 
-    @Password
+    /**
+     * 只有新增用户的时候  才需要校验密码
+     */
+    @Password(groups = Create.class)
     private String password;
 
     @Email

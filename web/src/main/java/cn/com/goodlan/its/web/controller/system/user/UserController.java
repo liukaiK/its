@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.web.controller.system.user;
 
+import cn.com.goodlan.its.common.annotations.Create;
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
 import cn.com.goodlan.its.pojo.dto.ChangePasswordDTO;
 import cn.com.goodlan.its.pojo.dto.UpdateProfileDTO;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -67,7 +69,7 @@ public class UserController {
      */
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('system:user:add')")
-    public void add(@Valid UserDTO userDTO) {
+    public void add(@Validated(Create.class) UserDTO userDTO) {
         userService.save(userDTO);
     }
 

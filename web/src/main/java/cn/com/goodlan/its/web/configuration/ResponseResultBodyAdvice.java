@@ -103,7 +103,7 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
      */
     @ExceptionHandler(BindException.class)
     public Result validatedBindException(BindException e) {
-        log.error(e.getMessage(), e);
+        log.debug(e.getMessage(), e);
         String message = e.getAllErrors().get(0).getDefaultMessage();
         return Result.fail(500, message);
     }
