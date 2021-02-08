@@ -40,16 +40,17 @@
     </div>
 
 </div>
+</body>
 <th:block th:include="include :: footer" />
 <th:block th:include="include :: echarts-js" />
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     $(function () {
         var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
         var baroption = {
-            title : {
+            title: {
                 text: '违规类型统计'
             },
-            tooltip : {
+            tooltip: {
                 trigger: 'axis'
             },
             // legend: {
@@ -60,23 +61,23 @@
             //     x2:40,
             //     y2:24
             // },
-            calculable : true,
-            xAxis : [
+            calculable: true,
+            xAxis: [
                 {
-                    type : 'category',
-                    data : ['类型1','类型2','类型3','类型4','类型5','类型6','类型7','类型8','类型9']
+                    type: 'category',
+                    data: ['类型1', '类型2', '类型3', '类型4', '类型5', '类型6', '类型7', '类型8', '类型9']
                 }
             ],
-            yAxis : [
+            yAxis: [
                 {
-                    type : 'value'
+                    type: 'value'
                 }
             ],
-            series : [
+            series: [
                 {
-                    name:'违规次数',
-                    type:'bar',
-                    data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6],
+                    name: '违规次数',
+                    type: 'bar',
+                    data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6],
                     // markPoint : {
                     //     data : [
                     //         {type : 'max', name: '最大值'},
@@ -114,10 +115,10 @@
 
         var lineChart = echarts.init(document.getElementById("echarts-line-chart"));
         var lineoption = {
-            title : {
+            title: {
                 text: '校园次数统计'
             },
-            tooltip : {
+            tooltip: {
                 trigger: 'axis'
             },
             // legend: {
@@ -128,23 +129,23 @@
             //     x2:40,
             //     y2:24
             // },
-            calculable : true,
-            xAxis : [
+            calculable: true,
+            xAxis: [
                 {
-                    type : 'category',
-                    data : ['学院1','学院2','学院3','学院4','学院5','学院6','学院7','学院8','学院9']
+                    type: 'category',
+                    data: ['学院1', '学院2', '学院3', '学院4', '学院5', '学院6', '学院7', '学院8', '学院9']
                 }
             ],
-            yAxis : [
+            yAxis: [
                 {
-                    type : 'value'
+                    type: 'value'
                 }
             ],
-            series : [
+            series: [
                 {
-                    name:'违规次数',
-                    type:'bar',
-                    data:[6, 1, 7, 12, 13, 10, 9, 20, 32.6],
+                    name: '违规次数',
+                    type: 'bar',
+                    data: [6, 1, 7, 12, 13, 10, 9, 20, 32.6],
                     // markPoint : {
                     //     data : [
                     //         {type : 'max', name: '最大值'},
@@ -180,29 +181,29 @@
 
         var pieChart = echarts.init(document.getElementById("echarts-pie-chart"));
         var pieoption = {
-            title : {
+            title: {
                 text: '入校车辆与出校车辆',
-                x:'center'
+                x: 'center'
             },
-            tooltip : {
+            tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
             legend: {
-                orient : 'vertical',
-                x : 'left',
-                data:['入校车辆','出校车辆']
+                orient: 'vertical',
+                x: 'left',
+                data: ['入校车辆', '出校车辆']
             },
-            calculable : true,
-            series : [
+            calculable: true,
+            series: [
                 {
-                    name:'访问来源',
-                    type:'pie',
-                    radius : '55%',
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
                     center: ['35%', '65%'],
-                    data:[
-                        {value:335, name:'入校车辆'},
-                        {value:310, name:'出校车辆'}
+                    data: [
+                        {value: 335, name: '入校车辆'},
+                        {value: 310, name: '出校车辆'}
                     ]
                 }
             ]
@@ -213,5 +214,4 @@
 
     });
 </script>
-</body>
 </html>
