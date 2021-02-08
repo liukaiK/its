@@ -59,9 +59,9 @@ public class TrafficEvent {
     /**
      * 事件时间
      */
-    private long m_Utc;
+//    private String m_Utc;
 
-    private String ip;
+//    private String ip;
 
     /**
      * 大图

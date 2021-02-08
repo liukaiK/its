@@ -16,10 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-
 @Slf4j
 @Component
 public class RabbitObtainEventImpl {
@@ -40,17 +36,18 @@ public class RabbitObtainEventImpl {
     @RabbitListener(queuesToDeclare = @Queue(name = "its.traffic.event", durable = "true"))
     public void obtainEvent(String message) throws JsonProcessingException {
         String content = StringEscapeUtils.unescapeJava(message);
+        System.out.println(content);
         if (StringUtils.startsWithIgnoreCase(content, "\"")) {
             content = content.substring(1, content.length() - 1);
         }
         TrafficEvent trafficEvent = objectMapper.readValue(content, TrafficEvent.class);
-        log.debug(trafficEvent.toString());
+//        log.debug(trafficEvent.toString());
         Event event = new Event();
-        event.setCamera(cameraRepository.getByIp(trafficEvent.getIp()));
+//        event.setCamera(cameraRepository.getByIp(trafficEvent.getIp()));
         event.setVehicle(vehicleRepository.getByLicensePlateNumber(trafficEvent.getM_PlateNumber()));
         event.setPlace(trafficEvent.getM_IllegalPlace());
         event.setLicensePlateNumber(trafficEvent.getM_PlateNumber());
-        event.setTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(trafficEvent.getM_Utc()), ZoneId.of("Asia/Shanghai")));
+//        event.setTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(trafficEvent.getM_Utc()), ZoneId.of("Asia/Shanghai")));
         event.setLaneNumber(trafficEvent.getM_LaneNumber());
         event.setVehicleColor(trafficEvent.getM_VehicleColor());
         event.setImage(trafficEvent.getBigImage());
