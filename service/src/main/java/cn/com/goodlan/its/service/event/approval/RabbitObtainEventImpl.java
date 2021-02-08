@@ -8,6 +8,7 @@ import cn.com.goodlan.its.pojo.entity.Event;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -37,7 +38,7 @@ public class RabbitObtainEventImpl {
     @RabbitHandler
     @RabbitListener(queuesToDeclare = @Queue(name = "its.traffic.event", durable = "true"))
     public void obtainEvent(String message) throws JsonProcessingException {
-        TrafficEvent trafficEvent = objectMapper.readValue(message, TrafficEvent.class);
+        TrafficEvent trafficEvent = objectMapper.readValue(StringEscapeUtils.unescapeJava(message), TrafficEvent.class);
         log.debug(trafficEvent.toString());
         Event event = new Event();
         event.setCamera(cameraRepository.getByIp(trafficEvent.getIp()));
