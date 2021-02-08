@@ -2,13 +2,9 @@ package cn.com.goodlan.its.web.controller.system.login;
 
 import cn.com.goodlan.its.common.constant.CaptchaConstant;
 import cn.com.goodlan.its.common.util.RSAUtil;
-import cn.com.goodlan.its.pojo.TrafficEvent;
 import cn.com.goodlan.its.web.security.captcha.CaptchaGenerator;
 import cn.hutool.captcha.ICaptcha;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,25 +24,11 @@ import java.io.IOException;
 @Controller
 public class LoginController {
 
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
     /**
      * 跳转到登录页面
      */
     @GetMapping("/login")
     public String login(Model model) throws JsonProcessingException {
-        TrafficEvent event = new TrafficEvent();
-        event.setM_EventName("22222222");
-        event.setM_PlateNumber("青A.00000");
-        event.setM_IllegalPlace("哈工大保卫处");
-        event.setM_Utc(1612336801000L);
-        event.setIp("127.0.0.1");
-        rabbitTemplate.convertAndSend("its.traffic.event", objectMapper.writeValueAsString(event));
-
         return alreadyLogin() ? toMainPage() : toLoginPage(model);
     }
 
