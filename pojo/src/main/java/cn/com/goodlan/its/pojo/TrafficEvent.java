@@ -63,6 +63,17 @@ public class TrafficEvent {
 
     private String ip;
 
+    /**
+     * 大图
+     */
+    public String bigImage;
+
+    /**
+     * 车牌图
+     */
+    public String plateImage;
+
+
 //    // 文件总数
 //    private String m_FileCount;
 //
@@ -84,14 +95,6 @@ public class TrafficEvent {
 //    private int nSpeed;
 //    //限速范围
 //    private int nUpperSpeedLimit;
-//
-//    /**
-//     * 大图
-//     */
-//    public String bigImage;
-//    /**
-//     * 车牌图
-//     */
-//    public String plateImage;
+
 
 }
