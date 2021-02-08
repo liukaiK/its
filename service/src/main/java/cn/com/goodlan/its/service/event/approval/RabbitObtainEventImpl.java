@@ -47,6 +47,7 @@ public class RabbitObtainEventImpl {
         event.setTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(trafficEvent.getM_Utc()), ZoneId.of("Asia/Shanghai")));
         event.setLaneNumber(trafficEvent.getM_LaneNumber());
         event.setVehicleColor(trafficEvent.getM_VehicleColor());
+        event.setImage(trafficEvent.getBigImage());
         eventRepository.save(event);
     }
 

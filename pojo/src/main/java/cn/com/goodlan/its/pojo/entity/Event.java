@@ -79,6 +79,8 @@ public class Event {
      */
     private LocalDateTime approvalTime;
 
+    private String image;
+
     private Integer status = 0;
 
     public Event() {
@@ -194,6 +196,15 @@ public class Event {
 
     public void setApprovalTime(LocalDateTime approvalTime) {
         this.approvalTime = approvalTime;
+    }
+
+    @Column(columnDefinition = "mediumtext")
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
 }
