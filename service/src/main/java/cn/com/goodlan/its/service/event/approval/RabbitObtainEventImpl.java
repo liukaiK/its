@@ -14,6 +14,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -38,7 +39,11 @@ public class RabbitObtainEventImpl {
     @RabbitHandler
     @RabbitListener(queuesToDeclare = @Queue(name = "its.traffic.event", durable = "true"))
     public void obtainEvent(String message) throws JsonProcessingException {
-        TrafficEvent trafficEvent = objectMapper.readValue(StringEscapeUtils.unescapeJava(message), TrafficEvent.class);
+        String content = StringEscapeUtils.unescapeJava(message);
+        if (StringUtils.startsWithIgnoreCase(content, "\"")) {
+            content = content.substring(1, content.length() - 1);
+        }
+        TrafficEvent trafficEvent = objectMapper.readValue(content, TrafficEvent.class);
         log.debug(trafficEvent.toString());
         Event event = new Event();
         event.setCamera(cameraRepository.getByIp(trafficEvent.getIp()));
