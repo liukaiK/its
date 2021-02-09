@@ -73,7 +73,7 @@ public class RabbitObtainEventImpl {
         }
         byte[] bytes = Base64Decoder.decode(base64ImageStr);
         StorePath storePath = uploadFile(bytes);
-        return storePath.getFullPath();
+        return "/" + storePath.getFullPath();
     }
 
     /**
