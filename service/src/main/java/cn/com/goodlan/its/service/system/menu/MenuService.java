@@ -9,7 +9,7 @@ import java.util.List;
 public interface MenuService {
 
 
-    List<MenuVO> findAll();
+    List<MenuVO> search(MenuDTO menuDTO);
 
     /**
      * 根据id查询一条记录

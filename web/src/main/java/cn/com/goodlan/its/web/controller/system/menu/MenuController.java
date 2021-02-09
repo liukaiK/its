@@ -39,8 +39,8 @@ public class MenuController {
      */
     @PostMapping("/search")
     @PreAuthorize("hasAuthority('system:menu:search')")
-    public List<MenuVO> search() {
-        return menuService.findAll();
+    public List<MenuVO> search(MenuDTO menuDTO) {
+        return menuService.search(menuDTO);
     }
 
     /**

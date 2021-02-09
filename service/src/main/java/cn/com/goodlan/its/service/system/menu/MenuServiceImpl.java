@@ -30,8 +30,13 @@ public class MenuServiceImpl implements MenuService {
     private MenuRepository menuRepository;
 
     @Override
-    public List<MenuVO> findAll() {
-        List<Menu> menuList = menuRepository.findByOrderByParent();
+    public List<MenuVO> search(MenuDTO menuDTO) {
+        List<Menu> menuList;
+        if (StringUtils.isNotEmpty(menuDTO.getName())) {
+            menuList = menuRepository.findByName(menuDTO.getName() + "%");
+        } else {
+            menuList = menuRepository.findByOrderByParent();
+        }
         return MenuMapper.INSTANCE.convertList(menuList);
     }
 
