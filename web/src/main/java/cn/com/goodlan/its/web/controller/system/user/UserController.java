@@ -3,6 +3,7 @@ package cn.com.goodlan.its.web.controller.system.user;
 import cn.com.goodlan.its.common.annotations.Create;
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
 import cn.com.goodlan.its.pojo.dto.ChangePasswordDTO;
+import cn.com.goodlan.its.pojo.dto.ResetPasswordDTO;
 import cn.com.goodlan.its.pojo.dto.UpdateProfileDTO;
 import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.vo.UserVO;
@@ -104,12 +105,23 @@ public class UserController {
     }
 
     /**
+     * 跳转到重置密码页面
+     */
+    @GetMapping("/resetPassword/{id}")
+    @PreAuthorize("hasAuthority('system:user:resetPassword')")
+    public ModelAndView resetPassword(@PathVariable String id, Model model) {
+        model.addAttribute("user", userService.getById(id));
+        return new ModelAndView("system/user/resetpassword");
+    }
+
+
+    /**
      * 重置密码
      */
     @PostMapping("/resetPassword")
     @PreAuthorize("hasAuthority('system:user:resetPassword')")
-    public void resetPassword() {
-
+    public void resetPassword(@Valid ResetPasswordDTO resetPasswordDTO) {
+        userService.resetPassword(resetPasswordDTO);
     }
 
     /**

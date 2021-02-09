@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.service.system.user;
 
 import cn.com.goodlan.its.pojo.dto.ChangePasswordDTO;
+import cn.com.goodlan.its.pojo.dto.ResetPasswordDTO;
 import cn.com.goodlan.its.pojo.dto.UpdateProfileDTO;
 import cn.com.goodlan.its.pojo.dto.UserDTO;
 import cn.com.goodlan.its.pojo.vo.UserVO;
@@ -22,9 +23,9 @@ public interface UserService {
     /**
      * 重置密码
      *
-     * @param id 用户ID
+     * @param resetPasswordDTO
      */
-    void resetPassword(String id);
+    void resetPassword(ResetPasswordDTO resetPasswordDTO);
 
     void updateProfile(UpdateProfileDTO updateProfileDTO);
 
