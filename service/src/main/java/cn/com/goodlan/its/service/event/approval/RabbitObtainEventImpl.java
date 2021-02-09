@@ -52,7 +52,7 @@ public class RabbitObtainEventImpl {
         event.setTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
         event.setLaneNumber(trafficEvent.getM_LaneNumber());
         event.setVehicleColor(trafficEvent.getM_VehicleColor());
-        event.setImage(trafficEvent.getBigImage());
+        event.setImage("data:image/png;base64," + trafficEvent.getBigImage());
         event.setVehicleSize(trafficEvent.getM_VehicleSize());
         eventRepository.save(event);
     }
