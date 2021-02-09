@@ -9,9 +9,12 @@ import cn.com.goodlan.its.pojo.vo.Ztree;
 import cn.com.goodlan.mapstruct.CollegeMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,8 +28,15 @@ public class CollegeServiceImpl implements CollegeService {
     private CollegeRepository collegeRepository;
 
     @Override
-    public List<CollegeVO> findAll() {
-        List<College> collegeList = collegeRepository.findByOrderByParent();
+    public List<CollegeVO> search(CollegeDTO collegeDTO) {
+        List<College> collegeList = collegeRepository.findAll((Specification<College>) (root, query, criteriaBuilder) -> {
+            List<Predicate> list = new ArrayList<>();
+            if (StringUtils.isNotEmpty(collegeDTO.getName())) {
+                list.add(criteriaBuilder.like(root.get("name").as(String.class), collegeDTO.getName() + "%"));
+            }
+            Predicate[] p = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(p));
+        }, Sort.by("parent", "sort"));
         return CollegeMapper.INSTANCE.convertList(collegeList);
     }
 

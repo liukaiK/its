@@ -38,8 +38,8 @@ public class CollegeController {
      */
     @PostMapping("/search")
     @PreAuthorize("hasAuthority('system:college:search')")
-    public List<CollegeVO> search() {
-        return collegeService.findAll();
+    public List<CollegeVO> search(CollegeDTO collegeDTO) {
+        return collegeService.search(collegeDTO);
     }
 
     /**

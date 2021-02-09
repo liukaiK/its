@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CollegeService {
 
-    List<CollegeVO> findAll();
+    List<CollegeVO> search(CollegeDTO collegeDTO);
 
 
     /**
