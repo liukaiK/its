@@ -84,7 +84,10 @@ public class Event {
      */
     private LocalDateTime approvalTime;
 
-    private String image;
+    /**
+     * 事件图片url
+     */
+    private String imageUrl;
 
     private Integer status = 0;
 
@@ -203,15 +206,6 @@ public class Event {
         this.approvalTime = approvalTime;
     }
 
-    @Column(columnDefinition = "mediumtext")
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getVehicleSize() {
         return vehicleSize;
     }
@@ -221,4 +215,11 @@ public class Event {
     }
 
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

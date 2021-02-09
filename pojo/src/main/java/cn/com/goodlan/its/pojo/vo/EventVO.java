@@ -47,6 +47,6 @@ public class EventVO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time;
 
-    private String image;
+    private String imageUrl;
 
 }
