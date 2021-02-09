@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setUsername(userDTO.getUsername());
-        user.setPhoneNumber(AESUtil.encrypt(userDTO.getPhoneNumber()));
+        user.setPhoneNumber(aesEncrypt(userDTO.getPhoneNumber()));
         user.setSex(userDTO.getSex());
         user.setRemark(userDTO.getRemark());
         user.addCollege(userDTO.getCollegeId());
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
         user.setRemark(userDTO.getRemark());
         user.setSex(userDTO.getSex());
         user.setEmail(userDTO.getEmail());
-        user.setPhoneNumber(AESUtil.encrypt(userDTO.getPhoneNumber()));
+        user.setPhoneNumber(aesEncrypt(userDTO.getPhoneNumber()));
         user.addCollege(userDTO.getCollegeId());
         String[] roleIds = Convert.toStrArray(userDTO.getRoleIds());
         user.removeAllRole();
@@ -133,8 +133,16 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.getOne(SecurityUtil.getUserId());
         user.setEmail(updateProfileDTO.getEmail());
         user.setSex(updateProfileDTO.getSex());
-        user.setPhoneNumber(AESUtil.encrypt(updateProfileDTO.getPhoneNumber()));
+        user.setPhoneNumber(aesEncrypt(updateProfileDTO.getPhoneNumber()));
         userRepository.save(user);
+    }
+
+
+    /**
+     * AES加密
+     */
+    private String aesEncrypt(String str) {
+        return AESUtil.encrypt(str);
     }
 
     @Override

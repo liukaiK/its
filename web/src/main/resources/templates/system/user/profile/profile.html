@@ -254,22 +254,12 @@
 	    	onkeyup: false,
 			rules:{
 				oldPassword:{
-					required:true,
-					remote: {
-	                    url: ctx + "system/user/profile/checkPassword",
-	                    type: "get",
-	                    dataType: "json",
-	                    data: {
-	                        password: function() {
-	                            return $("input[name='oldPassword']").val();
-	                        }
-	                    }
-	                }
+					required:true
 				},
 				newPassword: {
 	                required: true,
-	                minlength: 6,
-	    			maxlength: 20
+	                minlength: 8,
+	    			maxlength: 16
 	            },
 	            confirmPassword: {
 	                required: true,
@@ -283,8 +273,8 @@
 	            },
 	            newPassword: {
 	                required: "请输入新密码",
-	                minlength: "密码不能小于5个字符",
-	                maxlength: "密码不能大于20个字符"
+	                minlength: "密码不能小于8个字符",
+	                maxlength: "密码不能大于16个字符"
 	            },
 	            confirmPassword: {
 	                required: "请再次输入新密码",
@@ -298,11 +288,12 @@
         let changePasswordUrl = /*[[@{/system/user/profile/changePassword}]]*/ "";
 
 		function submitChangPassword () {
-			var chrtype = [[${#strings.defaultString(@config.getKey('sys.account.chrtype'), 0)}]];
-			var password = $("#newPassword").val();
-	        if ($.validate.form("form-user-resetPwd") && checkpwd(chrtype, password)) {
-	        	$.operate.saveModal(changePasswordUrl, $('#form-user-resetPwd').serialize());
-	        }
+			// var chrtype = [[${#strings.defaultString(@config.getKey('sys.account.chrtype'), 0)}]];
+			// var password = $("#newPassword").val();
+	        // if ($.validate.form("form-user-resetPwd") && checkpwd(chrtype, password)) {
+            if ($.validate.form("form-user-resetPwd")) {
+                $.operate.saveModal(changePasswordUrl, $('#form-user-resetPwd').serialize());
+            }
 	    }
 	</script>
 </body>
