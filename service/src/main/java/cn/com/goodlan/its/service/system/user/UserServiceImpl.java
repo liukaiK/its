@@ -153,7 +153,7 @@ public class UserServiceImpl implements UserService {
         if (passwordIsError(changePasswordDTO, user)) {
             throw new BusinessException("原密码错误!");
         }
-        if (!StringUtils.equals(changePasswordDTO.getNewPassword(), changePasswordDTO.getConfigPassword())) {
+        if (!StringUtils.equals(changePasswordDTO.getNewPassword(), changePasswordDTO.getConfirmPassword())) {
             throw new BusinessException("确认密码与新密码不一致!");
         }
         user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
