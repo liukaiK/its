@@ -60,6 +60,11 @@ public class Event {
     private String vehicleColor;
 
     /**
+     * 车辆尺寸 例 小型车
+     */
+    private String vehicleSize;
+
+    /**
      * 摄像头
      */
     private Camera camera;
@@ -206,5 +211,14 @@ public class Event {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public String getVehicleSize() {
+        return vehicleSize;
+    }
+
+    public void setVehicleSize(String vehicleSize) {
+        this.vehicleSize = vehicleSize;
+    }
+
 
 }

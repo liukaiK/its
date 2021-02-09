@@ -34,6 +34,13 @@ public class EventVO {
 
     private String vehicleColor;
 
+    private String vehicleSize;
+
+    /**
+     * 违规地点
+     */
+    private String place;
+
     private Integer status;
 
 

@@ -51,6 +51,7 @@ public class RabbitObtainEventImpl {
         event.setLaneNumber(trafficEvent.getM_LaneNumber());
         event.setVehicleColor(trafficEvent.getM_VehicleColor());
         event.setImage(trafficEvent.getBigImage());
+        event.setVehicleSize(trafficEvent.getM_VehicleSize());
         eventRepository.save(event);
     }
 
