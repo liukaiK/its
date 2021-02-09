@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.Date;
+
 @Data
 @ToString
 @NoArgsConstructor
@@ -59,7 +61,7 @@ public class TrafficEvent {
     /**
      * 事件时间
      */
-//    private String m_Utc;
+    private Date m_Utc;
 
 //    private String ip;
 

@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.time.ZoneId;
+
 @Slf4j
 @Component
 public class RabbitObtainEventImpl {
@@ -47,7 +49,7 @@ public class RabbitObtainEventImpl {
         event.setVehicle(vehicleRepository.getByLicensePlateNumber(trafficEvent.getM_PlateNumber()));
         event.setPlace(trafficEvent.getM_IllegalPlace());
         event.setLicensePlateNumber(trafficEvent.getM_PlateNumber());
-//        event.setTime(LocalDateTime.ofInstant(Instant.ofEpochMilli(trafficEvent.getM_Utc()), ZoneId.of("Asia/Shanghai")));
+        event.setTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
         event.setLaneNumber(trafficEvent.getM_LaneNumber());
         event.setVehicleColor(trafficEvent.getM_VehicleColor());
         event.setImage(trafficEvent.getBigImage());
