@@ -15,5 +15,6 @@ public class ScoreDTO {
 
     private String regionId;
 
+    private String remark;
 
 }

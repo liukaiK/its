@@ -1,5 +1,7 @@
 package cn.com.goodlan.its.pojo.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,6 +12,8 @@ import javax.persistence.*;
  * @author liukai
  */
 @Entity
+@DynamicUpdate
+@DynamicInsert
 @Table(name = "sys_score")
 public class Score extends BaseEntity {
 
@@ -22,6 +26,8 @@ public class Score extends BaseEntity {
     private ViolationType violation;
 
     private Region region;
+
+    private String remark;
 
 
     public Score() {
@@ -78,4 +84,13 @@ public class Score extends BaseEntity {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
 }
