@@ -80,7 +80,10 @@ public class RabbitObtainEventImpl {
      * 上传文件
      */
     private StorePath uploadFile(byte[] b) {
-        FastImageFile fastImageFile = new FastImageFile.Builder().withFile(new ByteArrayInputStream(b), b.length, "png").build();
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(b);
+        FastImageFile fastImageFile = new FastImageFile.Builder()
+                .withFile(inputStream, inputStream.available(), "png")
+                .build();
         return storageClient.uploadImage(fastImageFile);
     }
 
