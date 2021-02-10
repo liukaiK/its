@@ -73,7 +73,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">违规时间：</label>
                         <div class="col-sm-8">
-                            <p class="form-control-static" th:text="*{time}"></p>
+                            <p class="form-control-static" th:text="*{#temporals.format(time, 'yyyy-MM-dd HH:mm:ss')}"></p>
                         </div>
                     </div>
                 </div>
