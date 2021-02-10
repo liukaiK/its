@@ -5,7 +5,7 @@ import cn.com.goodlan.its.pojo.dto.ScoreDTO;
 import cn.com.goodlan.its.pojo.vo.ScoreVO;
 import cn.com.goodlan.its.service.system.region.RegionService;
 import cn.com.goodlan.its.service.system.score.ScoreService;
-import cn.com.goodlan.its.service.system.violation.ViolationService;
+import cn.com.goodlan.its.service.system.violation.ViolationTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +34,7 @@ public class ScoreController {
     private RegionService regionService;
 
     @Autowired
-    private ViolationService violationService;
+    private ViolationTypeService violationService;
 
 
     @GetMapping

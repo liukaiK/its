@@ -19,7 +19,7 @@ public class Score extends BaseEntity {
 
     private Integer number;
 
-    private Violation violation;
+    private ViolationType violation;
 
     private Region region;
 
@@ -53,11 +53,11 @@ public class Score extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "violation_id")
-    public Violation getViolation() {
+    public ViolationType getViolation() {
         return violation;
     }
 
-    public void setViolation(Violation violation) {
+    public void setViolation(ViolationType violation) {
         this.violation = violation;
     }
 

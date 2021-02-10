@@ -52,7 +52,7 @@ public class Event {
      */
     private String laneNumber;
 
-    private Violation violation;
+    private ViolationType violation;
 
     /**
      * 违规车辆的颜色
@@ -156,11 +156,11 @@ public class Event {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "violation_id")
-    public Violation getViolation() {
+    public ViolationType getViolation() {
         return violation;
     }
 
-    public void setViolation(Violation violation) {
+    public void setViolation(ViolationType violation) {
         this.violation = violation;
     }
 

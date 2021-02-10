@@ -9,7 +9,7 @@ import lombok.Data;
  * @date: 2021/1/18-16:57
  */
 @Data
-public class ViolationDTO {
+public class ViolationTypeDTO {
 
     private String id;
 
@@ -17,8 +17,12 @@ public class ViolationDTO {
      * 违规分类
      */
     private String name;
+
     /**
      * 违规编码
      */
-    private String number;
+    private String code;
+
+    private String remark;
+
 }

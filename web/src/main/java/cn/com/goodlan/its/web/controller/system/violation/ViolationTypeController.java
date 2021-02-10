@@ -1,10 +1,9 @@
 package cn.com.goodlan.its.web.controller.system.violation;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
-import cn.com.goodlan.its.pojo.dto.VehicleDTO;
-import cn.com.goodlan.its.pojo.dto.ViolationDTO;
-import cn.com.goodlan.its.pojo.vo.ViolationVO;
-import cn.com.goodlan.its.service.system.violation.ViolationService;
+import cn.com.goodlan.its.pojo.dto.ViolationTypeDTO;
+import cn.com.goodlan.its.pojo.vo.ViolationTypeVO;
+import cn.com.goodlan.its.service.system.violation.ViolationTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,18 +16,18 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 /**
- * description:
+ * 违规分类Controller
  *
- * @author: 王硕
- * @date: 2021/1/18-17:09
+ * @author 王硕
+ * @date 2021/1/18-17:09
  */
 @RestController
 @ResponseResultBody
 @RequestMapping("/system/violation")
-public class ViolationController {
+public class ViolationTypeController {
 
     @Autowired
-    private ViolationService violationService;
+    private ViolationTypeService violationTypeService;
 
 
     @GetMapping
@@ -42,8 +41,8 @@ public class ViolationController {
      */
     @PostMapping("/search")
     @PreAuthorize("hasAuthority('system:violation:search')")
-    public Page<ViolationVO> search(@PageableDefault Pageable pageable) {
-        return violationService.search(pageable);
+    public Page<ViolationTypeVO> search(ViolationTypeDTO violationTypeDTO, @PageableDefault Pageable pageable) {
+        return violationTypeService.search(violationTypeDTO, pageable);
     }
 
 
@@ -61,8 +60,8 @@ public class ViolationController {
      */
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('system:violation:add')")
-    public void add(@Valid ViolationDTO violationDTO) {
-        violationService.save(violationDTO);
+    public void add(@Valid ViolationTypeDTO violationDTO) {
+        violationTypeService.save(violationDTO);
     }
 
     /**
@@ -71,7 +70,7 @@ public class ViolationController {
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasAuthority('system:violation:edit')")
     public ModelAndView edit(@PathVariable String id, Model model) {
-        model.addAttribute("violation", violationService.getById(id));
+        model.addAttribute("violation", violationTypeService.getById(id));
         return new ModelAndView("system/violation/edit");
     }
 
@@ -80,8 +79,8 @@ public class ViolationController {
      */
     @PostMapping("/edit")
     @PreAuthorize("hasAuthority('system:violation:edit')")
-    public void edit(@Valid ViolationDTO violationDTO) {
-        violationService.update(violationDTO);
+    public void edit(@Valid ViolationTypeDTO violationDTO) {
+        violationTypeService.update(violationDTO);
     }
 
     /**
@@ -90,7 +89,7 @@ public class ViolationController {
     @PostMapping("/remove")
     @PreAuthorize("hasAuthority('system:violation:remove')")
     public void remove(String ids) {
-        violationService.remove(ids);
+        violationTypeService.remove(ids);
     }
 
 }

@@ -13,8 +13,8 @@ import javax.persistence.Table;
  * @author 王硕
  */
 @Entity
-@Table(name = "sys_violation")
-public class Violation extends BaseEntity {
+@Table(name = "sys_violation_type")
+public class ViolationType extends BaseEntity {
 
     private String id;
 
@@ -26,12 +26,14 @@ public class Violation extends BaseEntity {
     /**
      * 违规编码
      */
-    private String number;
+    private String code;
 
-    public Violation() {
+    private String remark;
+
+    public ViolationType() {
     }
 
-    public Violation(String id) {
+    public ViolationType(String id) {
         this.id = id;
     }
 
@@ -50,15 +52,24 @@ public class Violation extends BaseEntity {
         return name;
     }
 
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

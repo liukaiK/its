@@ -4,7 +4,7 @@ import cn.com.goodlan.its.dao.system.score.ScoreRepository;
 import cn.com.goodlan.its.pojo.dto.ScoreDTO;
 import cn.com.goodlan.its.pojo.entity.Region;
 import cn.com.goodlan.its.pojo.entity.Score;
-import cn.com.goodlan.its.pojo.entity.Violation;
+import cn.com.goodlan.its.pojo.entity.ViolationType;
 import cn.com.goodlan.its.pojo.vo.ScoreVO;
 import cn.com.goodlan.mapstruct.ScoreMapper;
 import cn.hutool.core.convert.Convert;
@@ -37,7 +37,7 @@ public class ScoreServiceImpl implements ScoreService {
         score.setName(scoreDTO.getName());
         score.setNumber(scoreDTO.getNumber());
         score.setRegion(new Region(scoreDTO.getRegionId()));
-        score.setViolation(new Violation(scoreDTO.getViolationId()));
+        score.setViolation(new ViolationType(scoreDTO.getViolationId()));
         scoreRepository.save(score);
     }
 
@@ -61,7 +61,7 @@ public class ScoreServiceImpl implements ScoreService {
         score.setName(scoreDTO.getName());
         score.setNumber(scoreDTO.getNumber());
         score.setRegion(new Region(scoreDTO.getRegionId()));
-        score.setViolation(new Violation(scoreDTO.getViolationId()));
+        score.setViolation(new ViolationType(scoreDTO.getViolationId()));
         scoreRepository.save(score);
     }
 
