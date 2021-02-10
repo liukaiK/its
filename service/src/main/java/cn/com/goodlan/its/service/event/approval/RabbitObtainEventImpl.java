@@ -45,7 +45,8 @@ public class RabbitObtainEventImpl {
 
     @RabbitHandler
     @RabbitListener(queuesToDeclare = @Queue(name = "its.traffic.event", durable = "true"))
-    public void obtainEvent(String message) throws JsonProcessingException {
+    public synchronized void obtainEvent(String message) throws JsonProcessingException {
+        System.out.println(message);
         String content = StringEscapeUtils.unescapeJava(message);
         if (StringUtils.startsWithIgnoreCase(content, "\"")) {
             content = content.substring(1, content.length() - 1);
