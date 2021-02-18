@@ -52,7 +52,7 @@ public class RabbitObtainEventImpl {
         }
         TrafficEvent trafficEvent = objectMapper.readValue(content, TrafficEvent.class);
         Event event = new Event();
-//        event.setCamera(cameraRepository.getByIp(trafficEvent.getIp()));
+        event.setCamera(cameraRepository.getByPosition(trafficEvent.getM_IllegalPlace()));
         event.setVehicle(vehicleRepository.getByLicensePlateNumber(trafficEvent.getM_PlateNumber()));
         event.setPlace(trafficEvent.getM_IllegalPlace());
         event.setLicensePlateNumber(trafficEvent.getM_PlateNumber());

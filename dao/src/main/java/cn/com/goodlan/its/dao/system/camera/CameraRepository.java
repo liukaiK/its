@@ -7,4 +7,6 @@ public interface CameraRepository extends CustomizeRepository<Camera, String> {
 
     Camera getByIp(String ip);
 
+    Camera getByPosition(String position);
+
 }
