@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
                 list.add(criteriaBuilder.like(root.get("username").as(String.class), userDTO.getUsername() + "%"));
             }
             if (StringUtils.isNotEmpty(userDTO.getPhoneNumber())) {
-                list.add(criteriaBuilder.like(root.get("phoneNumber").as(String.class), userDTO.getPhoneNumber() + "%"));
+                list.add(criteriaBuilder.equal(root.get("phoneNumber").as(String.class), aesEncrypt(userDTO.getPhoneNumber())));
             }
             Predicate[] p = new Predicate[list.size()];
             return criteriaBuilder.and(list.toArray(p));
