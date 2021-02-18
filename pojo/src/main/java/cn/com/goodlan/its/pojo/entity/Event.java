@@ -89,6 +89,11 @@ public class Event {
      */
     private String imageUrl;
 
+    /**
+     * 车速
+     */
+    private Integer speed;
+
     private Integer status = 0;
 
     public Event() {
@@ -221,5 +226,14 @@ public class Event {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Column(columnDefinition = "tinyint")
+    public Integer getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(Integer speed) {
+        this.speed = speed;
     }
 }
