@@ -45,6 +45,12 @@ public class EventApprovalServiceImpl implements EventApprovalService {
             if (StringUtils.isNotEmpty(eventDTO.getVehicleNumber())) {
                 list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), eventDTO.getVehicleNumber() + "%"));
             }
+            if (StringUtils.isNotEmpty(eventDTO.getStartTime())) {
+                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("time").as(String.class), eventDTO.getStartTime()));
+            }
+            if (StringUtils.isNotEmpty(eventDTO.getEndTime())) {
+                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("time").as(String.class), eventDTO.getEndTime()));
+            }
             Predicate[] p = new Predicate[list.size()];
             return criteriaBuilder.and(list.toArray(p));
         };

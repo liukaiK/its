@@ -11,4 +11,8 @@ public class EventDTO {
 
     private String vehicleNumber;
 
+    private String startTime;
+
+    private String endTime;
+
 }
