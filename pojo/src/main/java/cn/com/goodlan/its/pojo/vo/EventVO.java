@@ -43,6 +43,8 @@ public class EventVO {
 
     private Integer status;
 
+    private Integer speed;
+
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time;

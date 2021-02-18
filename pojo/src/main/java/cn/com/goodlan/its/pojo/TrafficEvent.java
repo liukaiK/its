@@ -75,6 +75,11 @@ public class TrafficEvent {
      */
     public String plateImage;
 
+    /**
+     * 车速
+     */
+    private int nSpeed;
+
 
 //    // 文件总数
 //    private String m_FileCount;
@@ -93,8 +98,7 @@ public class TrafficEvent {
 //    // 文件大小
 //    private int m_FileLength;
 
-//    //车速
-//    private int nSpeed;
+
 //    //限速范围
 //    private int nUpperSpeedLimit;
 

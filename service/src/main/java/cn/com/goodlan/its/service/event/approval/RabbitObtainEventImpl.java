@@ -61,6 +61,7 @@ public class RabbitObtainEventImpl {
         event.setVehicleColor(trafficEvent.getM_VehicleColor());
         event.setImageUrl(getImageUrl(trafficEvent.getBigImage()));
         event.setVehicleSize(trafficEvent.getM_VehicleSize());
+        event.setSpeed(trafficEvent.getNSpeed());
         eventRepository.save(event);
     }
 
