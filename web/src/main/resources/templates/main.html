@@ -8,28 +8,29 @@
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-        <form id="config-form">
-            <div class="select-list">
-                <ul>
-                    <li class="select-time">
-                        <label>选择时间： </label>
-                        <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"
-                               lay-key="1">
-                        <span>-</span>
-                        <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"
-                               lay-key="2">
-                    </li>
-                    <li>
-                        <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
-                                class="fa fa-search"></i>&nbsp;搜索</a>
-                        <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
-                                class="fa fa-refresh"></i>&nbsp;重置</a>
-                    </li>
-                </ul>
-            </div>
-        </form>
-    </div>
-    <div class="row">
+        <div class="col-sm-12 search-collapse">
+            <form id="user-form">
+                <div class="select-list">
+                                    <ul>
+                                        <li class="select-time">
+                                            <label>选择时间： </label>
+                                            <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginTime]"
+                                                   lay-key="1">
+                                            <span>-</span>
+                                            <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endTime]"
+                                                   lay-key="2">
+                                        </li>
+                                        <li>
+                                            <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i
+                                                    class="fa fa-search"></i>&nbsp;搜索</a>
+                                            <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i
+                                                    class="fa fa-refresh"></i>&nbsp;重置</a>
+                                        </li>
+                                    </ul>
+                </div>
+            </form>
+        </div>
+
         <div class="col-sm-4">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -464,8 +465,8 @@
         $(window).resize(pieChart1.resize);
 
 
-        // var options = null;
-        // $.table.init(options);
+        var options = null;
+        $.table.init(options);
     });
 </script>
 </html>
