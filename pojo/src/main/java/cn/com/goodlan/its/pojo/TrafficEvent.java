@@ -3,12 +3,10 @@ package cn.com.goodlan.its.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.util.Date;
 
 @Data
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class TrafficEvent {
@@ -63,8 +61,6 @@ public class TrafficEvent {
      */
     private Date m_Utc;
 
-//    private String ip;
-
     /**
      * 大图
      */
@@ -80,8 +76,26 @@ public class TrafficEvent {
      */
     private int nSpeed;
 
+    @Override
+    public String toString() {
+        return "TrafficEvent{" +
+                "m_EventName='" + m_EventName + '\'' +
+                ", m_PlateNumber='" + m_PlateNumber + '\'' +
+                ", m_PlateType='" + m_PlateType + '\'' +
+                ", m_PlateColor='" + m_PlateColor + '\'' +
+                ", m_VehicleColor='" + m_VehicleColor + '\'' +
+                ", m_VehicleType='" + m_VehicleType + '\'' +
+                ", m_VehicleSize='" + m_VehicleSize + '\'' +
+                ", m_IllegalPlace='" + m_IllegalPlace + '\'' +
+                ", m_LaneNumber='" + m_LaneNumber + '\'' +
+                ", m_Utc=" + m_Utc +
+                ", plateImage='" + plateImage + '\'' +
+                ", nSpeed=" + nSpeed +
+                '}';
+    }
 
-//    // 文件总数
+
+    //    // 文件总数
 //    private String m_FileCount;
 //
 //    // 文件编号

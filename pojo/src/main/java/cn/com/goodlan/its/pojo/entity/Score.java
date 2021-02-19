@@ -21,6 +21,9 @@ public class Score extends BaseEntity {
 
     private String name;
 
+    /**
+     * 分值,扣多少分
+     */
     private Integer number;
 
     private ViolationType violation;

@@ -4,7 +4,10 @@ import cn.com.goodlan.its.dao.event.EventRepository;
 import cn.com.goodlan.its.dao.system.camera.CameraRepository;
 import cn.com.goodlan.its.dao.system.vehicle.VehicleRepository;
 import cn.com.goodlan.its.pojo.TrafficEvent;
+import cn.com.goodlan.its.pojo.entity.Camera;
 import cn.com.goodlan.its.pojo.entity.Event;
+import cn.com.goodlan.its.pojo.entity.Region;
+import cn.com.goodlan.its.pojo.entity.Score;
 import cn.hutool.core.codec.Base64Decoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +25,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.ByteArrayInputStream;
 import java.time.ZoneId;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -43,6 +47,8 @@ public class RabbitObtainEventImpl {
     @Autowired
     private ObjectMapper objectMapper;
 
+    private String status = "";
+
     @RabbitHandler
     @RabbitListener(queuesToDeclare = @Queue(name = "its.traffic.event", durable = "true"))
     public synchronized void obtainEvent(String message) throws JsonProcessingException {
@@ -51,8 +57,58 @@ public class RabbitObtainEventImpl {
             content = content.substring(1, content.length() - 1);
         }
         TrafficEvent trafficEvent = objectMapper.readValue(content, TrafficEvent.class);
+
+        logTrafficEvent(trafficEvent);
+
+
+        // 判断是否和上一条数据相同 相同的话直接跳过不记录
+        if (isDistinct(trafficEvent)) {
+            return;
+        }
+
+        Camera camera = cameraRepository.getByPosition(trafficEvent.getM_IllegalPlace());
+
+
+        if (camera == null) {
+            return;
+        }
+
+        Region region = camera.getRegion();
+
+        if (region == null) {
+            return;
+        }
+
+        List<Score> scoreList = region.getScoreList();
+
+        int speed = trafficEvent.getNSpeed();
+
+        Score score1 = null;
+        for (Score score : scoreList) {
+            Integer min = score.getMinRange();
+            Integer max = score.getMaxRange();
+
+            if (min == null) {
+                min = Integer.MIN_VALUE;
+            }
+
+            if (max == null) {
+                max = Integer.MAX_VALUE;
+            }
+
+            if (min <= speed && speed <= max) {
+                score1 = score;
+                break;
+            }
+        }
+
+        if (score1 == null) {
+            return;
+        }
+
+
         Event event = new Event();
-        event.setCamera(cameraRepository.getByPosition(trafficEvent.getM_IllegalPlace()));
+        event.setCamera(camera);
         event.setVehicle(vehicleRepository.getByLicensePlateNumber(trafficEvent.getM_PlateNumber()));
         event.setPlace(trafficEvent.getM_IllegalPlace());
         event.setLicensePlateNumber(trafficEvent.getM_PlateNumber());
@@ -61,8 +117,29 @@ public class RabbitObtainEventImpl {
         event.setVehicleColor(trafficEvent.getM_VehicleColor());
         event.setImageUrl(getImageUrl(trafficEvent.getBigImage()));
         event.setVehicleSize(trafficEvent.getM_VehicleSize());
-        event.setSpeed(trafficEvent.getNSpeed());
+
+        event.setSpeed(speed);
+        event.setScore(score1);
         eventRepository.save(event);
+
+
+    }
+
+    /**
+     * 打印
+     */
+    private void logTrafficEvent(TrafficEvent trafficEvent) {
+        log.info(trafficEvent.toString());
+    }
+
+    private boolean isDistinct(TrafficEvent trafficEvent) {
+        String tempStatus = trafficEvent.getM_PlateNumber() + trafficEvent.getM_IllegalPlace() + trafficEvent.getM_Utc();
+        if (status.equals(tempStatus)) {
+            return true;
+        } else {
+            status = tempStatus;
+            return false;
+        }
     }
 
     /**

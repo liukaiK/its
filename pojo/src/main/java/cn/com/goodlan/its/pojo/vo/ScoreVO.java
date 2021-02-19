@@ -24,6 +24,10 @@ public class ScoreVO {
 
     private String remark;
 
+    private Integer minRange;
+
+    private Integer maxRange;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 

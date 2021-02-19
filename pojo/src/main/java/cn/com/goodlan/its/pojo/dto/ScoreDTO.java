@@ -17,4 +17,15 @@ public class ScoreDTO {
 
     private String remark;
 
+    /**
+     * 分值最小值
+     */
+    private Integer minRange;
+
+
+    /**
+     * 分值最大值
+     */
+    private Integer maxRange;
+
 }

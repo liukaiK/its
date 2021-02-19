@@ -3,9 +3,9 @@ package cn.com.goodlan.its.service.event.approval;
 import cn.com.goodlan.its.common.exception.BusinessException;
 import cn.com.goodlan.its.dao.event.EventRepository;
 import cn.com.goodlan.its.dao.system.record.RecordRepository;
-import cn.com.goodlan.its.dao.system.score.ScoreRepository;
 import cn.com.goodlan.its.pojo.dto.EventDTO;
 import cn.com.goodlan.its.pojo.entity.Event;
+import cn.com.goodlan.its.pojo.entity.Record;
 import cn.com.goodlan.its.pojo.entity.Score;
 import cn.com.goodlan.its.pojo.vo.EventVO;
 import cn.com.goodlan.mapstruct.EventMapper;
@@ -34,9 +34,6 @@ public class EventApprovalServiceImpl implements EventApprovalService {
 
     @Autowired
     private RecordRepository recordRepository;
-
-    @Autowired
-    private ScoreRepository scoreRepository;
 
     @Override
     public Page<EventVO> search(EventDTO eventDTO, Pageable pageable) {
@@ -77,20 +74,15 @@ public class EventApprovalServiceImpl implements EventApprovalService {
         event.setApprovalTime(LocalDateTime.now());
         eventRepository.save(event);
 
-        // 查询要扣除多少分
-        Score score = scoreRepository.getByRegionAndViolation(event.getCamera().getRegion(), event.getViolation());
+        // 获取要扣除多少分
+        Score score = event.getScore();
 
-//        if (score == null) {
-//            throw new BusinessException(event.getCamera().getRegion().getName() + " 未设置 " + event.getViolation().getName() + " 扣分规则");
-//        }
-
-
-//        Record record = new Record();
-//        record.setEvent(event);
+        Record record = new Record();
+        record.setEvent(event);
 //        record.setCollege(event.getVehicle().getCollege());
-//        record.setScore(score);
-//        record.setRecord(score.getNumber());
-//        recordRepository.save(record);
+        record.setScore(score);
+        record.setRecord(score.getNumber());
+        recordRepository.save(record);
     }
 
     @Override

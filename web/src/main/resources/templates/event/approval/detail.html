@@ -65,7 +65,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">车速：</label>
                         <div class="col-sm-8">
-                            <p class="form-control-static" th:text="*{speed}"></p>
+                            <p class="form-control-static" th:text="*{speed + ' km/h'}"></p>
                         </div>
                     </div>
                 </div>
@@ -103,11 +103,6 @@
             <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
         </div>
     </div>
-	<th:block th:include="include :: footer" />
-    <script th:inline="javascript">
-
-
-
-    </script>
 </body>
+<th:block th:include="include :: footer" />
 </html>

@@ -37,6 +37,11 @@ public class EventVO {
     private String vehicleSize;
 
     /**
+     * 扣了多少分
+     */
+    private Integer score;
+
+    /**
      * 违规地点
      */
     private String place;

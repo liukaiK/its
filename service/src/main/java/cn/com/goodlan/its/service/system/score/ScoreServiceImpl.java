@@ -39,6 +39,8 @@ public class ScoreServiceImpl implements ScoreService {
         score.setRegion(new Region(scoreDTO.getRegionId()));
         score.setViolation(new ViolationType(scoreDTO.getViolationId()));
         score.setRemark(scoreDTO.getRemark());
+        score.setMaxRange(scoreDTO.getMaxRange());
+        score.setMinRange(scoreDTO.getMinRange());
         scoreRepository.save(score);
     }
 
@@ -64,6 +66,8 @@ public class ScoreServiceImpl implements ScoreService {
         score.setRegion(new Region(scoreDTO.getRegionId()));
         score.setViolation(new ViolationType(scoreDTO.getViolationId()));
         score.setRemark(scoreDTO.getRemark());
+        score.setMinRange(scoreDTO.getMinRange());
+        score.setMaxRange(scoreDTO.getMaxRange());
         scoreRepository.save(score);
     }
 

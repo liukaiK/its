@@ -20,7 +20,8 @@ public interface EventMapper {
             @Mapping(source = "licensePlateNumber", target = "vehicleNumber"),
             @Mapping(source = "vehicle.college.name", target = "collegeName"),
             @Mapping(source = "violation.name", target = "violationName"),
-            @Mapping(source = "camera.region.name", target = "regionName")
+            @Mapping(source = "camera.region.name", target = "regionName"),
+            @Mapping(source = "score.number", target = "score")
     })
     EventVO convert(Event event);
 

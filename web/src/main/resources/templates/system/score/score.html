@@ -33,12 +33,6 @@
 		            <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" sec:authorize="hasAuthority('system:score:remove')">
 		                <i class="fa fa-remove"></i> 删除
 		            </a>
-<!--		            <a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:user:import">-->
-<!--			            <i class="fa fa-upload"></i> 导入-->
-<!--			        </a>-->
-<!--		            <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:user:export">-->
-<!--			            <i class="fa fa-download"></i> 导出-->
-<!--			        </a>-->
 		        </div>
 
 		        <div class="col-sm-12 select-table table-striped">
@@ -51,7 +45,7 @@
 <th:block th:include="include :: footer" />
 <script th:inline="javascript">
 	$(function() {
-		queryUserList();
+		search();
 	});
 
 
@@ -64,7 +58,7 @@
 	let editFlag = [[${@authority.hasAuthority('system:score:edit')}]];
 	let removeFlag = [[${@authority.hasAuthority('system:score:remove')}]];
 
-	function queryUserList() {
+	function search() {
 		var options = {
 			url: searchUrl,
 			createUrl: createUrl,

@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.pojo.entity;
 
+import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
  *
  * @author liukai
  */
+@ToString
 @Entity
 @DynamicUpdate
 @DynamicInsert
@@ -51,6 +53,11 @@ public class Event {
      * 车道号
      */
     private String laneNumber;
+
+    /**
+     * 分值
+     */
+    private Score score;
 
     private ViolationType violation;
 
@@ -236,4 +243,15 @@ public class Event {
     public void setSpeed(Integer speed) {
         this.speed = speed;
     }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "score_id")
+    public Score getScore() {
+        return score;
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
+    }
+
 }
