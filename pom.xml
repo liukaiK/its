@@ -25,6 +25,7 @@
         <lombok.version>1.18.16</lombok.version>
         <google.xzing.version>3.4.1</google.xzing.version>
         <commons-text.version>1.9</commons-text.version>
+        <poi.version>4.1.2</poi.version>
     </properties>
 
     <modules>
@@ -88,6 +89,12 @@
                 <groupId>com.google.zxing</groupId>
                 <artifactId>core</artifactId>
                 <version>${google.xzing.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
             </dependency>
 
 
