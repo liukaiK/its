@@ -22,7 +22,7 @@ public interface RecordMapper {
             @Mapping(source = "college.id", target = "collegeId"),
             @Mapping(source = "event.violation.id", target = "violationId"),
             @Mapping(source = "event.violation.name", target = "violationName"),
-            @Mapping(source = "event.vehicle.licensePlateNumber", target = "vehicleNumber"),
+            @Mapping(source = "event.licensePlateNumber", target = "vehicleNumber"),
     })
     RecordVO convert(Record record);
 
