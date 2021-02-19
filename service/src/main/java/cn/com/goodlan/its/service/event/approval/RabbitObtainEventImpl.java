@@ -60,6 +60,8 @@ public class RabbitObtainEventImpl {
         }
         TrafficEvent trafficEvent = objectMapper.readValue(content, TrafficEvent.class);
 
+        logMessage(message);
+
         logTrafficEvent(trafficEvent);
 
 
@@ -125,6 +127,11 @@ public class RabbitObtainEventImpl {
         eventRepository.save(event);
 
 
+    }
+
+    private void logMessage(String message) {
+        int index = message.indexOf("m_Utc");
+        log.info(message.substring(index, index + 40));
     }
 
     /**
