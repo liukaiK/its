@@ -21,6 +21,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.io.ByteArrayInputStream;
@@ -50,6 +51,7 @@ public class RabbitObtainEventImpl {
     private String status = "";
 
     @RabbitHandler
+    @Transactional(rollbackFor = Exception.class)
     @RabbitListener(queuesToDeclare = @Queue(name = "its.traffic.event", durable = "true"))
     public synchronized void obtainEvent(String message) throws JsonProcessingException {
         String content = StringEscapeUtils.unescapeJava(message);
