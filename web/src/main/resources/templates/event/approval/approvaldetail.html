@@ -63,6 +63,16 @@
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
+                        <label class="col-sm-4 control-label">车道号：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="*{laneNumber}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
                         <label class="col-sm-4 control-label">车速：</label>
                         <div class="col-sm-8">
                             <p class="form-control-static" th:text="*{speed + ' km/h'}"></p>
