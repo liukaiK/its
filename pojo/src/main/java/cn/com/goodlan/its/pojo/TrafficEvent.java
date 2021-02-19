@@ -1,14 +1,12 @@
 package cn.com.goodlan.its.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter
+@Getter
 public class TrafficEvent {
 
     /**
@@ -69,7 +67,7 @@ public class TrafficEvent {
     /**
      * 车牌图
      */
-    public String plateImage;
+//    public String plateImage;
 
     /**
      * 车速
@@ -89,7 +87,6 @@ public class TrafficEvent {
                 ", m_IllegalPlace='" + m_IllegalPlace + '\'' +
                 ", m_LaneNumber='" + m_LaneNumber + '\'' +
                 ", m_Utc=" + m_Utc +
-                ", plateImage='" + plateImage + '\'' +
                 ", nSpeed=" + nSpeed +
                 '}';
     }
