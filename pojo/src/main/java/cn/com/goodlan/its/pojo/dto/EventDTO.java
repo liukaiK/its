@@ -15,4 +15,6 @@ public class EventDTO {
 
     private String endTime;
 
+    private String status;
+
 }

@@ -18,6 +18,13 @@
                                 车牌号：<input type="text" name="vehicleNumber"/>
                             </li>
                             <li>
+                                状态：<select name="status">
+                                        <option value="">所有</option>
+                                        <option value="0">未处理</option>
+                                        <option value="1">已审批</option>
+                                        <option value="2">已作废</option>
+                                    </select>
+                            </li>
                             <li class="select-time">
                                 <label>违规时间： </label>
                                 <input type="text" class="time-input" placeholder="开始时间" name="startTime" data-type="datetime" data-format="yyyy-MM-dd HH:mm:ss" readonly="readonly"/>
