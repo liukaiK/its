@@ -365,11 +365,11 @@ var table = {
                     $.modal.loading("正在导出数据，请稍后...");
                     $.post(table.options.exportUrl, dataParam, function(result) {
                         if (result.code == web_status.SUCCESS) {
-                            window.location.href = ctx + "common/download?fileName=" + encodeURI(result.msg) + "&delete=" + true;
+                            window.location.href = ctx + "common/download?fileName=" + encodeURI(result.message) + "&delete=" + true;
                         } else if (result.code == web_status.WARNING) {
-                            $.modal.alertWarning(result.msg)
+                            $.modal.alertWarning(result.message)
                         } else {
-                            $.modal.alertError(result.msg);
+                            $.modal.alertError(result.message);
                         }
                         $.modal.closeLoading();
                     });

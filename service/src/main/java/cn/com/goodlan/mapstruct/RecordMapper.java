@@ -23,6 +23,8 @@ public interface RecordMapper {
             @Mapping(source = "event.violation.id", target = "violationId"),
             @Mapping(source = "event.violation.name", target = "violationName"),
             @Mapping(source = "event.licensePlateNumber", target = "vehicleNumber"),
+            @Mapping(source = "event.camera.region.id", target = "regionId"),
+            @Mapping(source = "event.camera.region.name", target = "regionName"),
     })
     RecordVO convert(Record record);
 

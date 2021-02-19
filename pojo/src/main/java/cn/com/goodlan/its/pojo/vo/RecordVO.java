@@ -19,6 +19,10 @@ public class RecordVO {
 
     private String collegeName;
 
+    private String regionId;
+
+    private String regionName;
+
     private String vehicleNumber;
 
 
