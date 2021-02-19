@@ -29,6 +29,16 @@ public class Score extends BaseEntity {
 
     private String remark;
 
+    /**
+     * 分值最小值
+     */
+    private Integer minRange;
+
+
+    /**
+     * 分值最大值
+     */
+    private Integer maxRange;
 
     public Score() {
     }
@@ -93,4 +103,21 @@ public class Score extends BaseEntity {
         this.remark = remark;
     }
 
+    @Column(columnDefinition = "tinyint")
+    public Integer getMinRange() {
+        return minRange;
+    }
+
+    public void setMinRange(Integer minRange) {
+        this.minRange = minRange;
+    }
+
+    @Column(columnDefinition = "tinyint")
+    public Integer getMaxRange() {
+        return maxRange;
+    }
+
+    public void setMaxRange(Integer maxRange) {
+        this.maxRange = maxRange;
+    }
 }
