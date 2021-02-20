@@ -37,7 +37,21 @@ public class EventApprovalServiceImpl implements EventApprovalService {
 
     @Override
     public Page<EventVO> search(EventDTO eventDTO, Pageable pageable) {
-        Specification<Event> specification = (root, query, criteriaBuilder) -> {
+        Specification<Event> specification = querySpecification(eventDTO);
+        Page<Event> page = eventRepository.findAll(specification, pageable);
+        List<EventVO> list = EventMapper.INSTANCE.convertList(page.getContent());
+        return new PageImpl<>(list, page.getPageable(), page.getTotalElements());
+    }
+
+    @Override
+    public List<EventVO> export(EventDTO eventDTO) {
+        Specification<Event> specification = querySpecification(eventDTO);
+        List<Event> list = eventRepository.findAll(specification);
+        return EventMapper.INSTANCE.convertList(list);
+    }
+
+    private Specification<Event> querySpecification(EventDTO eventDTO) {
+        return (root, query, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
             if (StringUtils.isNotEmpty(eventDTO.getVehicleNumber())) {
                 list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), eventDTO.getVehicleNumber() + "%"));
@@ -54,9 +68,6 @@ public class EventApprovalServiceImpl implements EventApprovalService {
             Predicate[] p = new Predicate[list.size()];
             return criteriaBuilder.and(list.toArray(p));
         };
-        Page<Event> page = eventRepository.findAll(specification, pageable);
-        List<EventVO> list = EventMapper.INSTANCE.convertList(page.getContent());
-        return new PageImpl<>(list, page.getPageable(), page.getTotalElements());
     }
 
     @Override
@@ -95,5 +106,6 @@ public class EventApprovalServiceImpl implements EventApprovalService {
         event.setApprovalTime(LocalDateTime.now());
         eventRepository.save(event);
     }
+
 
 }

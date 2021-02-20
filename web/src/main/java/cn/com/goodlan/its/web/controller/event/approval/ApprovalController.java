@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.web.controller.event.approval;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
+import cn.com.goodlan.its.common.util.ExcelUtil;
 import cn.com.goodlan.its.pojo.dto.EventDTO;
 import cn.com.goodlan.its.pojo.vo.EventVO;
 import cn.com.goodlan.its.service.event.approval.EventApprovalService;
@@ -12,6 +13,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 违规审批Controller
@@ -52,6 +57,20 @@ public class ApprovalController {
         return new ModelAndView("event/approval/detail");
     }
 
+
+    /**
+     * 导出Excel
+     */
+    @PostMapping("/export")
+    @PreAuthorize("hasAuthority('event:approval:export')")
+    public Map<String, Object> export(EventDTO eventDTO) {
+        Map<String, Object> map = new HashMap<>(1);
+        List<EventVO> list = eventApprovalService.export(eventDTO);
+        ExcelUtil<EventVO> util = new ExcelUtil<>(EventVO.class);
+        String fileName = util.exportExcel(list, "审批数据");
+        map.put("fileName", fileName);
+        return map;
+    }
 
     /**
      * 跳转到审批页面

@@ -356,23 +356,34 @@ var table = {
             // 导出数据
             exportExcel: function(formId) {
                 table.set();
-                $.modal.confirm("确定导出所有" + table.options.modalName + "吗？", function() {
+                $.modal.confirm("确定导出" + table.options.modalName + "吗？", function() {
                     var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
                     var params = $("#" + table.options.id).bootstrapTable('getOptions');
                     var dataParam = $("#" + currentId).serializeArray();
                     dataParam.push({ "name": "orderByColumn", "value": params.sortName });
                     dataParam.push({ "name": "isAsc", "value": params.sortOrder });
-                    $.modal.loading("正在导出数据，请稍后...");
-                    $.post(table.options.exportUrl, dataParam, function(result) {
-                        if (result.code == web_status.SUCCESS) {
-                            window.location.href = ctx + "common/download?fileName=" + encodeURI(result.message) + "&delete=" + true;
-                        } else if (result.code == web_status.WARNING) {
-                            $.modal.alertWarning(result.message)
-                        } else {
-                            $.modal.alertError(result.message);
+                    var config = {
+                        url: table.options.exportUrl,
+                        type: 'post',
+                        data: dataParam,
+                        beforeSend: function (request) {
+                            if (csrfToken && csrfHeader) {
+                                request.setRequestHeader(csrfHeader, csrfToken);
+                            }
+                            $.modal.loading("正在导出数据，请稍后...");
+                        },
+                        success: function(result) {
+                            if (result.code === web_status.SUCCESS) {
+                                window.location.href = "/common/download?fileName=" + encodeURI(result.data.fileName) + "&delete=" + true;
+                            } else if (result.code === web_status.WARNING) {
+                                $.modal.alertWarning(result.message)
+                            } else {
+                                $.modal.alertError(result.message);
+                            }
+                            $.modal.closeLoading();
                         }
-                        $.modal.closeLoading();
-                    });
+                    };
+                    $.ajax(config);
                 });
             },
             // 下载模板

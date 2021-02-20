@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.pojo.vo;
 
+import cn.com.goodlan.its.common.annotations.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -15,6 +16,7 @@ public class EventVO {
     /**
      * 车牌号码
      */
+    @Excel(name = "车牌号")
     private String vehicleNumber;
 
     /**
@@ -32,6 +34,7 @@ public class EventVO {
 
     private String laneNumber;
 
+    @Excel(name = "车辆颜色")
     private String vehicleColor;
 
     private String vehicleSize;
@@ -39,18 +42,22 @@ public class EventVO {
     /**
      * 扣了多少分
      */
+    @Excel(name = "扣分", cellType = Excel.ColumnType.NUMERIC)
     private Integer score;
 
     /**
      * 违规地点
      */
+    @Excel(name = "违规地点")
     private String place;
 
     private Integer status;
 
+    @Excel(name = "车速", suffix = "km/h")
     private Integer speed;
 
 
+    @Excel(name = "违规时间", dateFormat = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time;
 
