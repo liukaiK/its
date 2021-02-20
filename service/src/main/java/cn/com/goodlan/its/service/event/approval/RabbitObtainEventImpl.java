@@ -66,7 +66,7 @@ public class RabbitObtainEventImpl {
 
 
         // 判断是否和上一条数据相同 相同的话直接跳过不记录
-        if (isDistinct(trafficEvent)) {
+        if (isSameWithPrevious(trafficEvent)) {
             return;
         }
 
@@ -87,10 +87,10 @@ public class RabbitObtainEventImpl {
 
         int speed = trafficEvent.getNSpeed();
 
-        Score score1 = null;
-        for (Score score : scoreList) {
-            Integer min = score.getMinRange();
-            Integer max = score.getMaxRange();
+        Score score = null;
+        for (Score tempScore : scoreList) {
+            Integer min = tempScore.getMinRange();
+            Integer max = tempScore.getMaxRange();
 
             if (min == null) {
                 min = Integer.MIN_VALUE;
@@ -101,12 +101,12 @@ public class RabbitObtainEventImpl {
             }
 
             if (min <= speed && speed <= max) {
-                score1 = score;
+                score = tempScore;
                 break;
             }
         }
 
-        if (score1 == null) {
+        if (score == null) {
             return;
         }
 
@@ -123,7 +123,7 @@ public class RabbitObtainEventImpl {
         event.setVehicleSize(trafficEvent.getM_VehicleSize());
 
         event.setSpeed(speed);
-        event.setScore(score1);
+        event.setScore(score);
         eventRepository.save(event);
 
 
@@ -141,7 +141,10 @@ public class RabbitObtainEventImpl {
         log.info(trafficEvent.toString());
     }
 
-    private boolean isDistinct(TrafficEvent trafficEvent) {
+    /**
+     * 会收到多条一样的消息 所以要过滤
+     */
+    private boolean isSameWithPrevious(TrafficEvent trafficEvent) {
         String tempStatus = trafficEvent.getM_PlateNumber() + trafficEvent.getM_IllegalPlace() + trafficEvent.getM_Utc();
         if (status.equals(tempStatus)) {
             return true;
