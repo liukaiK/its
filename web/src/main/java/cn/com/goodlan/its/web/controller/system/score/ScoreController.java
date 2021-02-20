@@ -39,7 +39,8 @@ public class ScoreController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('system:score:view')")
-    public ModelAndView score() {
+    public ModelAndView score(Model model) {
+        model.addAttribute("regionList", regionService.findAll());
         return new ModelAndView("system/score/score");
     }
 

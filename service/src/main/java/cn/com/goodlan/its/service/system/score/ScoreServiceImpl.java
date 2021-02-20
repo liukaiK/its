@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.service.system.score;
 
+import cn.com.goodlan.its.common.util.StringUtils;
 import cn.com.goodlan.its.dao.system.score.ScoreRepository;
 import cn.com.goodlan.its.pojo.dto.ScoreDTO;
 import cn.com.goodlan.its.pojo.entity.Region;
@@ -26,7 +27,12 @@ public class ScoreServiceImpl implements ScoreService {
 
     @Override
     public Page<ScoreVO> search(ScoreDTO scoreDTO, Pageable pageable) {
-        Page<Score> page = scoreRepository.findAll(pageable);
+        Page<Score> page;
+        if (StringUtils.isNotEmpty(scoreDTO.getRegionId())) {
+            page = scoreRepository.findByRegion(new Region(scoreDTO.getRegionId()), pageable);
+        } else {
+            page = scoreRepository.findAll(pageable);
+        }
         List<ScoreVO> list = ScoreMapper.INSTANCE.convertList(page.getContent());
         return new PageImpl<>(list, page.getPageable(), page.getTotalElements());
     }
