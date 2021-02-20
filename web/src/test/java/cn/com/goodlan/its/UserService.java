@@ -41,7 +41,7 @@ public class UserService {
 
     @Test
     public void test() {
-        String str = "{\"id\":\"4028d985776d8524017781d900923323\",\"m_EventName\":\"交通卡口\",\"m_PlateNumber\":\"黑AX717N\",\"m_PlateType\":\"Normal\",\"m_PlateColor\":\"Blue\",\"m_VehicleColor\":\"White\",\"m_VehicleType\":\"Unknown\",\"m_VehicleSize\":\"小型车\",\"m_FileCount\":\"1\",\"m_FileIndex\":\"1\",\"m_GroupID\":\"299982174\",\"m_IllegalPlace\":\"航天路拍2H栋方向\",\"m_LaneNumber\":\"1\",\"m_bPicEnble\":1,\"m_OffSet\":992595,\"m_FileLength\":29250,\"m_Utc\":\"2021-02-19T08:00:43.000+0000\",\"eventType\":23,\"bigImage\":null,\"plateImage\":null,\"nupperSpeedLimit\":30,\"nspeed\":30}";
+        String str = "{\"id\":\"4028d985776d8524017781d900923323\",\"m_EventName\":\"交通卡口\",\"m_PlateNumber\":\"黑AX717N\",\"m_PlateType\":\"Normal\",\"m_PlateColor\":\"Blue\",\"m_VehicleColor\":\"White\",\"m_VehicleType\":\"Unknown\",\"m_VehicleSize\":\"小型车\",\"m_FileCount\":\"1\",\"m_FileIndex\":\"1\",\"m_GroupID\":\"299982174\",\"m_IllegalPlace\":\"航天路拍2H栋方向\",\"m_LaneNumber\":\"1\",\"m_bPicEnble\":1,\"m_OffSet\":992595,\"m_FileLength\":29250,\"m_Utc\":\"2021-02-19T16:02:00.000+0000\",\"eventType\":23,\"bigImage\":null,\"plateImage\":null,\"nupperSpeedLimit\":30,\"nspeed\":30}";
 
         try {
             TrafficEvent event = objectMapper.readValue(str, TrafficEvent.class);
