@@ -16,7 +16,10 @@ public class Record extends BaseEntity {
 
     private String id;
 
-    private Event event;
+    /**
+     * 车牌号
+     */
+    private String licensePlateNumber;
 
     private Score score;
 
@@ -27,6 +30,26 @@ public class Record extends BaseEntity {
 
     private College college;
 
+    private Long count;
+
+    public Record() {
+    }
+
+
+    public Record(String licensePlateNumber, Long count) {
+        this.licensePlateNumber = licensePlateNumber;
+        this.count = count;
+    }
+
+    @Override
+    public String toString() {
+        return "Record{" +
+                "id='" + id + '\'' +
+                ", licensePlateNumber='" + licensePlateNumber + '\'' +
+                ", record=" + record +
+                ", count=" + count +
+                '}';
+    }
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -37,16 +60,6 @@ public class Record extends BaseEntity {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id")
-    public Event getEvent() {
-        return event;
-    }
-
-    public void setEvent(Event event) {
-        this.event = event;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -79,4 +92,20 @@ public class Record extends BaseEntity {
     }
 
 
+    public String getLicensePlateNumber() {
+        return licensePlateNumber;
+    }
+
+    public void setLicensePlateNumber(String licensePlateNumber) {
+        this.licensePlateNumber = licensePlateNumber;
+    }
+
+    @Transient
+    public Long getCount() {
+        return count;
+    }
+
+    public void setCount(Long count) {
+        this.count = count;
+    }
 }

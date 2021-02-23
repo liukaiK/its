@@ -36,7 +36,7 @@ public class RecordVO {
     /**
      * 违规次数
      */
-    private Integer count;
+    private Long count;
 
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

@@ -92,7 +92,7 @@ public class EventApprovalServiceImpl implements EventApprovalService {
         Score score = event.getScore();
 
         Record record = new Record();
-        record.setEvent(event);
+        record.setLicensePlateNumber(event.getLicensePlateNumber());
 //        record.setCollege(event.getVehicle().getCollege());
         record.setScore(score);
         record.setRecord(score.getNumber());

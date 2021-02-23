@@ -20,11 +20,11 @@ public interface RecordMapper {
 //            @Mapping(target = "phoneNumber", expression = "java(cn.com.goodlan.its.common.util.AESUtil.decrypt(user.getPhoneNumber()))"),
             @Mapping(source = "college.name", target = "collegeName"),
             @Mapping(source = "college.id", target = "collegeId"),
-            @Mapping(source = "event.violation.id", target = "violationId"),
-            @Mapping(source = "event.violation.name", target = "violationName"),
-            @Mapping(source = "event.licensePlateNumber", target = "vehicleNumber"),
-            @Mapping(source = "event.camera.region.id", target = "regionId"),
-            @Mapping(source = "event.camera.region.name", target = "regionName"),
+            @Mapping(source = "licensePlateNumber", target = "vehicleNumber")
+//            @Mapping(source = "event.violation.name", target = "violationName"),
+//            @Mapping(source = "event.licensePlateNumber", target = "vehicleNumber"),
+//            @Mapping(source = "event.camera.region.id", target = "regionId"),
+//            @Mapping(source = "event.camera.region.name", target = "regionName"),
     })
     RecordVO convert(Record record);
 
