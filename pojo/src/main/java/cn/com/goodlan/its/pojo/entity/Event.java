@@ -110,6 +110,19 @@ public class Event {
         this.id = id;
     }
 
+
+    /**
+     * 获取当前违规事件发生在哪个区域
+     */
+    @Transient
+    public Region getRegion() {
+        Camera camera = getCamera();
+        if (camera == null) {
+            return null;
+        }
+        return camera.getRegion();
+    }
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Service
@@ -28,11 +29,24 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public Page<RecordVO> search(RecordDTO recordDTO, Pageable pageable) {
 
-        String qlString = "select new Record(r.licensePlateNumber,count(r.licensePlateNumber)) from Record r where 1=1 group by r.licensePlateNumber";
+        String qlString = "select new Record(r.licensePlateNumber,count(r.licensePlateNumber)) \n" +
+                "from Record r \n" +
+                "where 1=1 \n" +
+//                "and r.licensePlateNumber = :licensePlateNumber \n" +
+                "group by r.licensePlateNumber";
 
-        String countString = "select count(distinct r.licensePlateNumber) from Record r where 1=1";
+        TypedQuery<Record> typedQuery = entityManager.createQuery(qlString, Record.class);
 
-        List<Record> resultList = entityManager.createQuery(qlString, Record.class)
+//        if (StringUtils.isNotEmpty(recordDTO.getLicensePlateNumber())) {
+//            typedQuery.setParameter("licensePlateNumber", recordDTO.getLicensePlateNumber());
+//        }
+
+
+        String countString = "select count(distinct r.licensePlateNumber) \n" +
+                "from Record r \n" +
+                "where 1=1";
+
+        List<Record> resultList = typedQuery
                 .setFirstResult(pageable.getPageNumber())
                 .setMaxResults(pageable.getPageSize())
                 .getResultList();

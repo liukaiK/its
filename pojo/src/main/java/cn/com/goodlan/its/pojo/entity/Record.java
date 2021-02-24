@@ -4,6 +4,7 @@ package cn.com.goodlan.its.pojo.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * 记录实体
@@ -29,6 +30,10 @@ public class Record extends BaseEntity {
     private Integer record;
 
     private College college;
+
+    private LocalDateTime time;
+
+    private String regionName;
 
     private Long count;
 
@@ -107,5 +112,21 @@ public class Record extends BaseEntity {
 
     public void setCount(Long count) {
         this.count = count;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
+
+    public String getRegionName() {
+        return regionName;
+    }
+
+    public void setRegionName(String regionName) {
+        this.regionName = regionName;
     }
 }

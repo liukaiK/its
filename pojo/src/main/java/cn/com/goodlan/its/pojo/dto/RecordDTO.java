@@ -9,5 +9,9 @@ public class RecordDTO {
 
     private String licensePlateNumber;
 
+    private String startTime;
+
+    private String endTime;
+
 
 }
