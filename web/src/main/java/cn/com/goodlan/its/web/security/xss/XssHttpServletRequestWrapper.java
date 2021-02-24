@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.web.security.xss;
 
 
-import cn.hutool.http.HTMLFilter;
+import cn.hutool.http.HtmlUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -26,7 +26,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
             String[] escapseValues = new String[length];
             for (int i = 0; i < length; i++) {
                 // 防xss攻击和过滤前后空格
-                escapseValues[i] = new HTMLFilter().filter(values[i].trim());
+                escapseValues[i] = HtmlUtil.filter(values[i].trim());
             }
             return escapseValues;
         }
@@ -38,7 +38,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     public String getParameter(String name) {
         String values = super.getParameter(name);
         if (values != null) {
-            return new HTMLFilter().filter(values.trim());
+            return HtmlUtil.filter(values.trim());
         }
         return values;
     }

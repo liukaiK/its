@@ -32,7 +32,6 @@ public class NoAuthorityHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        log.error("访问被拒绝", accessDeniedException);
         if (HttpUtil.isAjaxRequest(request)) {
             response.setCharacterEncoding("UTF-8");
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
