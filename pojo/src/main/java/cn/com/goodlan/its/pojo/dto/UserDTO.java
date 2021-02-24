@@ -1,12 +1,10 @@
 package cn.com.goodlan.its.pojo.dto;
 
-import cn.com.goodlan.its.common.annotations.Create;
-import cn.com.goodlan.its.common.annotations.MobileNumber;
-import cn.com.goodlan.its.common.annotations.Password;
-import cn.com.goodlan.its.common.annotations.Sex;
+import cn.com.goodlan.its.common.annotations.*;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Data
 public class UserDTO {
@@ -15,6 +13,10 @@ public class UserDTO {
 
     private String name;
 
+    /**
+     * 只有新增用户的时候  才需要校验账号
+     */
+    @Username(groups = Create.class)
     private String username;
 
     /**
@@ -32,6 +34,7 @@ public class UserDTO {
     @Sex
     private String sex;
 
+    @NotBlank(message = "请选择学院")
     private String collegeId;
 
     private String roleIds;
