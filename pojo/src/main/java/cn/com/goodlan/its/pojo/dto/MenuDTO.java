@@ -2,11 +2,14 @@ package cn.com.goodlan.its.pojo.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
 public class MenuDTO {
 
     private String id;
 
+    @NotBlank(message = "菜单名称不能为空")
     private String name;
 
     private String url;
@@ -16,6 +19,7 @@ public class MenuDTO {
     /**
      * 菜单类型
      */
+    @NotBlank(message = "请选择菜单类型")
     private String menuType;
 
     /**
