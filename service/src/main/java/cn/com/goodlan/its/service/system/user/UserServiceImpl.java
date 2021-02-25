@@ -97,18 +97,12 @@ public class UserServiceImpl implements UserService {
     public void remove(String ids) {
         String[] userIds = Convert.toStrArray(ids);
         for (String userId : userIds) {
-//            checkUserAllowed(new User(userId));
-            userRepository.delete(new User(userId));
+            User user = new User(userId);
+            if (user.isAdmin()) {
+                throw new BusinessException("超级管理员不能被删除");
+            }
+            userRepository.delete(user);
         }
-        // 删除用户与角色关联
-//        userRoleMapper.deleteUserRole(userIds);
-        // 删除用户与岗位关联
-//        userPostMapper.deleteUserPost(userIds);
-//        return userMapper.deleteUserByIds(userIds);
-
-//        userRepository.deleteAll(Arrays.);
-
-
     }
 
     @Override
