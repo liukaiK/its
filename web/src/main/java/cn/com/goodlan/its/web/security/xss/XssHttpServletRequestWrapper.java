@@ -26,7 +26,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
             String[] escapseValues = new String[length];
             for (int i = 0; i < length; i++) {
                 // 防xss攻击和过滤前后空格
-                escapseValues[i] = HtmlUtil.filter(values[i].trim());
+                escapseValues[i] = HtmlUtil.escape(values[i].trim());
             }
             return escapseValues;
         }
