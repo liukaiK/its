@@ -117,9 +117,9 @@ body {
 }
 
 .map_queen {
-    width: 35%;
+    width: 33%;
     height: 100%;
-    background-image: url('../img/map_queen.png');
+    /* background-image: url('../img/map_queen.png'); */
     background-size: 100% 100%;
 }
 
@@ -129,7 +129,7 @@ body {
 }
 
 .message_queen {
-    width: 30%;
+    width: 33%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -200,6 +200,7 @@ body {
     padding-bottom: 10px;
 }
 
+.chart_second,
 .chart_third {
     position: relative;
     display: flex;
@@ -245,7 +246,7 @@ body {
 }
 
 .hlj_screen {
-    padding: 10px;
+    /* padding: 10px; */
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -260,4 +261,10 @@ body {
 
 .banner .echart_here {
     width: 100%;
+}
+
+.title_logo {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
 }
