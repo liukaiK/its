@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.pojo;
 
+import cn.com.goodlan.its.pojo.entity.Menu;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,6 +17,15 @@ public class SecurityAuthorityBean implements GrantedAuthority {
     private String id;
 
     private String authority;
+
+    public SecurityAuthorityBean() {
+
+    }
+
+    public SecurityAuthorityBean(Menu menu) {
+        this.id = menu.getId();
+        this.authority = menu.getAuthority();
+    }
 
     @Override
     public String getAuthority() {

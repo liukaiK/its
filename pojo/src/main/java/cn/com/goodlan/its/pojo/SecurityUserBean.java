@@ -1,11 +1,14 @@
 package cn.com.goodlan.its.pojo;
 
+import cn.com.goodlan.its.pojo.entity.Menu;
+import cn.com.goodlan.its.pojo.entity.Role;
 import cn.com.goodlan.its.pojo.entity.User;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -26,9 +29,9 @@ public class SecurityUserBean implements UserDetails {
 
     private String password;
 
-    private List<SecurityRoleBean> roleList;
-
     private SecurityDeptBean dept;
+
+    private List<SecurityRoleBean> roleList;
 
     private List<SecurityAuthorityBean> authorities;
 
@@ -38,9 +41,32 @@ public class SecurityUserBean implements UserDetails {
 
     }
 
-    public SecurityUserBean(String id, String username) {
-        this.id = id;
-        this.username = username;
+    public SecurityUserBean(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.roleList = obtainRoles(user.getRoleList());
+        this.authorities = obtainAuthorities(user.getRoleList());
+    }
+
+    private List<SecurityRoleBean> obtainRoles(List<Role> roleList) {
+        List<SecurityRoleBean> roles = new ArrayList<>();
+        for (Role role : roleList) {
+            roles.add(new SecurityRoleBean(role));
+        }
+        return roles;
+    }
+
+    private List<SecurityAuthorityBean> obtainAuthorities(List<Role> roleList) {
+        List<SecurityAuthorityBean> grantedAuthorities = new ArrayList<>();
+        for (Role role : roleList) {
+            List<Menu> menuList = role.getMenuList();
+            for (Menu menu : menuList) {
+                grantedAuthorities.add(new SecurityAuthorityBean(menu));
+            }
+        }
+        return grantedAuthorities;
     }
 
     @Override

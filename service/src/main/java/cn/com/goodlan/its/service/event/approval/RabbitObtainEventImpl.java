@@ -1,13 +1,11 @@
 package cn.com.goodlan.its.service.event.approval;
 
+import cn.com.goodlan.its.dao.event.CountRepository;
 import cn.com.goodlan.its.dao.event.EventRepository;
 import cn.com.goodlan.its.dao.system.camera.CameraRepository;
 import cn.com.goodlan.its.dao.system.vehicle.VehicleRepository;
 import cn.com.goodlan.its.pojo.TrafficEvent;
-import cn.com.goodlan.its.pojo.entity.Camera;
-import cn.com.goodlan.its.pojo.entity.Event;
-import cn.com.goodlan.its.pojo.entity.Region;
-import cn.com.goodlan.its.pojo.entity.Score;
+import cn.com.goodlan.its.pojo.entity.*;
 import cn.hutool.core.codec.Base64Decoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,6 +25,7 @@ import org.springframework.util.StringUtils;
 import java.io.ByteArrayInputStream;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -39,11 +38,13 @@ public class RabbitObtainEventImpl {
     private EventRepository eventRepository;
 
     @Autowired
+    private CountRepository countRepository;
+
+    @Autowired
     private CameraRepository cameraRepository;
 
     @Autowired
     protected FastFileStorageClient storageClient;
-
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -110,12 +111,15 @@ public class RabbitObtainEventImpl {
             return;
         }
 
+        // 违规车辆的车牌号
+        String licensePlateNumber = trafficEvent.getM_PlateNumber();
+
 
         Event event = new Event();
         event.setCamera(camera);
-        event.setVehicle(vehicleRepository.getByLicensePlateNumber(trafficEvent.getM_PlateNumber()));
+        event.setVehicle(vehicleRepository.getByLicensePlateNumber(licensePlateNumber));
         event.setPlace(trafficEvent.getM_IllegalPlace());
-        event.setLicensePlateNumber(trafficEvent.getM_PlateNumber());
+        event.setLicensePlateNumber(licensePlateNumber);
         event.setTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
         event.setLaneNumber(trafficEvent.getM_LaneNumber());
         event.setVehicleColor(trafficEvent.getM_VehicleColor());
@@ -125,6 +129,20 @@ public class RabbitObtainEventImpl {
         event.setSpeed(speed);
         event.setScore(score);
         eventRepository.save(event);
+
+
+        Optional<Count> optional = countRepository.findById(licensePlateNumber);
+
+        if (optional.isPresent()) {
+            Count count = optional.get();
+            count.setCount(count.getCount() + 1);
+            countRepository.save(count);
+        } else {
+            Count count = new Count();
+            count.setLicensePlateNumber(licensePlateNumber);
+            count.setCount(0L);
+            countRepository.save(count);
+        }
 
 
     }

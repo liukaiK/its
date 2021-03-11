@@ -8,13 +8,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * @author liukai
  */
 public interface UserRepository extends CustomizeRepository<User, String> {
 
-    User getByUsername(String username);
+    Optional<User> getByUsername(String username);
 
     @Modifying
     @Transactional
