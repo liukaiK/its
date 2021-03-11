@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.web.security;
+package cn.com.goodlan.its.common.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

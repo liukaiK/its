@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.service.event.approval;
+package cn.com.goodlan.its.web.rabbit;
 
 import cn.com.goodlan.its.dao.event.CountRepository;
 import cn.com.goodlan.its.dao.event.EventRepository;
