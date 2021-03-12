@@ -1,6 +1,5 @@
 package cn.com.goodlan.its.service.event.approval;
 
-import cn.com.goodlan.its.common.exception.BusinessException;
 import cn.com.goodlan.its.dao.event.EventRepository;
 import cn.com.goodlan.its.dao.system.record.RecordRepository;
 import cn.com.goodlan.its.pojo.dto.EventDTO;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.Predicate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,13 +78,7 @@ public class EventApprovalServiceImpl implements EventApprovalService {
     public void approval(String id) {
         Event event = eventRepository.getOne(id);
 
-        if (event.getStatus().equals(Event.APPROVAL)) {
-            throw new BusinessException("该违规事件已经审批 请刷新页面");
-        }
-
-        event.setStatus(Event.APPROVAL);
-        event.setApprovalTime(LocalDateTime.now());
-        eventRepository.save(event);
+        event.approval();
 
         // 获取要扣除多少分
         Score score = event.getScore();
@@ -102,9 +94,7 @@ public class EventApprovalServiceImpl implements EventApprovalService {
     @Override
     public void cancel(String id) {
         Event event = eventRepository.getOne(id);
-        event.setStatus(Event.CANCEL);
-        event.setApprovalTime(LocalDateTime.now());
-        eventRepository.save(event);
+        event.cancel();
     }
 
 

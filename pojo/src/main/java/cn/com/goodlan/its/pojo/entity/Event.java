@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.pojo.entity;
 
+import cn.com.goodlan.its.common.exception.BusinessException;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -121,6 +122,24 @@ public class Event {
             return null;
         }
         return camera.getRegion();
+    }
+
+    /**
+     * 审批
+     */
+    @Transient
+    public void approval() {
+        if (APPROVAL.equals(this.status)) {
+            throw new BusinessException("该违规事件已经审批 请刷新页面");
+        }
+        this.setStatus(APPROVAL);
+        this.setApprovalTime(LocalDateTime.now());
+    }
+
+    @Transient
+    public void cancel() {
+        this.setStatus(CANCEL);
+        this.setApprovalTime(LocalDateTime.now());
     }
 
     @Id
