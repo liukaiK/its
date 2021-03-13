@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.csrf.InvalidCsrfTokenException;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -33,13 +34,26 @@ public class NoAuthorityHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         if (HttpUtil.isAjaxRequest(request)) {
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.setStatus(HttpServletResponse.SC_OK);
-            PrintWriter writer = response.getWriter();
-            Result responseBody = Result.fail(500, "认证已失效,需要重新登录");
-            writer.write(objectMapper.writeValueAsString(responseBody));
-            writer.close();
+
+            if (accessDeniedException instanceof InvalidCsrfTokenException) {
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                response.setStatus(HttpServletResponse.SC_OK);
+                PrintWriter writer = response.getWriter();
+                Result responseBody = Result.fail(500, "页面已经过期,请刷新页面");
+                writer.write(objectMapper.writeValueAsString(responseBody));
+                writer.close();
+            } else {
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                response.setStatus(HttpServletResponse.SC_OK);
+                PrintWriter writer = response.getWriter();
+                Result responseBody = Result.fail(500, "认证已失效,需要重新登录");
+                writer.write(objectMapper.writeValueAsString(responseBody));
+                writer.close();
+            }
+
+
         } else {
             response.sendRedirect(SystemConstant.LOGIN_PAGE);
         }
