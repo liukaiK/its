@@ -88,14 +88,13 @@ public class TrafficEvent {
                 ", m_VehicleSize='" + m_VehicleSize + '\'' +
                 ", m_IllegalPlace='" + m_IllegalPlace + '\'' +
                 ", m_LaneNumber='" + m_LaneNumber + '\'' +
-                ", m_Utc=" + m_Utc + '\'' +
-                ", nSpeed=" + nSpeed + '\'' +
-                ", ip=" + ip + '\'' +
+                ", m_Utc=" + m_Utc +
+                ", nSpeed=" + nSpeed +
+                ", ip='" + ip + '\'' +
                 '}';
     }
 
-
-    //    // 文件总数
+//    // 文件总数
 //    private String m_FileCount;
 //
 //    // 文件编号

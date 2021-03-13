@@ -65,13 +65,17 @@ public class RabbitObtainEventImpl {
 
         logTrafficEvent(trafficEvent);
 
+        if (StringUtils.isEmpty(trafficEvent.getM_PlateNumber())) {
+            return;
+        }
+
 
         // 判断是否和上一条数据相同 相同的话直接跳过不记录
         if (isSameWithPrevious(trafficEvent)) {
             return;
         }
 
-        Camera camera = cameraRepository.getByPosition(trafficEvent.getM_IllegalPlace());
+        Camera camera = cameraRepository.getByIp(trafficEvent.getIp());
 
 
         if (camera == null) {
@@ -124,10 +128,11 @@ public class RabbitObtainEventImpl {
 
         if (optional.isPresent()) {
             Count count = optional.get();
-            count.setCount(count.getCount() + 1);
+            long num = count.getCount() + 1;
+            count.setCount(num);
             countRepository.save(count);
 
-            event.setNum(count.getCount() + 1);
+            event.setNum(num);
         } else {
             Count count = new Count();
             count.setLicensePlateNumber(licensePlateNumber);
@@ -171,7 +176,7 @@ public class RabbitObtainEventImpl {
      * 会收到多条一样的消息 所以要过滤
      */
     private boolean isSameWithPrevious(TrafficEvent trafficEvent) {
-        String tempStatus = trafficEvent.getM_PlateNumber() + trafficEvent.getM_IllegalPlace() + trafficEvent.getM_Utc();
+        String tempStatus = trafficEvent.getM_PlateNumber() + trafficEvent.getIp();
         if (status.equals(tempStatus)) {
             return true;
         } else {
