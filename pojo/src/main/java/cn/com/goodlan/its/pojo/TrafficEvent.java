@@ -74,6 +74,8 @@ public class TrafficEvent {
      */
     private int nSpeed;
 
+    private String ip;
+
     @Override
     public String toString() {
         return "TrafficEvent{" +
@@ -86,8 +88,9 @@ public class TrafficEvent {
                 ", m_VehicleSize='" + m_VehicleSize + '\'' +
                 ", m_IllegalPlace='" + m_IllegalPlace + '\'' +
                 ", m_LaneNumber='" + m_LaneNumber + '\'' +
-                ", m_Utc=" + m_Utc +
-                ", nSpeed=" + nSpeed +
+                ", m_Utc=" + m_Utc + '\'' +
+                ", nSpeed=" + nSpeed + '\'' +
+                ", ip=" + ip + '\'' +
                 '}';
     }
 

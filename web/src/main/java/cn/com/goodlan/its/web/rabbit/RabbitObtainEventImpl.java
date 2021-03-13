@@ -88,6 +88,8 @@ public class RabbitObtainEventImpl {
 
         int speed = trafficEvent.getNSpeed();
 
+
+        // 与数据库中设置的速度 判断是否超速了
         Score score = null;
         for (Score tempScore : scoreList) {
             Integer min = tempScore.getMinRange();
