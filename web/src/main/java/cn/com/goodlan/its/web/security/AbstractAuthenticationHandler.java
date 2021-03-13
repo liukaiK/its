@@ -24,7 +24,7 @@ public abstract class AbstractAuthenticationHandler {
      */
     protected void handleResponse(HttpServletRequest request, HttpServletResponse response, String responseBody) throws IOException {
         response.setCharacterEncoding("UTF-8");
-        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         PrintWriter writer = response.getWriter();
         writer.write(responseBody);
         writer.close();
