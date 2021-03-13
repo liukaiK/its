@@ -102,6 +102,11 @@ public class Event {
      */
     private Integer speed;
 
+    /**
+     * 第几次违规
+     */
+    private Long num;
+
     private Integer status = 0;
 
     public Event() {
@@ -286,4 +291,12 @@ public class Event {
         this.score = score;
     }
 
+
+    public Long getNum() {
+        return num;
+    }
+
+    public void setNum(Long num) {
+        this.num = num;
+    }
 }

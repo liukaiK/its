@@ -63,4 +63,7 @@ public class EventVO {
 
     private String imageUrl;
 
+    private Long num;
+
+
 }

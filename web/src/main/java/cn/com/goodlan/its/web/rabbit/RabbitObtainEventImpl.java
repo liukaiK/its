@@ -115,7 +115,27 @@ public class RabbitObtainEventImpl {
         String licensePlateNumber = trafficEvent.getM_PlateNumber();
 
 
+        Optional<Count> optional = countRepository.findById(licensePlateNumber);
+
         Event event = new Event();
+
+
+        if (optional.isPresent()) {
+            Count count = optional.get();
+            count.setCount(count.getCount() + 1);
+            countRepository.save(count);
+
+            event.setNum(count.getCount() + 1);
+        } else {
+            Count count = new Count();
+            count.setLicensePlateNumber(licensePlateNumber);
+            count.setCount(1L);
+            countRepository.save(count);
+
+            event.setNum(1L);
+        }
+
+
         event.setCamera(camera);
         event.setVehicle(vehicleRepository.getByLicensePlateNumber(licensePlateNumber));
         event.setPlace(trafficEvent.getM_IllegalPlace());
@@ -129,20 +149,6 @@ public class RabbitObtainEventImpl {
         event.setSpeed(speed);
         event.setScore(score);
         eventRepository.save(event);
-
-
-        Optional<Count> optional = countRepository.findById(licensePlateNumber);
-
-        if (optional.isPresent()) {
-            Count count = optional.get();
-            count.setCount(count.getCount() + 1);
-            countRepository.save(count);
-        } else {
-            Count count = new Count();
-            count.setLicensePlateNumber(licensePlateNumber);
-            count.setCount(0L);
-            countRepository.save(count);
-        }
 
 
     }

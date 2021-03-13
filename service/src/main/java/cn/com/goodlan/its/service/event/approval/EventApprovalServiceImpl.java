@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.service.event.approval;
 
+import cn.com.goodlan.its.dao.event.CountRepository;
 import cn.com.goodlan.its.dao.event.EventRepository;
 import cn.com.goodlan.its.dao.system.record.RecordRepository;
 import cn.com.goodlan.its.pojo.dto.EventDTO;
