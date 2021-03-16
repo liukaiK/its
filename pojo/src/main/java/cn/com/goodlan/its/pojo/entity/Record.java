@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "eve_record")
-public class Record extends BaseEntity {
+public class Record extends AbstractEntity {
 
     private String id;
 

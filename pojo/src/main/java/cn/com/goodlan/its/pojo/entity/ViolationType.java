@@ -14,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "sys_violation_type")
-public class ViolationType extends BaseEntity {
+public class ViolationType extends AbstractEntity {
 
     private String id;
 

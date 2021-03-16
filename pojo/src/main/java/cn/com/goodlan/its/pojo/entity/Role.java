@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "sys_role")
-public class Role extends BaseEntity {
+public class Role extends AbstractEntity {
 
     private String id;
 

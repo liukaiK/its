@@ -19,7 +19,7 @@ import java.util.List;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "sys_user")
-public class User extends BaseEntity {
+public class User extends AbstractEntity {
 
     public final static String ADMIN_ID = "1b3c1438-beb2-4bab-af86-b6b8dfb91114";
 

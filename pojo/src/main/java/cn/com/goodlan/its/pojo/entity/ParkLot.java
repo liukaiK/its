@@ -14,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "sys_park_lot")
-public class ParkLot extends BaseEntity {
+public class ParkLot extends AbstractEntity {
 
     private String id;
 

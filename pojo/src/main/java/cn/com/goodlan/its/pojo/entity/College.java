@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "sys_college")
-public class College extends BaseEntity {
+public class College extends AbstractEntity {
 
     private String id;
 

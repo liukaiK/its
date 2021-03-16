@@ -15,7 +15,7 @@ import javax.persistence.*;
 @DynamicInsert
 @Entity
 @Table(name = "sys_camera")
-public class Camera extends BaseEntity {
+public class Camera extends AbstractEntity {
 
     private String id;
 

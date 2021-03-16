@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "sys_region")
-public class Region extends BaseEntity {
+public class Region extends AbstractEntity {
 
 
     private String id;

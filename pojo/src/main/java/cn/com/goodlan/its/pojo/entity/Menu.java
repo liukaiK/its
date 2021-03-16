@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "sys_menu")
-public class Menu extends BaseEntity {
+public class Menu extends AbstractEntity {
 
     public static final String M = "M";
 

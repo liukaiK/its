@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "sys_vehicle")
-public class Vehicle extends BaseEntity {
+public class Vehicle extends AbstractEntity {
 
     private String id;
 

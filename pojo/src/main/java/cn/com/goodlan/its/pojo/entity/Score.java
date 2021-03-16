@@ -15,7 +15,7 @@ import javax.persistence.*;
 @DynamicUpdate
 @DynamicInsert
 @Table(name = "sys_score")
-public class Score extends BaseEntity {
+public class Score extends AbstractEntity {
 
     private String id;
 

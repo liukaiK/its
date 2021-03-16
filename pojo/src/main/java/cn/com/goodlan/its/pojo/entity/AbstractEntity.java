@@ -2,9 +2,7 @@ package cn.com.goodlan.its.pojo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,7 +19,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
 @EntityListeners(AuditingEntityListener.class)
-public class BaseEntity implements Serializable {
+public abstract class AbstractEntity implements Serializable {
 
     private LocalDateTime createTime;
 
@@ -62,7 +60,7 @@ public class BaseEntity implements Serializable {
         this.updateTime = updateTime;
     }
 
-//    @CreatedBy
+    //    @CreatedBy
 //    @Column(name = "create_by")
     public String getCreateBy() {
         return createBy;
@@ -72,7 +70,7 @@ public class BaseEntity implements Serializable {
         this.createBy = createBy;
     }
 
-//    @LastModifiedBy
+    //    @LastModifiedBy
 //    @Column(name = "update_by")
     public String getUpdateBy() {
         return updateBy;

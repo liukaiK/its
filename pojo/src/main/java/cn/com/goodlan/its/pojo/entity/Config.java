@@ -14,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "sys_config")
-public class Config extends BaseEntity {
+public class Config extends AbstractEntity {
 
     private String id;
 
