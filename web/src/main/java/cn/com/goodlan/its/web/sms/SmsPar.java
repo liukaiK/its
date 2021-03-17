@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.web.sms;
 
+import cn.com.goodlan.its.web.properties.SmsProperties;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,7 +59,7 @@ public class SmsPar {
      */
     private String username;
 
-    public SmsPar(String mobilePhone, String content) {
+    public SmsPar(String mobilePhone, String content, SmsProperties smsProperties) {
         this.aTTime = "";
         this.messageFormat = 8;
         this.priority = 1;
@@ -68,6 +69,10 @@ public class SmsPar {
 
         this.destAddresses = mobilePhone;
         this.messageContent = content;
+
+        ApplicationInfo applicationInfo = new ApplicationInfo();
+        applicationInfo.setApplicationId(smsProperties.getApplicationId());
+        applicationInfo.setApplicationPassword(smsProperties.getApplicationPassword());
 
     }
 

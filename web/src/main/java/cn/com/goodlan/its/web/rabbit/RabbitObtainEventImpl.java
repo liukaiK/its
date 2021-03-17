@@ -1,12 +1,15 @@
 package cn.com.goodlan.its.web.rabbit;
 
+import cn.com.goodlan.its.common.util.DateUtils;
 import cn.com.goodlan.its.dao.event.CountRepository;
 import cn.com.goodlan.its.dao.event.EventRepository;
 import cn.com.goodlan.its.dao.system.camera.CameraRepository;
 import cn.com.goodlan.its.dao.system.vehicle.VehicleRepository;
 import cn.com.goodlan.its.pojo.TrafficEvent;
 import cn.com.goodlan.its.pojo.entity.*;
+import cn.com.goodlan.its.web.sms.SmsService;
 import cn.hutool.core.codec.Base64Decoder;
+import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
@@ -44,12 +47,17 @@ public class RabbitObtainEventImpl {
     private CameraRepository cameraRepository;
 
     @Autowired
+    private SmsService smsService;
+
+    @Autowired
     protected FastFileStorageClient storageClient;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     private String status = "";
+
+    private String message2 = "您好，您的车辆 XXXX（车牌号）于2021年3月13日11:25:39（违规时间）在XXX（违规地点）超速/违停（违规分类），扣分XX（分）。您已经尾骨超过4次被系统拉黑。";
 
     @RabbitHandler
     @Transactional(rollbackFor = Exception.class)
@@ -125,10 +133,11 @@ public class RabbitObtainEventImpl {
 
         Event event = new Event();
 
-
+        // 违规次数
+        long num = 0;
         if (optional.isPresent()) {
             Count count = optional.get();
-            long num = count.getCount() + 1;
+            num = count.getCount() + 1;
             count.setCount(num);
             countRepository.save(count);
 
@@ -144,7 +153,42 @@ public class RabbitObtainEventImpl {
 
 
         event.setCamera(camera);
-        event.setVehicle(vehicleRepository.getByLicensePlateNumber(licensePlateNumber));
+
+        // 查询此车辆在系统里存不存在
+        Optional<Vehicle> optionalVehicle = vehicleRepository.getByLicensePlateNumber(licensePlateNumber);
+
+        if (optionalVehicle.isPresent()) {
+            Vehicle vehicle = optionalVehicle.get();
+            saveEvent(trafficEvent, speed, score, licensePlateNumber, event, vehicle);
+            // 首次违规
+            if (num == 1) {
+                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，系统对您于警告处理。",
+                        vehicle.getLicensePlateNumber(),
+                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                        trafficEvent.getM_IllegalPlace()
+                        )
+                );
+            }
+
+            // 第二次和第三次违规
+            if (num == 2 || num == 3) {
+                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，扣分%s分。违规超过4次将被进行拉黑处理。",
+                        vehicle.getLicensePlateNumber(),
+                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                        trafficEvent.getM_IllegalPlace(),
+                        score.getNumber()
+                        )
+                );
+            }
+
+
+        }
+
+
+    }
+
+    private void saveEvent(TrafficEvent trafficEvent, int speed, Score score, String licensePlateNumber, Event event, Vehicle vehicle) {
+        event.setVehicle(vehicle);
         event.setPlace(trafficEvent.getM_IllegalPlace());
         event.setLicensePlateNumber(licensePlateNumber);
         event.setTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
@@ -152,12 +196,16 @@ public class RabbitObtainEventImpl {
         event.setVehicleColor(trafficEvent.getM_VehicleColor());
         event.setImageUrl(getImageUrl(trafficEvent.getBigImage()));
         event.setVehicleSize(trafficEvent.getM_VehicleSize());
-
         event.setSpeed(speed);
         event.setScore(score);
         eventRepository.save(event);
+    }
 
-
+    /**
+     * 发送短信
+     */
+    private void sendMessage(String phone, String message) {
+        smsService.sendSms(phone, message);
     }
 
     private void logMessage(String message) {
