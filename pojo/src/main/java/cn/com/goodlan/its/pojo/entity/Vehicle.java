@@ -29,7 +29,18 @@ public class Vehicle extends AbstractEntity {
 
     private College college;
 
+    /**
+     * 车主姓名
+     */
+    private String driverName;
+
+    /**
+     * 车主电话
+     */
+    private String driverPhone;
+
     public Vehicle() {
+
     }
 
     public Vehicle(String id) {
@@ -81,4 +92,21 @@ public class Vehicle extends AbstractEntity {
         this.licensePlateNumber = licensePlateNumber;
     }
 
+    @Column
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    @Column
+    public String getDriverPhone() {
+        return driverPhone;
+    }
+
+    public void setDriverPhone(String driverPhone) {
+        this.driverPhone = driverPhone;
+    }
 }
