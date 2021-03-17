@@ -11,4 +11,9 @@ public class ApplicationInfo {
 
     private String applicationPassword;
 
+    public ApplicationInfo(String applicationId, String applicationPassword) {
+        this.applicationId = applicationId;
+        this.applicationPassword = applicationPassword;
+    }
+
 }

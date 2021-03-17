@@ -24,7 +24,7 @@ public class SmsServiceImpl implements SmsService {
     public void sendSms(String mobilePhone, String content) {
         SmsPar smsPar = new SmsPar(mobilePhone, content, smsProperties);
         try {
-            HttpUtil.post(smsProperties.getSendSmsUrl(), objectMapper.writeValueAsString(smsPar), 2000);
+            String post = HttpUtil.post(smsProperties.getSendSmsUrl(), objectMapper.writeValueAsString(smsPar), 2000);
         } catch (RuntimeException e) {
             log.error("发送短信出现异常", e);
         } catch (JsonProcessingException e) {

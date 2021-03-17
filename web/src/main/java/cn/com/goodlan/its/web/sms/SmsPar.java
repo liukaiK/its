@@ -64,15 +64,10 @@ public class SmsPar {
         this.messageFormat = 8;
         this.priority = 1;
         this.requireReport = false;
-        this.extendCode = "343";
-
-
+        this.extendCode = "";
         this.destAddresses = mobilePhone;
         this.messageContent = content;
-
-        ApplicationInfo applicationInfo = new ApplicationInfo();
-        applicationInfo.setApplicationId(smsProperties.getApplicationId());
-        applicationInfo.setApplicationPassword(smsProperties.getApplicationPassword());
+        this.applicationInfo = new ApplicationInfo(smsProperties.getApplicationId(), smsProperties.getApplicationPassword());
 
     }
 

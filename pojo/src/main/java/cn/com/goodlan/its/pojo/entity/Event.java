@@ -222,6 +222,7 @@ public class Event {
         this.time = time;
     }
 
+    @Column
     public String getLicensePlateNumber() {
         return licensePlateNumber;
     }
