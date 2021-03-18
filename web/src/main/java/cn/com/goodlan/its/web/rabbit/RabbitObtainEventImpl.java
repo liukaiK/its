@@ -161,25 +161,25 @@ public class RabbitObtainEventImpl {
             Vehicle vehicle = optionalVehicle.get();
             saveEvent(trafficEvent, speed, score, licensePlateNumber, event, vehicle);
             // 首次违规
-            if (num == 1) {
-                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，系统对您于警告处理。",
-                        vehicle.getLicensePlateNumber(),
-                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
-                        trafficEvent.getM_IllegalPlace()
-                        )
-                );
-            }
+//            if (num == 1) {
+//                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，系统对您于警告处理。",
+//                        vehicle.getLicensePlateNumber(),
+//                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+//                        trafficEvent.getM_IllegalPlace()
+//                        )
+//                );
+//            }
 
             // 第二次和第三次违规
-            if (num == 2 || num == 3) {
-                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，扣分%s分。违规超过4次将被进行拉黑处理。",
-                        vehicle.getLicensePlateNumber(),
-                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
-                        trafficEvent.getM_IllegalPlace(),
-                        score.getNumber()
-                        )
-                );
-            }
+//            if (num == 2 || num == 3) {
+//                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，扣分%s分。违规超过4次将被进行拉黑处理。",
+//                        vehicle.getLicensePlateNumber(),
+//                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+//                        trafficEvent.getM_IllegalPlace(),
+//                        score.getNumber()
+//                        )
+//                );
+//            }
 
 
         }
