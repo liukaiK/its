@@ -14,6 +14,16 @@ public class VehicleVO {
 
     private Integer type;
 
+    /**
+     * 车主姓名
+     */
+    private String driverName;
+
+    /**
+     * 车主电话
+     */
+    private String driverPhone;
+
     private String collegeId;
 
     private String collegeName;
