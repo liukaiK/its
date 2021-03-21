@@ -26,9 +26,6 @@ public class Vehicle {
      */
     private Integer type;
 
-
-    private College college;
-
     /**
      * 车主姓名
      */
@@ -39,7 +36,10 @@ public class Vehicle {
      */
     private String driverPhone;
 
-    private String dmmc;
+    /**
+     * 部门名称
+     */
+    private String bmmc;
 
     public Vehicle() {
 
@@ -47,11 +47,6 @@ public class Vehicle {
 
     public Vehicle(String id) {
         this.id = id;
-    }
-
-    @Transient
-    public void addCollege(String collegeId) {
-        this.college = new College(collegeId);
     }
 
     @Id
@@ -65,17 +60,6 @@ public class Vehicle {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "college_id")
-    public College getCollege() {
-        return college;
-    }
-
-    public void setCollege(College college) {
-        this.college = college;
-    }
-
-
     public Integer getType() {
         return type;
     }
@@ -83,7 +67,6 @@ public class Vehicle {
     public void setType(Integer type) {
         this.type = type;
     }
-
 
     public String getLicensePlateNumber() {
         return licensePlateNumber;
@@ -109,13 +92,13 @@ public class Vehicle {
         this.driverPhone = driverPhone;
     }
 
-    @Column(name = "dmmc")
-    public String getDmmc() {
-        return dmmc;
+    @Column(name = "bmmc")
+    public String getBmmc() {
+        return bmmc;
     }
 
-    public void setDmmc(String dmmc) {
-        this.dmmc = dmmc;
+    public void setBmmc(String bmmc) {
+        this.bmmc = bmmc;
     }
 
 }

@@ -17,8 +17,6 @@ public interface VehicleMapper {
     List<VehicleVO> convertList(List<Vehicle> vehicleList);
 
     @Mappings({
-            @Mapping(source = "college.id", target = "collegeId"),
-            @Mapping(source = "college.name", target = "collegeName"),
             @Mapping(source = "licensePlateNumber", target = "number")
     })
     VehicleVO convert(Vehicle vehicle);

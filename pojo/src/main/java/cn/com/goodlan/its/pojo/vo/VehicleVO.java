@@ -28,6 +28,8 @@ public class VehicleVO {
 
     private String collegeName;
 
+    private String bmmc;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 

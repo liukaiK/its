@@ -135,8 +135,15 @@
 					title: '车主电话'
 				},
 				{
-					field: 'collegeName',
-					title: '归属学院'
+					field: 'bmmc',
+					title: '归属单位',
+					formatter: function (value, row, index) {
+						if (row.bmmc === null) {
+							return '未知';
+						} else {
+							return row.bmmc;
+						}
+					}
 				},
 				{
 					field: 'type',

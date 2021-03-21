@@ -31,11 +31,11 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void save(VehicleDTO vehicleDTO) {
-        Vehicle vehicle = new Vehicle();
-        vehicle.setLicensePlateNumber(vehicleDTO.getNumber());
-        vehicle.setType(vehicleDTO.getType());
-        vehicle.addCollege(vehicleDTO.getCollegeId());
-        vehicleRepository.save(vehicle);
+//        Vehicle vehicle = new Vehicle();
+//        vehicle.setLicensePlateNumber(vehicleDTO.getNumber());
+//        vehicle.setType(vehicleDTO.getType());
+//        vehicle.addCollege(vehicleDTO.getCollegeId());
+//        vehicleRepository.save(vehicle);
     }
 
     @Override
@@ -55,11 +55,11 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public void update(VehicleDTO vehicleDTO) {
-        Vehicle vehicle = vehicleRepository.getOne(vehicleDTO.getId());
-        vehicle.setLicensePlateNumber(vehicleDTO.getNumber());
-        vehicle.setType(vehicleDTO.getType());
-        vehicle.addCollege(vehicleDTO.getCollegeId());
-        vehicleRepository.save(vehicle);
+//        Vehicle vehicle = vehicleRepository.getOne(vehicleDTO.getId());
+//        vehicle.setLicensePlateNumber(vehicleDTO.getNumber());
+//        vehicle.setType(vehicleDTO.getType());
+//        vehicle.addCollege(vehicleDTO.getCollegeId());
+//        vehicleRepository.save(vehicle);
     }
 
 }
