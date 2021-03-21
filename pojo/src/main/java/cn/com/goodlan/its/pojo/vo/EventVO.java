@@ -19,12 +19,6 @@ public class EventVO {
     @Excel(name = "车牌号")
     private String vehicleNumber;
 
-    /**
-     * 学院名称
-     */
-    private String collegeName;
-
-
     private String regionName;
 
     /**
@@ -68,16 +62,19 @@ public class EventVO {
     /**
      * 车主姓名
      */
+    @Excel(name = "车主姓名")
     private String driverName;
 
     /**
      * 车主电话
      */
+    @Excel(name = "车主电话")
     private String driverPhone;
 
     /**
      * 部门名称
      */
+    @Excel(name = "违规地点", defaultValue = "未知")
     private String bmmc;
 
 
