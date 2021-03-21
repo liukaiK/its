@@ -27,11 +27,11 @@
                 </div>
             </div>
             <div class="row">
-            	<div class="col-sm-3">
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label class="col-sm-4 control-label">车主：</label>
                         <div class="col-sm-8">
-                            <p class="form-control-static"></p>
+                            <p class="form-control-static" th:text="*{driverName}"></p>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">所属单位：</label>
                         <div class="col-sm-8">
-                            <p class="form-control-static" th:text="*{collegeName}"></p>
+                            <p class="form-control-static" th:text="*{bmmc}"></p>
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">联系电话：</label>
                         <div class="col-sm-8">
-                            <p class="form-control-static"></p>
+                            <p class="form-control-static" th:text="*{driverPhone}"></p>
                         </div>
                     </div>
                 </div>

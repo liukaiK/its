@@ -65,5 +65,20 @@ public class EventVO {
 
     private Long num;
 
+    /**
+     * 车主姓名
+     */
+    private String driverName;
+
+    /**
+     * 车主电话
+     */
+    private String driverPhone;
+
+    /**
+     * 部门名称
+     */
+    private String bmmc;
+
 
 }
