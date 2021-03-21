@@ -28,6 +28,8 @@ public class RecordVO {
 
     private String violationId;
 
+    private String bmmc;
+
     /**
      * 违规类型
      */

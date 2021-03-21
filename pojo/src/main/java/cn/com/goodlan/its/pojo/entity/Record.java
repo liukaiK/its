@@ -35,13 +35,16 @@ public class Record extends AbstractEntity {
 
     private Long count;
 
+    private String bmmc;
+
     public Record() {
     }
 
 
-    public Record(String licensePlateNumber, Long count) {
+    public Record(String licensePlateNumber, Long count, String bmmc) {
         this.licensePlateNumber = licensePlateNumber;
         this.count = count;
+        this.bmmc = bmmc;
     }
 
     @Override
@@ -115,5 +118,14 @@ public class Record extends AbstractEntity {
 
     public void setRegionName(String regionName) {
         this.regionName = regionName;
+    }
+
+    @Column(name = "bmmc")
+    public String getBmmc() {
+        return bmmc;
+    }
+
+    public void setBmmc(String bmmc) {
+        this.bmmc = bmmc;
     }
 }

@@ -1,6 +1,5 @@
 package cn.com.goodlan.its.service.event.approval;
 
-import cn.com.goodlan.its.dao.event.CountRepository;
 import cn.com.goodlan.its.dao.event.EventRepository;
 import cn.com.goodlan.its.dao.system.record.RecordRepository;
 import cn.com.goodlan.its.pojo.dto.EventDTO;
@@ -89,6 +88,9 @@ public class EventApprovalServiceImpl implements EventApprovalService {
         record.setRegionName(event.getRegion().getName());
         record.setTime(event.getTime());
         record.setRecord(score.getNumber());
+        if (event.getVehicle() != null) {
+            record.setBmmc(event.getVehicle().getBmmc());
+        }
         recordRepository.save(record);
     }
 

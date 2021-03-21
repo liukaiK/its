@@ -29,11 +29,11 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public Page<RecordVO> search(RecordDTO recordDTO, Pageable pageable) {
 
-        String qlString = "select new Record(r.licensePlateNumber,count(r.licensePlateNumber)) \n" +
+        String qlString = "select new Record(r.licensePlateNumber,count(r.licensePlateNumber),r.bmmc) \n" +
                 "from Record r \n" +
                 "where 1=1 \n" +
 //                "and r.licensePlateNumber = :licensePlateNumber \n" +
-                "group by r.licensePlateNumber";
+                "group by r.licensePlateNumber,r.bmmc";
 
         TypedQuery<Record> typedQuery = entityManager.createQuery(qlString, Record.class);
 
