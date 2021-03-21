@@ -36,11 +36,6 @@ public class Event {
     private String id;
 
     /**
-     * 事件名称
-     */
-    private String name;
-
-    /**
      * 违章车辆 系统中存在的车辆
      */
     private Vehicle vehicle;
@@ -156,14 +151,6 @@ public class Event {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

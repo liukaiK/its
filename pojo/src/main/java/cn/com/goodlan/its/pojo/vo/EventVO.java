@@ -11,8 +11,6 @@ public class EventVO {
 
     private String id;
 
-    private String name;
-
     /**
      * 车牌号码
      */

@@ -22,8 +22,6 @@ public class Record extends AbstractEntity {
      */
     private String licensePlateNumber;
 
-    private Score score;
-
     /**
      * 扣了多少分
      */
@@ -66,16 +64,6 @@ public class Record extends AbstractEntity {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "score_id")
-    public Score getScore() {
-        return score;
-    }
-
-    public void setScore(Score score) {
-        this.score = score;
     }
 
     public Integer getRecord() {
