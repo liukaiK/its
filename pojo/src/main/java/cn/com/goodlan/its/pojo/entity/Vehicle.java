@@ -39,6 +39,8 @@ public class Vehicle {
      */
     private String driverPhone;
 
+    private String dmmc;
+
     public Vehicle() {
 
     }
@@ -74,7 +76,6 @@ public class Vehicle {
     }
 
 
-    @Column(columnDefinition = "tinyint")
     public Integer getType() {
         return type;
     }
@@ -92,7 +93,6 @@ public class Vehicle {
         this.licensePlateNumber = licensePlateNumber;
     }
 
-    @Column
     public String getDriverName() {
         return driverName;
     }
@@ -101,7 +101,6 @@ public class Vehicle {
         this.driverName = driverName;
     }
 
-    @Column
     public String getDriverPhone() {
         return driverPhone;
     }
@@ -109,4 +108,14 @@ public class Vehicle {
     public void setDriverPhone(String driverPhone) {
         this.driverPhone = driverPhone;
     }
+
+    @Column(name = "dmmc")
+    public String getDmmc() {
+        return dmmc;
+    }
+
+    public void setDmmc(String dmmc) {
+        this.dmmc = dmmc;
+    }
+
 }
