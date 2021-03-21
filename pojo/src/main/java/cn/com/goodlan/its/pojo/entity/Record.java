@@ -29,8 +29,6 @@ public class Record extends AbstractEntity {
      */
     private Integer record;
 
-    private College college;
-
     private LocalDateTime time;
 
     private String regionName;
@@ -76,17 +74,6 @@ public class Record extends AbstractEntity {
     public void setScore(Score score) {
         this.score = score;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "college_id")
-    public College getCollege() {
-        return college;
-    }
-
-    public void setCollege(College college) {
-        this.college = college;
-    }
-
 
     public Integer getRecord() {
         return record;

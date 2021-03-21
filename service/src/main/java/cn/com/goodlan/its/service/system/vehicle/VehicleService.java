@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface VehicleService {
 
-    Page<VehicleVO> search(Pageable pageable);
+    Page<VehicleVO> search(VehicleDTO vehicleDTO, Pageable pageable);
 
     void save(VehicleDTO vehicleDTO);
 

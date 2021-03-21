@@ -6,13 +6,17 @@ import cn.com.goodlan.its.pojo.entity.Vehicle;
 import cn.com.goodlan.its.pojo.vo.VehicleVO;
 import cn.com.goodlan.mapstruct.VehicleMapper;
 import cn.hutool.core.convert.Convert;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,8 +27,16 @@ public class VehicleServiceImpl implements VehicleService {
     private VehicleRepository vehicleRepository;
 
     @Override
-    public Page<VehicleVO> search(Pageable pageable) {
-        Page<Vehicle> page = vehicleRepository.findAll(pageable);
+    public Page<VehicleVO> search(VehicleDTO vehicleDTO, Pageable pageable) {
+        Specification<Vehicle> specification = (root, query, criteriaBuilder) -> {
+            List<Predicate> list = new ArrayList<>();
+            if (StringUtils.isNotEmpty(vehicleDTO.getId())) {
+                list.add(criteriaBuilder.equal(root.get("id").as(String.class), vehicleDTO.getId()));
+            }
+            Predicate[] p = new Predicate[list.size()];
+            return criteriaBuilder.and(list.toArray(p));
+        };
+        Page<Vehicle> page = vehicleRepository.findAll(specification, pageable);
         List<VehicleVO> vehicleList = VehicleMapper.INSTANCE.convertList(page.getContent());
         return new PageImpl<>(vehicleList, page.getPageable(), page.getTotalElements());
     }

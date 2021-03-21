@@ -18,8 +18,8 @@ public interface RecordMapper {
 
     @Mappings({
 //            @Mapping(target = "phoneNumber", expression = "java(cn.com.goodlan.its.common.util.AESUtil.decrypt(user.getPhoneNumber()))"),
-            @Mapping(source = "college.name", target = "collegeName"),
-            @Mapping(source = "college.id", target = "collegeId"),
+//            @Mapping(source = "college.name", target = "collegeName"),
+//            @Mapping(source = "college.id", target = "collegeId"),
             @Mapping(source = "licensePlateNumber", target = "vehicleNumber")
 //            @Mapping(source = "event.violation.name", target = "violationName"),
 //            @Mapping(source = "event.licensePlateNumber", target = "vehicleNumber"),

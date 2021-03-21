@@ -155,7 +155,7 @@ public class RabbitObtainEventImpl {
         event.setCamera(camera);
 
         // 查询此车辆在系统里存不存在
-        Optional<Vehicle> optionalVehicle = vehicleRepository.getByLicensePlateNumber(licensePlateNumber);
+        Optional<Vehicle> optionalVehicle = vehicleRepository.findById(licensePlateNumber);
 
         if (optionalVehicle.isPresent()) {
             Vehicle vehicle = optionalVehicle.get();
