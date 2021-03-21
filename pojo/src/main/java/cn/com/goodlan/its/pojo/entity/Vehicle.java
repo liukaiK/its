@@ -22,11 +22,6 @@ public class Vehicle {
 
 
     /**
-     * 校内车还是校外车
-     */
-    private Integer type;
-
-    /**
      * 车主姓名
      */
     private String driverName;
@@ -58,14 +53,6 @@ public class Vehicle {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 
     public String getLicensePlateNumber() {
