@@ -130,7 +130,7 @@ body {
 	top: 0;
 	left: 0;
 	overflow: hidden;
-	cursor: pointer;
+	/*cursor: pointer;*/
 }
 
 .scroll .con1,

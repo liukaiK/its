@@ -34,6 +34,12 @@ public class EventApprovalServiceImpl implements EventApprovalService {
     private RecordRepository recordRepository;
 
     @Override
+    public List<EventVO> searchAll() {
+        List<Event> findAll = eventRepository.findTop30ByOrderByTime();
+        return EventMapper.INSTANCE.convertList(findAll);
+    }
+
+    @Override
     public Page<EventVO> search(EventDTO eventDTO, Pageable pageable) {
         Specification<Event> specification = querySpecification(eventDTO);
         Page<Event> page = eventRepository.findAll(specification, pageable);

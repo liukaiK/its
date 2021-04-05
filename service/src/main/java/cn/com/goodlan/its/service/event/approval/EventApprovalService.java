@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface EventApprovalService {
 
+    List<EventVO> searchAll();
+
     Page<EventVO> search(EventDTO eventDTO, Pageable pageable);
 
     EventVO getById(String id);

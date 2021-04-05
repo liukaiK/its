@@ -199,93 +199,19 @@
                             <div id="scroll" class="scroll">
                                 <div id="con1">
                                     <ul>
-                                        <li class="tableOptions">
-                                                <span>
-                                                    <a href="">黑C123456</a>
-                                                </span>
+                                        <li class="tableOptions" th:each="event : ${eventList}">
+                                            <span th:text="${event.vehicleNumber}"></span>
                                             <span>超速</span>
-                                            <span>南岗区南岗区南岗区南岗区南岗区南岗区</span>
-                                            <span>2020/12/12</span>
-                                        </li>
-                                        <li class="tableOptions">
-                                                <span>
-                                                    <a href="">黑C123456</a>
-                                                </span>
-                                            <span>超速</span>
-                                            <span>南岗区</span>
-                                            <span>2020/12/12</span>
-                                        </li>
-                                        <li class="tableOptions">
-                                                <span>
-                                                    <a href="">黑C123456</a>
-                                                </span>
-                                            <span>超速</span>
-                                            <span>南岗区</span>
-                                            <span>2020/12/12</span>
-                                        </li>
-                                        <li class="tableOptions">
-                                                <span>
-                                                    <a href="">黑C123456</a>
-                                                </span>
-                                            <span>超速</span>
-                                            <span>南岗区花园街奥维斯</span>
-                                            <span>2020/12/12</span>
-                                        </li>
-                                        <li class="tableOptions">
-                                                <span>
-                                                    <a href="">黑C123456</a>
-                                                </span>
-                                            <span>超速</span>
-                                            <span>南岗区花园街奥维斯</span>
-                                            <span>2020/12/12</span>
-                                        </li>
-                                        <li class="tableOptions">
-                                                <span>
-                                                    <a href="">黑C123456</a>
-                                                </span>
-                                            <span>超速</span>
-                                            <span>南岗区</span>
-                                            <span>2020/12/12</span>
-                                        </li>
-                                        <li class="tableOptions">
-                                                <span>
-                                                    <a href="">黑C123456</a>
-                                                </span>
-                                            <span>超速</span>
-                                            <span>南岗区</span>
-                                            <span>2020/12/12</span>
-                                        </li>
-                                        <li class="tableOptions">
-                                                <span>
-                                                    <a href="">黑C123456</a>
-                                                </span>
-                                            <span>超速</span>
-                                            <span>南岗区</span>
-                                            <span>2020/12/12</span>
-                                        </li>
-                                        <li class="tableOptions">
-                                                <span>
-                                                    <a href="">黑C123456</a>
-                                                </span>
-                                            <span>超速</span>
-                                            <span>南岗区</span>
-                                            <span>2020/12/12</span>
-                                        </li>
-                                        <li class="tableOptions">
-                                                <span>
-                                                    <a href="">黑C123456</a>
-                                                </span>
-                                            <span>超速</span>
-                                            <span>南岗区</span>
-                                            <span>2020/12/12</span>
+                                            <span th:text="${event.place}">南岗区南岗区南岗区南岗区南岗区南岗区</span>
+                                            <span th:text="${event.time}">2020/12/12</span>
                                         </li>
                                     </ul>
                                 </div>
 
-                                <div class="con2 bak"></div>
-                                <div class="con2 bak"></div>
-                                <div class="con2 bak"></div>
-                                <div class="con2 bak"></div>
+<!--                                <div class="con2 bak"></div>-->
+<!--                                <div class="con2 bak"></div>-->
+<!--                                <div class="con2 bak"></div>-->
+<!--                                <div class="con2 bak"></div>-->
                             </div>
                         </div>
                     </div>
