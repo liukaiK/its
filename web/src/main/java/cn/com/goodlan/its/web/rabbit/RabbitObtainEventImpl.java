@@ -1,15 +1,13 @@
 package cn.com.goodlan.its.web.rabbit;
 
-import cn.com.goodlan.its.common.util.DateUtils;
-import cn.com.goodlan.its.dao.event.CountRepository;
 import cn.com.goodlan.its.dao.event.EventRepository;
 import cn.com.goodlan.its.dao.system.camera.CameraRepository;
 import cn.com.goodlan.its.dao.system.vehicle.VehicleRepository;
 import cn.com.goodlan.its.pojo.TrafficEvent;
 import cn.com.goodlan.its.pojo.entity.*;
+import cn.com.goodlan.its.service.event.CountService;
 import cn.com.goodlan.its.web.sms.SmsService;
 import cn.hutool.core.codec.Base64Decoder;
-import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
@@ -41,13 +39,13 @@ public class RabbitObtainEventImpl {
     private EventRepository eventRepository;
 
     @Autowired
-    private CountRepository countRepository;
-
-    @Autowired
     private CameraRepository cameraRepository;
 
     @Autowired
     private SmsService smsService;
+
+    @Autowired
+    private CountService countService;
 
     @Autowired
     protected FastFileStorageClient storageClient;
@@ -129,37 +127,12 @@ public class RabbitObtainEventImpl {
         String licensePlateNumber = trafficEvent.getM_PlateNumber();
 
 
-        Optional<Count> optional = countRepository.findById(licensePlateNumber);
-
-        Event event = new Event();
-
-        // 违规次数
-        long num = 0;
-        if (optional.isPresent()) {
-            Count count = optional.get();
-            num = count.getCount() + 1;
-            count.setCount(num);
-            countRepository.save(count);
-
-            event.setNum(num);
-        } else {
-            Count count = new Count();
-            count.setLicensePlateNumber(licensePlateNumber);
-            count.setCount(1L);
-            countRepository.save(count);
-
-            event.setNum(1L);
-        }
-
-
-        event.setCamera(camera);
-
         // 查询此车辆在系统里存不存在
         Optional<Vehicle> optionalVehicle = vehicleRepository.findById(licensePlateNumber);
 
         if (optionalVehicle.isPresent()) {
             Vehicle vehicle = optionalVehicle.get();
-            saveEvent(trafficEvent, speed, score, licensePlateNumber, event, vehicle);
+            saveEvent(trafficEvent, score, vehicle, camera);
             // 首次违规
 //            if (num == 1) {
 //                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，系统对您于警告处理。",
@@ -187,16 +160,21 @@ public class RabbitObtainEventImpl {
 
     }
 
-    private void saveEvent(TrafficEvent trafficEvent, int speed, Score score, String licensePlateNumber, Event event, Vehicle vehicle) {
+    private void saveEvent(TrafficEvent trafficEvent, Score score, Vehicle vehicle, Camera camera) {
+        Event event = new Event();
+
+        // 违规次数
+        event.setNum(countService.queryCount(trafficEvent.getM_PlateNumber()));
+        event.setCamera(camera);
         event.setVehicle(vehicle);
         event.setPlace(trafficEvent.getM_IllegalPlace());
-        event.setLicensePlateNumber(licensePlateNumber);
+        event.setLicensePlateNumber(trafficEvent.getM_PlateNumber());
         event.setTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
         event.setLaneNumber(trafficEvent.getM_LaneNumber());
         event.setVehicleColor(trafficEvent.getM_VehicleColor());
         event.setImageUrl(getImageUrl(trafficEvent.getBigImage()));
         event.setVehicleSize(trafficEvent.getM_VehicleSize());
-        event.setSpeed(speed);
+        event.setSpeed(trafficEvent.getNSpeed());
         event.setScore(score);
         eventRepository.save(event);
     }
