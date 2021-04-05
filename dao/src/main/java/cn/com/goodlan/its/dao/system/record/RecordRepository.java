@@ -18,4 +18,13 @@ public interface RecordRepository extends CustomizeRepository<Record, String> {
 
     List<Record> findByOrderByTime();
 
+    /**
+     * 大屏违规车辆统计
+     */
+    @Query(value = "select t1.bmmc as bmmc,t1.count as count " +
+            "from (select bmmc, count(*) as count from eve_record where bmmc is not null group by bmmc) as t1\n" +
+            "order by count desc\n" +
+            "limit 10", nativeQuery = true)
+    List<Object> bigScreen();
+
 }

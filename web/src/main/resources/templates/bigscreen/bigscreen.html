@@ -149,7 +149,7 @@
 <script th:src="@{/ajax/libs/report/echarts/echarts-all.js}"></script>
 <script th:src="@{/js/vintage.js}"></script>
 <script th:src="@{/js/echarts-liquidfill.min.js}"></script>
-<script>
+<script th:inline="javascript">
     $(function() {
 
 
@@ -490,7 +490,20 @@
         };
         schar.setOption(Soption);
 
-        // 专业部门
+
+
+
+        var zybm = [[${zybm}]]
+        var zybmx = [];
+        var zybmy = [];
+
+
+        for (let i = 0; i < zybm.length; i++) {
+            zybmx.push(zybm[i][0]);
+            zybmy.push(zybm[i][1]);
+        }
+
+        // 违规车辆统计
         var myChart3 = echarts.init(document.getElementById('zybm'));
         var option3 = {
             title: {
@@ -499,7 +512,7 @@
             },
             legend: {
                 show: false,
-                data: ["立案量"],
+                data: ["违规数量"],
                 x: "right",
                 orient: "horizontal",
                 y: "top",
@@ -535,7 +548,7 @@
             calculable: true,
             xAxis: [{
                 type: "category",
-                data: ["单位1", "单位2", "单位3", "单位4", "单位5", "单位6"],
+                data: zybmx,
                 splitArea: {
                     show: false
                 },
@@ -596,10 +609,10 @@
                 }
             }],
             series: [{
-                name: "立案量",
+                name: "违规数",
                 barWidth: 10,
                 type: "bar",
-                data: [20, 4.9, 30, 23.2, 120, 76.7],
+                data: zybmy,
                 itemStyle: {
                     normal: {
                         color: new echarts.graphic.LinearGradient(
@@ -629,6 +642,11 @@
             }
         };
         myChart3.setOption(option3);
+
+
+
+
+
 
         var myChart = echarts.init(document.getElementById('ajcl'));
         var option = {

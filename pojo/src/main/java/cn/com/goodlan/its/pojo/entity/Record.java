@@ -65,7 +65,11 @@ public class Record extends AbstractEntity {
                 "id='" + id + '\'' +
                 ", licensePlateNumber='" + licensePlateNumber + '\'' +
                 ", record=" + record +
+                ", time=" + time +
+                ", regionName='" + regionName + '\'' +
+                ", place='" + place + '\'' +
                 ", count=" + count +
+                ", bmmc='" + bmmc + '\'' +
                 '}';
     }
 

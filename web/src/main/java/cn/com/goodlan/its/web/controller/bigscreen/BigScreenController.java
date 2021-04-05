@@ -1,16 +1,13 @@
 package cn.com.goodlan.its.web.controller.bigscreen;
 
 
-import cn.com.goodlan.its.pojo.vo.RecordVO;
-import cn.com.goodlan.its.service.event.approval.EventApprovalService;
+import cn.com.goodlan.its.dao.system.record.RecordRepository;
 import cn.com.goodlan.its.service.event.record.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 
 /**
@@ -23,16 +20,17 @@ import java.util.List;
 public class BigScreenController {
 
     @Autowired
-    private EventApprovalService eventApprovalService;
+    private RecordService recordService;
 
     @Autowired
-    private RecordService recordService;
+    private RecordRepository recordRepository;
 
     @GetMapping
     public String bigScreen(Model model) {
-        List<RecordVO> recordList = recordService.search();
-        model.addAttribute("recordList", recordList);
+        model.addAttribute("recordList", recordService.search());
+        model.addAttribute("zybm", recordRepository.bigScreen());
         return "bigscreen/bigscreen";
     }
+
 
 }
