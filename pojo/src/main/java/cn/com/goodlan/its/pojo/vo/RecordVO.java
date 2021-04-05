@@ -15,10 +15,6 @@ public class RecordVO {
      */
     private String name;
 
-    private String collegeId;
-
-    private String collegeName;
-
     private String regionId;
 
     private String regionName;
@@ -30,6 +26,8 @@ public class RecordVO {
 
     private String bmmc;
 
+    private String place;
+
     /**
      * 违规类型
      */
@@ -39,6 +37,8 @@ public class RecordVO {
      * 违规次数
      */
     private Long count;
+
+    private LocalDateTime time;
 
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

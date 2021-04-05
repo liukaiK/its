@@ -32,5 +32,11 @@ public class RecordServiceImpl implements RecordService {
         return new PageImpl<>(list, findAll.getPageable(), findAll.getTotalElements());
     }
 
+    @Override
+    public List<RecordVO> search() {
+        List<Record> list = recordRepository.findByOrderByTime();
+        return RecordMapper.INSTANCE.convertList(list);
+    }
+
 
 }

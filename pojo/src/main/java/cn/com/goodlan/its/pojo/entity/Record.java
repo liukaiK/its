@@ -31,11 +31,25 @@ public class Record extends AbstractEntity {
 
     private String regionName;
 
+    private String place;
+
     private Long count;
 
     private String bmmc;
 
     public Record() {
+    }
+
+    public Record(Event event) {
+        this.licensePlateNumber = event.getLicensePlateNumber();
+        this.regionName = event.getRegion().getName();
+        this.time = event.getTime();
+        // 获取要扣除多少分
+        this.record = event.getScore().getNumber();
+        this.place = event.getPlace();
+        if (event.getVehicle() != null) {
+            this.bmmc = event.getVehicle().getBmmc();
+        }
     }
 
 
@@ -116,4 +130,13 @@ public class Record extends AbstractEntity {
     public void setBmmc(String bmmc) {
         this.bmmc = bmmc;
     }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
 }

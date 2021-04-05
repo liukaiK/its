@@ -5,7 +5,6 @@ import cn.com.goodlan.its.dao.system.record.RecordRepository;
 import cn.com.goodlan.its.pojo.dto.EventDTO;
 import cn.com.goodlan.its.pojo.entity.Event;
 import cn.com.goodlan.its.pojo.entity.Record;
-import cn.com.goodlan.its.pojo.entity.Score;
 import cn.com.goodlan.its.pojo.vo.EventVO;
 import cn.com.goodlan.mapstruct.EventMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -83,21 +82,8 @@ public class EventApprovalServiceImpl implements EventApprovalService {
     @Override
     public void approval(String id) {
         Event event = eventRepository.getOne(id);
-
         event.approval();
-
-        // 获取要扣除多少分
-        Score score = event.getScore();
-
-        Record record = new Record();
-        record.setLicensePlateNumber(event.getLicensePlateNumber());
-        record.setRegionName(event.getRegion().getName());
-        record.setTime(event.getTime());
-        record.setRecord(score.getNumber());
-        if (event.getVehicle() != null) {
-            record.setBmmc(event.getVehicle().getBmmc());
-        }
-        recordRepository.save(record);
+        recordRepository.save(new Record(event));
     }
 
     @Override
