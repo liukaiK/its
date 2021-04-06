@@ -1,8 +1,8 @@
 package cn.com.goodlan.its.service.system.park.parklot;
 
-import cn.com.goodlan.its.dao.park.parklot.ParkLotRepository;
+import cn.com.goodlan.its.dao.primary.park.parklot.ParkLotRepository;
 import cn.com.goodlan.its.pojo.dto.ParkLotDTO;
-import cn.com.goodlan.its.pojo.entity.ParkLot;
+import cn.com.goodlan.its.pojo.entity.primary.ParkLot;
 import cn.com.goodlan.its.pojo.vo.ParkLotVO;
 import cn.com.goodlan.mapstruct.ParkLotMapper;
 import cn.hutool.core.convert.Convert;

@@ -1,9 +1,9 @@
 package cn.com.goodlan.its.service.system.camera;
 
-import cn.com.goodlan.its.dao.system.camera.CameraRepository;
+import cn.com.goodlan.its.dao.primary.system.camera.CameraRepository;
 import cn.com.goodlan.its.pojo.dto.CameraDTO;
-import cn.com.goodlan.its.pojo.entity.Camera;
-import cn.com.goodlan.its.pojo.entity.Region;
+import cn.com.goodlan.its.pojo.entity.primary.Camera;
+import cn.com.goodlan.its.pojo.entity.primary.Region;
 import cn.com.goodlan.its.pojo.vo.CameraVO;
 import cn.com.goodlan.mapstruct.CameraMapper;
 import cn.hutool.core.convert.Convert;

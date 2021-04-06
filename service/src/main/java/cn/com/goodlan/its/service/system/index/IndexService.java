@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.service.system.index;
 
-import cn.com.goodlan.its.pojo.entity.Menu;
+import cn.com.goodlan.its.pojo.entity.primary.Menu;
 
 import java.util.List;
 

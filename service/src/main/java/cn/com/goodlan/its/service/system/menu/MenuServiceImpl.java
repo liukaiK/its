@@ -1,9 +1,9 @@
 package cn.com.goodlan.its.service.system.menu;
 
 import cn.com.goodlan.its.common.exception.BusinessException;
-import cn.com.goodlan.its.dao.system.menu.MenuRepository;
+import cn.com.goodlan.its.dao.primary.system.menu.MenuRepository;
 import cn.com.goodlan.its.pojo.dto.MenuDTO;
-import cn.com.goodlan.its.pojo.entity.Menu;
+import cn.com.goodlan.its.pojo.entity.primary.Menu;
 import cn.com.goodlan.its.pojo.vo.MenuVO;
 import cn.com.goodlan.its.pojo.vo.Ztree;
 import cn.com.goodlan.mapstruct.MenuMapper;

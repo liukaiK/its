@@ -1,11 +1,11 @@
 package cn.com.goodlan.its.service.system.score;
 
 import cn.com.goodlan.its.common.util.StringUtils;
-import cn.com.goodlan.its.dao.system.score.ScoreRepository;
+import cn.com.goodlan.its.dao.primary.system.score.ScoreRepository;
 import cn.com.goodlan.its.pojo.dto.ScoreDTO;
-import cn.com.goodlan.its.pojo.entity.Region;
-import cn.com.goodlan.its.pojo.entity.Score;
-import cn.com.goodlan.its.pojo.entity.ViolationType;
+import cn.com.goodlan.its.pojo.entity.primary.Region;
+import cn.com.goodlan.its.pojo.entity.primary.Score;
+import cn.com.goodlan.its.pojo.entity.primary.ViolationType;
 import cn.com.goodlan.its.pojo.vo.ScoreVO;
 import cn.com.goodlan.mapstruct.ScoreMapper;
 import cn.hutool.core.convert.Convert;

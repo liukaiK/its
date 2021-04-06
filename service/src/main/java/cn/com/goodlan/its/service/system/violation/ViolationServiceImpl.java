@@ -1,8 +1,8 @@
 package cn.com.goodlan.its.service.system.violation;
 
-import cn.com.goodlan.its.dao.system.violation.ViolationTypeRepository;
+import cn.com.goodlan.its.dao.primary.system.violation.ViolationTypeRepository;
 import cn.com.goodlan.its.pojo.dto.ViolationTypeDTO;
-import cn.com.goodlan.its.pojo.entity.ViolationType;
+import cn.com.goodlan.its.pojo.entity.primary.ViolationType;
 import cn.com.goodlan.its.pojo.vo.ViolationTypeVO;
 import cn.com.goodlan.mapstruct.ViolationMapper;
 import cn.hutool.core.convert.Convert;

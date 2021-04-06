@@ -1,10 +1,10 @@
 package cn.com.goodlan.its.web.rabbit;
 
-import cn.com.goodlan.its.dao.event.EventRepository;
-import cn.com.goodlan.its.dao.system.camera.CameraRepository;
-import cn.com.goodlan.its.dao.system.vehicle.VehicleRepository;
+import cn.com.goodlan.its.dao.primary.event.EventRepository;
+import cn.com.goodlan.its.dao.primary.system.camera.CameraRepository;
+import cn.com.goodlan.its.dao.primary.system.vehicle.VehicleRepository;
 import cn.com.goodlan.its.pojo.TrafficEvent;
-import cn.com.goodlan.its.pojo.entity.*;
+import cn.com.goodlan.its.pojo.entity.primary.*;
 import cn.com.goodlan.its.service.event.CountService;
 import cn.com.goodlan.its.web.sms.SmsService;
 import cn.hutool.core.codec.Base64Decoder;

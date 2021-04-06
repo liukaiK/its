@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.service.event;
 
-import cn.com.goodlan.its.dao.event.CountRepository;
-import cn.com.goodlan.its.pojo.entity.Count;
+import cn.com.goodlan.its.dao.primary.event.CountRepository;
+import cn.com.goodlan.its.pojo.entity.primary.Count;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

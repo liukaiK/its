@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.pojo;
 
-import cn.com.goodlan.its.pojo.entity.Role;
+import cn.com.goodlan.its.pojo.entity.primary.Role;
 import lombok.Data;
 
 @Data

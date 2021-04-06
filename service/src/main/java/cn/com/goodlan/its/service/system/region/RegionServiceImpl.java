@@ -1,9 +1,9 @@
 package cn.com.goodlan.its.service.system.region;
 
 import cn.com.goodlan.its.common.exception.BusinessException;
-import cn.com.goodlan.its.dao.system.region.RegionRepository;
+import cn.com.goodlan.its.dao.primary.system.region.RegionRepository;
 import cn.com.goodlan.its.pojo.dto.RegionDTO;
-import cn.com.goodlan.its.pojo.entity.Region;
+import cn.com.goodlan.its.pojo.entity.primary.Region;
 import cn.com.goodlan.its.pojo.vo.RegionVO;
 import cn.com.goodlan.mapstruct.RegionMapper;
 import cn.hutool.core.convert.Convert;

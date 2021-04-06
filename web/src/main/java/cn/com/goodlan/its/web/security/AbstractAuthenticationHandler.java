@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.web.security;
 
-import cn.com.goodlan.its.pojo.entity.LoginLog;
+import cn.com.goodlan.its.pojo.entity.primary.LoginLog;
 import cn.com.goodlan.its.common.util.IPUtil;
 import cn.com.goodlan.its.common.util.UserAgentUtil;
 import org.springframework.http.MediaType;

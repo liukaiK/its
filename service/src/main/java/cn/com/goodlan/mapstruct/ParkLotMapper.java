@@ -1,6 +1,6 @@
 package cn.com.goodlan.mapstruct;
 
-import cn.com.goodlan.its.pojo.entity.ParkLot;
+import cn.com.goodlan.its.pojo.entity.primary.ParkLot;
 import cn.com.goodlan.its.pojo.vo.ParkLotVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

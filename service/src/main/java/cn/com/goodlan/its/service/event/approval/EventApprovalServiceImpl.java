@@ -1,10 +1,10 @@
 package cn.com.goodlan.its.service.event.approval;
 
-import cn.com.goodlan.its.dao.event.EventRepository;
-import cn.com.goodlan.its.dao.system.record.RecordRepository;
+import cn.com.goodlan.its.dao.primary.event.EventRepository;
+import cn.com.goodlan.its.dao.primary.system.record.RecordRepository;
 import cn.com.goodlan.its.pojo.dto.EventDTO;
-import cn.com.goodlan.its.pojo.entity.Event;
-import cn.com.goodlan.its.pojo.entity.Record;
+import cn.com.goodlan.its.pojo.entity.primary.Event;
+import cn.com.goodlan.its.pojo.entity.primary.Record;
 import cn.com.goodlan.its.pojo.vo.EventVO;
 import cn.com.goodlan.mapstruct.EventMapper;
 import lombok.extern.slf4j.Slf4j;

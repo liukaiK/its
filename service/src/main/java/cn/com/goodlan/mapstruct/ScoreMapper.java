@@ -1,6 +1,6 @@
 package cn.com.goodlan.mapstruct;
 
-import cn.com.goodlan.its.pojo.entity.Score;
+import cn.com.goodlan.its.pojo.entity.primary.Score;
 import cn.com.goodlan.its.pojo.vo.ScoreVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

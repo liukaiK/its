@@ -1,8 +1,8 @@
 package cn.com.goodlan.record;
 
 import cn.com.goodlan.its.WebApplication;
-import cn.com.goodlan.its.dao.system.record.RecordRepository;
-import cn.com.goodlan.its.pojo.entity.Record;
+import cn.com.goodlan.its.dao.primary.system.record.RecordRepository;
+import cn.com.goodlan.its.pojo.entity.primary.Record;
 import cn.com.goodlan.its.service.event.record.RecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

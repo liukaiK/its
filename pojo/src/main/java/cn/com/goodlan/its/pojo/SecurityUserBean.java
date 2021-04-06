@@ -1,8 +1,8 @@
 package cn.com.goodlan.its.pojo;
 
-import cn.com.goodlan.its.pojo.entity.Menu;
-import cn.com.goodlan.its.pojo.entity.Role;
-import cn.com.goodlan.its.pojo.entity.User;
+import cn.com.goodlan.its.pojo.entity.primary.Menu;
+import cn.com.goodlan.its.pojo.entity.primary.Role;
+import cn.com.goodlan.its.pojo.entity.primary.User;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;

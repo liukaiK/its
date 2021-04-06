@@ -1,9 +1,9 @@
 package cn.com.goodlan.its.service.event.record;
 
 import cn.com.goodlan.its.common.util.StringUtils;
-import cn.com.goodlan.its.dao.system.record.RecordRepository;
+import cn.com.goodlan.its.dao.primary.system.record.RecordRepository;
 import cn.com.goodlan.its.pojo.dto.RecordDTO;
-import cn.com.goodlan.its.pojo.entity.Record;
+import cn.com.goodlan.its.pojo.entity.primary.Record;
 import cn.com.goodlan.its.pojo.vo.RecordVO;
 import cn.com.goodlan.mapstruct.RecordMapper;
 import org.springframework.beans.factory.annotation.Autowired;

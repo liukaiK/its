@@ -3,13 +3,13 @@ package cn.com.goodlan.its.service.system.user;
 
 import cn.com.goodlan.its.common.exception.BusinessException;
 import cn.com.goodlan.its.common.util.AESUtil;
-import cn.com.goodlan.its.dao.system.user.UserRepository;
+import cn.com.goodlan.its.dao.primary.system.user.UserRepository;
 import cn.com.goodlan.its.pojo.dto.ChangePasswordDTO;
 import cn.com.goodlan.its.pojo.dto.ResetPasswordDTO;
 import cn.com.goodlan.its.pojo.dto.UpdateProfileDTO;
 import cn.com.goodlan.its.pojo.dto.UserDTO;
-import cn.com.goodlan.its.pojo.entity.Role;
-import cn.com.goodlan.its.pojo.entity.User;
+import cn.com.goodlan.its.pojo.entity.primary.Role;
+import cn.com.goodlan.its.pojo.entity.primary.User;
 import cn.com.goodlan.its.pojo.vo.UserVO;
 import cn.com.goodlan.its.util.SecurityUtil;
 import cn.com.goodlan.mapstruct.UserMapper;
