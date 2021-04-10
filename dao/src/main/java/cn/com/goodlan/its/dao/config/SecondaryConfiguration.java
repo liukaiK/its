@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.dao.config;
 
+import org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
@@ -37,7 +38,9 @@ public class SecondaryConfiguration {
     private HibernateProperties hibernateProperties;
 
     private Map<String, Object> getVendorProperties() {
-        return hibernateProperties.determineHibernateProperties(jpaProperties.getProperties(), new HibernateSettings());
+        Map<String, Object> map = hibernateProperties.determineHibernateProperties(jpaProperties.getProperties(), new HibernateSettings());
+        map.put("hibernate.physical_naming_strategy", PhysicalNamingStrategyStandardImpl.class.getName());
+        return map;
     }
 
     @Bean(name = "entityManagerSecondary")
