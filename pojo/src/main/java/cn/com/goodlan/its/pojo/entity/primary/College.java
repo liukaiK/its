@@ -25,8 +25,6 @@ public class College extends AbstractEntity {
 
     private List<College> children;
 
-    private List<Vehicle> vehicleList;
-
     private List<User> userList;
 
     public College() {
@@ -64,11 +62,6 @@ public class College extends AbstractEntity {
     @Transient
     public boolean hasUser() {
         return CollectionUtil.isNotEmpty(this.userList);
-    }
-
-    @Transient
-    public boolean hasVehicle() {
-        return CollectionUtil.isNotEmpty(this.vehicleList);
     }
 
 
@@ -128,14 +121,4 @@ public class College extends AbstractEntity {
         this.userList = userList;
     }
 
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "college_id")
-    public List<Vehicle> getVehicleList() {
-        return vehicleList;
-    }
-
-    public void setVehicleList(List<Vehicle> vehicleList) {
-        this.vehicleList = vehicleList;
-    }
 }

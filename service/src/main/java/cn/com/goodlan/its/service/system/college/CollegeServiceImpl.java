@@ -66,9 +66,6 @@ public class CollegeServiceImpl implements CollegeService {
             if (college.get().hasUser()) {
                 throw new BusinessException("此学院存在用户,不允许删除");
             }
-            if (college.get().hasVehicle()) {
-                throw new BusinessException("此学院存在车辆,不允许删除");
-            }
             collegeRepository.deleteById(id);
         }
     }

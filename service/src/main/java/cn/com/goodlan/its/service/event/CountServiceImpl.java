@@ -14,7 +14,7 @@ public class CountServiceImpl implements CountService {
     private CountRepository countRepository;
 
     @Override
-    public Long queryCount(String licensePlateNumber) {
+    public Long queryCountAndSave(String licensePlateNumber) {
         Optional<Count> optional = countRepository.findById(licensePlateNumber);
         Count count;
         if (optional.isPresent()) {

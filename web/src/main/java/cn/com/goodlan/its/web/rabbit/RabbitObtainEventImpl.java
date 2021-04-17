@@ -3,8 +3,10 @@ package cn.com.goodlan.its.web.rabbit;
 import cn.com.goodlan.its.dao.primary.event.EventRepository;
 import cn.com.goodlan.its.dao.primary.system.camera.CameraRepository;
 import cn.com.goodlan.its.dao.primary.system.vehicle.VehicleRepository;
+import cn.com.goodlan.its.dao.secondary.HitBackRepository;
 import cn.com.goodlan.its.pojo.TrafficEvent;
 import cn.com.goodlan.its.pojo.entity.primary.*;
+import cn.com.goodlan.its.pojo.entity.secondary.HitBack;
 import cn.com.goodlan.its.service.event.CountService;
 import cn.com.goodlan.its.web.sms.SmsService;
 import cn.hutool.core.codec.Base64Decoder;
@@ -24,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.io.ByteArrayInputStream;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
@@ -46,6 +49,9 @@ public class RabbitObtainEventImpl {
 
     @Autowired
     private CountService countService;
+
+    @Autowired
+    private HitBackRepository hitBackRepository;
 
     @Autowired
     protected FastFileStorageClient storageClient;
@@ -136,9 +142,10 @@ public class RabbitObtainEventImpl {
 
         if (optionalVehicle.isPresent()) {
             Vehicle vehicle = optionalVehicle.get();
-            saveEvent(trafficEvent, score, vehicle, camera);
+            Long count = countService.queryCountAndSave(trafficEvent.getM_PlateNumber());
+            saveEvent(trafficEvent, score, vehicle, camera, count);
             // 首次违规
-//            if (num == 1) {
+//            if (count == 1) {
 //                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，系统对您于警告处理。",
 //                        vehicle.getLicensePlateNumber(),
 //                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
@@ -148,7 +155,7 @@ public class RabbitObtainEventImpl {
 //            }
 
             // 第二次和第三次违规
-//            if (num == 2 || num == 3) {
+//            if (count == 2 || count == 3) {
 //                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，扣分%s分。违规超过4次将被进行拉黑处理。",
 //                        vehicle.getLicensePlateNumber(),
 //                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
@@ -158,17 +165,26 @@ public class RabbitObtainEventImpl {
 //                );
 //            }
 
+            if (count > 3) {
+                // TODO 发送短信
+                // 拉黑
+                HitBack hitBack = new HitBack();
+                hitBack.setVehplate(licensePlateNumber);
+                hitBack.setBackTime(LocalDateTime.now());
+                hitBack.setRemark("拉黑");
+                hitBackRepository.save(hitBack);
+            }
+
 
         }
 
 
     }
 
-    private void saveEvent(TrafficEvent trafficEvent, Score score, Vehicle vehicle, Camera camera) {
+    private void saveEvent(TrafficEvent trafficEvent, Score score, Vehicle vehicle, Camera camera, Long count) {
         Event event = new Event();
 
-        // 违规次数
-        event.setNum(countService.queryCount(trafficEvent.getM_PlateNumber()));
+        event.setNum(count);
         event.setCamera(camera);
         event.setVehicle(vehicle);
         event.setPlace(trafficEvent.getM_IllegalPlace());

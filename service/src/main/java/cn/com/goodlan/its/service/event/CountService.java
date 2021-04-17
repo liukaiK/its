@@ -8,7 +8,7 @@ public interface CountService {
      * @param licensePlateNumber 车牌号
      * @return 违规次数
      */
-    Long queryCount(String licensePlateNumber);
+    Long queryCountAndSave(String licensePlateNumber);
 
 
 }
