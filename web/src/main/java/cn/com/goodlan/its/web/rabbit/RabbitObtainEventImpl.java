@@ -75,6 +75,10 @@ public class RabbitObtainEventImpl {
             return;
         }
 
+        if (!"超速".equals(trafficEvent.getM_EventName())) {
+            return;
+        }
+
 
         // 判断是否和上一条数据相同 相同的话直接跳过不记录
         if (isSameWithPrevious(trafficEvent)) {
