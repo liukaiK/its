@@ -168,17 +168,25 @@ public class RabbitObtainEventImpl {
             if (count > 3) {
                 // TODO 发送短信
                 // 拉黑
-                HitBack hitBack = new HitBack();
-                hitBack.setVehplate(licensePlateNumber);
-                hitBack.setBackTime(LocalDateTime.now());
-                hitBack.setRemark("拉黑");
-                hitBackRepository.save(hitBack);
+                try {
+                    hitBack(licensePlateNumber);
+                } catch (Exception e) {
+                    log.error("拉黑失败", e);
+                }
             }
 
 
         }
 
 
+    }
+
+    private void hitBack(String licensePlateNumber) {
+        HitBack hitBack = new HitBack();
+        hitBack.setVehplate(licensePlateNumber);
+        hitBack.setBackTime(LocalDateTime.now());
+        hitBack.setRemark("拉黑");
+        hitBackRepository.save(hitBack);
     }
 
     private void saveEvent(TrafficEvent trafficEvent, Score score, Vehicle vehicle, Camera camera, Long count) {
