@@ -22,6 +22,7 @@ public class CountServiceImpl implements CountService {
             count.setCount(count.getCount() + 1);
         } else {
             count = new Count();
+            count.setLicensePlateNumber(licensePlateNumber);
             count.setCount(1L);
         }
         countRepository.save(count);
