@@ -24,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,10 @@ public class UserServiceImpl implements UserService {
     public Page<UserVO> search(UserDTO userDTO, Pageable pageable) {
         Specification<User> specification = (root, query, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
+            if (!query.getResultType().equals(Long.class)) {
+                root.fetch("college", JoinType.LEFT);
+            }
+
             if (StringUtils.isNotEmpty(userDTO.getName())) {
                 list.add(criteriaBuilder.like(root.get("name").as(String.class), userDTO.getName() + "%"));
             }
