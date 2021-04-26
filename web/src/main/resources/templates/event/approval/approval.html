@@ -94,10 +94,6 @@
                     title: '车主'
                 },
                 {
-                    field: 'driverPhone',
-                    title: '车主电话'
-                },
-                {
                     field: 'bmmc',
                     title: '所属单位',
                     formatter: function (value, row, index) {
@@ -106,6 +102,11 @@
                         }
                         return value;
                     },
+                },
+                {
+                    field: 'time',
+                    title: '违规时间',
+                    sortable: true
                 },
                 {
                     field: 'place',
@@ -117,6 +118,14 @@
                     formatter: function (value, row, index) {
                         return '超速';
                     },
+                },
+                {
+                    field: 'num',
+                    title: '违规次数'
+                },
+                {
+                    field: 'driverPhone',
+                    title: '车主电话'
                 },
                 {
                     field: 'status',
@@ -133,15 +142,6 @@
                         }
                     },
                     sortable: true
-                },
-                {
-                    field: 'time',
-                    title: '违规时间',
-                    sortable: true
-                },
-                {
-                    field: 'num',
-                    title: '违规次数'
                 },
                 {
                     title: '操作',
