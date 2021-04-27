@@ -22,17 +22,6 @@ import java.time.LocalDateTime;
 @Table(name = "eve_event")
 public class Event {
 
-    /**
-     * 作废
-     */
-    public final static Integer CANCEL = 2;
-
-    /**
-     * 审批
-     */
-    public final static Integer APPROVAL = 1;
-
-
     private String id;
 
     /**
@@ -102,7 +91,7 @@ public class Event {
      */
     private Long num;
 
-    private Integer status = 0;
+    private Status status = Status.NORMAL;
 
     public Event() {
     }
@@ -129,16 +118,16 @@ public class Event {
      */
     @Transient
     public void approval() {
-        if (APPROVAL.equals(this.status)) {
+        if (Status.APPROVAL.equals(this.status)) {
             throw new BusinessException("该违规事件已经审批 请刷新页面");
         }
-        this.setStatus(APPROVAL);
+        this.setStatus(Status.APPROVAL);
         this.setApprovalTime(LocalDateTime.now());
     }
 
     @Transient
     public void cancel() {
-        this.setStatus(CANCEL);
+        this.setStatus(Status.CANCEL);
         this.setApprovalTime(LocalDateTime.now());
     }
 
@@ -181,12 +170,12 @@ public class Event {
         this.camera = camera;
     }
 
-    @Column(columnDefinition = "tinyint")
-    public Integer getStatus() {
+    @Convert(converter = StatusConverter.class)
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -287,4 +276,66 @@ public class Event {
     public void setNum(Long num) {
         this.num = num;
     }
+
+    /**
+     * 一定要实现BaseEnum
+     *
+     * @author liukai
+     */
+    public enum Status implements BaseEnum {
+
+        NORMAL(0, "未处理"),
+        APPROVAL(1, "审批"),
+        CANCEL(2, "作废");
+
+        Status(Integer value, String description) {
+            this.value = value;
+            this.description = description;
+        }
+
+        private Integer value;
+        private String description;
+
+        @Override
+        public Integer getValue() {
+            return value;
+        }
+
+        public void setValue(Integer value) {
+            this.value = value;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+    }
+
+
+    public static class StatusConverter implements AttributeConverter<Status, Integer> {
+
+        @Override
+        public Integer convertToDatabaseColumn(Status attribute) {
+            if (attribute == null) {
+                throw new BusinessException("Unknown status text  ");
+            }
+            return attribute.getValue();
+
+        }
+
+        @Override
+        public Status convertToEntityAttribute(Integer dbData) {
+            for (Status status : Status.values()) {
+                if (status.getValue().equals(dbData)) {
+                    return status;
+                }
+            }
+            throw new BusinessException("Unknown status text : " + dbData);
+        }
+    }
+
+
 }
