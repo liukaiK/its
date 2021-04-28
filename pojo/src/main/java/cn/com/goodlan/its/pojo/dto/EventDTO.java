@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.pojo.dto;
 
+import cn.com.goodlan.its.pojo.entity.primary.Event;
 import lombok.Data;
 
 @Data
@@ -11,10 +12,12 @@ public class EventDTO {
 
     private String vehicleNumber;
 
+    private String driverName;
+
     private String startTime;
 
     private String endTime;
 
-    private String status;
+    private Event.Status status;
 
 }

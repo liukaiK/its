@@ -1,8 +1,10 @@
 package cn.com.goodlan.its.web.controller.event.statistics;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
-import cn.com.goodlan.its.pojo.dto.RecordDTO;
-import cn.com.goodlan.its.pojo.vo.RecordVO;
+import cn.com.goodlan.its.pojo.dto.EventDTO;
+import cn.com.goodlan.its.pojo.entity.primary.Event;
+import cn.com.goodlan.its.pojo.vo.EventVO;
+import cn.com.goodlan.its.service.event.approval.EventApprovalService;
 import cn.com.goodlan.its.service.event.record.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +31,9 @@ public class StatisticsController {
     @Autowired
     private RecordService recordService;
 
+    @Autowired
+    private EventApprovalService eventApprovalService;
+
     @GetMapping
     @PreAuthorize("hasAuthority('event:statistics:view')")
     public ModelAndView statistics() {
@@ -40,8 +45,9 @@ public class StatisticsController {
      */
     @PostMapping("/search")
     @PreAuthorize("hasAuthority('system:statistics:search')")
-    public Page<RecordVO> search(RecordDTO recordDTO, @PageableDefault Pageable pageable) {
-        return recordService.search(recordDTO, pageable);
+    public Page<EventVO> search(EventDTO eventDTO, @PageableDefault Pageable pageable) {
+        eventDTO.setStatus(Event.Status.APPROVAL);
+        return eventApprovalService.search(eventDTO, pageable);
     }
 
 }

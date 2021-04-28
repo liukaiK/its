@@ -56,6 +56,9 @@ public class EventApprovalServiceImpl implements EventApprovalService {
     private Specification<Event> querySpecification(EventDTO eventDTO) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
+            if (StringUtils.isNotEmpty(eventDTO.getDriverName())) {
+                list.add(criteriaBuilder.like(root.get("vehicle").get("driverName").as(String.class), eventDTO.getDriverName() + "%"));
+            }
             if (StringUtils.isNotEmpty(eventDTO.getVehicleNumber())) {
                 list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), eventDTO.getVehicleNumber() + "%"));
             }
@@ -65,8 +68,8 @@ public class EventApprovalServiceImpl implements EventApprovalService {
             if (StringUtils.isNotEmpty(eventDTO.getEndTime())) {
                 list.add(criteriaBuilder.lessThanOrEqualTo(root.get("time").as(String.class), eventDTO.getEndTime()));
             }
-            if (StringUtils.isNotEmpty(eventDTO.getStatus())) {
-                list.add(criteriaBuilder.equal(root.get("status").as(Integer.class), Integer.valueOf(eventDTO.getStatus())));
+            if (eventDTO.getStatus() != null) {
+                list.add(criteriaBuilder.equal(root.get("status").as(Event.Status.class), eventDTO.getStatus()));
             }
             Predicate[] p = new Predicate[list.size()];
             return criteriaBuilder.and(list.toArray(p));
