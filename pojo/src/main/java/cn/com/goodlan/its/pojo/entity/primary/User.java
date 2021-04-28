@@ -20,7 +20,7 @@ import java.util.List;
 @Table(name = "sys_user")
 public class User extends AbstractEntity {
 
-    public final static String ADMIN_ID = "1b3c1438-beb2-4bab-af86-b6b8dfb91114";
+    private final static String ADMIN_ID = "1b3c1438-beb2-4bab-af86-b6b8dfb91114";
 
     private String id;
 
