@@ -73,8 +73,6 @@ public class RabbitObtainEventImpl {
         }
         TrafficEvent trafficEvent = objectMapper.readValue(content, TrafficEvent.class);
 
-        logMessage(message);
-
         logTrafficEvent(trafficEvent);
 
         if (StringUtils.isEmpty(trafficEvent.getM_PlateNumber())) {
@@ -212,11 +210,6 @@ public class RabbitObtainEventImpl {
      */
     private void sendMessage(String phone, String message) {
         smsService.sendSms(phone, message);
-    }
-
-    private void logMessage(String message) {
-        int index = message.indexOf("m_Utc");
-        log.info(message.substring(index, index + 40));
     }
 
     /**

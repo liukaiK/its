@@ -76,6 +76,11 @@ public class TrafficEvent {
 
     private String ip;
 
+    /**
+     * 限速范围
+     */
+    private int nUpperSpeedLimit;
+
     @Override
     public String toString() {
         return "TrafficEvent{" +
@@ -91,6 +96,7 @@ public class TrafficEvent {
                 ", m_Utc=" + m_Utc +
                 ", nSpeed=" + nSpeed +
                 ", ip='" + ip + '\'' +
+                ", nUpperSpeedLimit=" + nUpperSpeedLimit +
                 '}';
     }
 
@@ -110,10 +116,6 @@ public class TrafficEvent {
 //    private int m_OffSet;
 //    // 文件大小
 //    private int m_FileLength;
-
-
-//    //限速范围
-//    private int nUpperSpeedLimit;
 
 
 }
