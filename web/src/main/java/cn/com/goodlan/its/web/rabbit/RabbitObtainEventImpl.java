@@ -79,11 +79,24 @@ public class RabbitObtainEventImpl {
             return;
         }
 
-        if (!"超速".equals(trafficEvent.getM_EventName())) {
+        if ("超速".equals(trafficEvent.getM_EventName())) {
+            exceedSpeed(trafficEvent);
+            return;
+        }
+
+        if ("违章停车".equals(trafficEvent.getM_EventName())) {
+
+
             return;
         }
 
 
+    }
+
+    /**
+     * 超速处理
+     */
+    private void exceedSpeed(TrafficEvent trafficEvent) {
         // 判断是否和上一条数据相同 相同的话直接跳过不记录
         if (isSameWithPrevious(trafficEvent)) {
             return;
@@ -175,8 +188,6 @@ public class RabbitObtainEventImpl {
 
 
         }
-
-
     }
 
     private void hitBack(String licensePlateNumber) {
