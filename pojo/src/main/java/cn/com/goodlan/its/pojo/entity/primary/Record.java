@@ -48,7 +48,7 @@ public class Record extends AbstractEntity {
         this.record = event.getScore().getNumber();
         this.place = event.getPlace();
         if (event.getVehicle() != null) {
-            this.bmmc = event.getVehicle().getBmmc();
+            this.bmmc = event.getVehicle().getCollegeName();
         }
     }
 

@@ -34,7 +34,7 @@ public class Vehicle {
     /**
      * 部门名称
      */
-    private String bmmc;
+    private String collegeName;
 
     public Vehicle() {
 
@@ -80,12 +80,12 @@ public class Vehicle {
     }
 
     @Column(name = "bmmc")
-    public String getBmmc() {
-        return bmmc;
+    public String getCollegeName() {
+        return collegeName;
     }
 
-    public void setBmmc(String bmmc) {
-        this.bmmc = bmmc;
+    public void setCollegeName(String collegeName) {
+        this.collegeName = collegeName;
     }
 
 }

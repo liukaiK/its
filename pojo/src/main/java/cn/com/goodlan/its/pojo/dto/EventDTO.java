@@ -14,6 +14,8 @@ public class EventDTO {
 
     private String driverName;
 
+    private String collegeName;
+
     private String startTime;
 
     private String endTime;

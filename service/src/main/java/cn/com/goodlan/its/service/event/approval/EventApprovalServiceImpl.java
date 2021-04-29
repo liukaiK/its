@@ -61,6 +61,9 @@ public class EventApprovalServiceImpl implements EventApprovalService {
                 root.fetch("camera", JoinType.LEFT);
             }
             List<Predicate> list = new ArrayList<>();
+            if (StringUtils.isNotEmpty(eventDTO.getCollegeName())) {
+                list.add(criteriaBuilder.like(root.get("vehicle").get("collegeName").as(String.class), eventDTO.getCollegeName() + "%"));
+            }
             if (StringUtils.isNotEmpty(eventDTO.getDriverName())) {
                 list.add(criteriaBuilder.like(root.get("vehicle").get("driverName").as(String.class), eventDTO.getDriverName() + "%"));
             }
