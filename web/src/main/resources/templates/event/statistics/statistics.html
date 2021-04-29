@@ -20,6 +20,15 @@
                             <li>
                                 车主：<input type="text" name="driverName"/>
                             </li>
+                            <li>
+                                所属单位：<input type="text" name="collegeName"/>
+                            </li>
+                            <li>
+                                违规分类：<select name="violationTypeId">
+                                <option value="">所有</option>
+                                <option th:each="violationType : ${violationTypeList}" th:text="${violationType.name}" th:value="${violationType.id}"></option>
+                            </select>
+                            </li>
                             <li class="select-time">
                                 <label>违规时间： </label>
                                 <input type="text" class="time-input" placeholder="开始时间" name="startTime" data-type="datetime" data-format="yyyy-MM-dd HH:mm:ss" readonly="readonly"/>

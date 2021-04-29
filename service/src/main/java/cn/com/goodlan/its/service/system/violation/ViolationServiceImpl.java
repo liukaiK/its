@@ -70,7 +70,7 @@ public class ViolationServiceImpl implements ViolationTypeService {
 
     @Override
     public List<ViolationTypeVO> findAll() {
-        List<ViolationType> violationList = violationTypeRepository.findAll();
+        List<ViolationType> violationList = violationTypeRepository.findAllByOrderByName();
         return ViolationMapper.INSTANCE.convertList(violationList);
     }
 }
