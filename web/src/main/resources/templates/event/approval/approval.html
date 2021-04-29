@@ -22,6 +22,12 @@
                                 所属单位：<input type="text" name="collegeName"/>
                             </li>
                             <li>
+                                违规分类：<select name="violationTypeId">
+                                <option value="">所有</option>
+                                <option th:each="violationType : ${violationTypeList}" th:text="${violationType.name}" th:value="${violationType.id}"></option>
+                            </select>
+                            </li>
+                            <li>
                                 状态：<select name="status">
                                         <option value="">所有</option>
                                         <option value="0">未处理</option>

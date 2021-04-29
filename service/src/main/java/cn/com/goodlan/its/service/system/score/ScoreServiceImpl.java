@@ -38,6 +38,12 @@ public class ScoreServiceImpl implements ScoreService {
     }
 
     @Override
+    public List<ScoreVO> findAll() {
+        List<Score> scoreList = scoreRepository.findAll();
+        return ScoreMapper.INSTANCE.convertList(scoreList);
+    }
+
+    @Override
     public void save(ScoreDTO scoreDTO) {
         Score score = new Score();
         score.setName(scoreDTO.getName());

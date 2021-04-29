@@ -5,9 +5,13 @@ import cn.com.goodlan.its.pojo.vo.ScoreVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface ScoreService {
 
     Page<ScoreVO> search(ScoreDTO scoreDTO, Pageable pageable);
+
+    List<ScoreVO> findAll();
 
     void save(ScoreDTO scoreDTO);
 

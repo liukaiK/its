@@ -5,6 +5,7 @@ import cn.com.goodlan.its.common.util.ExcelUtil;
 import cn.com.goodlan.its.pojo.dto.EventDTO;
 import cn.com.goodlan.its.pojo.vo.EventVO;
 import cn.com.goodlan.its.service.event.approval.EventApprovalService;
+import cn.com.goodlan.its.service.system.violation.ViolationTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,9 +32,13 @@ public class ApprovalController {
     @Autowired
     private EventApprovalService eventApprovalService;
 
+    @Autowired
+    private ViolationTypeService violationTypeService;
+
     @GetMapping
     @PreAuthorize("hasAuthority('event:approval:view')")
-    public ModelAndView approval() {
+    public ModelAndView approval(Model model) {
+        model.addAttribute("violationTypeList", violationTypeService.findAll());
         return new ModelAndView("event/approval/approval");
     }
 

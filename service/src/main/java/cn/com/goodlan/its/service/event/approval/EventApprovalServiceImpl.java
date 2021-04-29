@@ -64,6 +64,9 @@ public class EventApprovalServiceImpl implements EventApprovalService {
             if (StringUtils.isNotEmpty(eventDTO.getCollegeName())) {
                 list.add(criteriaBuilder.like(root.get("vehicle").get("collegeName").as(String.class), eventDTO.getCollegeName() + "%"));
             }
+            if (StringUtils.isNotEmpty(eventDTO.getViolationTypeId())) {
+                list.add(criteriaBuilder.equal(root.get("score").get("violation").get("id").as(String.class), eventDTO.getViolationTypeId()));
+            }
             if (StringUtils.isNotEmpty(eventDTO.getDriverName())) {
                 list.add(criteriaBuilder.like(root.get("vehicle").get("driverName").as(String.class), eventDTO.getDriverName() + "%"));
             }

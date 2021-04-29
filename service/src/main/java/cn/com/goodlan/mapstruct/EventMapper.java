@@ -21,7 +21,7 @@ public interface EventMapper {
             @Mapping(source = "vehicle.driverName", target = "driverName"),
             @Mapping(source = "vehicle.driverPhone", target = "driverPhone"),
             @Mapping(source = "vehicle.collegeName", target = "bmmc"),
-            @Mapping(source = "score.name", target = "violationName"),
+            @Mapping(source = "score.violation.name", target = "violationName"),
             @Mapping(source = "camera.region.name", target = "regionName"),
             @Mapping(source = "score.number", target = "score"),
             @Mapping(target = "status", expression = "java(event.getStatus().getValue())")
