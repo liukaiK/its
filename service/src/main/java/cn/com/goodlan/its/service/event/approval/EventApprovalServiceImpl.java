@@ -17,6 +17,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,10 @@ public class EventApprovalServiceImpl implements EventApprovalService {
 
     private Specification<Event> querySpecification(EventDTO eventDTO) {
         return (root, query, criteriaBuilder) -> {
+            if (!query.getResultType().equals(Long.class)) {
+                root.fetch("vehicle", JoinType.LEFT);
+                root.fetch("camera", JoinType.LEFT);
+            }
             List<Predicate> list = new ArrayList<>();
             if (StringUtils.isNotEmpty(eventDTO.getDriverName())) {
                 list.add(criteriaBuilder.like(root.get("vehicle").get("driverName").as(String.class), eventDTO.getDriverName() + "%"));

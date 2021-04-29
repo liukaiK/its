@@ -80,11 +80,62 @@ public class RabbitObtainEventImpl {
         }
 
         if ("超速".equals(trafficEvent.getM_EventName())) {
-            exceedSpeed(trafficEvent);
+            exceedSpeedHandle(trafficEvent);
             return;
         }
 
         if ("违章停车".equals(trafficEvent.getM_EventName())) {
+            // 违规车辆的车牌号
+            String licensePlateNumber = trafficEvent.getM_PlateNumber();
+            // 查询此车辆在系统里存不存在
+            Optional<Vehicle> optionalVehicle = vehicleRepository.findById(licensePlateNumber);
+            if (optionalVehicle.isPresent()) {
+                Camera camera = cameraRepository.getByIp(trafficEvent.getIp());
+
+
+                if (camera == null) {
+                    return;
+                }
+
+
+                Vehicle vehicle = optionalVehicle.get();
+                Long count = countService.queryCountAndSave(trafficEvent.getM_PlateNumber());
+                Score score = new Score("0f647018-2c28-4bfe-ae10-e9586cfb66b0");
+                saveEvent(trafficEvent, score, vehicle, camera, count);
+
+                // 首次违规
+//            if (count == 1) {
+//                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，系统对您于警告处理。",
+//                        vehicle.getLicensePlateNumber(),
+//                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+//                        trafficEvent.getM_IllegalPlace()
+//                        )
+//                );
+//            }
+
+                // 第二次和第三次违规
+//            if (count == 2 || count == 3) {
+//                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，扣分%s分。违规超过4次将被进行拉黑处理。",
+//                        vehicle.getLicensePlateNumber(),
+//                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+//                        trafficEvent.getM_IllegalPlace(),
+//                        score.getNumber()
+//                        )
+//                );
+//            }
+
+//                if (count > 3) {
+//                    // TODO 发送短信
+//                    // 拉黑
+//                    try {
+//                        hitBack(licensePlateNumber);
+//                    } catch (Exception e) {
+//                        log.error("拉黑失败", e);
+//                    }
+//                }
+
+
+            }
 
 
             return;
@@ -96,7 +147,7 @@ public class RabbitObtainEventImpl {
     /**
      * 超速处理
      */
-    private void exceedSpeed(TrafficEvent trafficEvent) {
+    private void exceedSpeedHandle(TrafficEvent trafficEvent) {
         // 判断是否和上一条数据相同 相同的话直接跳过不记录
         if (isSameWithPrevious(trafficEvent)) {
             return;

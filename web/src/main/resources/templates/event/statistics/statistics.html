@@ -107,22 +107,6 @@
                 {
                     field: 'driverPhone',
                     title: '车主电话'
-                },
-                {
-                    field: 'status',
-                    title: '状态',
-                    formatter: function (value, row, index) {
-                        if (row.status === 0) {
-                            return '未处理';
-                        }
-                        if (row.status === 1) {
-                            return '已审批';
-                        }
-                        if (row.status === 2) {
-                            return '已作废';
-                        }
-                    },
-                    sortable: true
                 }
             ]
         };
