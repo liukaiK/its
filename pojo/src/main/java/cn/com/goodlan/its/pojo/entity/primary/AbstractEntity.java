@@ -28,12 +28,12 @@ public abstract class AbstractEntity implements Serializable {
     /**
      * 创建用户
      */
-    private String createBy;
+//    private String createBy;
 
     /**
      * 修改用户
      */
-    private String updateBy;
+//    private String updateBy;
 
 
     @CreatedDate
@@ -62,22 +62,22 @@ public abstract class AbstractEntity implements Serializable {
 
     //    @CreatedBy
 //    @Column(name = "create_by")
-    public String getCreateBy() {
-        return createBy;
-    }
+//    public String getCreateBy() {
+//        return createBy;
+//    }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
+//    public void setCreateBy(String createBy) {
+//        this.createBy = createBy;
+//    }
 
     //    @LastModifiedBy
 //    @Column(name = "update_by")
-    public String getUpdateBy() {
-        return updateBy;
-    }
+//    public String getUpdateBy() {
+//        return updateBy;
+//    }
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
+//    public void setUpdateBy(String updateBy) {
+//        this.updateBy = updateBy;
+//    }
 
 }
