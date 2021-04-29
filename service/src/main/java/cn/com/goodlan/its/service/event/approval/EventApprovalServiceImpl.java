@@ -59,6 +59,7 @@ public class EventApprovalServiceImpl implements EventApprovalService {
             if (!query.getResultType().equals(Long.class)) {
                 root.fetch("vehicle", JoinType.LEFT);
                 root.fetch("camera", JoinType.LEFT);
+                root.fetch("score", JoinType.LEFT);
             }
             List<Predicate> list = new ArrayList<>();
             if (StringUtils.isNotEmpty(eventDTO.getCollegeName())) {
