@@ -51,6 +51,33 @@ public class Score extends AbstractEntity {
     }
 
 
+    /**
+     * 判断是否为超速1类型的
+     */
+    @Transient
+    public boolean isScore1() {
+        return "126e87e3-42e3-4e53-8128-005843a65173".equals(this.id) || "fee71ddd-9116-4952-b8a1-13639b3032d3".equals(this.id);
+    }
+
+
+    /**
+     * 判断是否为超速2类型的
+     */
+    @Transient
+    public boolean isScore2() {
+        return "e26ee558-26bc-44a6-9767-909fe9accf09".equals(this.id) || "f6a3a200-9c0d-4606-a218-554fb637c908".equals(this.id);
+    }
+
+
+    /**
+     * 判断是否为超速3类型的
+     */
+    @Transient
+    public boolean isScore3() {
+        return "14731d00-3e20-4b7f-aaf0-b4b4a7d8b29d".equals(this.id) || "35552577-cfd6-480e-8586-f7568bb943b4".equals(this.id);
+    }
+
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
