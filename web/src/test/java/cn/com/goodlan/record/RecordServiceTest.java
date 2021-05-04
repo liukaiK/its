@@ -3,7 +3,7 @@ package cn.com.goodlan.record;
 import cn.com.goodlan.its.WebApplication;
 import cn.com.goodlan.its.dao.primary.system.record.RecordRepository;
 import cn.com.goodlan.its.pojo.entity.primary.Record;
-import cn.com.goodlan.its.service.event.record.RecordService;
+import cn.com.goodlan.its.service.event.statistics.StatisticsService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +24,7 @@ public class RecordServiceTest {
 
 
     @Autowired
-    private RecordService recordService;
+    private StatisticsService recordService;
 
     @Autowired
     private RecordRepository recordRepository;

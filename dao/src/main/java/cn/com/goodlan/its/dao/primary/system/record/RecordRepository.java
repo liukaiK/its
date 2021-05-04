@@ -2,6 +2,7 @@ package cn.com.goodlan.its.dao.primary.system.record;
 
 import cn.com.goodlan.its.dao.CustomizeRepository;
 import cn.com.goodlan.its.pojo.entity.primary.Record;
+import cn.com.goodlan.its.pojo.vo.StatisticsExcel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -26,5 +27,8 @@ public interface RecordRepository extends CustomizeRepository<Record, String> {
             "order by count desc\n" +
             "limit 10", nativeQuery = true)
     List<Object> bigScreen();
+
+    @Query("select new cn.com.goodlan.its.pojo.vo.StatisticsExcel(r.bmmc, sum(r.record)) from Record r group by r.bmmc order by sum(r.record) ")
+    List<StatisticsExcel> exportExcel();
 
 }

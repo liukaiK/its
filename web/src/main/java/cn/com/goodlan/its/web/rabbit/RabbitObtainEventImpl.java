@@ -205,27 +205,25 @@ public class RabbitObtainEventImpl {
         if (optionalVehicle.isPresent()) {
             Vehicle vehicle = optionalVehicle.get();
             Long count = countService.queryCountAndSave(trafficEvent.getM_PlateNumber());
-            saveEvent(trafficEvent, score, vehicle, camera, count);
+
             // 首次违规
-//            if (count == 1) {
-//                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，系统对您于警告处理。",
-//                        vehicle.getLicensePlateNumber(),
-//                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
-//                        trafficEvent.getM_IllegalPlace()
-//                        )
-//                );
-//            }
+            if (count == 1) {
+//                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，系统对您于警告处理。", vehicle.getLicensePlateNumber(), DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS), trafficEvent.getM_IllegalPlace()));
+
+
+                if (score.isScore2() || score.isScore3()) {
+                    saveEvent(trafficEvent, score, vehicle, camera, count);
+                }
+
+                return;
+            }
 
             // 第二次和第三次违规
-//            if (count == 2 || count == 3) {
-//                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，扣分%s分。违规超过4次将被进行拉黑处理。",
-//                        vehicle.getLicensePlateNumber(),
-//                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
-//                        trafficEvent.getM_IllegalPlace(),
-//                        score.getNumber()
-//                        )
-//                );
-//            }
+            if (count == 2 || count == 3) {
+//                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，扣分%s分。违规超过4次将被进行拉黑处理。", vehicle.getLicensePlateNumber(), DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS), trafficEvent.getM_IllegalPlace(), score.getNumber()));
+                saveEvent(trafficEvent, score, vehicle, camera, count);
+                return;
+            }
 
             if (count > 3) {
                 // TODO 发送短信

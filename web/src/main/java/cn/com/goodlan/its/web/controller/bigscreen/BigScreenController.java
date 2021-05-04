@@ -2,7 +2,7 @@ package cn.com.goodlan.its.web.controller.bigscreen;
 
 
 import cn.com.goodlan.its.dao.primary.system.record.RecordRepository;
-import cn.com.goodlan.its.service.event.record.RecordService;
+import cn.com.goodlan.its.service.event.statistics.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BigScreenController {
 
     @Autowired
-    private RecordService recordService;
+    private StatisticsService statisticsService;
 
     @Autowired
     private RecordRepository recordRepository;
 
     @GetMapping
     public String bigScreen(Model model) {
-        model.addAttribute("recordList", recordService.search());
+        model.addAttribute("recordList", statisticsService.search());
         model.addAttribute("zybm", recordRepository.bigScreen());
         return "bigscreen/bigscreen";
     }

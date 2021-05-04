@@ -1,17 +1,21 @@
-package cn.com.goodlan.its.service.event.record;
+package cn.com.goodlan.its.service.event.statistics;
 
+import cn.com.goodlan.its.pojo.dto.EventDTO;
 import cn.com.goodlan.its.pojo.dto.RecordDTO;
 import cn.com.goodlan.its.pojo.vo.RecordVO;
+import cn.com.goodlan.its.pojo.vo.StatisticsExcel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
-public interface RecordService {
+public interface StatisticsService {
 
 
     Page<RecordVO> search(RecordDTO recordDTO, Pageable pageable);
 
     List<RecordVO> search();
+
+    List<StatisticsExcel> export(EventDTO eventDTO);
 
 }
