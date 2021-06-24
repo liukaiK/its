@@ -3,7 +3,7 @@ package cn.com.goodlan.its.web.controller.system.violation;
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
 import cn.com.goodlan.its.pojo.dto.ViolationTypeDTO;
 import cn.com.goodlan.its.pojo.vo.ViolationTypeVO;
-import cn.com.goodlan.its.service.system.violation.ViolationTypeService;
+import cn.com.goodlan.its.core.service.system.violation.ViolationTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

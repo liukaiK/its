@@ -4,7 +4,7 @@ import cn.com.goodlan.its.pojo.Result;
 import cn.com.goodlan.its.pojo.dto.CollegeDTO;
 import cn.com.goodlan.its.pojo.vo.CollegeVO;
 import cn.com.goodlan.its.pojo.vo.Ztree;
-import cn.com.goodlan.its.service.system.college.CollegeService;
+import cn.com.goodlan.its.core.service.system.college.CollegeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;

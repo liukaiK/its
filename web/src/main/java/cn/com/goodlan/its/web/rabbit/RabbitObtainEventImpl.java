@@ -7,7 +7,7 @@ import cn.com.goodlan.its.dao.secondary.HitBackRepository;
 import cn.com.goodlan.its.pojo.TrafficEvent;
 import cn.com.goodlan.its.pojo.entity.primary.*;
 import cn.com.goodlan.its.pojo.entity.secondary.HitBack;
-import cn.com.goodlan.its.service.event.CountService;
+import cn.com.goodlan.its.core.service.event.CountService;
 import cn.com.goodlan.its.web.sms.SmsService;
 import cn.hutool.core.codec.Base64Decoder;
 import com.fasterxml.jackson.core.JsonProcessingException;

@@ -3,7 +3,7 @@ package cn.com.goodlan.its.web.controller.system.region;
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
 import cn.com.goodlan.its.pojo.dto.RegionDTO;
 import cn.com.goodlan.its.pojo.vo.RegionVO;
-import cn.com.goodlan.its.service.system.region.RegionService;
+import cn.com.goodlan.its.core.service.system.region.RegionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

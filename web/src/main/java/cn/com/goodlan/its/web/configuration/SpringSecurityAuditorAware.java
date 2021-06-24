@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.web.configuration;
 
 
-import cn.com.goodlan.its.util.SecurityUtil;
+import cn.com.goodlan.its.core.util.SecurityUtil;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 

@@ -1,10 +1,6 @@
 package cn.com.goodlan.its;
 
-import cn.com.goodlan.its.pojo.vo.EventVO;
-import cn.com.goodlan.its.service.event.approval.EventApprovalService;
-import cn.hutool.core.codec.Base64Decoder;
-import com.github.tobato.fastdfs.domain.fdfs.StorePath;
-import com.github.tobato.fastdfs.domain.upload.FastImageFile;
+import cn.com.goodlan.its.core.service.event.approval.EventApprovalService;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -12,8 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.io.ByteArrayInputStream;
 
 @Slf4j
 @SpringBootTest(classes = WebApplication.class)

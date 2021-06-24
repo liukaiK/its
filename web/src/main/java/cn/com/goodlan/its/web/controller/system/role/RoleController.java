@@ -3,7 +3,7 @@ package cn.com.goodlan.its.web.controller.system.role;
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
 import cn.com.goodlan.its.pojo.dto.RoleDTO;
 import cn.com.goodlan.its.pojo.vo.RoleVO;
-import cn.com.goodlan.its.service.system.role.RoleService;
+import cn.com.goodlan.its.core.service.system.role.RoleService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
