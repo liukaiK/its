@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.web.security;
 
-import cn.com.goodlan.its.dao.primary.system.user.UserRepository;
-import cn.com.goodlan.its.pojo.Result;
+import cn.com.goodlan.its.core.dao.primary.system.user.UserRepository;
+import cn.com.goodlan.its.core.pojo.Result;
 import cn.com.goodlan.its.core.util.SecurityUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;

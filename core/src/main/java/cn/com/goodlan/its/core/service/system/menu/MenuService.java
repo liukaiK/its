@@ -1,8 +1,8 @@
 package cn.com.goodlan.its.core.service.system.menu;
 
-import cn.com.goodlan.its.pojo.dto.MenuDTO;
-import cn.com.goodlan.its.pojo.vo.MenuVO;
-import cn.com.goodlan.its.pojo.vo.Ztree;
+import cn.com.goodlan.its.core.pojo.dto.MenuDTO;
+import cn.com.goodlan.its.core.pojo.vo.MenuVO;
+import cn.com.goodlan.its.core.pojo.vo.Ztree;
 
 import java.util.List;
 

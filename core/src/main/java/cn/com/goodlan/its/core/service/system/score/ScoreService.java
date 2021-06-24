@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.service.system.score;
 
-import cn.com.goodlan.its.pojo.dto.ScoreDTO;
-import cn.com.goodlan.its.pojo.vo.ScoreVO;
+import cn.com.goodlan.its.core.pojo.dto.ScoreDTO;
+import cn.com.goodlan.its.core.pojo.vo.ScoreVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

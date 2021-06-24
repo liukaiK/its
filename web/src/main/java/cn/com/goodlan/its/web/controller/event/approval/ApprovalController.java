@@ -2,8 +2,8 @@ package cn.com.goodlan.its.web.controller.event.approval;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
 import cn.com.goodlan.its.common.util.ExcelUtil;
-import cn.com.goodlan.its.pojo.dto.EventDTO;
-import cn.com.goodlan.its.pojo.vo.EventVO;
+import cn.com.goodlan.its.core.pojo.dto.EventDTO;
+import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.service.event.approval.EventApprovalService;
 import cn.com.goodlan.its.core.service.system.violation.ViolationTypeService;
 import org.springframework.beans.factory.annotation.Autowired;

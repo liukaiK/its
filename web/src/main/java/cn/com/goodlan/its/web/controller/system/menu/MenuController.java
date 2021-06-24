@@ -1,9 +1,9 @@
 package cn.com.goodlan.its.web.controller.system.menu;
 
-import cn.com.goodlan.its.pojo.Result;
-import cn.com.goodlan.its.pojo.dto.MenuDTO;
-import cn.com.goodlan.its.pojo.vo.MenuVO;
-import cn.com.goodlan.its.pojo.vo.Ztree;
+import cn.com.goodlan.its.core.pojo.Result;
+import cn.com.goodlan.its.core.pojo.dto.MenuDTO;
+import cn.com.goodlan.its.core.pojo.vo.MenuVO;
+import cn.com.goodlan.its.core.pojo.vo.Ztree;
 import cn.com.goodlan.its.core.service.system.menu.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

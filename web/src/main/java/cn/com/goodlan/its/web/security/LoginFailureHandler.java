@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.web.security;
 
-import cn.com.goodlan.its.pojo.Result;
+import cn.com.goodlan.its.core.pojo.Result;
 import cn.com.goodlan.its.common.exception.authentication.BadCaptchaException;
 import cn.com.goodlan.its.common.exception.authentication.CaptchaExpiredException;
 import cn.com.goodlan.its.common.exception.authentication.NotDeptException;

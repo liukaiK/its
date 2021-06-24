@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.service.system.index;
 
-import cn.com.goodlan.its.dao.primary.system.menu.MenuRepository;
-import cn.com.goodlan.its.pojo.entity.primary.Menu;
+import cn.com.goodlan.its.core.dao.primary.system.menu.MenuRepository;
+import cn.com.goodlan.its.core.pojo.entity.primary.Menu;
 import cn.com.goodlan.its.core.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

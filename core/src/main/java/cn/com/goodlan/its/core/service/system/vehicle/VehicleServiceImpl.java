@@ -1,9 +1,9 @@
 package cn.com.goodlan.its.core.service.system.vehicle;
 
-import cn.com.goodlan.its.dao.primary.system.vehicle.VehicleRepository;
-import cn.com.goodlan.its.pojo.dto.VehicleDTO;
-import cn.com.goodlan.its.pojo.entity.primary.Vehicle;
-import cn.com.goodlan.its.pojo.vo.VehicleVO;
+import cn.com.goodlan.its.core.dao.primary.system.vehicle.VehicleRepository;
+import cn.com.goodlan.its.core.pojo.dto.VehicleDTO;
+import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
+import cn.com.goodlan.its.core.pojo.vo.VehicleVO;
 import cn.com.goodlan.its.core.mapstruct.VehicleMapper;
 import cn.hutool.core.convert.Convert;
 import org.apache.commons.lang3.StringUtils;

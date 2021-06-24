@@ -1,9 +1,9 @@
 package cn.com.goodlan.its.core.service.system.violation;
 
-import cn.com.goodlan.its.dao.primary.system.violation.ViolationTypeRepository;
-import cn.com.goodlan.its.pojo.dto.ViolationTypeDTO;
-import cn.com.goodlan.its.pojo.entity.primary.ViolationType;
-import cn.com.goodlan.its.pojo.vo.ViolationTypeVO;
+import cn.com.goodlan.its.core.dao.primary.system.violation.ViolationTypeRepository;
+import cn.com.goodlan.its.core.pojo.dto.ViolationTypeDTO;
+import cn.com.goodlan.its.core.pojo.entity.primary.ViolationType;
+import cn.com.goodlan.its.core.pojo.vo.ViolationTypeVO;
 import cn.com.goodlan.its.core.mapstruct.ViolationMapper;
 import cn.hutool.core.convert.Convert;
 import org.springframework.beans.factory.annotation.Autowired;

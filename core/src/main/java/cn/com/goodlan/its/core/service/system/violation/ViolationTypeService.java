@@ -1,8 +1,8 @@
 package cn.com.goodlan.its.core.service.system.violation;
 
 
-import cn.com.goodlan.its.pojo.dto.ViolationTypeDTO;
-import cn.com.goodlan.its.pojo.vo.ViolationTypeVO;
+import cn.com.goodlan.its.core.pojo.dto.ViolationTypeDTO;
+import cn.com.goodlan.its.core.pojo.vo.ViolationTypeVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

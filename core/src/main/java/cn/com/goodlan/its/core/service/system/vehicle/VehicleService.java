@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.service.system.vehicle;
 
-import cn.com.goodlan.its.pojo.dto.VehicleDTO;
-import cn.com.goodlan.its.pojo.vo.VehicleVO;
+import cn.com.goodlan.its.core.pojo.dto.VehicleDTO;
+import cn.com.goodlan.its.core.pojo.vo.VehicleVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -1,8 +1,8 @@
 package cn.com.goodlan.its.web.controller.system.park.parklot;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
-import cn.com.goodlan.its.pojo.dto.ParkLotDTO;
-import cn.com.goodlan.its.pojo.vo.ParkLotVO;
+import cn.com.goodlan.its.core.pojo.dto.ParkLotDTO;
+import cn.com.goodlan.its.core.pojo.vo.ParkLotVO;
 import cn.com.goodlan.its.core.service.system.park.parklot.ParkLotService;
 import cn.com.goodlan.its.core.service.system.role.RoleService;
 import cn.com.goodlan.its.core.service.system.user.UserService;

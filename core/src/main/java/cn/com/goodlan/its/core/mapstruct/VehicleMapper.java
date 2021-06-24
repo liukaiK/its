@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.mapstruct;
 
-import cn.com.goodlan.its.pojo.entity.primary.Vehicle;
-import cn.com.goodlan.its.pojo.vo.VehicleVO;
+import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
+import cn.com.goodlan.its.core.pojo.vo.VehicleVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

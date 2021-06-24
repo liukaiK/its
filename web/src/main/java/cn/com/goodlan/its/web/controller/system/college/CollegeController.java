@@ -1,9 +1,9 @@
 package cn.com.goodlan.its.web.controller.system.college;
 
-import cn.com.goodlan.its.pojo.Result;
-import cn.com.goodlan.its.pojo.dto.CollegeDTO;
-import cn.com.goodlan.its.pojo.vo.CollegeVO;
-import cn.com.goodlan.its.pojo.vo.Ztree;
+import cn.com.goodlan.its.core.pojo.Result;
+import cn.com.goodlan.its.core.pojo.dto.CollegeDTO;
+import cn.com.goodlan.its.core.pojo.vo.CollegeVO;
+import cn.com.goodlan.its.core.pojo.vo.Ztree;
 import cn.com.goodlan.its.core.service.system.college.CollegeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

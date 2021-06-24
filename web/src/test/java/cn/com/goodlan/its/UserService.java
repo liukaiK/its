@@ -1,7 +1,7 @@
 package cn.com.goodlan.its;
 
-import cn.com.goodlan.its.dao.primary.system.user.UserRepository;
-import cn.com.goodlan.its.pojo.TrafficEvent;
+import cn.com.goodlan.its.core.dao.primary.system.user.UserRepository;
+import cn.com.goodlan.its.core.pojo.TrafficEvent;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;

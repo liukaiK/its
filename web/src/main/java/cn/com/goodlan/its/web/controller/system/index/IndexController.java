@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.web.controller.system.index;
 
-import cn.com.goodlan.its.pojo.entity.primary.Menu;
+import cn.com.goodlan.its.core.pojo.entity.primary.Menu;
 import cn.com.goodlan.its.core.service.framework.ConfigService;
 import cn.com.goodlan.its.core.service.system.index.IndexService;
 import cn.com.goodlan.its.core.util.TreeUtils;

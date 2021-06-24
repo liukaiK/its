@@ -1,8 +1,8 @@
 package cn.com.goodlan.its.core.service.system.college;
 
-import cn.com.goodlan.its.pojo.dto.CollegeDTO;
-import cn.com.goodlan.its.pojo.vo.CollegeVO;
-import cn.com.goodlan.its.pojo.vo.Ztree;
+import cn.com.goodlan.its.core.pojo.dto.CollegeDTO;
+import cn.com.goodlan.its.core.pojo.vo.CollegeVO;
+import cn.com.goodlan.its.core.pojo.vo.Ztree;
 
 import java.util.List;
 

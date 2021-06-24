@@ -1,8 +1,8 @@
 package cn.com.goodlan.its.web.controller.system.vehicle;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
-import cn.com.goodlan.its.pojo.dto.VehicleDTO;
-import cn.com.goodlan.its.pojo.vo.VehicleVO;
+import cn.com.goodlan.its.core.pojo.dto.VehicleDTO;
+import cn.com.goodlan.its.core.pojo.vo.VehicleVO;
 import cn.com.goodlan.its.core.service.system.vehicle.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

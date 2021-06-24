@@ -2,10 +2,10 @@ package cn.com.goodlan.its.web.controller.event.statistics;
 
 import cn.com.goodlan.its.common.annotations.ResponseResultBody;
 import cn.com.goodlan.its.common.util.ExcelUtil;
-import cn.com.goodlan.its.pojo.dto.EventDTO;
-import cn.com.goodlan.its.pojo.entity.primary.Event;
-import cn.com.goodlan.its.pojo.vo.EventVO;
-import cn.com.goodlan.its.pojo.vo.StatisticsExcel;
+import cn.com.goodlan.its.core.pojo.dto.EventDTO;
+import cn.com.goodlan.its.core.pojo.entity.primary.Event;
+import cn.com.goodlan.its.core.pojo.vo.EventVO;
+import cn.com.goodlan.its.core.pojo.vo.StatisticsExcel;
 import cn.com.goodlan.its.core.service.event.approval.EventApprovalService;
 import cn.com.goodlan.its.core.service.event.statistics.StatisticsService;
 import cn.com.goodlan.its.core.service.system.violation.ViolationTypeService;

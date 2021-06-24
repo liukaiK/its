@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.mapstruct;
 
-import cn.com.goodlan.its.pojo.entity.primary.ViolationType;
-import cn.com.goodlan.its.pojo.vo.ViolationTypeVO;
+import cn.com.goodlan.its.core.pojo.entity.primary.ViolationType;
+import cn.com.goodlan.its.core.pojo.vo.ViolationTypeVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

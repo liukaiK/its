@@ -1,10 +1,10 @@
 package cn.com.goodlan.its.core.service.system.camera;
 
-import cn.com.goodlan.its.dao.primary.system.camera.CameraRepository;
-import cn.com.goodlan.its.pojo.dto.CameraDTO;
-import cn.com.goodlan.its.pojo.entity.primary.Camera;
-import cn.com.goodlan.its.pojo.entity.primary.Region;
-import cn.com.goodlan.its.pojo.vo.CameraVO;
+import cn.com.goodlan.its.core.dao.primary.system.camera.CameraRepository;
+import cn.com.goodlan.its.core.pojo.dto.CameraDTO;
+import cn.com.goodlan.its.core.pojo.entity.primary.Camera;
+import cn.com.goodlan.its.core.pojo.entity.primary.Region;
+import cn.com.goodlan.its.core.pojo.vo.CameraVO;
 import cn.com.goodlan.its.core.mapstruct.CameraMapper;
 import cn.hutool.core.convert.Convert;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.mapstruct;
 
-import cn.com.goodlan.its.pojo.entity.primary.Record;
-import cn.com.goodlan.its.pojo.vo.RecordVO;
+import cn.com.goodlan.its.core.pojo.entity.primary.Record;
+import cn.com.goodlan.its.core.pojo.vo.RecordVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

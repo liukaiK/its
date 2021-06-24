@@ -1,8 +1,8 @@
 package cn.com.goodlan.its.web.security;
 
-import cn.com.goodlan.its.dao.primary.system.user.UserRepository;
-import cn.com.goodlan.its.pojo.SecurityUserBean;
-import cn.com.goodlan.its.pojo.entity.primary.User;
+import cn.com.goodlan.its.core.dao.primary.system.user.UserRepository;
+import cn.com.goodlan.its.core.pojo.SecurityUserBean;
+import cn.com.goodlan.its.core.pojo.entity.primary.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.mapstruct;
 
-import cn.com.goodlan.its.pojo.entity.primary.College;
-import cn.com.goodlan.its.pojo.vo.CollegeVO;
+import cn.com.goodlan.its.core.pojo.entity.primary.College;
+import cn.com.goodlan.its.core.pojo.vo.CollegeVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

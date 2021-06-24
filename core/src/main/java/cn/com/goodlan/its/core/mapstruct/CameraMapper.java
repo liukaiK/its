@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.mapstruct;
 
-import cn.com.goodlan.its.pojo.entity.primary.Camera;
-import cn.com.goodlan.its.pojo.vo.CameraVO;
+import cn.com.goodlan.its.core.pojo.entity.primary.Camera;
+import cn.com.goodlan.its.core.pojo.vo.CameraVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

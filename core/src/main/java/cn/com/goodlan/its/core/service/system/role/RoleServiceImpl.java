@@ -1,11 +1,11 @@
 package cn.com.goodlan.its.core.service.system.role;
 
 import cn.com.goodlan.its.common.exception.BusinessException;
-import cn.com.goodlan.its.dao.primary.system.role.RoleRepository;
-import cn.com.goodlan.its.pojo.dto.RoleDTO;
-import cn.com.goodlan.its.pojo.entity.primary.Menu;
-import cn.com.goodlan.its.pojo.entity.primary.Role;
-import cn.com.goodlan.its.pojo.vo.RoleVO;
+import cn.com.goodlan.its.core.dao.primary.system.role.RoleRepository;
+import cn.com.goodlan.its.core.pojo.dto.RoleDTO;
+import cn.com.goodlan.its.core.pojo.entity.primary.Menu;
+import cn.com.goodlan.its.core.pojo.entity.primary.Role;
+import cn.com.goodlan.its.core.pojo.vo.RoleVO;
 import cn.com.goodlan.its.core.mapstruct.RoleMapper;
 import cn.hutool.core.convert.Convert;
 import org.apache.commons.lang3.StringUtils;

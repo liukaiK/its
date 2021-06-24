@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.web.controller.bigscreen;
 
 
-import cn.com.goodlan.its.dao.primary.system.record.RecordRepository;
+import cn.com.goodlan.its.core.dao.primary.system.record.RecordRepository;
 import cn.com.goodlan.its.core.service.event.statistics.StatisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

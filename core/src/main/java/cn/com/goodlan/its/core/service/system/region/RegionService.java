@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.service.system.region;
 
-import cn.com.goodlan.its.pojo.dto.RegionDTO;
-import cn.com.goodlan.its.pojo.vo.RegionVO;
+import cn.com.goodlan.its.core.pojo.dto.RegionDTO;
+import cn.com.goodlan.its.core.pojo.vo.RegionVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

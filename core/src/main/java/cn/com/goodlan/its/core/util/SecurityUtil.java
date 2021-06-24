@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.core.util;
 
-import cn.com.goodlan.its.pojo.SecurityUserBean;
+import cn.com.goodlan.its.core.pojo.SecurityUserBean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

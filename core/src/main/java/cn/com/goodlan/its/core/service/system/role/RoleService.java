@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.service.system.role;
 
-import cn.com.goodlan.its.pojo.dto.RoleDTO;
-import cn.com.goodlan.its.pojo.vo.RoleVO;
+import cn.com.goodlan.its.core.pojo.dto.RoleDTO;
+import cn.com.goodlan.its.core.pojo.vo.RoleVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

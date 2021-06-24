@@ -1,10 +1,10 @@
 package cn.com.goodlan.its.core.service.system.user;
 
-import cn.com.goodlan.its.pojo.dto.ChangePasswordDTO;
-import cn.com.goodlan.its.pojo.dto.ResetPasswordDTO;
-import cn.com.goodlan.its.pojo.dto.UpdateProfileDTO;
-import cn.com.goodlan.its.pojo.dto.UserDTO;
-import cn.com.goodlan.its.pojo.vo.UserVO;
+import cn.com.goodlan.its.core.pojo.dto.ChangePasswordDTO;
+import cn.com.goodlan.its.core.pojo.dto.ResetPasswordDTO;
+import cn.com.goodlan.its.core.pojo.dto.UpdateProfileDTO;
+import cn.com.goodlan.its.core.pojo.dto.UserDTO;
+import cn.com.goodlan.its.core.pojo.vo.UserVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.mapstruct;
 
-import cn.com.goodlan.its.pojo.entity.primary.Menu;
-import cn.com.goodlan.its.pojo.vo.MenuVO;
+import cn.com.goodlan.its.core.pojo.entity.primary.Menu;
+import cn.com.goodlan.its.core.pojo.vo.MenuVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

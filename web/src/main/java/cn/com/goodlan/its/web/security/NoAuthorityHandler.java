@@ -2,7 +2,7 @@ package cn.com.goodlan.its.web.security;
 
 import cn.com.goodlan.its.common.constant.SystemConstant;
 import cn.com.goodlan.its.common.util.HttpUtil;
-import cn.com.goodlan.its.pojo.Result;
+import cn.com.goodlan.its.core.pojo.Result;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

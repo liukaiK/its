@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.util;
 
 
-import cn.com.goodlan.its.pojo.entity.primary.Menu;
+import cn.com.goodlan.its.core.pojo.entity.primary.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
