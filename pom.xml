@@ -31,7 +31,7 @@
     <modules>
         <module>web</module>
         <module>api</module>
-        <module>service</module>
+        <module>core</module>
         <module>dao</module>
         <module>pojo</module>
         <module>common</module>
