@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.core.pojo.entity.primary;
 
+import cn.com.goodlan.its.common.util.AESUtil;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
@@ -55,6 +56,35 @@ public class User extends AbstractEntity {
 
     }
 
+    @Transient
+    public void updateEmail(String email) {
+        this.email = email;
+    }
+
+    @Transient
+    public void updateSex(String sex) {
+        this.sex = sex;
+    }
+
+    @Transient
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    @Transient
+    public void updateUsername(String username) {
+        this.username = username;
+    }
+
+    @Transient
+    public void updatePhoneNumber(String phoneNumber) {
+        this.phoneNumber = AESUtil.encrypt(phoneNumber);
+    }
+
+    @Transient
+    public void updateRemark(String remark) {
+        this.remark = remark;
+    }
 
     @Transient
     public void removeAllRole() {

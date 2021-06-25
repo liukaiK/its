@@ -2,11 +2,11 @@ package cn.com.goodlan.its.core.service.system.role;
 
 import cn.com.goodlan.its.common.exception.BusinessException;
 import cn.com.goodlan.its.core.dao.primary.system.role.RoleRepository;
+import cn.com.goodlan.its.core.mapstruct.RoleMapper;
 import cn.com.goodlan.its.core.pojo.dto.RoleDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Menu;
 import cn.com.goodlan.its.core.pojo.entity.primary.Role;
 import cn.com.goodlan.its.core.pojo.vo.RoleVO;
-import cn.com.goodlan.its.core.mapstruct.RoleMapper;
 import cn.hutool.core.convert.Convert;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,24 +53,24 @@ public class RoleServiceImpl implements RoleService {
     public void update(RoleDTO roleDTO) {
         String[] menuIds = Convert.toStrArray(roleDTO.getMenuIds());
         Role role = roleRepository.getOne(roleDTO.getId());
+        role.updateName(roleDTO.getRoleName());
+        role.updateRemark(roleDTO.getRemark());
         role.removeAllMenu();
         for (String menuId : menuIds) {
             role.addMenu(new Menu(menuId));
         }
-        role.setName(roleDTO.getRoleName());
-        role.setRemark(roleDTO.getRemark());
         roleRepository.save(role);
     }
 
     @Override
     public void save(RoleDTO roleDTO) {
         Role role = new Role();
-        role.setName(roleDTO.getRoleName());
+        role.updateName(roleDTO.getRoleName());
+        role.updateRemark(roleDTO.getRemark());
         String[] menuIds = Convert.toStrArray(roleDTO.getMenuIds());
         for (String menuId : menuIds) {
             role.addMenu(new Menu(menuId));
         }
-        role.setRemark(roleDTO.getRemark());
         roleRepository.save(role);
     }
 

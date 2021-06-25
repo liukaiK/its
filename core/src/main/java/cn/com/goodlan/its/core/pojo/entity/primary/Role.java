@@ -37,9 +37,20 @@ public class Role extends AbstractEntity {
         this.id = id;
     }
 
+    @Transient
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    @Transient
+    public void updateRemark(String remark) {
+        this.remark = remark;
+    }
+
     /**
      * 角色下面是否有人
      */
+    @Transient
     public boolean hasUser() {
         return CollectionUtil.isNotEmpty(this.userList);
     }

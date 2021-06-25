@@ -4,6 +4,7 @@ package cn.com.goodlan.its.core.service.system.user;
 import cn.com.goodlan.its.common.exception.BusinessException;
 import cn.com.goodlan.its.common.util.AESUtil;
 import cn.com.goodlan.its.core.dao.primary.system.user.UserRepository;
+import cn.com.goodlan.its.core.mapstruct.UserMapper;
 import cn.com.goodlan.its.core.pojo.dto.ChangePasswordDTO;
 import cn.com.goodlan.its.core.pojo.dto.ResetPasswordDTO;
 import cn.com.goodlan.its.core.pojo.dto.UpdateProfileDTO;
@@ -12,7 +13,6 @@ import cn.com.goodlan.its.core.pojo.entity.primary.Role;
 import cn.com.goodlan.its.core.pojo.entity.primary.User;
 import cn.com.goodlan.its.core.pojo.vo.UserVO;
 import cn.com.goodlan.its.core.util.SecurityUtil;
-import cn.com.goodlan.its.core.mapstruct.UserMapper;
 import cn.hutool.core.convert.Convert;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
                 list.add(criteriaBuilder.like(root.get("username").as(String.class), userDTO.getUsername() + "%"));
             }
             if (StringUtils.isNotEmpty(userDTO.getPhoneNumber())) {
-                list.add(criteriaBuilder.equal(root.get("phoneNumber").as(String.class), aesEncrypt(userDTO.getPhoneNumber())));
+                list.add(criteriaBuilder.equal(root.get("phoneNumber").as(String.class), AESUtil.encrypt(userDTO.getPhoneNumber())));
             }
             Predicate[] p = new Predicate[list.size()];
             return criteriaBuilder.and(list.toArray(p));
@@ -67,14 +67,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(UserDTO userDTO) {
         User user = new User();
-        user.setName(userDTO.getName());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setUsername(userDTO.getUsername());
-        user.setPhoneNumber(aesEncrypt(userDTO.getPhoneNumber()));
-        user.setSex(userDTO.getSex());
-        user.setRemark(userDTO.getRemark());
+        user.updateName(userDTO.getName());
+        user.updateEmail(userDTO.getEmail());
+        user.updateUsername(userDTO.getUsername());
+        user.updatePhoneNumber(userDTO.getPhoneNumber());
+        user.updateSex(userDTO.getSex());
+        user.updateRemark(userDTO.getRemark());
         user.addCollege(userDTO.getCollegeId());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         String[] roleIds = Convert.toStrArray(userDTO.getRoleIds());
         for (String roleId : roleIds) {
             user.addRole(new Role(roleId));
@@ -85,10 +85,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(UserDTO userDTO) {
         User user = userRepository.getOne(userDTO.getId());
-        user.setRemark(userDTO.getRemark());
-        user.setSex(userDTO.getSex());
-        user.setEmail(userDTO.getEmail());
-        user.setPhoneNumber(aesEncrypt(userDTO.getPhoneNumber()));
+        user.updateRemark(userDTO.getRemark());
+        user.updateSex(userDTO.getSex());
+        user.updateEmail(userDTO.getEmail());
+        user.updatePhoneNumber(userDTO.getPhoneNumber());
         user.addCollege(userDTO.getCollegeId());
         String[] roleIds = Convert.toStrArray(userDTO.getRoleIds());
         user.removeAllRole();
@@ -126,19 +126,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateProfile(UpdateProfileDTO updateProfileDTO) {
         User user = userRepository.getOne(SecurityUtil.getUserId());
-        user.setEmail(updateProfileDTO.getEmail());
-        user.setSex(updateProfileDTO.getSex());
-        user.setPhoneNumber(aesEncrypt(updateProfileDTO.getPhoneNumber()));
+        user.updateEmail(updateProfileDTO.getEmail());
+        user.updateSex(updateProfileDTO.getSex());
+        user.updatePhoneNumber(updateProfileDTO.getPhoneNumber());
         userRepository.save(user);
     }
 
-
-    /**
-     * AES加密
-     */
-    private String aesEncrypt(String str) {
-        return AESUtil.encrypt(str);
-    }
 
     @Override
     public boolean checkUsernameUnique(String username) {
