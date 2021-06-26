@@ -65,14 +65,6 @@
             <div class="row">
                 <div class="col-sm-3">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">车速：</label>
-                        <div class="col-sm-8">
-                            <p class="form-control-static" th:text="*{speed + ' km/h'}"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
                         <label class="col-sm-4 control-label">违规地点：</label>
                         <div class="col-sm-8">
                             <p class="form-control-static" th:text="*{place}"></p>
@@ -84,6 +76,14 @@
                         <label class="col-sm-4 control-label">违规时间：</label>
                         <div class="col-sm-8">
                             <p class="form-control-static" th:text="*{#temporals.format(time, 'yyyy-MM-dd HH:mm:ss')}"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3" th:unless="*{violationName eq '违章停车'}">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">车速：</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static" th:text="*{speed + ' km/h'}"></p>
                         </div>
                     </div>
                 </div>
