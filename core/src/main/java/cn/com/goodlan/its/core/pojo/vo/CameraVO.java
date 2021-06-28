@@ -12,8 +12,6 @@ public class CameraVO {
 
     private String ip;
 
-    private String factory;
-
     /**
      * 位置
      */
@@ -51,14 +49,6 @@ public class CameraVO {
 
     public void setIp(String ip) {
         this.ip = ip;
-    }
-
-    public String getFactory() {
-        return factory;
-    }
-
-    public void setFactory(String factory) {
-        this.factory = factory;
     }
 
     public String getPosition() {

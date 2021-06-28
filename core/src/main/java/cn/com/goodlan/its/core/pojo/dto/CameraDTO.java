@@ -14,8 +14,6 @@ public class CameraDTO {
 
     private String ip;
 
-    private String factory;
-
     @NotBlank(message = "请选择区域")
     private String regionId;
 

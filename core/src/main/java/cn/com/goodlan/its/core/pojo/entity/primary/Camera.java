@@ -23,11 +23,6 @@ public class Camera extends AbstractEntity {
 
     private String ip;
 
-    /**
-     * 厂家
-     */
-    private String factory;
-
     private Region region;
 
     /**
@@ -67,14 +62,6 @@ public class Camera extends AbstractEntity {
 
     public void setIp(String ip) {
         this.ip = ip;
-    }
-
-    public String getFactory() {
-        return factory;
-    }
-
-    public void setFactory(String factory) {
-        this.factory = factory;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)

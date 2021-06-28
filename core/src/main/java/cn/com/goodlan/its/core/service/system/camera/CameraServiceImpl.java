@@ -1,11 +1,11 @@
 package cn.com.goodlan.its.core.service.system.camera;
 
 import cn.com.goodlan.its.core.dao.primary.system.camera.CameraRepository;
+import cn.com.goodlan.its.core.mapstruct.CameraMapper;
 import cn.com.goodlan.its.core.pojo.dto.CameraDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Camera;
 import cn.com.goodlan.its.core.pojo.entity.primary.Region;
 import cn.com.goodlan.its.core.pojo.vo.CameraVO;
-import cn.com.goodlan.its.core.mapstruct.CameraMapper;
 import cn.hutool.core.convert.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,7 +39,6 @@ public class CameraServiceImpl implements CameraService {
     public void save(CameraDTO cameraDTO) {
         Camera camera = new Camera();
         camera.setName(cameraDTO.getName());
-        camera.setFactory(cameraDTO.getFactory());
         camera.setIp(cameraDTO.getIp());
         camera.setPosition(cameraDTO.getPosition());
         camera.setRegion(new Region(cameraDTO.getRegionId()));
@@ -50,7 +49,6 @@ public class CameraServiceImpl implements CameraService {
     public void update(CameraDTO cameraDTO) {
         Camera camera = cameraRepository.getOne(cameraDTO.getId());
         camera.setName(cameraDTO.getName());
-        camera.setFactory(cameraDTO.getFactory());
         camera.setIp(cameraDTO.getIp());
         camera.setPosition(cameraDTO.getPosition());
         camera.setRegion(new Region(cameraDTO.getRegionId()));

@@ -32,9 +32,9 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <label class="col-sm-4 control-label">厂家：</label>
+                        <label class="col-sm-4 control-label is-required">位置：</label>
                         <div class="col-sm-8">
-                            <input name="factory" placeholder="请输入厂家" class="form-control" type="text" maxlength="11" th:value="*{factory}">
+                            <input id="position" name="position" placeholder="请输入位置" class="form-control" type="text" maxlength="30" th:value="*{position}" required>
                         </div>
                     </div>
                 </div>
@@ -43,16 +43,6 @@
                         <label class="col-sm-4 control-label">ip：</label>
                         <div class="col-sm-8">
                             <input name="ip" class="form-control" type="text" maxlength="50" placeholder="请输入IP地址" th:value="*{ip}">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label is-required">位置：</label>
-                        <div class="col-sm-8">
-                            <input id="position" name="position" placeholder="请输入位置" class="form-control" type="text" maxlength="30" th:value="*{position}" required>
                         </div>
                     </div>
                 </div>
