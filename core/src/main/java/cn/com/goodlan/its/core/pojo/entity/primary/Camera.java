@@ -11,9 +11,9 @@ import javax.persistence.*;
  *
  * @author liukai
  */
+@Entity
 @DynamicUpdate
 @DynamicInsert
-@Entity
 @Table(name = "sys_camera")
 public class Camera extends AbstractEntity {
 
