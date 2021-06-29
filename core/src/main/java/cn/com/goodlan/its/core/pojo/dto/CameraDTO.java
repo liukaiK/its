@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.core.pojo.dto;
 
+import cn.com.goodlan.its.common.annotations.IP;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -12,6 +13,8 @@ public class CameraDTO {
     @NotBlank(message = "摄像头名称不能为空")
     private String name;
 
+    @IP
+    @NotBlank(message = "IP不能为空")
     private String ip;
 
     @NotBlank(message = "请选择区域")
