@@ -34,6 +34,11 @@ public class Region extends AbstractEntity {
     }
 
     @Transient
+    public void updateName(String name) {
+        this.name = name;
+    }
+
+    @Transient
     public boolean hasCamera() {
         return CollectionUtil.isNotEmpty(this.cameraList);
     }
