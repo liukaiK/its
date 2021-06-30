@@ -18,13 +18,13 @@ public class SecurityAuthorityBean implements GrantedAuthority {
 
     private String authority;
 
-    public SecurityAuthorityBean() {
-
-    }
-
-    public SecurityAuthorityBean(Menu menu) {
+    private SecurityAuthorityBean(Menu menu) {
         this.id = menu.getId();
         this.authority = menu.getAuthority();
+    }
+
+    public static SecurityAuthorityBean convertFormMenu(Menu menu) {
+        return new SecurityAuthorityBean(menu);
     }
 
     @Override

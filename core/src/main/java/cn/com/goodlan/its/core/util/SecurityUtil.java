@@ -37,8 +37,8 @@ public abstract class SecurityUtil {
      *
      * @return 部门ID集合
      */
-    public static String getDeptId() {
-        return getUser().getDept().getId();
+    public static String getCollegeId() {
+        return getUser().getCollege().getId();
     }
 
 
@@ -47,8 +47,8 @@ public abstract class SecurityUtil {
      *
      * @return 部门名称集合
      */
-    public static String getDeptName() {
-        return getUser().getDept().getDeptName();
+    public static String getCollegeName() {
+        return getUser().getCollege().getCollegeName();
     }
 
     /**

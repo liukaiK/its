@@ -10,10 +10,6 @@ public class SecurityRoleBean {
 
     private String name;
 
-    public SecurityRoleBean() {
-
-    }
-
     public SecurityRoleBean(Role role) {
         this.id = role.getId();
         this.name = role.getName();

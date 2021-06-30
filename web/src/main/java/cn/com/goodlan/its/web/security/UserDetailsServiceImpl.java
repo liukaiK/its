@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         User user = userOptional.orElseThrow(() -> new UsernameNotFoundException(username + " not found"));
 
-        return new SecurityUserBean(user);
+        return SecurityUserBean.convertFromUser(user);
     }
 
 }
