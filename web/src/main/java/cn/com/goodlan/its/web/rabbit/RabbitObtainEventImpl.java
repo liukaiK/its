@@ -15,7 +15,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.domain.upload.FastImageFile;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
@@ -31,9 +32,10 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Component
 public class RabbitObtainEventImpl {
+
+    private static final Log logger = LogFactory.getLog(RabbitObtainEventImpl.class);
 
     @Autowired
     private VehicleRepository vehicleRepository;
@@ -231,7 +233,7 @@ public class RabbitObtainEventImpl {
                 try {
                     hitBack(licensePlateNumber);
                 } catch (Exception e) {
-                    log.error("拉黑失败", e);
+                    logger.error("拉黑失败", e);
                 }
             }
 
@@ -276,7 +278,7 @@ public class RabbitObtainEventImpl {
      * 打印
      */
     private void logTrafficEvent(TrafficEvent trafficEvent) {
-        log.info(trafficEvent.toString());
+        logger.info(trafficEvent.toString());
     }
 
     /**

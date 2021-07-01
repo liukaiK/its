@@ -2,11 +2,9 @@ package cn.com.goodlan.its.core.pojo.dto;
 
 
 import cn.com.goodlan.its.common.annotations.Password;
-import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
-@Data
 public class ChangePasswordDTO {
 
     @NotBlank(message = "旧密码不能为空")
@@ -19,5 +17,27 @@ public class ChangePasswordDTO {
     @NotBlank(message = "确认密码不能为空")
     private String confirmPassword;
 
+    public String getOldPassword() {
+        return oldPassword;
+    }
 
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
 }
