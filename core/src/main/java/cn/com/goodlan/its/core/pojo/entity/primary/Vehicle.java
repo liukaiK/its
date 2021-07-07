@@ -36,6 +36,11 @@ public class Vehicle {
      */
     private String collegeName;
 
+    /**
+     * 例:教职工车辆(B1类)
+     */
+    private String carType;
+
     public Vehicle() {
 
     }
@@ -86,6 +91,14 @@ public class Vehicle {
 
     public void setCollegeName(String collegeName) {
         this.collegeName = collegeName;
+    }
+
+    public String getCarType() {
+        return carType;
+    }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
     }
 
 }
