@@ -73,8 +73,8 @@ public class UserServiceImpl implements UserService {
         user.updatePhoneNumber(userDTO.getPhoneNumber());
         user.updateSex(userDTO.getSex());
         user.updateRemark(userDTO.getRemark());
+        user.updatePassword(passwordEncoder.encode(userDTO.getPassword()));
         user.addCollege(userDTO.getCollegeId());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         String[] roleIds = Convert.toStrArray(userDTO.getRoleIds());
         for (String roleId : roleIds) {
             user.addRole(new Role(roleId));
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void resetPassword(ResetPasswordDTO resetPasswordDTO) {
         User user = userRepository.getOne(resetPasswordDTO.getId());
-        user.setPassword(passwordEncoder.encode(resetPasswordDTO.getPassword()));
+        user.updatePassword(passwordEncoder.encode(resetPasswordDTO.getPassword()));
         userRepository.save(user);
     }
 

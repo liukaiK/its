@@ -87,6 +87,11 @@ public class User extends AbstractEntity {
     }
 
     @Transient
+    public void updatePassword(String password) {
+        this.password = password;
+    }
+
+    @Transient
     public void removeAllRole() {
         this.roleList = new ArrayList<>();
     }
