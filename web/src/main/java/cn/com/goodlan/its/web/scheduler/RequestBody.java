@@ -15,7 +15,7 @@ import java.util.Date;
 @Data
 public class RequestBody implements Serializable {
 
-    private static RequestBody requestBody = new RequestBody();
+    private final static RequestBody INSTANCE = new RequestBody();
 
     /**
      * 停车场编号
@@ -102,13 +102,13 @@ public class RequestBody implements Serializable {
     }
 
     public static RequestBody from(Vehicle vehicle) {
-        requestBody.setCarOwner(vehicle.getDriverName());
-        requestBody.setTelphone(vehicle.getDriverPhone());
-        requestBody.setCarList(new Car[]{Car.getInstance(vehicle.getLicensePlateNumber())});
-        requestBody.setOperateTime(DateUtil.formatDateTime(new Date()));
-        requestBody.setCarportList(new Carport[]{new Carport(requestBody.getParkCode())});
-        requestBody.setTimePeriodList(new TimePeriod[]{new TimePeriod()});
-        return requestBody;
+        INSTANCE.setCarOwner(vehicle.getDriverName());
+        INSTANCE.setTelphone(vehicle.getDriverPhone());
+        INSTANCE.setCarList(new Car[]{Car.getInstance(vehicle.getLicensePlateNumber())});
+        INSTANCE.setOperateTime(DateUtil.formatDateTime(new Date()));
+        INSTANCE.setCarportList(new Carport[]{new Carport(INSTANCE.getParkCode())});
+        INSTANCE.setTimePeriodList(new TimePeriod[]{new TimePeriod()});
+        return INSTANCE;
     }
 
 
