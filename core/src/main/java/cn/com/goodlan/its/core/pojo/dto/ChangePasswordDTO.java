@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.pojo.dto;
 
 
-import cn.com.goodlan.its.common.annotations.Password;
+import cn.com.goodlan.its.core.annotations.Password;
 
 import javax.validation.constraints.NotBlank;
 

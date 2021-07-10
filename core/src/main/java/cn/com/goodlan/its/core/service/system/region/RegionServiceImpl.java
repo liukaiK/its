@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.core.service.system.region;
 
-import cn.com.goodlan.its.common.exception.BusinessException;
+import cn.com.goodlan.its.core.exception.BusinessException;
 import cn.com.goodlan.its.core.dao.primary.system.region.RegionRepository;
 import cn.com.goodlan.its.core.mapstruct.RegionMapper;
 import cn.com.goodlan.its.core.pojo.dto.RegionDTO;

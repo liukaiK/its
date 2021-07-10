@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.web.controller.system.violation;
 
-import cn.com.goodlan.its.common.annotations.ResponseResultBody;
+import cn.com.goodlan.its.core.annotations.ResponseResultBody;
 import cn.com.goodlan.its.core.pojo.dto.ViolationTypeDTO;
 import cn.com.goodlan.its.core.pojo.vo.ViolationTypeVO;
 import cn.com.goodlan.its.core.service.system.violation.ViolationTypeService;

@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.web.controller.system.score;
 
-import cn.com.goodlan.its.common.annotations.ResponseResultBody;
+import cn.com.goodlan.its.core.annotations.ResponseResultBody;
 import cn.com.goodlan.its.core.pojo.dto.ScoreDTO;
 import cn.com.goodlan.its.core.pojo.vo.ScoreVO;
 import cn.com.goodlan.its.core.service.system.region.RegionService;

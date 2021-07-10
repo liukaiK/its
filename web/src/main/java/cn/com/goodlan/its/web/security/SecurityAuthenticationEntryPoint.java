@@ -1,9 +1,9 @@
 package cn.com.goodlan.its.web.security;
 
-import cn.com.goodlan.its.common.constant.SystemConstant;
-import cn.com.goodlan.its.common.exception.authentication.UsernameMoreThanOneException;
-import cn.com.goodlan.its.common.util.HttpUtil;
+import cn.com.goodlan.its.core.constant.SystemConstant;
+import cn.com.goodlan.its.core.exception.authentication.UsernameMoreThanOneException;
 import cn.com.goodlan.its.core.pojo.Result;
+import cn.com.goodlan.its.core.util.HttpUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

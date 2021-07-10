@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.core.pojo.dto;
 
-import cn.com.goodlan.its.common.annotations.*;
+import cn.com.goodlan.its.core.annotations.*;
 import lombok.Data;
 
 import javax.validation.constraints.Email;

@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.core.service.framework.converter;
 
-import cn.com.goodlan.its.common.exception.BusinessException;
+import cn.com.goodlan.its.core.exception.BusinessException;
 import cn.com.goodlan.its.core.pojo.entity.primary.BaseEnum;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;

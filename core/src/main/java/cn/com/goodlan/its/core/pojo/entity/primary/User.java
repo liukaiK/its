@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.core.pojo.entity.primary;
 
-import cn.com.goodlan.its.common.util.AESUtil;
+import cn.com.goodlan.its.core.util.AESUtil;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;

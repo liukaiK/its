@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.web.security;
 
-import cn.com.goodlan.its.common.constant.SystemConstant;
+import cn.com.goodlan.its.core.constant.SystemConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

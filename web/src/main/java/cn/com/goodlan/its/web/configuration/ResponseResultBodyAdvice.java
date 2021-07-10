@@ -1,9 +1,9 @@
 package cn.com.goodlan.its.web.configuration;
 
-import cn.com.goodlan.its.common.annotations.ResponseResultBody;
-import cn.com.goodlan.its.common.exception.BusinessException;
-import cn.com.goodlan.its.common.util.HttpUtil;
+import cn.com.goodlan.its.core.annotations.ResponseResultBody;
+import cn.com.goodlan.its.core.exception.BusinessException;
 import cn.com.goodlan.its.core.pojo.Result;
+import cn.com.goodlan.its.core.util.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotatedElementUtils;

@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.web.controller.system.login;
 
-import cn.com.goodlan.its.common.constant.CaptchaConstant;
-import cn.com.goodlan.its.common.util.RSAUtil;
+import cn.com.goodlan.its.core.constant.CaptchaConstant;
+import cn.com.goodlan.its.core.util.RSAUtil;
 import cn.com.goodlan.its.web.security.captcha.CaptchaGenerator;
 import cn.hutool.captcha.ICaptcha;
 import com.fasterxml.jackson.core.JsonProcessingException;

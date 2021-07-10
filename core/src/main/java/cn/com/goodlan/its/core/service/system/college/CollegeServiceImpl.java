@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.core.service.system.college;
 
-import cn.com.goodlan.its.common.exception.BusinessException;
+import cn.com.goodlan.its.core.exception.BusinessException;
 import cn.com.goodlan.its.core.dao.primary.system.college.CollegeRepository;
 import cn.com.goodlan.its.core.pojo.dto.CollegeDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.College;

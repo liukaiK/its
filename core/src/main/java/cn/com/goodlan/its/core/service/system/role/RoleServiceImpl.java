@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.core.service.system.role;
 
-import cn.com.goodlan.its.common.exception.BusinessException;
+import cn.com.goodlan.its.core.exception.BusinessException;
 import cn.com.goodlan.its.core.dao.primary.system.role.RoleRepository;
 import cn.com.goodlan.its.core.mapstruct.RoleMapper;
 import cn.com.goodlan.its.core.pojo.dto.RoleDTO;

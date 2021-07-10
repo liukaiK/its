@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.web.controller.system.user;
 
-import cn.com.goodlan.its.common.annotations.Create;
-import cn.com.goodlan.its.common.annotations.ResponseResultBody;
+import cn.com.goodlan.its.core.annotations.Create;
+import cn.com.goodlan.its.core.annotations.ResponseResultBody;
 import cn.com.goodlan.its.core.pojo.dto.ChangePasswordDTO;
 import cn.com.goodlan.its.core.pojo.dto.ResetPasswordDTO;
 import cn.com.goodlan.its.core.pojo.dto.UpdateProfileDTO;

@@ -1,10 +1,10 @@
 package cn.com.goodlan.its.web.security;
 
 import cn.com.goodlan.its.core.pojo.Result;
-import cn.com.goodlan.its.common.exception.authentication.BadCaptchaException;
-import cn.com.goodlan.its.common.exception.authentication.CaptchaExpiredException;
-import cn.com.goodlan.its.common.exception.authentication.NotDeptException;
-import cn.com.goodlan.its.common.exception.authentication.UsernameMoreThanOneException;
+import cn.com.goodlan.its.core.exception.authentication.BadCaptchaException;
+import cn.com.goodlan.its.core.exception.authentication.CaptchaExpiredException;
+import cn.com.goodlan.its.core.exception.authentication.NotDeptException;
+import cn.com.goodlan.its.core.exception.authentication.UsernameMoreThanOneException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
 package cn.com.goodlan.its.web.controller.common;
 
 
-import cn.com.goodlan.its.common.util.StringUtils;
-import cn.com.goodlan.its.common.util.file.FileUtils;
+import cn.com.goodlan.its.core.util.StringUtils;
+import cn.com.goodlan.its.core.util.file.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;

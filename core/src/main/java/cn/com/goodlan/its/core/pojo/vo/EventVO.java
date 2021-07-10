@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.core.pojo.vo;
 
-import cn.com.goodlan.its.common.annotations.Excel;
+import cn.com.goodlan.its.core.annotations.Excel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;

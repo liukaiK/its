@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.web.controller.system.region;
 
-import cn.com.goodlan.its.common.annotations.ResponseResultBody;
+import cn.com.goodlan.its.core.annotations.ResponseResultBody;
 import cn.com.goodlan.its.core.pojo.dto.RegionDTO;
 import cn.com.goodlan.its.core.pojo.vo.RegionVO;
 import cn.com.goodlan.its.core.service.system.region.RegionService;

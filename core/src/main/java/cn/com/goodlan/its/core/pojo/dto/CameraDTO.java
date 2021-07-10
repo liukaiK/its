@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.core.pojo.dto;
 
-import cn.com.goodlan.its.common.annotations.IP;
+import cn.com.goodlan.its.core.annotations.IP;
 
 import javax.validation.constraints.NotBlank;
 

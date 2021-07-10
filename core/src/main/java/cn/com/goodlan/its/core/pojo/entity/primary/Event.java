@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.core.pojo.entity.primary;
 
-import cn.com.goodlan.its.common.exception.BusinessException;
+import cn.com.goodlan.its.core.exception.BusinessException;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;

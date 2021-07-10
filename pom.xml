@@ -31,7 +31,6 @@
         <module>web</module>
         <module>api</module>
         <module>core</module>
-        <module>common</module>
     </modules>
 
     <dependencyManagement>

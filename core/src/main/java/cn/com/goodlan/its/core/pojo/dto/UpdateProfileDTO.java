@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.pojo.dto;
 
-import cn.com.goodlan.its.common.annotations.MobileNumber;
-import cn.com.goodlan.its.common.annotations.Sex;
+import cn.com.goodlan.its.core.annotations.MobileNumber;
+import cn.com.goodlan.its.core.annotations.Sex;
 import lombok.Data;
 
 import javax.validation.constraints.Email;

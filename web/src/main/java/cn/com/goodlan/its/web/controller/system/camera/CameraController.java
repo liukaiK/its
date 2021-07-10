@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.web.controller.system.camera;
 
-import cn.com.goodlan.its.common.annotations.ResponseResultBody;
+import cn.com.goodlan.its.core.annotations.ResponseResultBody;
 import cn.com.goodlan.its.core.pojo.dto.CameraDTO;
 import cn.com.goodlan.its.core.pojo.vo.CameraVO;
 import cn.com.goodlan.its.core.service.system.camera.CameraService;

@@ -1,13 +1,13 @@
 package cn.com.goodlan.its.core.service.system.score;
 
-import cn.com.goodlan.its.common.util.StringUtils;
 import cn.com.goodlan.its.core.dao.primary.system.score.ScoreRepository;
+import cn.com.goodlan.its.core.mapstruct.ScoreMapper;
 import cn.com.goodlan.its.core.pojo.dto.ScoreDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Region;
 import cn.com.goodlan.its.core.pojo.entity.primary.Score;
 import cn.com.goodlan.its.core.pojo.entity.primary.ViolationType;
 import cn.com.goodlan.its.core.pojo.vo.ScoreVO;
-import cn.com.goodlan.its.core.mapstruct.ScoreMapper;
+import cn.com.goodlan.its.core.util.StringUtils;
 import cn.hutool.core.convert.Convert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
