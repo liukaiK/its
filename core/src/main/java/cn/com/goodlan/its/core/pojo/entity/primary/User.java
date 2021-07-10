@@ -29,7 +29,7 @@ public class User extends AbstractEntity {
 
     private String name;
 
-    private String sex;
+    private Character sex;
 
     private String email;
 
@@ -62,7 +62,7 @@ public class User extends AbstractEntity {
     }
 
     @Transient
-    public void updateSex(String sex) {
+    public void updateSex(Character sex) {
         this.sex = sex;
     }
 
@@ -170,11 +170,11 @@ public class User extends AbstractEntity {
         this.lastLoginTime = lastLoginTime;
     }
 
-    public String getSex() {
+    public Character getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(Character sex) {
         this.sex = sex;
     }
 

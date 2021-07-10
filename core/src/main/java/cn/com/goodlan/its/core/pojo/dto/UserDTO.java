@@ -32,7 +32,7 @@ public class UserDTO {
     private String phoneNumber;
 
     @Sex
-    private String sex;
+    private Character sex;
 
     @NotBlank(message = "请选择学院")
     private String collegeId;

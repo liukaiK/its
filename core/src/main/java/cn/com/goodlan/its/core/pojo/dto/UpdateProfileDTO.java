@@ -19,7 +19,7 @@ public class UpdateProfileDTO {
     private String email;
 
     @Sex
-    private String sex;
+    private Character sex;
 
 
 }
