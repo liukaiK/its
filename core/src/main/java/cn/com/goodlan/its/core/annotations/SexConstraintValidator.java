@@ -8,7 +8,7 @@ import javax.validation.ConstraintValidatorContext;
  *
  * @author liukai
  */
-public class SexConstraintValidator implements ConstraintValidator<Sex, String> {
+public class SexConstraintValidator implements ConstraintValidator<Sex, Character> {
 
     @Override
     public void initialize(Sex constraintAnnotation) {
@@ -16,8 +16,8 @@ public class SexConstraintValidator implements ConstraintValidator<Sex, String> 
     }
 
     @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-        return "男".equals(value) || "女".equals(value);
+    public boolean isValid(Character value, ConstraintValidatorContext context) {
+        return '男' == value || '女' == value;
     }
 
 }

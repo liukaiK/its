@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 public class UsernameConstraintValidator implements ConstraintValidator<Username, String> {
 
-    private final static String PATTERN = "^[a-zA-Z0-9]{4,16}$";
+    private final static Pattern PATTERN = Pattern.compile("^[a-zA-Z0-9]{4,16}$");
 
     @Override
     public void initialize(Username constraintAnnotation) {
@@ -25,7 +25,7 @@ public class UsernameConstraintValidator implements ConstraintValidator<Username
         if (StringUtils.isEmpty(value)) {
             return false;
         }
-        return Pattern.matches(PATTERN, value);
+        return PATTERN.matcher(value).matches();
     }
 
 }

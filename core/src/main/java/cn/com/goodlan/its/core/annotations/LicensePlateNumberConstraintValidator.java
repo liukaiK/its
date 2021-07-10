@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 public class LicensePlateNumberConstraintValidator implements ConstraintValidator<LicensePlateNumber, String> {
 
-    private final static String PATTERN = "^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$";
+    private final static Pattern PATTERN = Pattern.compile("^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9]{4}[A-Z0-9挂学警港澳]{1}$");
 
     @Override
     public void initialize(LicensePlateNumber constraintAnnotation) {
@@ -25,7 +25,7 @@ public class LicensePlateNumberConstraintValidator implements ConstraintValidato
         if (StringUtils.isEmpty(value)) {
             return false;
         }
-        return Pattern.matches(PATTERN, value);
+        return PATTERN.matcher(value).matches();
     }
 
 }

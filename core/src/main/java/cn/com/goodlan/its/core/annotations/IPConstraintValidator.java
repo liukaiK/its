@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 public class IPConstraintValidator implements ConstraintValidator<IP, String> {
 
-    private final static String PATTERN = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}";
+    private final static Pattern PATTERN = Pattern.compile("((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}");
 
     @Override
     public void initialize(IP constraintAnnotation) {
@@ -25,7 +25,7 @@ public class IPConstraintValidator implements ConstraintValidator<IP, String> {
         if (StringUtils.isEmpty(value)) {
             return false;
         }
-        return Pattern.matches(PATTERN, value);
+        return PATTERN.matcher(value).matches();
     }
 
 }

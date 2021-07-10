@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 public class PasswordConstraintValidator implements ConstraintValidator<Password, String> {
 
-    private final static String PATTERN = "^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{8,16}$";
+    private final static Pattern PATTERN = Pattern.compile("^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)[a-zA-Z0-9\\W]{8,16}$");
 
     @Override
     public void initialize(Password constraintAnnotation) {
@@ -25,7 +25,7 @@ public class PasswordConstraintValidator implements ConstraintValidator<Password
         if (StringUtils.isEmpty(value)) {
             return false;
         }
-        return Pattern.matches(PATTERN, value);
+        return PATTERN.matcher(value).matches();
     }
 
 }
