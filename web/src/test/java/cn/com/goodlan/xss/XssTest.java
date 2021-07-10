@@ -1,7 +1,7 @@
 package cn.com.goodlan.xss;
 
 import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
-import cn.com.goodlan.its.web.scheduler.AddVipTicket;
+import cn.com.goodlan.its.web.scheduler.RequestBody;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.crypto.digest.DigestUtil;
@@ -44,7 +44,7 @@ public class XssTest {
         vehicle.setDriverName("刘凯");
         vehicle.setDriverPhone("13384614120");
         vehicle.setLicensePlateNumber("粤AT2Q80");
-        String body = new ObjectMapper().writeValueAsString(AddVipTicket.convertFromVehicle(vehicle));
+        String body = new ObjectMapper().writeValueAsString(RequestBody.from(vehicle));
         System.out.println("body = " + body);
         HttpResponse response = HttpRequest.post(String.format(URL, sign))
                 .auth(Base64.encode(KEY + ":" + yyyyMMddHHmmss))

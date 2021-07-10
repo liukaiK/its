@@ -63,7 +63,7 @@ public class Scheduler {
 
         String sign = getSign(time);
 
-        AddVipTicket addVipTicket = AddVipTicket.convertFromVehicle(vehicle);
+        RequestBody addVipTicket = RequestBody.from(vehicle);
 
 
         try {
