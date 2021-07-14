@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.web.security.captcha;
 
 import cn.hutool.captcha.ICaptcha;
+import cn.hutool.captcha.generator.RandomGenerator;
 
 /**
  * 验证码生成器
@@ -8,6 +9,8 @@ import cn.hutool.captcha.ICaptcha;
  * @author liukai
  */
 public class CaptchaGenerator {
+
+    private static final String BASE_STR = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789";
 
     private CaptchaGenerator() {
 
@@ -17,7 +20,9 @@ public class CaptchaGenerator {
      * 生成验证码
      */
     public static ICaptcha generate(int width, int height, int length, long expireTime) {
-        return new Captcha(width, height, length, expireTime);
+        Captcha captcha = new Captcha(width, height, length, expireTime);
+        captcha.setGenerator(new RandomGenerator(BASE_STR, length));
+        return captcha;
     }
 
 }
