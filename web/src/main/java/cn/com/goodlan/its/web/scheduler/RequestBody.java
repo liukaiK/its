@@ -55,7 +55,7 @@ public class RequestBody implements Serializable {
     /**
      * 操作员
      */
-    private final String operator = "test";
+    private final String operator = "交通信息平台";
 
     /**
      * 操作时间，yyyy-MM-dd HH:mm:ss

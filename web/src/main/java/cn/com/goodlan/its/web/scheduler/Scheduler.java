@@ -5,6 +5,7 @@ import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.crypto.digest.DigestUtil;
+import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -75,7 +76,7 @@ public class Scheduler {
             if (!response.isOk()) {
                 logger.error("调用接口出现异常 " + response.body());
             }
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException | HttpException e) {
             logger.error("推送车辆error", e);
         }
 
