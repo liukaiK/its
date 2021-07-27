@@ -77,7 +77,7 @@ public class Scheduler {
                 logger.error("调用接口出现异常 " + response.body());
             }
         } catch (JsonProcessingException | HttpException e) {
-            logger.error("推送车辆error", e);
+            logger.error(vehicle.getLicensePlateNumber() + " 推送超时!");
         }
 
     }
