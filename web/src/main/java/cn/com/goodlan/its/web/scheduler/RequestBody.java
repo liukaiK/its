@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * 单例
@@ -25,27 +26,27 @@ public class RequestBody implements Serializable {
     /**
      * VIP类型唯一编号
      */
-    private final String vipTypeCode = "T99";
+    private final String vipTypeCode = "CZC0001TEST01";
 
     /**
      * VIP类型名称，如果没有对接“新增月卡类型”接口，可以在停车场管理系统预先建好VIP类型，然后按“VIP类型名称”开通VIP票
      */
-    private final String vipTypeName = "测试月卡类型99";
+    private final String vipTypeName = "月卡TEST";
 
     /**
-     * 外部系统定义的票唯一编号
+     * 外部系统定义的票唯一编号 不能重复
      */
-    private final String ticketNo = "Test99";
+    private String ticketNo;
 
     /**
      * 车主
      */
-    private String carOwner = "张三";
+    private String carOwner;
 
     /**
      * 车主电话
      */
-    private String telphone = "18022222222";
+    private String telphone;
 
     /**
      * 车主性别，0男 1女 2未知
@@ -108,6 +109,7 @@ public class RequestBody implements Serializable {
         INSTANCE.setOperateTime(DateUtil.formatDateTime(new Date()));
         INSTANCE.setCarportList(new Carport[]{new Carport(INSTANCE.getParkCode())});
         INSTANCE.setTimePeriodList(new TimePeriod[]{new TimePeriod()});
+        INSTANCE.setTicketNo(UUID.randomUUID().toString());
         return INSTANCE;
     }
 
