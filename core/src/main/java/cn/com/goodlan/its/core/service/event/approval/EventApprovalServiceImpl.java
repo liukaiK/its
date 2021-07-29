@@ -2,11 +2,11 @@ package cn.com.goodlan.its.core.service.event.approval;
 
 import cn.com.goodlan.its.core.dao.primary.event.EventRepository;
 import cn.com.goodlan.its.core.dao.primary.system.record.RecordRepository;
+import cn.com.goodlan.its.core.mapstruct.EventMapper;
 import cn.com.goodlan.its.core.pojo.dto.EventDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Event;
 import cn.com.goodlan.its.core.pojo.entity.primary.Record;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
-import cn.com.goodlan.its.core.mapstruct.EventMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +72,7 @@ public class EventApprovalServiceImpl implements EventApprovalService {
                 list.add(criteriaBuilder.like(root.get("vehicle").get("driverName").as(String.class), eventDTO.getDriverName() + "%"));
             }
             if (StringUtils.isNotEmpty(eventDTO.getVehicleNumber())) {
-                list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), eventDTO.getVehicleNumber() + "%"));
+                list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), "%" + eventDTO.getVehicleNumber() + "%"));
             }
             if (StringUtils.isNotEmpty(eventDTO.getStartTime())) {
                 list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("time").as(String.class), eventDTO.getStartTime()));
