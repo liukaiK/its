@@ -46,7 +46,7 @@ public class Scheduler {
     /**
      * 每天凌晨1点执行一次
      */
-    @Scheduled(cron = "0 0 1 * * ?")
+//    @Scheduled(cron = "0 0 1 * * ?")
     public void statusCheck() {
         logger.info("开始推送车辆数据到停车场");
         List<Vehicle> vehicles = vehicleRepository.findAll();
