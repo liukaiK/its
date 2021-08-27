@@ -19,6 +19,7 @@ public interface UserMapper {
     @Mappings({
             @Mapping(target = "phoneNumber", expression = "java(cn.com.goodlan.its.core.util.AESUtil.decrypt(user.getPhoneNumber()))"),
             @Mapping(source = "college.name", target = "collegeName"),
+            @Mapping(source = "username.username", target = "username"),
             @Mapping(source = "college.id", target = "collegeId")
     })
     UserVO convert(User user);

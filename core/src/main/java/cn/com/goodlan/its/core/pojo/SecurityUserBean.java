@@ -45,7 +45,7 @@ public class SecurityUserBean implements UserDetails {
     private SecurityUserBean(User user) {
         this.id = user.getId();
         this.name = user.getName();
-        this.username = user.getUsername();
+        this.username = user.getUsername().getUsername();
         this.password = user.getPassword();
         this.college = obtainCollege(user.getCollege());
         this.roleList = obtainRoles(user.getRoleList());

@@ -3,7 +3,8 @@ package cn.com.goodlan.its.web.security;
 import cn.com.goodlan.its.core.dao.primary.system.user.UserRepository;
 import cn.com.goodlan.its.core.pojo.SecurityUserBean;
 import cn.com.goodlan.its.core.pojo.entity.primary.user.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.com.goodlan.its.core.pojo.entity.primary.user.Username;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,16 +19,16 @@ import java.util.Optional;
  * @author liukai
  */
 @Component
+@AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<User> userOptional = userRepository.getByUsername(username);
+        Optional<User> userOptional = userRepository.getByUsername(new Username(username));
 
         User user = userOptional.orElseThrow(() -> new UsernameNotFoundException(username + " not found"));
 

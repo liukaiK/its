@@ -10,6 +10,7 @@ import cn.com.goodlan.its.core.pojo.dto.UpdateProfileDTO;
 import cn.com.goodlan.its.core.pojo.dto.UserDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Role;
 import cn.com.goodlan.its.core.pojo.entity.primary.user.User;
+import cn.com.goodlan.its.core.pojo.entity.primary.user.Username;
 import cn.com.goodlan.its.core.pojo.vo.UserVO;
 import cn.com.goodlan.its.core.util.AESUtil;
 import cn.com.goodlan.its.core.util.SecurityUtil;
@@ -69,7 +70,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.updateName(userDTO.getName());
         user.updateEmail(userDTO.getEmail());
-        user.updateUsername(userDTO.getUsername());
+        user.updateUsername(new Username(userDTO.getUsername()));
         user.updatePhoneNumber(userDTO.getPhoneNumber());
         user.updateSex(userDTO.getSex());
         user.updateRemark(userDTO.getRemark());

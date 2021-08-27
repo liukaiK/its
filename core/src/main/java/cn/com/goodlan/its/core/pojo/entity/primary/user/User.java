@@ -28,7 +28,7 @@ public class User extends AbstractEntity {
 
     private String id;
 
-    private String username;
+    private Username username;
 
     private String name;
 
@@ -75,7 +75,7 @@ public class User extends AbstractEntity {
     }
 
     @Transient
-    public void updateUsername(String username) {
+    public void updateUsername(Username username) {
         this.username = username;
     }
 
@@ -130,11 +130,12 @@ public class User extends AbstractEntity {
         this.id = id;
     }
 
-    public String getUsername() {
+    @Embedded
+    public Username getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(Username username) {
         this.username = username;
     }
 
