@@ -9,7 +9,7 @@ import cn.com.goodlan.its.core.pojo.dto.ResetPasswordDTO;
 import cn.com.goodlan.its.core.pojo.dto.UpdateProfileDTO;
 import cn.com.goodlan.its.core.pojo.dto.UserDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Role;
-import cn.com.goodlan.its.core.pojo.entity.primary.User;
+import cn.com.goodlan.its.core.pojo.entity.primary.user.User;
 import cn.com.goodlan.its.core.pojo.vo.UserVO;
 import cn.com.goodlan.its.core.util.AESUtil;
 import cn.com.goodlan.its.core.util.SecurityUtil;

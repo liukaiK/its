@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.core.mapstruct;
 
-import cn.com.goodlan.its.core.pojo.entity.primary.User;
+import cn.com.goodlan.its.core.pojo.entity.primary.user.User;
 import cn.com.goodlan.its.core.pojo.vo.UserVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

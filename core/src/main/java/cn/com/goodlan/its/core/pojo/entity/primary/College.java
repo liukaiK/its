@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.core.pojo.entity.primary;
 
+import cn.com.goodlan.its.core.pojo.entity.primary.user.User;
 import cn.hutool.core.collection.CollectionUtil;
 import org.hibernate.annotations.GenericGenerator;
 

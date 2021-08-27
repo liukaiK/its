@@ -2,7 +2,7 @@ package cn.com.goodlan.its.core.dao.primary.system.user;
 
 
 import cn.com.goodlan.its.core.dao.CustomizeRepository;
-import cn.com.goodlan.its.core.pojo.entity.primary.User;
+import cn.com.goodlan.its.core.pojo.entity.primary.user.User;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;

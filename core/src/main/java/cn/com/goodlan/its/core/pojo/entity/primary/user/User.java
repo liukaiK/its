@@ -1,5 +1,8 @@
-package cn.com.goodlan.its.core.pojo.entity.primary;
+package cn.com.goodlan.its.core.pojo.entity.primary.user;
 
+import cn.com.goodlan.its.core.pojo.entity.primary.AbstractEntity;
+import cn.com.goodlan.its.core.pojo.entity.primary.College;
+import cn.com.goodlan.its.core.pojo.entity.primary.Role;
 import cn.com.goodlan.its.core.util.AESUtil;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;

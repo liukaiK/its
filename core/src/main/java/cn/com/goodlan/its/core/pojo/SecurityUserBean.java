@@ -3,7 +3,7 @@ package cn.com.goodlan.its.core.pojo;
 import cn.com.goodlan.its.core.pojo.entity.primary.College;
 import cn.com.goodlan.its.core.pojo.entity.primary.Menu;
 import cn.com.goodlan.its.core.pojo.entity.primary.Role;
-import cn.com.goodlan.its.core.pojo.entity.primary.User;
+import cn.com.goodlan.its.core.pojo.entity.primary.user.User;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
