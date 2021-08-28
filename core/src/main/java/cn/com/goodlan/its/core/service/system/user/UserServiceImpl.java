@@ -15,8 +15,8 @@ import cn.com.goodlan.its.core.pojo.vo.UserVO;
 import cn.com.goodlan.its.core.util.AESUtil;
 import cn.com.goodlan.its.core.util.SecurityUtil;
 import cn.hutool.core.convert.Convert;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -30,15 +30,17 @@ import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author liukai
+ */
 @Service
+@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Page<UserVO> search(UserDTO userDTO, Pageable pageable) {
