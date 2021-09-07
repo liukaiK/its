@@ -14,6 +14,11 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>cn.com.goodlan.its</groupId>
+            <artifactId>core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -33,6 +38,11 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
@@ -40,14 +50,12 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <!-- sqlserver的数据库驱动包 -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>

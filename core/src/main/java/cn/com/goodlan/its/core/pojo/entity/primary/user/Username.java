@@ -22,9 +22,9 @@ public class Username {
     }
 
     public Username(String username) {
-        if (!PATTERN.matcher(this.username).matches()) {
-            throw new DataValidException("账号格式不正确");
-        }
+//        if (!PATTERN.matcher(this.username).matches()) {
+//            throw new DataValidException("账号格式不正确");
+//        }
         this.username = username;
     }
 
