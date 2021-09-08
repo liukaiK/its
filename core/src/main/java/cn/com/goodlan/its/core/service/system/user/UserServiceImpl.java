@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
                 list.add(criteriaBuilder.like(root.get("name").as(String.class), userDTO.getName() + "%"));
             }
             if (StringUtils.isNotEmpty(userDTO.getUsername())) {
-                list.add(criteriaBuilder.like(root.get("username").as(String.class), userDTO.getUsername() + "%"));
+                list.add(criteriaBuilder.like(root.get("username").get("username").as(String.class), userDTO.getUsername() + "%"));
             }
             if (StringUtils.isNotEmpty(userDTO.getPhoneNumber())) {
                 list.add(criteriaBuilder.equal(root.get("phoneNumber").as(String.class), AESUtil.encrypt(userDTO.getPhoneNumber())));
