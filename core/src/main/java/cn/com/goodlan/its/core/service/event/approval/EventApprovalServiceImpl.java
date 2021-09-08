@@ -6,7 +6,9 @@ import cn.com.goodlan.its.core.mapstruct.EventMapper;
 import cn.com.goodlan.its.core.pojo.dto.EventDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Event;
 import cn.com.goodlan.its.core.pojo.entity.primary.Record;
+import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
+import cn.com.goodlan.its.core.service.system.vehicle.VehicleService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -32,6 +37,9 @@ public class EventApprovalServiceImpl implements EventApprovalService {
 
     @Autowired
     private RecordRepository recordRepository;
+
+    @Autowired
+    private VehicleService vehicleService;
 
     @Override
     public List<EventVO> searchAll() {
@@ -107,5 +115,26 @@ public class EventApprovalServiceImpl implements EventApprovalService {
         event.cancel();
     }
 
-
+    /**
+     * 根据工号查询违章集合
+     *
+     * @param studstaffno 工号
+     * @param pageable    分页
+     * @return JSONObject
+     */
+    @Override
+    public Map<String, Object> findByUserId(String studstaffno, Pageable pageable) {
+        //根据工号查询车辆集合
+        List<Vehicle> vehicles = vehicleService.findByStudstaffno(studstaffno);
+        List<String> collect = vehicles.stream().map(Vehicle::getLicensePlateNumber).collect(Collectors.toList());
+        //根据车辆车牌集合查询违章事件
+        Page<Event> eventList = eventRepository.findByLicensePlateNumberInOrderByTimeDesc(collect, pageable);
+        List<EventVO> eventVOS = eventList.stream().map(EventMapper.INSTANCE::convert).collect(Collectors.toList());
+        Map<String, Object> map = new HashMap<>(4);
+        map.put("pageSize", pageable.getPageSize());
+        map.put("pageIndex", pageable.getPageNumber());
+        map.put("total", eventList.getTotalElements());
+        map.put("eventList", eventVOS);
+        return map;
+    }
 }

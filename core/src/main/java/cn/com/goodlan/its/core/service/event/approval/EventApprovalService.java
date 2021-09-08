@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EventApprovalService {
 
@@ -21,4 +22,12 @@ public interface EventApprovalService {
 
     List<EventVO> export(EventDTO eventDTO);
 
+    /**
+     * 根据工号查询违章集合
+     *
+     * @param studstaffno 工号
+     * @param pageable    分页
+     * @return
+     */
+    Map<String, Object> findByUserId(String studstaffno, Pageable pageable);
 }

@@ -1,10 +1,10 @@
 package cn.com.goodlan.its.core.service.system.vehicle;
 
 import cn.com.goodlan.its.core.dao.primary.system.vehicle.VehicleRepository;
+import cn.com.goodlan.its.core.mapstruct.VehicleMapper;
 import cn.com.goodlan.its.core.pojo.dto.VehicleDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.vo.VehicleVO;
-import cn.com.goodlan.its.core.mapstruct.VehicleMapper;
 import cn.hutool.core.convert.Convert;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -74,4 +75,15 @@ public class VehicleServiceImpl implements VehicleService {
 //        vehicleRepository.save(vehicle);
     }
 
+    /**
+     * 根据工号查询车辆集合
+     *
+     * @param studstaffno 工号
+     * @return List<Vehicle>
+     */
+    @Override
+    public List<Vehicle> findByStudstaffno(String studstaffno) {
+        Optional<List<Vehicle>> byStudstaffno = vehicleRepository.getByStudstaffno(studstaffno);
+        return byStudstaffno.orElse(new ArrayList<>());
+    }
 }

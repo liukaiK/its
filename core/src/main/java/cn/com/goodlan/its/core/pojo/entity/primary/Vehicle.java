@@ -41,6 +41,11 @@ public class Vehicle {
      */
     private String carType;
 
+    /**
+     * 工号
+     */
+    private String studstaffno;
+
     public Vehicle() {
 
     }
@@ -101,4 +106,11 @@ public class Vehicle {
         this.carType = carType;
     }
 
+    public String getStudstaffno() {
+        return studstaffno;
+    }
+
+    public void setStudstaffno(String studstaffno) {
+        this.studstaffno = studstaffno;
+    }
 }
