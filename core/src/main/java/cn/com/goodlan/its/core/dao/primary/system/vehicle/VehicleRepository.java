@@ -12,4 +12,6 @@ public interface VehicleRepository extends CustomizeRepository<Vehicle, String> 
 
     Optional<List<Vehicle>> getByStudstaffno(String studstaffno);
 
+    Vehicle getByDriverPhone(String driverPhone);
+
 }
