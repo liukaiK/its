@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Map;
 
 public interface RecordRepository extends CustomizeRepository<Record, String> {
 
@@ -31,4 +32,40 @@ public interface RecordRepository extends CustomizeRepository<Record, String> {
     @Query("select new cn.com.goodlan.its.core.pojo.vo.StatisticsExcel(r.bmmc, sum(r.record)) from Record r group by r.bmmc order by sum(r.record) ")
     List<StatisticsExcel> exportExcel();
 
+    @Query(value = "SELECT c.name,SUM( co.count ) as num, DATE_FORMAT(\t(SELECT\n" +
+            "\tMAX( eve.time )\n" +
+            "FROM\n" +
+            "\tsys_college c1 \n" +
+            "\tLEFT JOIN sys_vehicle v ON c1.NAME = v.bmmc\n" +
+            "\tLEFT JOIN eve_count co ON v.license_plate_number = co.license_plate_number\n" +
+            "\tLEFT JOIN eve_event eve ON v.license_plate_number = eve.license_plate_number\n" +
+            "\tWHERE c1.`name` = c.`name`\n" +
+            "GROUP BY\n" +
+            "\tc.NAME \n" +
+            "ORDER BY\n" +
+            "\teve.time DESC),'%Y-%m-%d %H:%i:%s') as latestTime \n" +
+            "\tFROM\n" +
+            "\t sys_college c LEFT JOIN sys_vehicle v ON c.NAME = v.bmmc\n" +
+            "\tLEFT JOIN eve_count co ON v.license_plate_number = co.license_plate_number \n" +
+            "GROUP BY c.id", nativeQuery = true)
+    List<Map<String,Object>> academyStatistics(Pageable pageable);
+
+    @Query(value = "SELECT c.name,SUM( co.count ) as num, DATE_FORMAT(\t(SELECT\n" +
+            "\tMAX( eve.time )\n" +
+            "FROM\n" +
+            "\tsys_college c1 \n" +
+            "\tLEFT JOIN sys_vehicle v ON c1.NAME = v.bmmc\n" +
+            "\tLEFT JOIN eve_count co ON v.license_plate_number = co.license_plate_number\n" +
+            "\tLEFT JOIN eve_event eve ON v.license_plate_number = eve.license_plate_number\n" +
+            "\tWHERE c1.`name` = c.`name`\n" +
+            "GROUP BY\n" +
+            "\tc.NAME \n" +
+            "ORDER BY\n" +
+            "\teve.time DESC),'%Y-%m-%d %H:%i:%s') as latestTime \n" +
+            "\tFROM\n" +
+            "\t sys_college c LEFT JOIN sys_vehicle v ON c.NAME = v.bmmc\n" +
+            "\tLEFT JOIN eve_count co ON v.license_plate_number = co.license_plate_number \n" +
+            " WHERE c.name like CONCAT('%',?1,'%')"+
+            "GROUP BY c.id", nativeQuery = true)
+    List<Map<String,Object>> academyStatisticsByName(String name, Pageable pageable);
 }

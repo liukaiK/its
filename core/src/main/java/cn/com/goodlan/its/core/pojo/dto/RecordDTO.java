@@ -13,5 +13,7 @@ public class RecordDTO {
 
     private String endTime;
 
+    private String collegeName;
+
 
 }
