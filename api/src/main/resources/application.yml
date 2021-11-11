@@ -31,3 +31,16 @@ sms:
   application-id: A000000000000054
   application-password: HITjt_#2021@hit!
   send-sms-url: http://uc.hit.edu.cn:8099/HitGateWay/SendSms
+weLink:
+  ##获取access token的请求地址
+  ticket:
+    url: https://open.welink.huaweicloud.com/api/auth/v2/tickets
+  ##获取免登用户userId的请求地址
+  user:
+    url: https://open.welink.huaweicloud.com/api/auth/v2/userid
+  ##对应We码开发平台H5应用的appid
+#  client为本地参数，服务器中的配置文件为生产参数
+  client:
+    id: 20211026155556354661433
+  ##对应We码开发平台H5应用的appsecret
+    secret: 72a3fdea-765d-4cf0-bfec-b276999d14e0
