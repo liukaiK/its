@@ -12,11 +12,11 @@ spring:
         minimum-idle: 30                    # 最小空闲连接
         connection-test-query: SELECT 1     # 连接测试查询
         connection-timeout: 60000           # 连接超时时间 毫秒
-    secondary:
-      jdbc-url: jdbc:sqlserver://127.0.0.1:1433;Databasename=NIC_DB
-      username: SA
-      password: Root@123
-      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    secondary:
+#      jdbc-url: jdbc:sqlserver://127.0.0.1:1433;Databasename=NIC_DB
+#      username: SA
+#      password: Root@123
+#      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
   jpa:
     hibernate:
       ddl-auto: none
@@ -38,6 +38,7 @@ weLink:
   ##获取免登用户userId的请求地址
   user:
     url: https://open.welink.huaweicloud.com/api/auth/v2/userid
+    detail: https://open.welink.huaweicloud.com/api/contact/v1/users
   ##对应We码开发平台H5应用的appid
 #  client为本地参数，服务器中的配置文件为生产参数
   client:

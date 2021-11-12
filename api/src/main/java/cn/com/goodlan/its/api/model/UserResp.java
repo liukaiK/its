@@ -6,6 +6,15 @@ public class UserResp {
     private String message;
     private String userId;
     private String tenantId;
+    private String corpUserId;
+
+    public String getCorpUserId() {
+        return corpUserId;
+    }
+
+    public void setCorpUserId(String corpUserId) {
+        this.corpUserId = corpUserId;
+    }
 
     public UserResp() { }
 

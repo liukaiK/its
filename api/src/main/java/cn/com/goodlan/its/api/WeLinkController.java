@@ -25,6 +25,9 @@ public class WeLinkController {
     @Value("${weLink.user.url}")
     private String userUrl;
 
+    @Value("${weLink.user.detail}")
+    private String userDetail;
+
     @Value("${weLink.client.id}")
     private String clientId;
 
@@ -82,6 +85,11 @@ public class WeLinkController {
             String userResult = OkHttpUtil.get(userUrl, userHeaderParams, urlParams);
             System.out.println("userinfo response: " + userResult);
             userResp = JSON.parseObject(userResult, UserResp.class);
+
+            urlParams.put("userId", userResp.getUserId());
+            userHeaderParams.put("x-wlk-gray", "0");
+            String detail = OkHttpUtil.get(userDetail, userHeaderParams, urlParams);
+            userResp = JSON.parseObject(detail, UserResp.class);
         } catch (Exception e) {
             e.printStackTrace();
 //            return ExceptionUtil.getExceptionInfo(e);
