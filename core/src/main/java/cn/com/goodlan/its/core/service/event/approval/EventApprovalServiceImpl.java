@@ -21,10 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -124,6 +121,14 @@ public class EventApprovalServiceImpl implements EventApprovalService {
      */
     @Override
     public Map<String, Object> findByUserId(String studstaffno, Pageable pageable) {
+        if(StringUtils.isBlank(studstaffno) || Objects.equals(studstaffno,"undefined")){
+            Map<String, Object> map = new HashMap<>(4);
+            map.put("pageSize", pageable.getPageSize());
+            map.put("pageIndex", pageable.getPageNumber());
+            map.put("total", 0);
+            map.put("eventList", new ArrayList<>());
+            return map;
+        }
         //根据工号查询车辆集合
         List<Vehicle> vehicles = vehicleService.findByStudstaffno(studstaffno);
         List<String> collect = vehicles.stream().map(Vehicle::getLicensePlateNumber).collect(Collectors.toList());
