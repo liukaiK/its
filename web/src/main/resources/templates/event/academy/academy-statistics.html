@@ -62,11 +62,11 @@
     function search() {
         var options = {
             url: searchUrl,
-            // exportUrl: exportUrl,
+            type: 'post',
             uniqueId: 'id',
             sortName: "num",
             sortOrder: "desc",
-            modalName: "违规数据统计",
+            modalName: "学院违规数据统计",
             columns: [
                 {
                     title: "序号",
@@ -105,8 +105,7 @@
             url: searchUrl,
             type: 'post',
             uniqueId: 'id',
-            sortName: "num",
-            sortOrder: "desc",
+            data: {sort: 'num,desc'},
             beforeSend: function (request) {
                 if (csrfToken && csrfHeader) {
                     request.setRequestHeader(csrfHeader, csrfToken);
@@ -123,7 +122,7 @@
                 var barChart = echarts.init(document.getElementById("echarts-bar-chart"));
                 var baroption = {
                     title: {
-                        text: '学院违规数据统计'
+                        text: '学院违规数据统计前十'
                     },
                     tooltip: {
                         trigger: 'axis'
