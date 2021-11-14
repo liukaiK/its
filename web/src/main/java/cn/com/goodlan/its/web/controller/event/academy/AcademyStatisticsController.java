@@ -48,7 +48,7 @@ public class AcademyStatisticsController {
     @PreAuthorize("hasAuthority('event:academy:view')")
     public ModelAndView statistics(Model model) {
         model.addAttribute("violationTypeList", violationTypeService.findAll());
-        return new ModelAndView("/event/academy/academy-statistics");
+        return new ModelAndView("event/academy/academy-statistics");
     }
 
     /**
