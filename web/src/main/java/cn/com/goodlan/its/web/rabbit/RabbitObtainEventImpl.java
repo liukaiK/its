@@ -8,8 +8,10 @@ import cn.com.goodlan.its.core.pojo.TrafficEvent;
 import cn.com.goodlan.its.core.pojo.entity.primary.*;
 import cn.com.goodlan.its.core.pojo.entity.secondary.HitBack;
 import cn.com.goodlan.its.core.service.event.CountService;
+import cn.com.goodlan.its.core.util.DateUtils;
 import cn.com.goodlan.its.web.sms.SmsService;
 import cn.hutool.core.codec.Base64Decoder;
+import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
@@ -106,35 +108,39 @@ public class RabbitObtainEventImpl {
                 saveEvent(trafficEvent, score, vehicle, camera, count);
 
                 // 首次违规
-//            if (count == 1) {
-//                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，系统对您于警告处理。",
-//                        vehicle.getLicensePlateNumber(),
-//                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
-//                        trafficEvent.getM_IllegalPlace()
-//                        )
-//                );
-//            }
+                if (count == 1) {
+                    sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了违章停车的违法行为。给予警告处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。【哈尔滨工业大学】",
+                                    vehicle.getLicensePlateNumber(),
+                                    DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                                    trafficEvent.getM_IllegalPlace()
+                            )
+                    );
+                }
 
                 // 第二次和第三次违规
-//            if (count == 2 || count == 3) {
-//                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，扣分%s分。违规超过4次将被进行拉黑处理。",
-//                        vehicle.getLicensePlateNumber(),
-//                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
-//                        trafficEvent.getM_IllegalPlace(),
-//                        score.getNumber()
-//                        )
-//                );
-//            }
+                if (count == 2 || count == 3) {
+                    sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了违章停车的违法行为。给予扣校内安全考核分处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。【哈尔滨工业大学】",
+                                    vehicle.getLicensePlateNumber(),
+                                    DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                                    trafficEvent.getM_IllegalPlace()
+                            )
+                    );
+                }
 
-//                if (count > 3) {
-//                    // TODO 发送短信
-//                    // 拉黑
-//                    try {
-//                        hitBack(licensePlateNumber);
-//                    } catch (Exception e) {
-//                        log.error("拉黑失败", e);
-//                    }
-//                }
+                if (count > 3) {
+                    sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了违章停车的违法行为。给予扣校内安全考核分处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。【哈尔滨工业大学】",
+                                    vehicle.getLicensePlateNumber(),
+                                    DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                                    trafficEvent.getM_IllegalPlace()
+                            )
+                    );
+                    // 拉黑
+                    try {
+                        hitBack(licensePlateNumber);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
 
             }
@@ -210,7 +216,12 @@ public class RabbitObtainEventImpl {
 
             // 首次违规
             if (count == 1) {
-//                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，系统对您于警告处理。", vehicle.getLicensePlateNumber(), DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS), trafficEvent.getM_IllegalPlace()));
+                sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了超速的违法行为。给予警告处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。【哈尔滨工业大学】",
+                                vehicle.getLicensePlateNumber(),
+                                DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                                trafficEvent.getM_IllegalPlace()
+                        )
+                );
 
 
                 if (score.isScore2() || score.isScore3()) {
@@ -222,13 +233,23 @@ public class RabbitObtainEventImpl {
 
             // 第二次和第三次违规
             if (count == 2 || count == 3) {
-//                sendMessage(vehicle.getDriverPhone(), String.format("您好，您的车辆%s于%s在%s超速，扣分%s分。违规超过4次将被进行拉黑处理。", vehicle.getLicensePlateNumber(), DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS), trafficEvent.getM_IllegalPlace(), score.getNumber()));
+                sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了超速的违法行为。给予扣校内安全考核分处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。【哈尔滨工业大学】",
+                                vehicle.getLicensePlateNumber(),
+                                DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                                trafficEvent.getM_IllegalPlace()
+                        )
+                );
                 saveEvent(trafficEvent, score, vehicle, camera, count);
                 return;
             }
 
             if (count > 3) {
-                // TODO 发送短信
+                sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了违章停车的违法行为。给予扣校内安全考核分处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。【哈尔滨工业大学】",
+                                vehicle.getLicensePlateNumber(),
+                                DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                                trafficEvent.getM_IllegalPlace()
+                        )
+                );
                 // 拉黑
                 try {
                     hitBack(licensePlateNumber);
