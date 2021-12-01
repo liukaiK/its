@@ -224,9 +224,11 @@ public class RabbitObtainEventImpl {
                 );
 
 
-                if (score.isScore2() || score.isScore3()) {
-                    saveEvent(trafficEvent, score, vehicle, camera, count);
-                }
+//                if (score.isScore2() || score.isScore3()) {
+//                    saveEvent(trafficEvent, score, vehicle, camera, count);
+//                }
+
+                saveEvent(trafficEvent, score, vehicle, camera, count);
 
                 return;
             }
