@@ -244,18 +244,20 @@ public class RabbitObtainEventImpl {
             }
 
             if (count > 3) {
-                sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了违章停车的违法行为。给予扣校内安全考核分处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。【哈尔滨工业大学】",
+                sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了超速的违法行为。给予扣校内安全考核分处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。【哈尔滨工业大学】",
                                 vehicle.getLicensePlateNumber(),
                                 DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
                                 trafficEvent.getM_IllegalPlace()
                         )
                 );
+                saveEvent(trafficEvent, score, vehicle, camera, count);
                 // 拉黑
                 try {
                     hitBack(licensePlateNumber);
                 } catch (Exception e) {
                     logger.error("拉黑失败", e);
                 }
+                return;
             }
 
 
