@@ -25,6 +25,7 @@
         <lombok.version>1.18.16</lombok.version>
         <commons-text.version>1.9</commons-text.version>
         <poi.version>4.1.2</poi.version>
+        <log4j.version>2.15.0</log4j.version>
     </properties>
 
     <modules>
@@ -87,6 +88,11 @@
                 <version>${poi.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
