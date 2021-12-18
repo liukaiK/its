@@ -18,9 +18,9 @@ public interface EventMapper {
 
     @Mappings({
             @Mapping(source = "licensePlateNumber", target = "vehicleNumber"),
-            @Mapping(source = "vehicle.driverName", target = "driverName"),
-            @Mapping(source = "vehicle.driverPhone", target = "driverPhone"),
-            @Mapping(source = "vehicle.collegeName", target = "bmmc"),
+            @Mapping(source = "driverName", target = "driverName"),
+            @Mapping(source = "driverPhone", target = "driverPhone"),
+            @Mapping(source = "collegeName", target = "bmmc"),
             @Mapping(source = "score.violation.name", target = "violationName"),
             @Mapping(source = "camera.region.name", target = "regionName"),
             @Mapping(source = "score.number", target = "score"),

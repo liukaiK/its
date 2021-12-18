@@ -62,19 +62,18 @@ public class EventApprovalServiceImpl implements EventApprovalService {
     private Specification<Event> querySpecification(EventDTO eventDTO) {
         return (root, query, criteriaBuilder) -> {
             if (!query.getResultType().equals(Long.class)) {
-                root.fetch("vehicle", JoinType.LEFT);
                 root.fetch("camera", JoinType.LEFT);
                 root.fetch("score", JoinType.LEFT);
             }
             List<Predicate> list = new ArrayList<>();
             if (StringUtils.isNotEmpty(eventDTO.getCollegeName())) {
-                list.add(criteriaBuilder.like(root.get("vehicle").get("collegeName").as(String.class), eventDTO.getCollegeName() + "%"));
+                list.add(criteriaBuilder.like(root.get("collegeName").as(String.class), eventDTO.getCollegeName() + "%"));
             }
             if (StringUtils.isNotEmpty(eventDTO.getViolationTypeId())) {
                 list.add(criteriaBuilder.equal(root.get("score").get("violation").get("id").as(String.class), eventDTO.getViolationTypeId()));
             }
             if (StringUtils.isNotEmpty(eventDTO.getDriverName())) {
-                list.add(criteriaBuilder.like(root.get("vehicle").get("driverName").as(String.class), eventDTO.getDriverName() + "%"));
+                list.add(criteriaBuilder.like(root.get("driverName").as(String.class), eventDTO.getDriverName() + "%"));
             }
             if (StringUtils.isNotEmpty(eventDTO.getVehicleNumber())) {
                 list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), "%" + eventDTO.getVehicleNumber() + "%"));
@@ -121,7 +120,7 @@ public class EventApprovalServiceImpl implements EventApprovalService {
      */
     @Override
     public Map<String, Object> findByUserId(String studstaffno, Pageable pageable) {
-        if(StringUtils.isBlank(studstaffno) || Objects.equals(studstaffno,"undefined")){
+        if (StringUtils.isBlank(studstaffno) || Objects.equals(studstaffno, "undefined")) {
             Map<String, Object> map = new HashMap<>(4);
             map.put("pageSize", pageable.getPageSize());
             map.put("pageIndex", pageable.getPageNumber());

@@ -279,7 +279,6 @@ public class RabbitObtainEventImpl {
         event.setCamera(camera);
         event.setVehicle(vehicle);
         event.setPlace(camera.getPosition());
-        event.setLicensePlateNumber(trafficEvent.getM_PlateNumber());
         event.setTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
         event.setLaneNumber(trafficEvent.getM_LaneNumber());
         event.setVehicleColor(trafficEvent.getM_VehicleColor());

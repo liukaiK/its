@@ -26,16 +26,25 @@ public class Event {
     private String id;
 
     /**
-     * 违章车辆 系统中存在的车辆
+     * 车主姓名
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vehicle_id")
-    private Vehicle vehicle;
+    private String driverName;
 
     /**
      * 车牌号
      */
     private String licensePlateNumber;
+
+    /**
+     * 车主电话
+     */
+    private String driverPhone;
+
+    /**
+     * 部门名称
+     */
+    private String collegeName;
+
 
     /**
      * 车道号
@@ -114,7 +123,6 @@ public class Event {
     /**
      * 获取当前违规事件发生在哪个区域
      */
-    @Transient
     public Region getRegion() {
         Camera camera = getCamera();
         if (camera == null) {
@@ -126,7 +134,6 @@ public class Event {
     /**
      * 审批
      */
-    @Transient
     public void approval() {
         if (Status.APPROVAL.equals(this.status)) {
             throw new BusinessException("该违规事件已经审批 请刷新页面");
@@ -135,10 +142,17 @@ public class Event {
         this.setApprovalTime(LocalDateTime.now());
     }
 
-    @Transient
     public void cancel() {
         this.setStatus(Status.CANCEL);
         this.setApprovalTime(LocalDateTime.now());
+    }
+
+
+    public void setVehicle(Vehicle vehicle) {
+        this.setLicensePlateNumber(vehicle.getLicensePlateNumber());
+        this.setDriverName(vehicle.getDriverName());
+        this.setDriverPhone(vehicle.getDriverPhone());
+        this.setCollegeName(vehicle.getCollegeName());
     }
 
     public String getId() {
@@ -147,14 +161,6 @@ public class Event {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
     }
 
     public String getPlace() {
@@ -202,7 +208,7 @@ public class Event {
         return licensePlateNumber;
     }
 
-    public void setLicensePlateNumber(String licensePlateNumber) {
+    protected void setLicensePlateNumber(String licensePlateNumber) {
         this.licensePlateNumber = licensePlateNumber;
     }
 
@@ -269,6 +275,30 @@ public class Event {
 
     public void setNum(Long num) {
         this.num = num;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    protected void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    public String getDriverPhone() {
+        return driverPhone;
+    }
+
+    protected void setDriverPhone(String driverPhone) {
+        this.driverPhone = driverPhone;
+    }
+
+    public String getCollegeName() {
+        return collegeName;
+    }
+
+    protected void setCollegeName(String collegeName) {
+        this.collegeName = collegeName;
     }
 
     /**
