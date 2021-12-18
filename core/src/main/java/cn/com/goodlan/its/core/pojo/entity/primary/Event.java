@@ -1,7 +1,6 @@
 package cn.com.goodlan.its.core.pojo.entity.primary;
 
 import cn.com.goodlan.its.core.exception.BusinessException;
-import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
@@ -15,18 +14,22 @@ import java.time.LocalDateTime;
  *
  * @author liukai
  */
-@ToString
 @Entity
 @DynamicUpdate
 @DynamicInsert
 @Table(name = "eve_event")
 public class Event {
 
+    @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
     /**
      * 违章车辆 系统中存在的车辆
      */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
     /**
@@ -42,8 +45,12 @@ public class Event {
     /**
      * 分值
      */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "score_id")
     private Score score;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "violation_id")
     private ViolationType violation;
 
     /**
@@ -59,6 +66,8 @@ public class Event {
     /**
      * 摄像头
      */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "camera_id")
     private Camera camera;
 
     /**
@@ -91,6 +100,7 @@ public class Event {
      */
     private Long num;
 
+    @Convert(converter = StatusConverter.class)
     private Status status = Status.NORMAL;
 
     public Event() {
@@ -131,9 +141,6 @@ public class Event {
         this.setApprovalTime(LocalDateTime.now());
     }
 
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     public String getId() {
         return id;
     }
@@ -142,8 +149,6 @@ public class Event {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vehicle_id")
     public Vehicle getVehicle() {
         return vehicle;
     }
@@ -160,8 +165,6 @@ public class Event {
         this.place = place;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "camera_id")
     public Camera getCamera() {
         return camera;
     }
@@ -170,7 +173,6 @@ public class Event {
         this.camera = camera;
     }
 
-    @Convert(converter = StatusConverter.class)
     public Status getStatus() {
         return status;
     }
@@ -179,8 +181,6 @@ public class Event {
         this.status = status;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "violation_id")
     public ViolationType getViolation() {
         return violation;
     }
@@ -198,7 +198,6 @@ public class Event {
         this.time = time;
     }
 
-    @Column
     public String getLicensePlateNumber() {
         return licensePlateNumber;
     }
@@ -240,7 +239,6 @@ public class Event {
         this.vehicleSize = vehicleSize;
     }
 
-
     public String getImageUrl() {
         return imageUrl;
     }
@@ -249,7 +247,6 @@ public class Event {
         this.imageUrl = imageUrl;
     }
 
-    @Column(columnDefinition = "tinyint")
     public Integer getSpeed() {
         return speed;
     }
@@ -258,8 +255,6 @@ public class Event {
         this.speed = speed;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "score_id")
     public Score getScore() {
         return score;
     }
@@ -267,7 +262,6 @@ public class Event {
     public void setScore(Score score) {
         this.score = score;
     }
-
 
     public Long getNum() {
         return num;
