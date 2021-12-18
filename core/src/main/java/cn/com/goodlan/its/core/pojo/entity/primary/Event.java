@@ -45,6 +45,11 @@ public class Event {
      */
     private String collegeName;
 
+    /**
+     * 工号
+     */
+    private String studstaffno;
+
 
     /**
      * 车道号
@@ -153,6 +158,7 @@ public class Event {
         this.setDriverName(vehicle.getDriverName());
         this.setDriverPhone(vehicle.getDriverPhone());
         this.setCollegeName(vehicle.getCollegeName());
+        this.setStudstaffno(vehicle.getStudstaffno());
     }
 
     public String getId() {
@@ -299,6 +305,14 @@ public class Event {
 
     protected void setCollegeName(String collegeName) {
         this.collegeName = collegeName;
+    }
+
+    public String getStudstaffno() {
+        return studstaffno;
+    }
+
+    protected void setStudstaffno(String studstaffno) {
+        this.studstaffno = studstaffno;
     }
 
     /**
