@@ -4,6 +4,7 @@ import cn.com.goodlan.its.core.dao.primary.event.EventRepository;
 import cn.com.goodlan.its.core.dao.primary.system.camera.CameraRepository;
 import cn.com.goodlan.its.core.dao.primary.system.vehicle.VehicleRepository;
 import cn.com.goodlan.its.core.dao.secondary.HitBackRepository;
+import cn.com.goodlan.its.core.pojo.MessageParam;
 import cn.com.goodlan.its.core.pojo.TrafficEvent;
 import cn.com.goodlan.its.core.pojo.entity.primary.*;
 import cn.com.goodlan.its.core.pojo.entity.secondary.HitBack;
@@ -101,6 +102,9 @@ public class RabbitObtainEventImpl {
 
 
                 Vehicle vehicle = optionalVehicle.get();
+
+                MessageParam messageParam = new MessageParam(vehicle.getStudstaffno(), trafficEvent.getM_IllegalPlace(), DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS), vehicle.getLicensePlateNumber());
+
                 Long count = countService.queryCountAndSave(trafficEvent.getM_PlateNumber());
                 Score score = new Score("0f647018-2c28-4bfe-ae10-e9586cfb66b0");
                 saveEvent(trafficEvent, score, vehicle, camera, count);
@@ -113,16 +117,30 @@ public class RabbitObtainEventImpl {
                                     trafficEvent.getM_IllegalPlace()
                             )
                     );
+                    messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。",
+                            vehicle.getLicensePlateNumber(),
+                            DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                            trafficEvent.getM_IllegalPlace(), "违章停车", "警告"
+                    ));
+                    //welink推送
+                    sendWelink(messageParam);
                 }
 
                 // 第二次和第三次违规
                 if (count == 2 || count == 3) {
-                    sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了违章停车的违法行为。给予扣校内安全考核分处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。",
+                    sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了违章停车的违法行为。给予处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。",
                                     vehicle.getLicensePlateNumber(),
                                     DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
                                     trafficEvent.getM_IllegalPlace()
                             )
                     );
+                    messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。",
+                            vehicle.getLicensePlateNumber(),
+                            DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                            trafficEvent.getM_IllegalPlace(), "违章停车", "扣校内安全考核分"
+                    ));
+                    //welink推送
+                    sendWelink(messageParam);
                 }
 
                 if (count > 3) {
@@ -132,6 +150,13 @@ public class RabbitObtainEventImpl {
                                     trafficEvent.getM_IllegalPlace()
                             )
                     );
+                    messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。",
+                            vehicle.getLicensePlateNumber(),
+                            DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                            trafficEvent.getM_IllegalPlace(), "违章停车", "扣校内安全考核分"
+                    ));
+                    //welink推送
+                    sendWelink(messageParam);
                     // 拉黑
                     try {
                         hitBack(licensePlateNumber);
@@ -139,8 +164,6 @@ public class RabbitObtainEventImpl {
                         e.printStackTrace();
                     }
                 }
-
-
             }
 
 
@@ -212,6 +235,9 @@ public class RabbitObtainEventImpl {
             Vehicle vehicle = optionalVehicle.get();
             Long count = countService.queryCountAndSave(trafficEvent.getM_PlateNumber());
 
+            MessageParam messageParam = new MessageParam(vehicle.getStudstaffno(), trafficEvent.getM_IllegalPlace(), DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS), vehicle.getLicensePlateNumber());
+
+
             // 首次违规
             if (count == 1) {
                 sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了超速的违法行为。给予警告处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。",
@@ -220,7 +246,13 @@ public class RabbitObtainEventImpl {
                                 trafficEvent.getM_IllegalPlace()
                         )
                 );
-
+                messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。",
+                        vehicle.getLicensePlateNumber(),
+                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                        trafficEvent.getM_IllegalPlace(), "超速", "警告"
+                ));
+                //welink推送
+                sendWelink(messageParam);
 
 //                if (score.isScore2() || score.isScore3()) {
 //                    saveEvent(trafficEvent, score, vehicle, camera, count);
@@ -239,6 +271,13 @@ public class RabbitObtainEventImpl {
                                 trafficEvent.getM_IllegalPlace()
                         )
                 );
+                messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。",
+                        vehicle.getLicensePlateNumber(),
+                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                        trafficEvent.getM_IllegalPlace(), "超速", "扣校内安全考核分"
+                ));
+                //welink推送
+                sendWelink(messageParam);
                 saveEvent(trafficEvent, score, vehicle, camera, count);
                 return;
             }
@@ -250,6 +289,13 @@ public class RabbitObtainEventImpl {
                                 trafficEvent.getM_IllegalPlace()
                         )
                 );
+                messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。",
+                        vehicle.getLicensePlateNumber(),
+                        DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                        trafficEvent.getM_IllegalPlace(), "超速", "扣校内安全考核分"
+                ));
+                //welink推送
+                sendWelink(messageParam);
                 saveEvent(trafficEvent, score, vehicle, camera, count);
                 // 拉黑
                 try {
@@ -269,7 +315,7 @@ public class RabbitObtainEventImpl {
         hitBack.setVehplate(licensePlateNumber);
         hitBack.setBackTime(LocalDateTime.now());
         hitBack.setRemark("拉黑");
-        hitBackRepository.save(hitBack);
+//        hitBackRepository.save(hitBack);
     }
 
     private void saveEvent(TrafficEvent trafficEvent, Score score, Vehicle vehicle, Camera camera, Long count) {
@@ -295,6 +341,10 @@ public class RabbitObtainEventImpl {
      */
     private void sendMessage(String phone, String message) {
         smsService.sendSms(phone, message);
+    }
+
+    public void sendWelink(MessageParam messageParam) {
+        smsService.sendWelink(messageParam);
     }
 
     /**

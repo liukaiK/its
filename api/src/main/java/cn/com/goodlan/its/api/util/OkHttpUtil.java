@@ -86,4 +86,24 @@ public class OkHttpUtil {
         return url;
     }
 
+    public static String setUrlFormParams(String url, Map<String, String> mapParams) {
+
+        StringBuilder strParams = new StringBuilder();
+        if (mapParams != null) {
+            Iterator<String> iterator = mapParams.keySet().iterator();
+            String key;
+            while (iterator.hasNext()) {
+                key = iterator.next();
+                strParams.append("&").append(key).append("=").append(mapParams.get(key));
+            }
+            if (url.endsWith("?")) {
+                url += strParams;
+            } else {
+                url += "?" + strParams.substring(1);
+            }
+        }
+
+        return url;
+    }
+
 }

@@ -26,5 +26,7 @@ public class SmsProperties {
      */
     private String sendSmsUrl;
 
+    private String welinkUrl;
+
 
 }

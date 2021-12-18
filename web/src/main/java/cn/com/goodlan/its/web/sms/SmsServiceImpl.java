@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.web.sms;
 
+import cn.com.goodlan.its.core.pojo.MessageParam;
 import cn.com.goodlan.its.web.properties.SmsProperties;
 import cn.hutool.http.HttpUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,4 +33,18 @@ public class SmsServiceImpl implements SmsService {
         }
     }
 
+    /**
+     * welink推送
+     *
+     * @param messageParam
+     */
+    @Override
+    public void sendWelink(MessageParam messageParam) {
+        try {
+            HttpUtil.post(smsProperties.getWelinkUrl(), objectMapper.writeValueAsString(messageParam), 2000);
+        } catch (Exception e) {
+            log.error("welink推送失败", e);
+        }
+
+    }
 }
