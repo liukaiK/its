@@ -7,6 +7,25 @@ public class TicketResp {
     private  String access_token;
     private  Integer expire_in;
 
+    private String errcode;
+    private String errmsg;
+
+    public String getErrcode() {
+        return errcode;
+    }
+
+    public void setErrcode(String errcode) {
+        this.errcode = errcode;
+    }
+
+    public String getErrmsg() {
+        return errmsg;
+    }
+
+    public void setErrmsg(String errmsg) {
+        this.errmsg = errmsg;
+    }
+
     public TicketResp() { }
 
     public String getCode() {
@@ -39,12 +58,13 @@ public class TicketResp {
 
     @Override
     public String toString() {
-
-        return "TicketResp {" +
+        return "TicketResp{" +
                 "code='" + code + '\'' +
-                ", message=" + message +
-                ", access_token=" + access_token +
-                ", expire_in='" + expire_in + '\'' +
+                ", message='" + message + '\'' +
+                ", access_token='" + access_token + '\'' +
+                ", expire_in=" + expire_in +
+                ", errcode='" + errcode + '\'' +
+                ", errmsg='" + errmsg + '\'' +
                 '}';
     }
 }

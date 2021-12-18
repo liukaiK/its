@@ -1,5 +1,7 @@
 package cn.com.goodlan.its.web.sms;
 
+import cn.com.goodlan.its.core.pojo.MessageParam;
+
 public interface SmsService {
 
     /**
@@ -10,4 +12,10 @@ public interface SmsService {
      */
     void sendSms(String mobilePhone, String content);
 
+    /**
+     * welink推送
+     *
+     * @param messageParam
+     */
+    void sendWelink(MessageParam messageParam);
 }

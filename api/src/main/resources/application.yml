@@ -45,3 +45,9 @@ weLink:
     id: 20211026155556354661433
   ##对应We码开发平台H5应用的appsecret
     secret: 72a3fdea-765d-4cf0-bfec-b276999d14e0
+  message:
+    url: https://plus.hit.edu.cn/msg/message/send_welink
+    access_token_url: http://open.hit.edu.cn/oauth2/token
+    grantType: client_credentials
+    appId: 56e9b5bf37a947f6ab50343
+    appKey: YAJKIWXBD0NtOK0TFUb0KpnK

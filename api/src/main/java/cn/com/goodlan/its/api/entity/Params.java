@@ -7,11 +7,11 @@ public class Params {
     /**
      * 页码
      */
-    private int page;
+    private int page = 1;
     /**
      * 条数
      */
-    private int size;
+    private int size = 10;
     /**
      * 工号
      */

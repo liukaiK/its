@@ -49,3 +49,4 @@ sms:
   application-id: A000000000000054
   application-password: HITjt_#2021@hit!
   send-sms-url: http://uc.hit.edu.cn:8099/HitGateWay/SendSms
+  welink-url: http://127.0.0.1:8085/message
