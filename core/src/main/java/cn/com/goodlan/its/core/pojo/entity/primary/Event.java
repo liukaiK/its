@@ -63,10 +63,6 @@ public class Event {
     @JoinColumn(name = "score_id")
     private Score score;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "violation_id")
-    private ViolationType violation;
-
     /**
      * 违规车辆的颜色
      */
@@ -191,14 +187,6 @@ public class Event {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public ViolationType getViolation() {
-        return violation;
-    }
-
-    public void setViolation(ViolationType violation) {
-        this.violation = violation;
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
