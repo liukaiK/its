@@ -7,6 +7,7 @@ import cn.com.goodlan.its.core.dao.secondary.HitBackRepository;
 import cn.com.goodlan.its.core.pojo.MessageParam;
 import cn.com.goodlan.its.core.pojo.TrafficEvent;
 import cn.com.goodlan.its.core.pojo.entity.primary.*;
+import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.entity.secondary.HitBack;
 import cn.com.goodlan.its.core.service.event.CountService;
 import cn.com.goodlan.its.core.util.DateUtils;

@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.core.mapstruct;
 
-import cn.com.goodlan.its.core.pojo.entity.primary.Event;
+import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

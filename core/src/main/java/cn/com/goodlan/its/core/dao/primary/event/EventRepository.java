@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.dao.primary.event;
 
 import cn.com.goodlan.its.core.dao.CustomizeRepository;
-import cn.com.goodlan.its.core.pojo.entity.primary.Event;
+import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -1,6 +1,7 @@
-package cn.com.goodlan.its.core.pojo.entity.primary;
+package cn.com.goodlan.its.core.pojo.entity.primary.event;
 
 import cn.com.goodlan.its.core.exception.BusinessException;
+import cn.com.goodlan.its.core.pojo.entity.primary.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;

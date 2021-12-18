@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.core.pojo.dto;
 
-import cn.com.goodlan.its.core.pojo.entity.primary.Event;
+import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 
 public class EventDTO {
 

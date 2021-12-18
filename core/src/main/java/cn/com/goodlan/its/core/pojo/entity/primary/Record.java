@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.core.pojo.entity.primary;
 
 
+import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
