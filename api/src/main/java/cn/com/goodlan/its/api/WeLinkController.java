@@ -50,6 +50,9 @@ public class WeLinkController {
     @Value("${weLink.message.appKey}")
     private String appKey;
 
+    @Value("${weLink.welink_url}")
+    private String welinkUrl;
+
     @GetMapping("/freelogin/{code}")
     public UserResp helloCloudLinkUser(@PathVariable String code) {
 
@@ -146,7 +149,7 @@ public class WeLinkController {
         message.put("title", "您有一条违章信息");
         message.put("content", messageParam.getContent());
         message.put("msgOwner", "违章查询");
-        message.put("url", "h5://20210904131114611602293/html/index.html");
+        message.put("url", welinkUrl);
         message.put("isForceTips", "1");
         String ticketResult = OkHttpUtil.post(messageUrl + "?access_token=" + accessToken, JSONObject.toJSONString(message), mediaType);
         TicketResp ticket = JSON.parseObject(ticketResult, TicketResp.class);
