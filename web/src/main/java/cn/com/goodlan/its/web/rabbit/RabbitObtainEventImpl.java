@@ -351,7 +351,7 @@ public class RabbitObtainEventImpl {
      * 打印
      */
     private void logTrafficEvent(TrafficEvent trafficEvent) {
-//        logger.info(trafficEvent.toString());
+        logger.info(trafficEvent.toString());
     }
 
     /**
