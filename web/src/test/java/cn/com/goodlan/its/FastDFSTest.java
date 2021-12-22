@@ -1,6 +1,6 @@
 package cn.com.goodlan.its;
 
-import cn.com.goodlan.its.core.service.event.approval.EventApprovalService;
+import cn.com.goodlan.its.core.service.event.approval.EventService;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -19,7 +19,7 @@ public class FastDFSTest {
     protected FastFileStorageClient storageClient;
 
     @Autowired
-    private EventApprovalService eventApprovalService;
+    private EventService eventService;
 
     @Test
     public void uploadFile() {

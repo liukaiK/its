@@ -4,9 +4,9 @@ import cn.com.goodlan.its.core.dao.primary.event.EventRepository;
 import cn.com.goodlan.its.core.dao.primary.system.record.RecordRepository;
 import cn.com.goodlan.its.core.mapstruct.EventMapper;
 import cn.com.goodlan.its.core.pojo.dto.EventDTO;
-import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.entity.primary.Record;
 import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
+import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.service.system.vehicle.VehicleService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class EventApprovalServiceImpl implements EventApprovalService {
+public class EventServiceImpl implements EventService {
 
     @Autowired
     private EventRepository eventRepository;

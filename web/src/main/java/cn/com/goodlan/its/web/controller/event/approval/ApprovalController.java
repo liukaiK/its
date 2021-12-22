@@ -3,7 +3,7 @@ package cn.com.goodlan.its.web.controller.event.approval;
 import cn.com.goodlan.its.core.annotations.ResponseResultBody;
 import cn.com.goodlan.its.core.pojo.dto.EventDTO;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
-import cn.com.goodlan.its.core.service.event.approval.EventApprovalService;
+import cn.com.goodlan.its.core.service.event.approval.EventService;
 import cn.com.goodlan.its.core.service.system.violation.ViolationTypeService;
 import cn.com.goodlan.its.core.util.ExcelUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ import java.util.Map;
 public class ApprovalController {
 
     @Autowired
-    private EventApprovalService eventApprovalService;
+    private EventService eventService;
 
     @Autowired
     private ViolationTypeService violationTypeService;
@@ -48,7 +48,7 @@ public class ApprovalController {
     @PostMapping("/search")
     @PreAuthorize("hasAuthority('event:approval:search')")
     public Page<EventVO> search(EventDTO eventDTO, @PageableDefault Pageable pageable) {
-        return eventApprovalService.search(eventDTO, pageable);
+        return eventService.search(eventDTO, pageable);
     }
 
 
@@ -58,7 +58,7 @@ public class ApprovalController {
     @GetMapping("/detail/{id}")
     @PreAuthorize("hasAuthority('event:approval:detail')")
     public ModelAndView detail(@PathVariable String id, Model model) {
-        model.addAttribute("event", eventApprovalService.getById(id));
+        model.addAttribute("event", eventService.getById(id));
         return new ModelAndView("event/approval/detail");
     }
 
@@ -70,7 +70,7 @@ public class ApprovalController {
     @PreAuthorize("hasAuthority('event:approval:export')")
     public Map<String, Object> export(EventDTO eventDTO) {
         Map<String, Object> map = new HashMap<>(1);
-        List<EventVO> list = eventApprovalService.export(eventDTO);
+        List<EventVO> list = eventService.export(eventDTO);
         ExcelUtil<EventVO> util = new ExcelUtil<>(EventVO.class);
         String fileName = util.exportExcel(list, "审批数据");
         map.put("fileName", fileName);
@@ -83,7 +83,7 @@ public class ApprovalController {
     @GetMapping("/approvaldetail/{id}")
     @PreAuthorize("hasAuthority('event:approval:approval')")
     public ModelAndView approval(@PathVariable String id, Model model) {
-        model.addAttribute("event", eventApprovalService.getById(id));
+        model.addAttribute("event", eventService.getById(id));
         return new ModelAndView("event/approval/approvaldetail");
     }
 
@@ -94,7 +94,7 @@ public class ApprovalController {
     @PostMapping("/approval")
     @PreAuthorize("hasAuthority('event:approval:approval')")
     public void approval(String id) {
-        eventApprovalService.approval(id);
+        eventService.approval(id);
     }
 
     /**
@@ -103,7 +103,7 @@ public class ApprovalController {
     @PostMapping("/cancel/{id}")
     @PreAuthorize("hasAuthority('event:approval:cancel')")
     public void cancel(@PathVariable String id) {
-        eventApprovalService.cancel(id);
+        eventService.cancel(id);
     }
 
 }
