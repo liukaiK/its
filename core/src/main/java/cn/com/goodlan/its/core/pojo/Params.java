@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.api.entity;
+package cn.com.goodlan.its.core.pojo;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,11 +11,23 @@ public class Params {
     /**
      * 条数
      */
-    private int size = 10;
+    private int size = 20;
     /**
      * 工号
      */
     private String studstaffno;
+    /**
+     * 车牌号
+     */
+    private String plateNumber;
+
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
+    }
 
     public String getStudstaffno() {
         return studstaffno;

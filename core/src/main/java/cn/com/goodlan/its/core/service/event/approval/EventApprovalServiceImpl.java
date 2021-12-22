@@ -3,6 +3,7 @@ package cn.com.goodlan.its.core.service.event.approval;
 import cn.com.goodlan.its.core.dao.primary.event.EventRepository;
 import cn.com.goodlan.its.core.dao.primary.system.record.RecordRepository;
 import cn.com.goodlan.its.core.mapstruct.EventMapper;
+import cn.com.goodlan.its.core.pojo.Params;
 import cn.com.goodlan.its.core.pojo.dto.EventDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.entity.primary.Record;
@@ -133,6 +134,18 @@ public class EventApprovalServiceImpl implements EventApprovalService {
         List<String> collect = vehicles.stream().map(Vehicle::getLicensePlateNumber).collect(Collectors.toList());
         //根据车辆车牌集合查询违章事件
         Page<Event> eventList = eventRepository.findByLicensePlateNumberInOrderByTimeDesc(collect, pageable);
+        return getStringObjectMap(pageable, eventList);
+    }
+
+    @Override
+    public Map<String, Object> allEvent(Params params) {
+        //查询全部违章
+        Pageable pageable = params.getPage();
+        Page<Event> eventList = eventRepository.findAllByOrderByTimeDesc(pageable);
+        return getStringObjectMap(pageable, eventList);
+    }
+
+    private Map<String, Object> getStringObjectMap(Pageable pageable, Page<Event> eventList) {
         List<EventVO> eventVOS = eventList.stream().map(EventMapper.INSTANCE::convert).collect(Collectors.toList());
         Map<String, Object> map = new HashMap<>(4);
         map.put("pageSize", pageable.getPageSize());

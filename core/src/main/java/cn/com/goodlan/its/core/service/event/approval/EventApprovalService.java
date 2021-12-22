@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.core.service.event.approval;
 
+import cn.com.goodlan.its.core.pojo.Params;
 import cn.com.goodlan.its.core.pojo.dto.EventDTO;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import org.springframework.data.domain.Page;
@@ -30,4 +31,5 @@ public interface EventApprovalService {
      * @return
      */
     Map<String, Object> findByUserId(String studstaffno, Pageable pageable);
+    Map<String, Object> allEvent(Params params);
 }

@@ -20,4 +20,11 @@ public interface EventRepository extends CustomizeRepository<Event, String> {
      */
     Page<Event> findByLicensePlateNumberInOrderByTimeDesc(List<String> plateNumbers, Pageable pageable);
 
+    /**
+     * 查询违章集合
+     *
+     * @return
+     */
+    Page<Event> findAllByOrderByTimeDesc(Pageable pageable);
+
 }

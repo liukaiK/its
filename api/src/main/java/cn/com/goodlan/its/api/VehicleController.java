@@ -1,6 +1,6 @@
 package cn.com.goodlan.its.api;
 
-import cn.com.goodlan.its.api.entity.Params;
+import cn.com.goodlan.its.core.pojo.Params;
 import cn.com.goodlan.its.core.dao.primary.system.vehicle.VehicleRepository;
 import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
@@ -28,6 +28,16 @@ public class VehicleController {
     @PostMapping("findAllEvent")
     public Map<String, Object> list(@RequestBody Params params) {
         return eventApprovalService.findByUserId(params.getStudstaffno(), params.getPage());
+    }
+
+    /**
+     * 查询所有违章记录
+     * @param params
+     * @return
+     */
+    @PostMapping("allEvent")
+    public Map<String, Object> allEvent(@RequestBody Params params) {
+        return eventApprovalService.allEvent(params);
     }
 
     /**
