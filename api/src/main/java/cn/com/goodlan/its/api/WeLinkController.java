@@ -144,7 +144,7 @@ public class WeLinkController {
         }
 
         Map<String, Object> message = new HashMap<>();
-        message.put("touser", "18445177881");
+        message.put("touser", messageParam.getStudstaffno());
         message.put("msgtype", "card");
         message.put("title", "您有一条违章信息");
         message.put("content", messageParam.getContent());
