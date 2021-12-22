@@ -11,7 +11,7 @@ public class Params {
     /**
      * 条数
      */
-    private int size = 20;
+    private int size = 15;
     /**
      * 工号
      */
