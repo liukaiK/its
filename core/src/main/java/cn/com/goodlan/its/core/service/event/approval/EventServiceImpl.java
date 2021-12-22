@@ -1,10 +1,8 @@
 package cn.com.goodlan.its.core.service.event.approval;
 
 import cn.com.goodlan.its.core.dao.primary.event.EventRepository;
-import cn.com.goodlan.its.core.dao.primary.system.record.RecordRepository;
 import cn.com.goodlan.its.core.mapstruct.EventMapper;
 import cn.com.goodlan.its.core.pojo.dto.EventDTO;
-import cn.com.goodlan.its.core.pojo.entity.primary.Record;
 import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
@@ -31,9 +29,6 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     private EventRepository eventRepository;
-
-    @Autowired
-    private RecordRepository recordRepository;
 
     @Autowired
     private VehicleService vehicleService;
@@ -98,18 +93,6 @@ public class EventServiceImpl implements EventService {
         return EventMapper.INSTANCE.convert(event);
     }
 
-    @Override
-    public void approval(String id) {
-        Event event = eventRepository.getOne(id);
-        event.approval();
-        recordRepository.save(new Record(event));
-    }
-
-    @Override
-    public void cancel(String id) {
-        Event event = eventRepository.getOne(id);
-        event.cancel();
-    }
 
     /**
      * 根据工号查询违章集合

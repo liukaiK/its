@@ -16,10 +16,6 @@ public interface EventService {
 
     EventVO getById(String id);
 
-    void approval(String id);
-
-    void cancel(String id);
-
     List<EventVO> export(EventDTO eventDTO);
 
     /**

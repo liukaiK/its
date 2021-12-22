@@ -6,6 +6,7 @@ import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.service.event.approval.EventService;
 import cn.com.goodlan.its.core.service.system.violation.ViolationTypeService;
 import cn.com.goodlan.its.core.util.ExcelUtil;
+import cn.com.goodlan.its.event.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +32,9 @@ public class ApprovalController {
 
     @Autowired
     private EventService eventService;
+
+    @Autowired
+    private ApprovalService approvalService;
 
     @Autowired
     private ViolationTypeService violationTypeService;
@@ -94,7 +98,7 @@ public class ApprovalController {
     @PostMapping("/approval")
     @PreAuthorize("hasAuthority('event:approval:approval')")
     public void approval(String id) {
-        eventService.approval(id);
+        approvalService.approval(id);
     }
 
     /**
@@ -103,7 +107,7 @@ public class ApprovalController {
     @PostMapping("/cancel/{id}")
     @PreAuthorize("hasAuthority('event:approval:cancel')")
     public void cancel(@PathVariable String id) {
-        eventService.cancel(id);
+        approvalService.cancel(id);
     }
 
 }
