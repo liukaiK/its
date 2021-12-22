@@ -5,7 +5,7 @@ import cn.com.goodlan.its.core.pojo.dto.EventDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.pojo.vo.StatisticsExcel;
-import cn.com.goodlan.its.core.service.event.approval.EventApprovalService;
+import cn.com.goodlan.its.core.service.event.approval.EventService;
 import cn.com.goodlan.its.core.service.event.statistics.StatisticsService;
 import cn.com.goodlan.its.core.service.system.violation.ViolationTypeService;
 import cn.com.goodlan.its.core.util.ExcelUtil;
@@ -37,7 +37,7 @@ public class StatisticsController {
 
 
     @Autowired
-    private EventApprovalService eventApprovalService;
+    private EventService eventService;
 
     @Autowired
     private ViolationTypeService violationTypeService;
@@ -59,7 +59,7 @@ public class StatisticsController {
     @PreAuthorize("hasAuthority('event:statistics:search')")
     public Page<EventVO> search(EventDTO eventDTO, @PageableDefault Pageable pageable) {
         eventDTO.setStatus(Event.Status.APPROVAL);
-        return eventApprovalService.search(eventDTO, pageable);
+        return eventService.search(eventDTO, pageable);
     }
 
     /**

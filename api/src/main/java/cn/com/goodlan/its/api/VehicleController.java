@@ -4,7 +4,7 @@ import cn.com.goodlan.its.core.pojo.Params;
 import cn.com.goodlan.its.core.dao.primary.system.vehicle.VehicleRepository;
 import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
-import cn.com.goodlan.its.core.service.event.approval.EventApprovalService;
+import cn.com.goodlan.its.core.service.event.approval.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,7 @@ import java.util.Map;
 @RestController
 public class VehicleController {
     @Autowired
-    private EventApprovalService eventApprovalService;
+    private EventService eventService;
 
     @Autowired
     private VehicleRepository vehicleRepository;
@@ -27,7 +27,7 @@ public class VehicleController {
      */
     @PostMapping("findAllEvent")
     public Map<String, Object> list(@RequestBody Params params) {
-        return eventApprovalService.findByUserId(params.getStudstaffno(), params.getPage());
+        return eventService.findByUserId(params.getStudstaffno(), params.getPage());
     }
 
     /**
@@ -46,7 +46,7 @@ public class VehicleController {
      */
     @GetMapping("/detail/{id}")
     public EventVO getOne(@PathVariable String id) {
-        return eventApprovalService.getById(id);
+        return eventService.getById(id);
     }
 
     /**

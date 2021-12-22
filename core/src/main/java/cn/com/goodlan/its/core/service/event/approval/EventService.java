@@ -9,17 +9,13 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Map;
 
-public interface EventApprovalService {
+public interface EventService {
 
     List<EventVO> searchAll();
 
     Page<EventVO> search(EventDTO eventDTO, Pageable pageable);
 
     EventVO getById(String id);
-
-    void approval(String id);
-
-    void cancel(String id);
 
     List<EventVO> export(EventDTO eventDTO);
 
