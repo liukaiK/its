@@ -6,12 +6,16 @@ import cn.com.goodlan.its.core.dao.primary.system.vehicle.VehicleRepository;
 import cn.com.goodlan.its.core.dao.secondary.HitBackRepository;
 import cn.com.goodlan.its.core.pojo.MessageParam;
 import cn.com.goodlan.its.core.pojo.TrafficEvent;
-import cn.com.goodlan.its.core.pojo.entity.primary.*;
+import cn.com.goodlan.its.core.pojo.entity.primary.Camera;
+import cn.com.goodlan.its.core.pojo.entity.primary.Region;
+import cn.com.goodlan.its.core.pojo.entity.primary.Score;
+import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.entity.secondary.HitBack;
 import cn.com.goodlan.its.core.service.event.CountService;
 import cn.com.goodlan.its.core.util.DateUtils;
 import cn.com.goodlan.its.web.sms.SmsService;
+import cn.com.goodlan.its.web.sms.template.SmsMessageTemplate;
 import cn.hutool.core.codec.Base64Decoder;
 import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.io.ByteArrayInputStream;
+import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
@@ -63,6 +68,9 @@ public class RabbitObtainEventImpl {
     protected FastFileStorageClient storageClient;
 
     @Autowired
+    private SmsMessageTemplate smsMessageTemplate;
+
+    @Autowired
     private ObjectMapper objectMapper;
 
     private String status = "";
@@ -71,6 +79,7 @@ public class RabbitObtainEventImpl {
     @Transactional(rollbackFor = Exception.class)
     @RabbitListener(queuesToDeclare = @Queue(name = "its.traffic.event", durable = "true"))
     public synchronized void obtainEvent(String message) throws JsonProcessingException {
+        String messageTemplate = smsMessageTemplate.getSmsTemplate();
         String content = StringEscapeUtils.unescapeJava(message);
         if (StringUtils.startsWithIgnoreCase(content, "\"")) {
             content = content.substring(1, content.length() - 1);
@@ -112,12 +121,11 @@ public class RabbitObtainEventImpl {
 
                 // 首次违规
                 if (count == 1) {
-                    sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了违章停车的违法行为。给予警告处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。",
-                                    vehicle.getLicensePlateNumber(),
-                                    DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
-                                    trafficEvent.getM_IllegalPlace()
-                            )
-                    );
+
+                    String smsMessage = MessageFormat.format(messageTemplate, vehicle.getLicensePlateNumber(), DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS), trafficEvent.getM_IllegalPlace(), "违章停车", "警告");
+                    logger.info(smsMessage);
+                    sendMessage(vehicle.getDriverPhone(), smsMessage);
+
                     messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。",
                             vehicle.getLicensePlateNumber(),
                             DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
@@ -129,12 +137,10 @@ public class RabbitObtainEventImpl {
 
                 // 第二次和第三次违规
                 if (count == 2 || count == 3) {
-                    sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了违章停车的违法行为。给予处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。",
-                                    vehicle.getLicensePlateNumber(),
-                                    DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
-                                    trafficEvent.getM_IllegalPlace()
-                            )
-                    );
+                    String smsMessage = MessageFormat.format(messageTemplate, vehicle.getLicensePlateNumber(), DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS), trafficEvent.getM_IllegalPlace(), "违章停车", "扣校内安全考核分");
+                    logger.info(smsMessage);
+                    sendMessage(vehicle.getDriverPhone(), smsMessage);
+
                     messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。",
                             vehicle.getLicensePlateNumber(),
                             DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
@@ -145,12 +151,10 @@ public class RabbitObtainEventImpl {
                 }
 
                 if (count > 3) {
-                    sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了违章停车的违法行为。给予扣校内安全考核分处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。",
-                                    vehicle.getLicensePlateNumber(),
-                                    DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
-                                    trafficEvent.getM_IllegalPlace()
-                            )
-                    );
+                    String smsMessage = MessageFormat.format(messageTemplate, vehicle.getLicensePlateNumber(), DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS), trafficEvent.getM_IllegalPlace(), "违章停车", "扣校内安全考核分");
+                    logger.info(smsMessage);
+                    sendMessage(vehicle.getDriverPhone(), smsMessage);
+
                     messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。",
                             vehicle.getLicensePlateNumber(),
                             DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
@@ -178,6 +182,7 @@ public class RabbitObtainEventImpl {
      * 超速处理
      */
     private void exceedSpeedHandle(TrafficEvent trafficEvent) {
+        String messageTemplate = smsMessageTemplate.getSmsTemplate();
         // 判断是否和上一条数据相同 相同的话直接跳过不记录
         if (isSameWithPrevious(trafficEvent)) {
             return;
@@ -241,12 +246,10 @@ public class RabbitObtainEventImpl {
 
             // 首次违规
             if (count == 1) {
-                sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了超速的违法行为。给予警告处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。",
-                                vehicle.getLicensePlateNumber(),
-                                DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
-                                trafficEvent.getM_IllegalPlace()
-                        )
-                );
+                String smsMessage = MessageFormat.format(messageTemplate, vehicle.getLicensePlateNumber(), DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS), trafficEvent.getM_IllegalPlace(), "超速", "警告");
+                logger.info(smsMessage);
+                sendMessage(vehicle.getDriverPhone(), smsMessage);
+
                 messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。",
                         vehicle.getLicensePlateNumber(),
                         DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
@@ -266,12 +269,10 @@ public class RabbitObtainEventImpl {
 
             // 第二次和第三次违规
             if (count == 2 || count == 3) {
-                sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了超速的违法行为。给予扣校内安全考核分处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。",
-                                vehicle.getLicensePlateNumber(),
-                                DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
-                                trafficEvent.getM_IllegalPlace()
-                        )
-                );
+                String smsMessage = MessageFormat.format(messageTemplate, vehicle.getLicensePlateNumber(), DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS), trafficEvent.getM_IllegalPlace(), "超速", "扣校内安全考核分");
+                logger.info(smsMessage);
+                sendMessage(vehicle.getDriverPhone(), smsMessage);
+
                 messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。",
                         vehicle.getLicensePlateNumber(),
                         DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
@@ -284,12 +285,10 @@ public class RabbitObtainEventImpl {
             }
 
             if (count > 3) {
-                sendMessage(vehicle.getDriverPhone(), String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了超速的违法行为。给予扣校内安全考核分处罚，请知悉。详情请登录哈工大APP进行查询。目前为宣传教育阶段，自2022年1月1日起正式实施。",
-                                vehicle.getLicensePlateNumber(),
-                                DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),
-                                trafficEvent.getM_IllegalPlace()
-                        )
-                );
+                String smsMessage = MessageFormat.format(messageTemplate, vehicle.getLicensePlateNumber(), DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS), trafficEvent.getM_IllegalPlace(), "超速", "扣校内安全考核分");
+                logger.info(smsMessage);
+                sendMessage(vehicle.getDriverPhone(), smsMessage);
+
                 messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。",
                         vehicle.getLicensePlateNumber(),
                         DateUtil.format(trafficEvent.getM_Utc(), DateUtils.YYYY_MM_DD_HH_MM_SS),

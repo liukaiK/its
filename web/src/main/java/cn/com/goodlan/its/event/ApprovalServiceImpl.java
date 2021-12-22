@@ -25,6 +25,14 @@ public class ApprovalServiceImpl implements ApprovalService {
         Event event = eventRepository.getOne(id);
         event.approval();
         recordRepository.save(new Record(event));
+        sendMessage(event);
+    }
+
+    private void sendMessage(Event event) {
+
+
+
+
     }
 
     @Override
