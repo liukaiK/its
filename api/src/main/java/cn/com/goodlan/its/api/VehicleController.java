@@ -37,7 +37,7 @@ public class VehicleController {
      */
     @PostMapping("allEvent")
     public Map<String, Object> allEvent(@RequestBody Params params) {
-        return eventApprovalService.allEvent(params);
+        return eventService.allEvent(params);
     }
 
     /**
