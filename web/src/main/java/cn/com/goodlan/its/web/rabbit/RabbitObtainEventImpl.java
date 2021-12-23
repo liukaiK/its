@@ -71,6 +71,7 @@ public class RabbitObtainEventImpl {
         if (StringUtils.startsWithIgnoreCase(content, "\"")) {
             content = content.substring(1, content.length() - 1);
         }
+        logMessage(message);
         TrafficEvent trafficEvent = objectMapper.readValue(content, TrafficEvent.class);
 
         logTrafficEvent(trafficEvent);
@@ -102,6 +103,12 @@ public class RabbitObtainEventImpl {
         }
 
 
+    }
+
+
+    private void logMessage(String message) {
+        int index = message.indexOf("m_Utc");
+        logger.info(message.substring(index, index + 40));
     }
 
     /**
