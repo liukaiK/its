@@ -4,6 +4,7 @@ import cn.com.goodlan.its.core.dao.primary.event.EventRepository;
 import cn.com.goodlan.its.core.dao.primary.system.camera.CameraRepository;
 import cn.com.goodlan.its.core.dao.primary.system.vehicle.VehicleRepository;
 import cn.com.goodlan.its.core.dao.secondary.HitBackRepository;
+import cn.com.goodlan.its.core.pojo.MessageParam;
 import cn.com.goodlan.its.core.pojo.TrafficEvent;
 import cn.com.goodlan.its.core.pojo.entity.primary.Camera;
 import cn.com.goodlan.its.core.pojo.entity.primary.Region;
@@ -12,12 +13,17 @@ import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.entity.secondary.HitBack;
 import cn.com.goodlan.its.core.service.event.CountService;
+import cn.com.goodlan.its.core.util.DateUtils;
+import cn.com.goodlan.its.web.sms.SmsService;
+import cn.com.goodlan.its.web.sms.template.SmsMessageTemplate;
 import cn.hutool.core.codec.Base64Decoder;
+import cn.hutool.core.date.DateUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.domain.upload.FastImageFile;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.text.StringEscapeUtils;
@@ -30,11 +36,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.io.ByteArrayInputStream;
+import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class RabbitObtainEventImpl {
 
@@ -60,6 +68,12 @@ public class RabbitObtainEventImpl {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private SmsService smsService;
+
+    @Autowired
+    private SmsMessageTemplate smsMessageTemplate;
 
     private String status = "";
 
@@ -98,11 +112,72 @@ public class RabbitObtainEventImpl {
                 Vehicle vehicle = optionalVehicle.get();
                 Long count = countService.queryCountAndSave(trafficEvent.getM_PlateNumber());
                 Score score = new Score("0f647018-2c28-4bfe-ae10-e9586cfb66b0");
-                saveEvent(trafficEvent, score, vehicle, camera, count);
+                Event event = saveEvent(trafficEvent, score, vehicle, camera, count);
+                sendSmsAndWeLink(event);
+            } else {
+                log.info("没有此车辆:{}", licensePlateNumber);
             }
         }
 
 
+    }
+
+
+    /**
+     * 发送短信
+     */
+    private void sendSmsMessage(Event event) {
+        String phone = event.getDriverPhone();
+        String smsMessageContent = buildSmsMessageContent(event);
+        log.debug("手机号码:{},短信内容:{}", phone, smsMessageContent);
+        smsService.sendSms(phone, smsMessageContent);
+
+    }
+
+    /**
+     * 构建短信内容
+     */
+    private String buildSmsMessageContent(Event event) {
+        String smsTemplate = smsMessageTemplate.getSmsTemplate();
+
+        String violationType = event.getScore().getViolation().getName();
+        if ("违章停车".equals(violationType)) {
+            violationType = "违章停车";
+        } else {
+            violationType = "超速";
+        }
+        String punish;
+        if (event.getNum() > 1) {
+            punish = "扣校内安全考核分";
+        } else {
+            punish = "警告";
+        }
+        return MessageFormat.format(smsTemplate, event.getLicensePlateNumber(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getPlace(), violationType, punish);
+    }
+
+
+    private void sendWeLink(Event event) {
+        String violationType = event.getScore().getViolation().getName();
+        if ("违章停车".equals(violationType)) {
+            violationType = "违章停车";
+        } else {
+            violationType = "超速";
+        }
+        String punish;
+        if (event.getNum() > 1) {
+            punish = "扣校内安全考核分";
+        } else {
+            punish = "警告";
+        }
+
+        MessageParam messageParam = new MessageParam(event.getStudstaffno(), event.getPlace(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getLicensePlateNumber());
+        messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。",
+                event.getLicensePlateNumber(),
+                DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS),
+                event.getPlace(), violationType, punish
+        ));
+        log.debug("WeLink:{}", messageParam.getContent());
+        smsService.sendWelink(messageParam);
     }
 
 
@@ -172,8 +247,16 @@ public class RabbitObtainEventImpl {
         if (optionalVehicle.isPresent()) {
             Vehicle vehicle = optionalVehicle.get();
             Long count = countService.queryCountAndSave(trafficEvent.getM_PlateNumber());
-            saveEvent(trafficEvent, score, vehicle, camera, count);
+            Event event = saveEvent(trafficEvent, score, vehicle, camera, count);
+            sendSmsAndWeLink(event);
+        } else {
+            log.info("没有此车辆:{}", licensePlateNumber);
         }
+    }
+
+    private void sendSmsAndWeLink(Event event) {
+        sendSmsMessage(event);
+        sendWeLink(event);
     }
 
     private void hitBack(String licensePlateNumber) {
@@ -184,7 +267,7 @@ public class RabbitObtainEventImpl {
         hitBackRepository.save(hitBack);
     }
 
-    private void saveEvent(TrafficEvent trafficEvent, Score score, Vehicle vehicle, Camera camera, Long count) {
+    private Event saveEvent(TrafficEvent trafficEvent, Score score, Vehicle vehicle, Camera camera, Long count) {
         Event event = new Event();
 
         event.setNum(count);
@@ -198,7 +281,7 @@ public class RabbitObtainEventImpl {
         event.setVehicleSize(trafficEvent.getM_VehicleSize());
         event.setSpeed(trafficEvent.getNSpeed());
         event.setScore(score);
-        eventRepository.save(event);
+        return eventRepository.save(event);
     }
 
     /**
