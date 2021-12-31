@@ -2,6 +2,7 @@ package cn.com.goodlan.its.web.rabbit;
 
 import cn.com.goodlan.its.core.dao.primary.event.EventRepository;
 import cn.com.goodlan.its.core.dao.primary.system.camera.CameraRepository;
+import cn.com.goodlan.its.core.dao.primary.system.score.ScoreRepository;
 import cn.com.goodlan.its.core.dao.primary.system.vehicle.VehicleRepository;
 import cn.com.goodlan.its.core.dao.secondary.HitBackRepository;
 import cn.com.goodlan.its.core.pojo.MessageParam;
@@ -75,6 +76,9 @@ public class RabbitObtainEventImpl {
     @Autowired
     private SmsMessageTemplate smsMessageTemplate;
 
+    @Autowired
+    private ScoreRepository scoreRepository;
+
     private String status = "";
 
     @RabbitHandler
@@ -111,7 +115,7 @@ public class RabbitObtainEventImpl {
                 }
                 Vehicle vehicle = optionalVehicle.get();
                 Long count = countService.queryCountAndSave(trafficEvent.getM_PlateNumber());
-                Score score = new Score("0f647018-2c28-4bfe-ae10-e9586cfb66b0");
+                Score score = scoreRepository.getOne("0f647018-2c28-4bfe-ae10-e9586cfb66b0");
                 Event event = saveEvent(trafficEvent, score, vehicle, camera, count);
                 sendSmsAndWeLink(event);
             } else {
