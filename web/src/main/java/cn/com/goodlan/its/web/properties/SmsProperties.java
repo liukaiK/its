@@ -28,5 +28,7 @@ public class SmsProperties {
 
     private String welinkUrl;
 
+    private String template;
+
 
 }

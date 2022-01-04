@@ -16,6 +16,11 @@
       "description": "发送短信信息接口."
     },
     {
+      "name": "sms.template",
+      "type": "java.lang.String",
+      "description": "短信模版."
+    },
+    {
       "name": "spring.datasource.primary.jdbc-url",
       "type": "java.lang.String",
       "description": "Description for spring.datasource.primary.jdbc-url."

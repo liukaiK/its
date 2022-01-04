@@ -46,6 +46,7 @@ fdfs:
     max-total-per-key: 50                 # 每个tracker地址的最大连接数
     max-wait-millis: 5000                 # 连接耗尽时等待获取连接的最大毫秒数
 sms:
+  template: 您的车辆{0}于{1}在{2}，被交通技术监控设备记录了{3}的违法行为。给予{4}处罚，请知悉。详情请登录哈工大APP进行查询。
   application-id: A000000000000054
   application-password: HITjt_#2021@hit!
   send-sms-url: http://uc.hit.edu.cn:8099/HitGateWay/SendSms
