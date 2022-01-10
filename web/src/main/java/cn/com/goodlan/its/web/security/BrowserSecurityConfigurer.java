@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
 import org.springframework.security.web.savedrequest.RequestCacheAwareFilter;
 
@@ -37,17 +38,21 @@ public class BrowserSecurityConfigurer extends SecurityConfigurerAdapter<Default
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private RememberMeServices rememberMeServices;
+
     @Override
     public void configure(HttpSecurity http) {
         UsernamePasswordCaptchaAuthenticationFilter usernamePasswordCaptchaAuthenticationFilter = new UsernamePasswordCaptchaAuthenticationFilter();
         usernamePasswordCaptchaAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
         usernamePasswordCaptchaAuthenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
         usernamePasswordCaptchaAuthenticationFilter.setAuthenticationManager(new ProviderManager(Collections.singletonList(getUserDetailsAuthenticationProvider())));
-
+        usernamePasswordCaptchaAuthenticationFilter.setRememberMeServices(rememberMeServices);
         http.addFilterBefore(usernamePasswordCaptchaAuthenticationFilter, RequestCacheAwareFilter.class);
         http.addFilterBefore(new XssFilter(), WebAsyncManagerIntegrationFilter.class);
 
     }
+
 
     private UserDetailsAuthenticationProvider getUserDetailsAuthenticationProvider() {
         UserDetailsAuthenticationProvider authenticationProvider = new UserDetailsAuthenticationProvider();

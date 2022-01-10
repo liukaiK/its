@@ -50,10 +50,9 @@
                         </a>
                     </div>
                 </div>
-<!--                <input type="text" th:value="">-->
-<!--                <div class="checkbox-custom" th:classappend="${captchaEnabled==false} ? 'm-t'">-->
-<!--                    <input type="checkbox" id="rememberme" name="rememberme"> <label for="rememberme">记住我</label>-->
-<!--                </div>-->
+                <div class="checkbox-custom m-t">
+                    <input type="checkbox" id="remember-me" name="remember-me" value="true"> <label for="remember-me">记住我</label>
+                </div>
                 <button type="button" class="btn btn-success btn-block" id="btnSubmit" data-loading="正在验证登录，请稍后..." onclick="login()">登录</button>
             </form>
         </div>
@@ -125,11 +124,13 @@
             return;
         }
 
+        let rememberMe = $("#remember-me").prop('checked');
 
         let data = {
             username: username,
             password: encryptPassword(password),
-            captcha: captcha
+            captcha: captcha,
+            'remember-me': rememberMe
         }
 
 
