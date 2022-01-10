@@ -37,7 +37,7 @@
                             </li>
                             <li class="select-time">
                                 <label>违规时间： </label>
-                                <input type="text" class="time-input" placeholder="开始时间" name="startTime" data-type="datetime" data-format="yyyy-MM-dd HH:mm:ss" readonly="readonly"/>
+                                <input type="text" class="time-input" placeholder="开始时间" name="startTime" data-type="datetime" data-format="yyyy-MM-dd HH:mm:ss" readonly="readonly" th:value="${#dates.format(#dates.createNow(), 'yyyy-01-01 00:00:00')}"/>
                                 <span>-</span>
                                 <input type="text" class="time-input" placeholder="结束时间" name="endTime" data-type="datetime" data-format="yyyy-MM-dd HH:mm:ss" readonly="readonly"/>
                             </li>

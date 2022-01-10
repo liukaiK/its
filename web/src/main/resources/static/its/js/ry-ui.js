@@ -642,23 +642,23 @@ var table = {
         // 表单封装处理
     	form: {
             // 表单重置
-            reset: function(formId, tableId) {
+            reset: function (formId, tableId) {
                 table.set(tableId);
-            	var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
-            	$("#" + currentId)[0].reset();
-            	if (table.options.type == table_type.bootstrapTable) {
-                    if($.common.isEmpty(tableId)){
+                var currentId = $.common.isEmpty(formId) ? $('form').attr('id') : formId;
+                $("#" + currentId)[0].reset();
+                if (table.options.type == table_type.bootstrapTable) {
+                    if ($.common.isEmpty(tableId)) {
                         $("#" + table.options.id).bootstrapTable('refresh');
-                    } else{
+                    } else {
                         $("#" + tableId).bootstrapTable('refresh');
                     }
-            	} else if (table.options.type == table_type.bootstrapTreeTable) {
-                    if($.common.isEmpty(tableId)){
+                } else if (table.options.type == table_type.bootstrapTreeTable) {
+                    if ($.common.isEmpty(tableId)) {
                         $("#" + table.options.id).bootstrapTreeTable('refresh', []);
-                    } else{
+                    } else {
                         $("#" + tableId).bootstrapTreeTable('refresh', []);
                     }
-            	}
+                }
             },
             // 获取选中复选框项
             selectCheckeds: function(name) {
