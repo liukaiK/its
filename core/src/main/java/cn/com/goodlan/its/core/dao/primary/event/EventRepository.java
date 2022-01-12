@@ -5,6 +5,7 @@ import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface EventRepository extends CustomizeRepository<Event, String> {
@@ -26,5 +27,9 @@ public interface EventRepository extends CustomizeRepository<Event, String> {
      * @return
      */
     Page<Event> findAllByOrderByTimeDesc(Pageable pageable);
+
+    long countByTimeGreaterThanEqualAndTimeLessThanEqualAndLicensePlateNumber(LocalDateTime startTime, LocalDateTime time, String licensePlateNumber);
+
+    long countByTimeLessThanEqualAndLicensePlateNumber(LocalDateTime time, String licensePlateNumber);
 
 }

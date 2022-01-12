@@ -20,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -45,6 +47,21 @@ public class EventServiceImpl implements EventService {
         Specification<Event> specification = querySpecification(eventDTO);
         Page<Event> page = eventRepository.findAll(specification, pageable);
         List<EventVO> list = EventMapper.INSTANCE.convertList(page.getContent());
+
+        if (StringUtils.isNotEmpty(eventDTO.getStartTime())) {
+            LocalDateTime startTime = LocalDateTime.parse(eventDTO.getStartTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            for (EventVO eventVO : list) {
+                long num = eventRepository.countByTimeGreaterThanEqualAndTimeLessThanEqualAndLicensePlateNumber(startTime, eventVO.getTime(), eventVO.getVehicleNumber());
+                eventVO.setNum(num);
+            }
+        } else {
+            for (EventVO eventVO : list) {
+                long num = eventRepository.countByTimeLessThanEqualAndLicensePlateNumber(eventVO.getTime(), eventVO.getVehicleNumber());
+                eventVO.setNum(num);
+            }
+        }
+
+
         return new PageImpl<>(list, page.getPageable(), page.getTotalElements());
     }
 
