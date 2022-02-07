@@ -9,6 +9,7 @@ import cn.com.goodlan.its.core.pojo.dto.ResetPasswordDTO;
 import cn.com.goodlan.its.core.pojo.dto.UpdateProfileDTO;
 import cn.com.goodlan.its.core.pojo.dto.UserDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Role;
+import cn.com.goodlan.its.core.pojo.entity.primary.user.Password;
 import cn.com.goodlan.its.core.pojo.entity.primary.user.User;
 import cn.com.goodlan.its.core.pojo.entity.primary.user.Username;
 import cn.com.goodlan.its.core.pojo.vo.UserVO;
@@ -76,7 +77,7 @@ public class UserServiceImpl implements UserService {
         user.updatePhoneNumber(userDTO.getPhoneNumber());
         user.updateSex(userDTO.getSex());
         user.updateRemark(userDTO.getRemark());
-        user.updatePassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.updatePassword(new Password(userDTO.getPassword()));
         user.addCollege(userDTO.getCollegeId());
         String[] roleIds = Convert.toStrArray(userDTO.getRoleIds());
         for (String roleId : roleIds) {
@@ -122,7 +123,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void resetPassword(ResetPasswordDTO resetPasswordDTO) {
         User user = userRepository.getOne(resetPasswordDTO.getId());
-        user.updatePassword(passwordEncoder.encode(resetPasswordDTO.getPassword()));
+        user.updatePassword(new Password(resetPasswordDTO.getPassword()));
         userRepository.save(user);
     }
 
@@ -155,12 +156,12 @@ public class UserServiceImpl implements UserService {
         if (!StringUtils.equals(changePasswordDTO.getNewPassword(), changePasswordDTO.getConfirmPassword())) {
             throw new BusinessException("确认密码与新密码不一致!");
         }
-        user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+        user.setPassword(new Password(changePasswordDTO.getNewPassword()));
         userRepository.save(user);
     }
 
     private boolean passwordIsError(ChangePasswordDTO changePasswordDTO, User user) {
-        return !passwordEncoder.matches(changePasswordDTO.getOldPassword(), user.getPassword());
+        return !passwordEncoder.matches(changePasswordDTO.getOldPassword(), user.getPassword().getPassword());
     }
 
 }

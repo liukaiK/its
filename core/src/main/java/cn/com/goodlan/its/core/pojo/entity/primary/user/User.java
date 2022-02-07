@@ -36,7 +36,7 @@ public class User extends AbstractEntity {
 
     private String email;
 
-    private String password;
+    private Password password;
 
     private String phoneNumber;
 
@@ -90,7 +90,7 @@ public class User extends AbstractEntity {
     }
 
     @Transient
-    public void updatePassword(String password) {
+    public void updatePassword(Password password) {
         this.password = password;
     }
 
@@ -147,11 +147,12 @@ public class User extends AbstractEntity {
         this.name = name;
     }
 
-    public String getPassword() {
+    @Embedded
+    public Password getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(Password password) {
         this.password = password;
     }
 
