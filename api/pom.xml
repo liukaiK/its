@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>its</artifactId>
         <groupId>cn.com.goodlan.its</groupId>
-        <version>0.0.1</version>
+        <artifactId>its</artifactId>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>api</artifactId>
@@ -17,7 +17,6 @@
         <dependency>
             <groupId>cn.com.goodlan.its</groupId>
             <artifactId>core</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
         <dependency>

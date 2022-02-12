@@ -6,9 +6,9 @@
 
 
     <parent>
-        <artifactId>its</artifactId>
         <groupId>cn.com.goodlan.its</groupId>
-        <version>0.0.1</version>
+        <artifactId>its</artifactId>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>core</artifactId>
