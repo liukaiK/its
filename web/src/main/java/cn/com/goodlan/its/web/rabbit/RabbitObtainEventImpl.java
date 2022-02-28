@@ -27,8 +27,6 @@ import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.domain.upload.FastImageFile;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
@@ -48,8 +46,6 @@ import java.util.Optional;
 @Slf4j
 @Component
 public class RabbitObtainEventImpl {
-
-    private static final Log logger = LogFactory.getLog(RabbitObtainEventImpl.class);
 
     @Autowired
     private VehicleRepository vehicleRepository;
@@ -144,7 +140,6 @@ public class RabbitObtainEventImpl {
     private void sendSmsMessage(Event event) {
         String phone = event.getDriverPhone();
         String smsMessageContent = buildSmsMessageContent(event);
-        log.debug("手机号码:{},短信内容:{}", phone, smsMessageContent);
         smsService.sendSms(phone, smsMessageContent);
 
     }
@@ -187,14 +182,14 @@ public class RabbitObtainEventImpl {
 
         MessageParam messageParam = new MessageParam(event.getStudstaffno(), event.getPlace(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getLicensePlateNumber());
         messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。", event.getLicensePlateNumber(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getPlace(), violationType, punish));
-        log.debug("WeLink:{}", messageParam.getContent());
+        log.info("WeLink:{}", messageParam.getContent());
         smsService.sendWelink(messageParam);
     }
 
 
     private void logMessage(String message) {
         int index = message.indexOf("m_Utc");
-        logger.info(message.substring(index, index + 40));
+        log.info(message.substring(index, index + 40));
     }
 
     /**
@@ -299,7 +294,7 @@ public class RabbitObtainEventImpl {
      * 打印
      */
     private void logTrafficEvent(TrafficEvent trafficEvent) {
-        logger.info(trafficEvent.toString());
+        log.info(trafficEvent.toString());
     }
 
     /**
