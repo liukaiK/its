@@ -15,7 +15,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.com.goodlan.its</groupId>
+            <groupId>${parent.groupId}</groupId>
             <artifactId>core</artifactId>
         </dependency>
 
