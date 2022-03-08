@@ -37,6 +37,7 @@ spring:
     username: its
     password: its@123456
     virtual-host: /its
+    connection-timeout: 1000ms
 fdfs:
   connect-timeout: 10000                  # 连接超时时间 socket的connectTimeout事件 毫秒
   tracker-list:                           # TrackerList参数,支持多个
