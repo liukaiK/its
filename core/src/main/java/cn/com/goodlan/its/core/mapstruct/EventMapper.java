@@ -21,9 +21,9 @@ public interface EventMapper {
             @Mapping(source = "driverName", target = "driverName"),
             @Mapping(source = "driverPhone", target = "driverPhone"),
             @Mapping(source = "collegeName", target = "bmmc"),
-            @Mapping(source = "score.violation.name", target = "violationName"),
+            @Mapping(source = "violationName", target = "violationName"),
             @Mapping(source = "camera.region.name", target = "regionName"),
-            @Mapping(source = "score.number", target = "score"),
+            @Mapping(source = "score", target = "score"),
             @Mapping(target = "status", expression = "java(event.getStatus().getValue())")
     })
     EventVO convert(Event event);

@@ -46,7 +46,7 @@ public class Record extends AbstractEntity {
         this.regionName = event.getRegion().getName();
         this.time = event.getTime();
         // 获取要扣除多少分
-        this.record = event.getScore().getNumber();
+        this.record = event.getScore();
         this.place = event.getPlace();
         this.bmmc = event.getCollegeName();
     }
@@ -60,16 +60,7 @@ public class Record extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "Record{" +
-                "id='" + id + '\'' +
-                ", licensePlateNumber='" + licensePlateNumber + '\'' +
-                ", record=" + record +
-                ", time=" + time +
-                ", regionName='" + regionName + '\'' +
-                ", place='" + place + '\'' +
-                ", count=" + count +
-                ", bmmc='" + bmmc + '\'' +
-                '}';
+        return "Record{" + "id='" + id + '\'' + ", licensePlateNumber='" + licensePlateNumber + '\'' + ", record=" + record + ", time=" + time + ", regionName='" + regionName + '\'' + ", place='" + place + '\'' + ", count=" + count + ", bmmc='" + bmmc + '\'' + '}';
     }
 
     @Id

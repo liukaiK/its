@@ -83,7 +83,7 @@ public class TrafficEvent {
 
     @Override
     public String toString() {
-        return "TrafficEvent{" +
+        return "{" +
                 "m_EventName='" + m_EventName + '\'' +
                 ", m_PlateNumber='" + m_PlateNumber + '\'' +
                 ", m_PlateType='" + m_PlateType + '\'' +

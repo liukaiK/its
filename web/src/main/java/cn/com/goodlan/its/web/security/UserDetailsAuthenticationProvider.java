@@ -59,6 +59,7 @@ public class UserDetailsAuthenticationProvider implements AuthenticationProvider
             log.error("用户名重复了", exception);
             throw new UsernameMoreThanOneException("用户名重复");
         } catch (AuthenticationException exception) {
+            log.error("AuthenticationException: ", exception);
             throw exception;
         } catch (CryptoException exception) {
             log.error("username:{} RSA解析密码出现错误", username);

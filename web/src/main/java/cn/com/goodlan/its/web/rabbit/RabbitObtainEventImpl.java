@@ -35,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -80,15 +81,20 @@ public class RabbitObtainEventImpl {
     @RabbitHandler
     @Transactional(rollbackFor = Exception.class)
     @RabbitListener(queuesToDeclare = @Queue(name = "its.traffic.event", durable = "true"))
-    public synchronized void obtainEvent(String message) throws JsonProcessingException {
+    public synchronized void obtainEvent(String message) {
         String content = StringEscapeUtils.unescapeJava(message);
         if (StringUtils.startsWithIgnoreCase(content, "\"")) {
             content = content.substring(1, content.length() - 1);
         }
-        logMessage(message);
-        TrafficEvent trafficEvent = objectMapper.readValue(content, TrafficEvent.class);
-
-        logTrafficEvent(trafficEvent);
+        log.info(content);
+        TrafficEvent trafficEvent;
+        try {
+            trafficEvent = objectMapper.readValue(content, TrafficEvent.class);
+            log.info("trafficEvent: {}", trafficEvent.toString());
+        } catch (JsonProcessingException e) {
+            log.error("解析mq消息失败:", e);
+            return;
+        }
 
         if (StringUtils.isEmpty(trafficEvent.getM_PlateNumber())) {
             return;
@@ -139,7 +145,7 @@ public class RabbitObtainEventImpl {
     private String buildSmsMessageContent(Event event) {
         String smsTemplate = smsMessageTemplate.getSmsTemplate();
 
-        String violationType = event.getScore().getViolation().getName();
+        String violationType = event.getViolationName();
         if ("违章停车".equals(violationType)) {
             violationType = "违章停车";
         } else {
@@ -156,7 +162,7 @@ public class RabbitObtainEventImpl {
 
 
     private void sendWeLink(Event event) {
-        String violationType = event.getScore().getViolation().getName();
+        String violationType = event.getViolationName();
         if ("违章停车".equals(violationType)) {
             violationType = "违章停车";
         } else {
@@ -175,11 +181,6 @@ public class RabbitObtainEventImpl {
         smsService.sendWelink(messageParam);
     }
 
-
-    private void logMessage(String message) {
-        int index = message.indexOf("m_Utc");
-        log.info(message.substring(index, index + 40));
-    }
 
     /**
      * 超速处理
@@ -267,7 +268,6 @@ public class RabbitObtainEventImpl {
 
         event.setNum(count);
         event.setCamera(camera);
-        event.setVehicle(vehicle);
         event.setPlace(camera.getPosition());
         event.setTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
         event.setLaneNumber(trafficEvent.getM_LaneNumber());
@@ -275,16 +275,12 @@ public class RabbitObtainEventImpl {
         event.setImageUrl(getImageUrl(trafficEvent.getBigImage()));
         event.setVehicleSize(trafficEvent.getM_VehicleSize());
         event.setSpeed(trafficEvent.getNSpeed());
-        event.setScore(score);
+        event.updateVehicle(vehicle);
+        event.updateScore(score);
+        event.updateViolation(score.getViolation());
         return eventRepository.save(event);
     }
 
-    /**
-     * 打印
-     */
-    private void logTrafficEvent(TrafficEvent trafficEvent) {
-        log.info(trafficEvent.toString());
-    }
 
     /**
      * 会收到多条一样的消息 所以要过滤
@@ -308,7 +304,7 @@ public class RabbitObtainEventImpl {
         }
         byte[] bytes = Base64Decoder.decode(base64ImageStr);
         StorePath storePath = uploadFile(bytes);
-        return "/" + storePath.getFullPath();
+        return File.separator + storePath.getFullPath();
     }
 
     /**
@@ -316,9 +312,7 @@ public class RabbitObtainEventImpl {
      */
     private StorePath uploadFile(byte[] b) {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(b);
-        FastImageFile fastImageFile = new FastImageFile.Builder()
-                .withFile(inputStream, inputStream.available(), "png")
-                .build();
+        FastImageFile fastImageFile = new FastImageFile.Builder().withFile(inputStream, inputStream.available(), "png").build();
         return storageClient.uploadImage(fastImageFile);
     }
 

@@ -62,7 +62,22 @@ public class Event {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "score_id")
-    private Score score;
+    private Score scoreId;
+
+    /**
+     * 扣了多少分 冗余字段
+     */
+    private Integer score;
+
+    /**
+     * 违规ID
+     */
+    private String violationId;
+
+    /**
+     * 违规名称 冗余字段
+     */
+    private String violationName;
 
     /**
      * 违规车辆的颜色
@@ -150,12 +165,31 @@ public class Event {
     }
 
 
-    public void setVehicle(Vehicle vehicle) {
+    public void updateVehicle(Vehicle vehicle) {
         this.setLicensePlateNumber(vehicle.getLicensePlateNumber());
         this.setDriverName(vehicle.getDriverName());
         this.setDriverPhone(vehicle.getDriverPhone());
         this.setCollegeName(vehicle.getCollegeName());
         this.setStudstaffno(vehicle.getStudstaffno());
+    }
+
+    /**
+     * 更新扣了多少分
+     */
+    public void updateScore(Score score) {
+        this.setScoreId(score);
+        this.setScore(score.getNumber());
+    }
+
+    /**
+     * 更新违规类型
+     */
+    public void updateViolation(ViolationType violationType) {
+        if (violationType == null) {
+            throw new BusinessException("违规类型不能为空");
+        }
+        this.setViolationId(violationType.getId());
+        this.setViolationName(violationType.getName());
     }
 
     public String getId() {
@@ -256,12 +290,36 @@ public class Event {
         this.speed = speed;
     }
 
-    public Score getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(Score score) {
+    protected void setScore(Integer score) {
         this.score = score;
+    }
+
+    public Score getScoreId() {
+        return scoreId;
+    }
+
+    protected void setScoreId(Score scoreId) {
+        this.scoreId = scoreId;
+    }
+
+    public String getViolationId() {
+        return violationId;
+    }
+
+    protected void setViolationId(String violationId) {
+        this.violationId = violationId;
+    }
+
+    public String getViolationName() {
+        return violationName;
+    }
+
+    protected void setViolationName(String violationName) {
+        this.violationName = violationName;
     }
 
     public Long getNum() {
@@ -311,9 +369,7 @@ public class Event {
      */
     public enum Status implements BaseEnum {
 
-        NORMAL(0, "未处理"),
-        APPROVAL(1, "审批"),
-        CANCEL(2, "作废");
+        NORMAL(0, "未处理"), APPROVAL(1, "审批"), CANCEL(2, "作废");
 
         Status(Integer value, String description) {
             this.value = value;

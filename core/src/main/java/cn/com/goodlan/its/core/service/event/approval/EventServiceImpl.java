@@ -76,14 +76,13 @@ public class EventServiceImpl implements EventService {
         return (root, query, criteriaBuilder) -> {
             if (!query.getResultType().equals(Long.class)) {
                 root.fetch("camera", JoinType.LEFT);
-                root.fetch("score", JoinType.LEFT);
             }
             List<Predicate> list = new ArrayList<>();
             if (StringUtils.isNotEmpty(eventDTO.getCollegeName())) {
                 list.add(criteriaBuilder.like(root.get("collegeName").as(String.class), eventDTO.getCollegeName() + "%"));
             }
             if (StringUtils.isNotEmpty(eventDTO.getViolationTypeId())) {
-                list.add(criteriaBuilder.equal(root.get("score").get("violation").get("id").as(String.class), eventDTO.getViolationTypeId()));
+                list.add(criteriaBuilder.equal(root.get("violationId").as(String.class), eventDTO.getViolationTypeId()));
             }
             if (StringUtils.isNotEmpty(eventDTO.getDriverName())) {
                 list.add(criteriaBuilder.like(root.get("driverName").as(String.class), eventDTO.getDriverName() + "%"));
