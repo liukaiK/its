@@ -6,6 +6,7 @@ import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.service.event.approval.EventService;
 import cn.com.goodlan.its.core.service.system.violation.ViolationTypeService;
 import cn.com.goodlan.its.core.util.ExcelUtil;
+import cn.com.goodlan.its.core.util.StringUtils;
 import cn.com.goodlan.its.event.ApprovalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,7 +42,13 @@ public class ApprovalController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('event:approval:view')")
-    public ModelAndView approval(Model model) {
+    public ModelAndView approval(Model model, String collageName, String startTime) {
+        if (StringUtils.isNotEmpty(collageName)) {
+            model.addAttribute("collageName", collageName);
+        }
+        if (StringUtils.isNotEmpty(startTime)) {
+            model.addAttribute("startTime", startTime);
+        }
         model.addAttribute("violationTypeList", violationTypeService.findAll());
         return new ModelAndView("event/approval/approval");
     }
