@@ -62,6 +62,8 @@
     <!-- Spring日志级别控制  -->
     <logger name="org.springframework" level="error"/>
 
+    <logger name="org.springframework.jdbc" level="debug"/>
+
     <logger name="org.springframework.boot.devtools" level="off"/>
 
     <!--系统操作日志-->

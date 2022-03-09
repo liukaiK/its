@@ -62,4 +62,4 @@ management:
       show-details: always
 logging:
   level:
-    web: debug
+    web: off

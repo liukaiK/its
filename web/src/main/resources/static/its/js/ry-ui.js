@@ -175,7 +175,7 @@ var table = {
                 }
                 if (res.code === web_status.SUCCESS) {
                     if ($.common.isNotEmpty(table.options.sidePagination) && table.options.sidePagination === 'client') {
-                        return res.rows;
+                        return {rows: res.data};
                     } else {
                         if ($.common.isNotEmpty(table.options.rememberSelected) && table.options.rememberSelected) {
                             var column = $.common.isEmpty(table.options.uniqueId) ? table.options.columns[1].field : table.options.uniqueId;
