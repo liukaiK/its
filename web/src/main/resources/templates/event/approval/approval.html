@@ -115,6 +115,13 @@
                     },
                 },
                 {
+                    field: 'num',
+                    title: '次序',
+                    formatter: function (value, row, index) {
+                        return '第' + row.num + '次';
+                    },
+                },
+                {
                     field: 'time',
                     title: '违规时间',
                     sortable: true
@@ -126,10 +133,6 @@
                 {
                     field: 'violationName',
                     title: '违规分类'
-                },
-                {
-                    field: 'num',
-                    title: '违规次数'
                 },
                 {
                     field: 'driverPhone',
