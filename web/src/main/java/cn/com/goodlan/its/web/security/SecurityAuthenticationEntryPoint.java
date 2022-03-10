@@ -32,7 +32,7 @@ public class SecurityAuthenticationEntryPoint implements AuthenticationEntryPoin
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         if (HttpUtil.isAjaxRequest(request)) {
             response.setCharacterEncoding("UTF-8");
-            response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.setStatus(HttpServletResponse.SC_OK);
             PrintWriter writer = response.getWriter();
             if (authException instanceof UsernameMoreThanOneException) {

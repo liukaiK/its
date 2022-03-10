@@ -15,7 +15,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>${parent.groupId}</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>core</artifactId>
         </dependency>
 
