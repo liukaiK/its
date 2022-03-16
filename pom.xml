@@ -34,6 +34,7 @@
         <commons-text.version>1.9</commons-text.version>
         <poi.version>4.1.2</poi.version>
         <log4j.version>2.17.0</log4j.version>
+        <os-maven-plugin.version>1.7.0</os-maven-plugin.version>
     </properties>
 
     <modules>
@@ -125,6 +126,13 @@
     </dependencyManagement>
 
     <build>
+        <extensions>
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>${os-maven-plugin.version}</version>
+            </extension>
+        </extensions>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
