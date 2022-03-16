@@ -31,7 +31,7 @@
                                 状态：<select name="status">
                                         <option value="">所有</option>
                                         <option value="0">未处理</option>
-                                        <option value="1">已审批</option>
+                                        <option value="1" th:selected="${status == '1'}">已审批</option>
                                         <option value="2">已作废</option>
                                     </select>
                             </li>

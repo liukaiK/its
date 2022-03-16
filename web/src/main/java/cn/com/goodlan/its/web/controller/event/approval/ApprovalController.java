@@ -42,12 +42,15 @@ public class ApprovalController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('event:approval:view')")
-    public ModelAndView approval(Model model, String collageName, String startTime) {
+    public ModelAndView approval(Model model, String collageName, String startTime, String status) {
         if (StringUtils.isNotEmpty(collageName)) {
             model.addAttribute("collageName", collageName);
         }
         if (StringUtils.isNotEmpty(startTime)) {
             model.addAttribute("startTime", startTime);
+        }
+        if (StringUtils.isNotEmpty(status)) {
+            model.addAttribute("status", status);
         }
         model.addAttribute("violationTypeList", violationTypeService.findAll());
         return new ModelAndView("event/approval/approval");

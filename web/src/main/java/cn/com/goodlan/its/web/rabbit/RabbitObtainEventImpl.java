@@ -86,7 +86,6 @@ public class RabbitObtainEventImpl {
         if (StringUtils.startsWithIgnoreCase(content, "\"")) {
             content = content.substring(1, content.length() - 1);
         }
-        log.info(content);
         TrafficEvent trafficEvent;
         try {
             trafficEvent = objectMapper.readValue(content, TrafficEvent.class);

@@ -22,7 +22,12 @@ public class AnalyseRepositoryImpl implements AnalyseRepository {
             analyseQuery.setEndTime("9999-12:12 23:59:59");
         }
 
-        String sql = "select event.college_name as collageName,\n" + "       (select sum(score) from eve_event event1 where violation_name = '超速1' and time >= ? and time <= ? and event.college_name = event1.college_name)  as speed1,\n" + "       (select sum(score) from eve_event event2 where violation_name = '超速2' and time >= ? and time <= ? and event.college_name = event2.college_name)  as speed2,\n" + "       (select sum(score) from eve_event event3 where violation_name = '超速3' and time >= ? and time <= ? and event.college_name = event3.college_name)  as speed3,\n" + "       (select sum(score) from eve_event event4 where violation_name = '违章停车' and time >= ? and time <= ? and event.college_name = event4.college_name) as stop\n" + "from eve_event event\n" + "where event.college_name is not null\n" + "group by event.college_name";
+        String sql = "select event.college_name as collageName,\n" +
+                "       (select sum(score) from eve_event event1 where violation_name = '超速1' and time >= ? and time <= ? and status = 1 and event.college_name = event1.college_name)  as speed1,\n" +
+                "       (select sum(score) from eve_event event2 where violation_name = '超速2' and time >= ? and time <= ? and status = 1 and event.college_name = event2.college_name)  as speed2,\n" +
+                "       (select sum(score) from eve_event event3 where violation_name = '超速3' and time >= ? and time <= ? and status = 1 and event.college_name = event3.college_name)  as speed3,\n" +
+                "       (select sum(score) from eve_event event4 where violation_name = '违章停车' and time >= ? and time <= ? and status = 1 and event.college_name = event4.college_name) as stop\n" +
+                "from eve_event event\n" + "where event.college_name is not null\n" + "group by event.college_name";
 
         List<AnalyseVo> list = jdbcTemplate.query(sql, (rs, rowNum) -> {
             String collageName = rs.getString("collageName");
