@@ -10,6 +10,7 @@ import cn.com.goodlan.its.core.pojo.dto.UpdateProfileDTO;
 import cn.com.goodlan.its.core.pojo.dto.UserDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Role;
 import cn.com.goodlan.its.core.pojo.entity.primary.user.Password;
+import cn.com.goodlan.its.core.pojo.entity.primary.user.PhoneNumber;
 import cn.com.goodlan.its.core.pojo.entity.primary.user.User;
 import cn.com.goodlan.its.core.pojo.entity.primary.user.Username;
 import cn.com.goodlan.its.core.pojo.vo.UserVO;
@@ -74,7 +75,7 @@ public class UserServiceImpl implements UserService {
         user.updateName(userDTO.getName());
         user.updateEmail(userDTO.getEmail());
         user.updateUsername(new Username(userDTO.getUsername()));
-        user.updatePhoneNumber(userDTO.getPhoneNumber());
+        user.updatePhoneNumber(new PhoneNumber(userDTO.getPhoneNumber()));
         user.updateSex(userDTO.getSex());
         user.updateRemark(userDTO.getRemark());
         user.updatePassword(new Password(userDTO.getPassword()));
@@ -92,7 +93,7 @@ public class UserServiceImpl implements UserService {
         user.updateRemark(userDTO.getRemark());
         user.updateSex(userDTO.getSex());
         user.updateEmail(userDTO.getEmail());
-        user.updatePhoneNumber(userDTO.getPhoneNumber());
+        user.updatePhoneNumber(new PhoneNumber(userDTO.getPhoneNumber()));
         user.addCollege(userDTO.getCollegeId());
         String[] roleIds = Convert.toStrArray(userDTO.getRoleIds());
         user.removeAllRole();
@@ -132,19 +133,19 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.getOne(SecurityUtil.getUserId());
         user.updateEmail(updateProfileDTO.getEmail());
         user.updateSex(updateProfileDTO.getSex());
-        user.updatePhoneNumber(updateProfileDTO.getPhoneNumber());
+        user.updatePhoneNumber(new PhoneNumber(updateProfileDTO.getPhoneNumber()));
         userRepository.save(user);
     }
 
 
     @Override
     public boolean checkUsernameUnique(String username) {
-        return userRepository.existsByUsername(username);
+        return userRepository.existsByUsername(new Username(username));
     }
 
     @Override
     public boolean checkUsernameUnique(String userId, String username) {
-        return userRepository.existsByUsernameAndIdNot(username, userId);
+        return userRepository.existsByUsernameAndIdNot(new Username(username), userId);
     }
 
     @Override

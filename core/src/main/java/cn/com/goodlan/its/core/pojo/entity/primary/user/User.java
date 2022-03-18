@@ -3,7 +3,6 @@ package cn.com.goodlan.its.core.pojo.entity.primary.user;
 import cn.com.goodlan.its.core.pojo.entity.primary.AbstractEntity;
 import cn.com.goodlan.its.core.pojo.entity.primary.College;
 import cn.com.goodlan.its.core.pojo.entity.primary.Role;
-import cn.com.goodlan.its.core.util.AESUtil;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
@@ -38,7 +37,7 @@ public class User extends AbstractEntity {
 
     private Password password;
 
-    private String phoneNumber;
+    private PhoneNumber phoneNumber;
 
     private String remark;
 
@@ -71,17 +70,17 @@ public class User extends AbstractEntity {
 
     @Transient
     public void updateName(String name) {
-        this.name = name;
+        this.setName(name);
     }
 
     @Transient
     public void updateUsername(Username username) {
-        this.username = username;
+        this.setUsername(username);
     }
 
     @Transient
-    public void updatePhoneNumber(String phoneNumber) {
-        this.phoneNumber = AESUtil.encrypt(phoneNumber);
+    public void updatePhoneNumber(PhoneNumber phoneNumber) {
+        this.setPhoneNumber(phoneNumber);
     }
 
     @Transient
@@ -135,7 +134,7 @@ public class User extends AbstractEntity {
         return username;
     }
 
-    public void setUsername(Username username) {
+    protected void setUsername(Username username) {
         this.username = username;
     }
 
@@ -143,7 +142,7 @@ public class User extends AbstractEntity {
         return name;
     }
 
-    public void setName(String name) {
+    protected void setName(String name) {
         this.name = name;
     }
 
@@ -191,14 +190,6 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -215,6 +206,15 @@ public class User extends AbstractEntity {
 
     public void setCollege(College college) {
         this.college = college;
+    }
+
+    @Embedded
+    public PhoneNumber getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    protected void setPhoneNumber(PhoneNumber phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
 }

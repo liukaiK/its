@@ -13,7 +13,6 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Password {
 
-    @Convert(converter = PasswordConverter.class)
     private String password;
 
     protected Password() {
@@ -24,7 +23,7 @@ public class Password {
         this.setPassword(password);
     }
 
-
+    @Convert(converter = PasswordConverter.class)
     public String getPassword() {
         return password;
     }
@@ -36,7 +35,7 @@ public class Password {
     /**
      * 密码加密
      */
-    static class PasswordConverter implements AttributeConverter<String, String> {
+    public static class PasswordConverter implements AttributeConverter<String, String> {
 
         private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
