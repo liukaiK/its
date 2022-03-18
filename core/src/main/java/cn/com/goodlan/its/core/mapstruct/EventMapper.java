@@ -5,16 +5,14 @@ import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
-@Mapper
-public interface EventMapper {
+@Mapper(componentModel = "spring", uses = {}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public abstract class EventMapper {
 
-    EventMapper INSTANCE = Mappers.getMapper(EventMapper.class);
-
-    List<EventVO> convertList(List<Event> eventList);
+    public abstract List<EventVO> convertList(List<Event> eventList);
 
     @Mappings({
             @Mapping(source = "licensePlateNumber", target = "vehicleNumber"),
@@ -24,8 +22,8 @@ public interface EventMapper {
             @Mapping(source = "violationName", target = "violationName"),
             @Mapping(source = "camera.region.name", target = "regionName"),
             @Mapping(source = "score", target = "score"),
-            @Mapping(target = "status", expression = "java(event.getStatus().getValue())")
     })
-    EventVO convert(Event event);
+    public abstract EventVO convert(Event event);
+
 
 }

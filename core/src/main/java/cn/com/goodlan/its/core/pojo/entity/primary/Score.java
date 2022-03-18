@@ -77,6 +77,14 @@ public class Score extends AbstractEntity {
         return "14731d00-3e20-4b7f-aaf0-b4b4a7d8b29d".equals(this.id) || "35552577-cfd6-480e-8586-f7568bb943b4".equals(this.id);
     }
 
+    /**
+     * 判断是否为违章停车
+     */
+    @Transient
+    public boolean isStop() {
+        return "0f647018-2c28-4bfe-ae10-e9586cfb66b0".equals(this.id);
+    }
+
 
     @Id
     @GeneratedValue(generator = "uuid2")

@@ -10,7 +10,9 @@ import java.util.List;
 
 public interface EventRepository extends CustomizeRepository<Event, String> {
 
-    List<Event> findTop30ByOrderByTime();
+    List<Event> findTop30ByDeletedOrderByTime(Event.Deleted deleted);
+
+    long countByLicensePlateNumberAndViolationNameLikeAndTimeAfterAndDeleted(String licensePlateNumber, String violationName, LocalDateTime localDateTime, Event.Deleted deleted);
 
     /**
      * 根据车辆车牌集合查询违章事件
@@ -19,17 +21,16 @@ public interface EventRepository extends CustomizeRepository<Event, String> {
      * @param pageable
      * @return List<Event>
      */
-    Page<Event> findByLicensePlateNumberInOrderByTimeDesc(List<String> plateNumbers, Pageable pageable);
+    Page<Event> findByLicensePlateNumberInAndDeletedOrderByTimeDesc(List<String> plateNumbers, Pageable pageable, Event.Deleted deleted);
 
     /**
      * 查询违章集合
      *
      * @return
      */
-    Page<Event> findAllByOrderByTimeDesc(Pageable pageable);
+    Page<Event> findAllByDeletedOrderByTimeDesc(Event.Deleted deleted, Pageable pageable);
 
-    long countByTimeGreaterThanEqualAndTimeLessThanEqualAndLicensePlateNumber(LocalDateTime startTime, LocalDateTime time, String licensePlateNumber);
+    long countByTimeGreaterThanEqualAndTimeLessThanEqualAndLicensePlateNumberAndViolationNameLikeAndDeleted(LocalDateTime startTime, LocalDateTime time, String licensePlateNumber, String violationName, Event.Deleted deleted);
 
-    long countByTimeLessThanEqualAndLicensePlateNumber(LocalDateTime time, String licensePlateNumber);
-
+    List<Event> findByTimeGreaterThanEqualAndDeleted(LocalDateTime time, Event.Deleted deleted);
 }

@@ -8,9 +8,9 @@ import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.service.system.vehicle.VehicleService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,48 +20,32 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class)
 public class EventServiceImpl implements EventService {
 
-    @Autowired
     private EventRepository eventRepository;
 
-    @Autowired
     private VehicleService vehicleService;
+
+    private EventMapper eventMapper;
 
     @Override
     public List<EventVO> searchAll() {
-        List<Event> findAll = eventRepository.findTop30ByOrderByTime();
-        return EventMapper.INSTANCE.convertList(findAll);
+        List<Event> findAll = eventRepository.findTop30ByDeletedOrderByTime(Event.Deleted.NORMAL);
+        return eventMapper.convertList(findAll);
     }
 
     @Override
     public Page<EventVO> search(EventDTO eventDTO, Pageable pageable) {
         Specification<Event> specification = querySpecification(eventDTO);
         Page<Event> page = eventRepository.findAll(specification, pageable);
-        List<EventVO> list = EventMapper.INSTANCE.convertList(page.getContent());
-
-        if (StringUtils.isNotEmpty(eventDTO.getStartTime())) {
-            LocalDateTime startTime = LocalDateTime.parse(eventDTO.getStartTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            for (EventVO eventVO : list) {
-                long num = eventRepository.countByTimeGreaterThanEqualAndTimeLessThanEqualAndLicensePlateNumber(startTime, eventVO.getTime(), eventVO.getVehicleNumber());
-                eventVO.setNum(num);
-            }
-        } else {
-            for (EventVO eventVO : list) {
-                long num = eventRepository.countByTimeLessThanEqualAndLicensePlateNumber(eventVO.getTime(), eventVO.getVehicleNumber());
-                eventVO.setNum(num);
-            }
-        }
-
-
+        List<EventVO> list = eventMapper.convertList(page.getContent());
         return new PageImpl<>(list, page.getPageable(), page.getTotalElements());
     }
 
@@ -69,7 +53,7 @@ public class EventServiceImpl implements EventService {
     public List<EventVO> export(EventDTO eventDTO) {
         Specification<Event> specification = querySpecification(eventDTO);
         List<Event> list = eventRepository.findAll(specification);
-        return EventMapper.INSTANCE.convertList(list);
+        return eventMapper.convertList(list);
     }
 
     private Specification<Event> querySpecification(EventDTO eventDTO) {
@@ -88,7 +72,7 @@ public class EventServiceImpl implements EventService {
                 list.add(criteriaBuilder.like(root.get("driverName").as(String.class), eventDTO.getDriverName() + "%"));
             }
             if (StringUtils.isNotEmpty(eventDTO.getVehicleNumber())) {
-                list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), "%" + eventDTO.getVehicleNumber() + "%"));
+                list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), eventDTO.getVehicleNumber() + "%"));
             }
             if (StringUtils.isNotEmpty(eventDTO.getStartTime())) {
                 list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("time").as(String.class), eventDTO.getStartTime()));
@@ -96,9 +80,7 @@ public class EventServiceImpl implements EventService {
             if (StringUtils.isNotEmpty(eventDTO.getEndTime())) {
                 list.add(criteriaBuilder.lessThanOrEqualTo(root.get("time").as(String.class), eventDTO.getEndTime()));
             }
-            if (eventDTO.getStatus() != null) {
-                list.add(criteriaBuilder.equal(root.get("status").as(Event.Status.class), eventDTO.getStatus()));
-            }
+            list.add(criteriaBuilder.equal(root.get("deleted").as(Event.Deleted.class), Event.Deleted.NORMAL));
             Predicate[] p = new Predicate[list.size()];
             return criteriaBuilder.and(list.toArray(p));
         };
@@ -107,7 +89,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventVO getById(String id) {
         Event event = eventRepository.getOne(id);
-        return EventMapper.INSTANCE.convert(event);
+        return eventMapper.convert(event);
     }
 
 
@@ -132,7 +114,7 @@ public class EventServiceImpl implements EventService {
         List<Vehicle> vehicles = vehicleService.findByStudstaffno(studstaffno);
         List<String> collect = vehicles.stream().map(Vehicle::getLicensePlateNumber).collect(Collectors.toList());
         //根据车辆车牌集合查询违章事件
-        Page<Event> eventList = eventRepository.findByLicensePlateNumberInOrderByTimeDesc(collect, pageable);
+        Page<Event> eventList = eventRepository.findByLicensePlateNumberInAndDeletedOrderByTimeDesc(collect, pageable, Event.Deleted.NORMAL);
         return getStringObjectMap(pageable, eventList);
     }
 
@@ -140,12 +122,12 @@ public class EventServiceImpl implements EventService {
     public Map<String, Object> allEvent(Params params) {
         //查询全部违章
         Pageable pageable = params.getPage();
-        Page<Event> eventList = eventRepository.findAllByOrderByTimeDesc(pageable);
+        Page<Event> eventList = eventRepository.findAllByDeletedOrderByTimeDesc(Event.Deleted.NORMAL, pageable);
         return getStringObjectMap(pageable, eventList);
     }
 
     private Map<String, Object> getStringObjectMap(Pageable pageable, Page<Event> eventList) {
-        List<EventVO> eventVOS = eventList.stream().map(EventMapper.INSTANCE::convert).collect(Collectors.toList());
+        List<EventVO> eventVOS = eventList.stream().map(eventMapper::convert).collect(Collectors.toList());
         Map<String, Object> map = new HashMap<>(4);
         map.put("pageSize", pageable.getPageSize());
         map.put("pageIndex", pageable.getPageNumber());

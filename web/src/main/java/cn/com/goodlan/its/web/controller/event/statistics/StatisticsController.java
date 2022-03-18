@@ -58,7 +58,7 @@ public class StatisticsController {
     @PostMapping("/search")
     @PreAuthorize("hasAuthority('event:statistics:search')")
     public Page<EventVO> search(EventDTO eventDTO, @PageableDefault Pageable pageable) {
-        eventDTO.setStatus(Event.Status.APPROVAL);
+//        eventDTO.setStatus(Event.Deleted.APPROVAL);
         return eventService.search(eventDTO, pageable);
     }
 

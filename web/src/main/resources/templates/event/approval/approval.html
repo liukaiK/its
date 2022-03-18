@@ -27,14 +27,6 @@
                                 <option th:each="violationType : ${violationTypeList}" th:text="${violationType.name}" th:value="${violationType.id}"></option>
                             </select>
                             </li>
-                            <li>
-                                状态：<select name="status">
-                                        <option value="">所有</option>
-                                        <option value="0">未处理</option>
-                                        <option value="1" th:selected="${status == '1'}">已审批</option>
-                                        <option value="2">已作废</option>
-                                    </select>
-                            </li>
                             <li class="select-time">
                                 <label>违规时间： </label>
                                 <input th:if="${startTime == null}" type="text" class="time-input" placeholder="开始时间" name="startTime" data-type="datetime" data-format="yyyy-MM-dd HH:mm:ss" readonly="readonly"  th:value="${#dates.format(#dates.createNow(), 'yyyy-01-01 00:00:00')}"/>
@@ -105,6 +97,10 @@
                     title: '车主'
                 },
                 {
+                    field: 'driverPhone',
+                    title: '车主电话'
+                },
+                {
                     field: 'bmmc',
                     title: '所属单位',
                     formatter: function (value, row, index) {
@@ -118,8 +114,27 @@
                     field: 'num',
                     title: '次序',
                     formatter: function (value, row, index) {
-                        return '第' + row.num + '次';
+                        if (row.violationName.startsWith("超速")) {
+                            return '第' + row.num + '次超速' ;
+                        }else{
+                            return '第' + row.num + '次违停';
+                        }
+
                     },
+                },
+                {
+                    field: 'violationName',
+                    title: '违规分类'
+                },
+                {
+                    field: 'score',
+                    title: '扣分',
+                    formatter: function (value, row, index) {
+                        if (row.score === 0) {
+                            return '第一次不扣分';
+                        }
+                        return row.score + '分';
+                    }
                 },
                 {
                     field: 'time',
@@ -130,30 +145,7 @@
                     field: 'place',
                     title: '违规地点'
                 },
-                {
-                    field: 'violationName',
-                    title: '违规分类'
-                },
-                {
-                    field: 'driverPhone',
-                    title: '车主电话'
-                },
-                {
-                    field: 'status',
-                    title: '状态',
-                    formatter: function (value, row, index) {
-                        if (row.status === 0) {
-                            return '未处理';
-                        }
-                        if (row.status === 1) {
-                            return '已审批';
-                        }
-                        if (row.status === 2) {
-                            return '已作废';
-                        }
-                    },
-                    sortable: true
-                },
+
                 {
                     title: '操作',
                     align: 'center',

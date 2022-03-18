@@ -126,8 +126,8 @@ public class Event {
      */
     private Long num;
 
-    @Convert(converter = StatusConverter.class)
-    private Status status = Status.NORMAL;
+    @Convert(converter = DeletedConverter.class)
+    private Deleted deleted = Deleted.NORMAL;
 
     public Event() {
     }
@@ -152,16 +152,9 @@ public class Event {
      * 审批
      */
     public void approval() {
-        if (Status.APPROVAL.equals(this.status)) {
-            throw new BusinessException("该违规事件已经审批 请刷新页面");
-        }
-        this.setStatus(Status.APPROVAL);
-        this.setApprovalTime(LocalDateTime.now());
     }
 
     public void cancel() {
-        this.setStatus(Status.CANCEL);
-        this.setApprovalTime(LocalDateTime.now());
     }
 
 
@@ -179,6 +172,13 @@ public class Event {
     public void updateScore(Score score) {
         this.setScoreId(score);
         this.setScore(score.getNumber());
+    }
+
+    /**
+     * 更新扣了多少分
+     */
+    public void updateScore(int score) {
+        this.setScore(score);
     }
 
     /**
@@ -216,12 +216,12 @@ public class Event {
         this.camera = camera;
     }
 
-    public Status getStatus() {
-        return status;
+    public Deleted getDeleted() {
+        return deleted;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setDeleted(Deleted deleted) {
+        this.deleted = deleted;
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -367,11 +367,11 @@ public class Event {
      *
      * @author liukai
      */
-    public enum Status implements BaseEnum {
+    public enum Deleted implements BaseEnum {
 
-        NORMAL(0, "未处理"), APPROVAL(1, "审批"), CANCEL(2, "作废");
+        NORMAL(0, "正常，未删除"), DELETED(1, "已删除");
 
-        Status(Integer value, String description) {
+        Deleted(Integer value, String description) {
             this.value = value;
             this.description = description;
         }
@@ -398,25 +398,25 @@ public class Event {
     }
 
 
-    public static class StatusConverter implements AttributeConverter<Status, Integer> {
+    public static class DeletedConverter implements AttributeConverter<Deleted, Integer> {
 
         @Override
-        public Integer convertToDatabaseColumn(Status attribute) {
+        public Integer convertToDatabaseColumn(Deleted attribute) {
             if (attribute == null) {
-                throw new BusinessException("Unknown status text  ");
+                throw new BusinessException("Unknown attribute text  ");
             }
             return attribute.getValue();
 
         }
 
         @Override
-        public Status convertToEntityAttribute(Integer dbData) {
-            for (Status status : Status.values()) {
-                if (status.getValue().equals(dbData)) {
-                    return status;
+        public Deleted convertToEntityAttribute(Integer dbData) {
+            for (Deleted deleted : Deleted.values()) {
+                if (deleted.getValue().equals(dbData)) {
+                    return deleted;
                 }
             }
-            throw new BusinessException("Unknown status text : " + dbData);
+            throw new BusinessException("Unknown dbData text : " + dbData);
         }
     }
 
