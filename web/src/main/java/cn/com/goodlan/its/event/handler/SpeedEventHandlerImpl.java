@@ -60,9 +60,9 @@ public class SpeedEventHandlerImpl implements EventHandler {
     @Override
     public void handler(TrafficEvent trafficEvent) {
         // 判断是否和上一条数据相同 相同的话直接跳过不记录
-//        if (isSameWithPrevious(trafficEvent)) {
-//            return;
-//        }
+        if (isSameWithPrevious(trafficEvent)) {
+            return;
+        }
 
         Camera camera = cameraRepository.getByIp(trafficEvent.getIp());
 
@@ -120,12 +120,12 @@ public class SpeedEventHandlerImpl implements EventHandler {
             Event event;
             if (count == 1) {
                 if (score.isScore1()) {
-                    event = warn(camera, trafficEvent, imageUrl, vehicle, score.getViolation());
+                    event = warn(camera, trafficEvent, imageUrl, vehicle, score.getViolation(), score);
                     sendSmsAndWeLink(event);
                     return;
                 }
                 if (score.isScore2()) {
-                    event = warn(camera, trafficEvent, imageUrl, vehicle, score.getViolation());
+                    event = warn(camera, trafficEvent, imageUrl, vehicle, score.getViolation(), score);
                     sendSmsAndWeLink(event);
                     return;
                 }
@@ -279,7 +279,7 @@ public class SpeedEventHandlerImpl implements EventHandler {
     /**
      * 警告
      */
-    private Event warn(Camera camera, TrafficEvent trafficEvent, String imageUrl, Vehicle vehicle, ViolationType violationType) {
+    private Event warn(Camera camera, TrafficEvent trafficEvent, String imageUrl, Vehicle vehicle, ViolationType violationType, Score score) {
         Event event = new Event();
 
         event.setNum(1L);
@@ -292,6 +292,9 @@ public class SpeedEventHandlerImpl implements EventHandler {
         event.setVehicleSize(trafficEvent.getM_VehicleSize());
         event.setSpeed(trafficEvent.getNSpeed());
         event.updateVehicle(vehicle);
+        // 先设置分数 防止null
+        event.updateScore(score);
+        // 然后在刷新为0分
         event.updateScore(0);
         event.updateViolation(violationType);
         return eventRepository.save(event);
