@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
  *
  * @author liukai
  */
-@Entity
 @DynamicUpdate
 @DynamicInsert
+@Entity(name = "event")
 @Table(name = "eve_event")
 public class Event {
 
@@ -190,6 +190,10 @@ public class Event {
         }
         this.setViolationId(violationType.getId());
         this.setViolationName(violationType.getName());
+    }
+
+    public void remove() {
+        this.setDeleted(Deleted.DELETED);
     }
 
     public String getId() {
@@ -422,3 +426,5 @@ public class Event {
 
 
 }
+
+

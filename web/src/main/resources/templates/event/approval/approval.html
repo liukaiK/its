@@ -68,25 +68,22 @@
 
     let searchUrl = /*[[@{/event/approval/search}]]*/ "";
     let detailUrl = /*[[@{/event/approval/detail/{id}}]]*/ "";
-    let approvalUrl = /*[[@{/event/approval/approvaldetail/{id}}]]*/ "";
-    let cancelUrl = /*[[@{/event/approval/cancel/{id}}]]*/ "";
+    let removeUrl = /*[[@{/event/approval/remove}]]*/ "";
     let exportUrl = /*[[@{/event/approval/export}]]*/ "";
 
     let detailFlag = [[${@authority.hasAuthority('event:approval:detail')}]];
-    let approvalFlag = [[${@authority.hasAuthority('event:approval:approval')}]];
-    let cancelFlag = [[${@authority.hasAuthority('event:approval:cancel')}]];
+    let removeFlag = [[${@authority.hasAuthority('event:approval:remove')}]];
 
     function search() {
         var options = {
             url: searchUrl,
             detailUrl: detailUrl,
-            approvalUrl: approvalUrl,
-            cancelUrl: cancelUrl,
+            removeUrl: removeUrl,
             exportUrl: exportUrl,
             uniqueId: 'id',
             sortName: "time",
             sortOrder: "desc",
-            modalName: "审批",
+            modalName: "违规",
             columns: [
                 {
                     field: 'vehicleNumber',
@@ -152,10 +149,7 @@
                     formatter: function (value, row, index) {
                         var actions = [];
                         actions.push('<a class="btn btn-success btn-xs ' + detailFlag + '" href="javascript:void(0)" onclick="$.operate.detailTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>查看详情</a> ');
-                        if (row.status === 0 && row.num > 1) {
-                            actions.push('<a class="btn btn-info btn-xs ' + approvalFlag + '" href="javascript:void(0)" onclick="$.operate.approvalTab(\'' + row.id + '\')"><i class="fa fa-check"></i>审批</a> ');
-                            actions.push('<a class="btn btn-danger btn-xs ' + cancelFlag + '" href="javascript:void(0)" onclick="$.operate.cancel(\'' + row.id + '\')"><i class="fa fa-remove"></i>作废</a> ');
-                        }
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a> ');
                         return actions.join('');
                     }
                 }]

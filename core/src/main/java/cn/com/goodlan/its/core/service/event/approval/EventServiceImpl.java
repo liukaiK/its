@@ -8,6 +8,7 @@ import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.service.system.vehicle.VehicleService;
+import cn.hutool.core.convert.Convert;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -36,12 +40,6 @@ public class EventServiceImpl implements EventService {
     private EventMapper eventMapper;
 
     @Override
-    public List<EventVO> searchAll() {
-        List<Event> findAll = eventRepository.findTop30ByDeletedOrderByTime(Event.Deleted.NORMAL);
-        return eventMapper.convertList(findAll);
-    }
-
-    @Override
     public Page<EventVO> search(EventDTO eventDTO, Pageable pageable) {
         Specification<Event> specification = querySpecification(eventDTO);
         Page<Event> page = eventRepository.findAll(specification, pageable);
@@ -54,6 +52,55 @@ public class EventServiceImpl implements EventService {
         Specification<Event> specification = querySpecification(eventDTO);
         List<Event> list = eventRepository.findAll(specification);
         return eventMapper.convertList(list);
+    }
+
+    @Override
+    public void remove(String ids) {
+        String[] eventIds = Convert.toStrArray(ids);
+        for (String id : eventIds) {
+            Event event = eventRepository.getOne(id);
+            event.remove();
+
+            String violationName = event.getViolationName();
+            if (violationName.startsWith("超速")) {
+                violationName = "超速";
+            } else {
+                violationName = "违章停车";
+            }
+
+
+            LocalDateTime firstDay = LocalDateTime.of(event.getTime().toLocalDate().with(TemporalAdjusters.firstDayOfYear()), LocalTime.MIN);
+
+            LocalDateTime lastDay = LocalDateTime.of(event.getTime().toLocalDate().with(TemporalAdjusters.lastDayOfYear()), LocalTime.MAX);
+
+            // 查询需要刷新的历史数据
+            List<Event> list = eventRepository.findByTimeGreaterThanEqualAndTimeLessThanEqualAndViolationName(firstDay, lastDay, violationName + "%", event.getLicensePlateNumber(), Event.Deleted.NORMAL);
+
+            refreshNumAndScore(list);
+
+        }
+
+
+    }
+
+    /**
+     * 刷新历史数据
+     */
+    private void refreshNumAndScore(List<Event> list) {
+        long num = 1;
+        for (Event event : list) {
+            event.setNum(num);
+            num++;
+        }
+        for (Event event : list) {
+            if (event.getNum() == 1) {
+                if (event.getScoreId().isScore1() || event.getScoreId().isScore2() || event.getScoreId().isStop()) {
+                    event.updateScore(0);
+                } else {
+                    event.updateScore(event.getScoreId());
+                }
+            }
+        }
     }
 
     private Specification<Event> querySpecification(EventDTO eventDTO) {

@@ -39,3 +39,7 @@ delete
 from eve_event
 where license_plate_number in
       (select license_plate_number from (select license_plate_number from eve_event where deleted = 1) as t1);
+
+# 增加删除按钮
+insert into sys_menu (id, name, url, parent_id, authority, target, menu_type, sort, visible, is_refresh, icon, remark, create_time, update_time)
+values  ('17be11d1-d4a7-400d-b144-d6dadc5e9977', '删除', '#', 'b57bdf94-0845-4cc7-b504-e399198b144d', 'event:approval:remove', 'menuItem', 'F', 5, null, null, '', null, '2022-03-18 09:48:02', '2022-03-18 09:48:02');
