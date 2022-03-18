@@ -6,8 +6,8 @@ import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.service.event.approval.EventService;
 import cn.com.goodlan.its.core.service.system.violation.ViolationTypeService;
 import cn.com.goodlan.its.core.util.ExcelUtil;
-import cn.com.goodlan.its.event.ApprovalService;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.com.goodlan.its.core.util.StringUtils;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -27,21 +27,23 @@ import java.util.Map;
  */
 @RestController
 @ResponseResultBody
+@AllArgsConstructor
 @RequestMapping("/event/approval")
 public class ApprovalController {
 
-    @Autowired
     private EventService eventService;
 
-    @Autowired
-    private ApprovalService approvalService;
-
-    @Autowired
     private ViolationTypeService violationTypeService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('event:approval:view')")
-    public ModelAndView approval(Model model) {
+    public ModelAndView approval(Model model, String collageName, String startTime) {
+        if (StringUtils.isNotEmpty(collageName)) {
+            model.addAttribute("collageName", collageName);
+        }
+        if (StringUtils.isNotEmpty(startTime)) {
+            model.addAttribute("startTime", startTime);
+        }
         model.addAttribute("violationTypeList", violationTypeService.findAll());
         return new ModelAndView("event/approval/approval");
     }
@@ -53,6 +55,16 @@ public class ApprovalController {
     @PreAuthorize("hasAuthority('event:approval:search')")
     public Page<EventVO> search(EventDTO eventDTO, @PageableDefault Pageable pageable) {
         return eventService.search(eventDTO, pageable);
+    }
+
+
+    /**
+     * 删除数据
+     */
+    @PostMapping("/remove")
+    @PreAuthorize("hasAuthority('event:approval:remove')")
+    public void remove(String ids) {
+        eventService.remove(ids);
     }
 
 
@@ -89,25 +101,6 @@ public class ApprovalController {
     public ModelAndView approval(@PathVariable String id, Model model) {
         model.addAttribute("event", eventService.getById(id));
         return new ModelAndView("event/approval/approvaldetail");
-    }
-
-
-    /**
-     * 审批功能
-     */
-    @PostMapping("/approval")
-    @PreAuthorize("hasAuthority('event:approval:approval')")
-    public void approval(String id) {
-        approvalService.approval(id);
-    }
-
-    /**
-     * 作废功能
-     */
-    @PostMapping("/cancel/{id}")
-    @PreAuthorize("hasAuthority('event:approval:cancel')")
-    public void cancel(@PathVariable String id) {
-        approvalService.cancel(id);
     }
 
 }

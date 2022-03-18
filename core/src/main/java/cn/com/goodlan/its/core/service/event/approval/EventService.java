@@ -11,13 +11,13 @@ import java.util.Map;
 
 public interface EventService {
 
-    List<EventVO> searchAll();
-
     Page<EventVO> search(EventDTO eventDTO, Pageable pageable);
 
     EventVO getById(String id);
 
     List<EventVO> export(EventDTO eventDTO);
+
+    void remove(String id);
 
     /**
      * 根据工号查询违章集合
@@ -27,5 +27,6 @@ public interface EventService {
      * @return
      */
     Map<String, Object> findByUserId(String studstaffno, Pageable pageable);
+
     Map<String, Object> allEvent(Params params);
 }

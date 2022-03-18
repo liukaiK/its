@@ -4,13 +4,15 @@ import cn.com.goodlan.its.core.dao.CustomizeRepository;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface EventRepository extends CustomizeRepository<Event, String> {
 
-    List<Event> findTop30ByOrderByTime();
+    long countByLicensePlateNumberAndViolationNameLikeAndTimeAfterAndDeleted(String licensePlateNumber, String violationName, LocalDateTime localDateTime, Event.Deleted deleted);
 
     /**
      * 根据车辆车牌集合查询违章事件
@@ -19,17 +21,19 @@ public interface EventRepository extends CustomizeRepository<Event, String> {
      * @param pageable
      * @return List<Event>
      */
-    Page<Event> findByLicensePlateNumberInOrderByTimeDesc(List<String> plateNumbers, Pageable pageable);
+    Page<Event> findByLicensePlateNumberInAndDeletedOrderByTimeDesc(List<String> plateNumbers, Pageable pageable, Event.Deleted deleted);
 
     /**
      * 查询违章集合
      *
      * @return
      */
-    Page<Event> findAllByOrderByTimeDesc(Pageable pageable);
+    Page<Event> findAllByDeletedOrderByTimeDesc(Event.Deleted deleted, Pageable pageable);
 
-    long countByTimeGreaterThanEqualAndTimeLessThanEqualAndLicensePlateNumber(LocalDateTime startTime, LocalDateTime time, String licensePlateNumber);
+    long countByTimeGreaterThanEqualAndTimeLessThanEqualAndLicensePlateNumberAndViolationNameLikeAndDeleted(LocalDateTime startTime, LocalDateTime time, String licensePlateNumber, String violationName, Event.Deleted deleted);
 
-    long countByTimeLessThanEqualAndLicensePlateNumber(LocalDateTime time, String licensePlateNumber);
+    List<Event> findByTimeGreaterThanEqualAndDeleted(LocalDateTime time, Event.Deleted deleted);
 
+    @Query(value = "select e from event e where e.time >= :fistDay and e.time <= :time and e.violationName like :violationName and e.licensePlateNumber = :licensePlateNumber and e.deleted = :deleted order by e.time")
+    List<Event> findByTimeGreaterThanEqualAndTimeLessThanEqualAndViolationName(@Param("fistDay") LocalDateTime fistDay, @Param("time") LocalDateTime time, @Param("violationName") String violationName, @Param("licensePlateNumber") String licensePlateNumber, @Param("deleted") Event.Deleted deleted);
 }

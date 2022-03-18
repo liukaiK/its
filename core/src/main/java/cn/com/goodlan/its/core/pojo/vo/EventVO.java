@@ -40,8 +40,6 @@ public class EventVO {
     @Excel(name = "违规地点", sort = 4)
     private String place;
 
-    private Integer status;
-
     @Excel(name = "车速", suffix = "km/h", sort = 8)
     private Integer speed;
 
@@ -142,14 +140,6 @@ public class EventVO {
 
     public void setPlace(String place) {
         this.place = place;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 
     public Integer getSpeed() {

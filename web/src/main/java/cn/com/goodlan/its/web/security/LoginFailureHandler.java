@@ -25,7 +25,7 @@ import java.io.IOException;
  * @author liukai
  */
 @Slf4j
-@Component("LoginFailureHandler")
+@Component("loginFailureHandler")
 public class LoginFailureHandler extends AbstractAuthenticationHandler implements AuthenticationFailureHandler {
 
     @Autowired

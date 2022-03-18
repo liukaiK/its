@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
  *
  * @author liukai
  */
-@Entity
 @DynamicUpdate
 @DynamicInsert
+@Entity(name = "event")
 @Table(name = "eve_event")
 public class Event {
 
@@ -62,7 +62,22 @@ public class Event {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "score_id")
-    private Score score;
+    private Score scoreId;
+
+    /**
+     * 扣了多少分 冗余字段
+     */
+    private Integer score;
+
+    /**
+     * 违规ID
+     */
+    private String violationId;
+
+    /**
+     * 违规名称 冗余字段
+     */
+    private String violationName;
 
     /**
      * 违规车辆的颜色
@@ -111,8 +126,8 @@ public class Event {
      */
     private Long num;
 
-    @Convert(converter = StatusConverter.class)
-    private Status status = Status.NORMAL;
+    @Convert(converter = DeletedConverter.class)
+    private Deleted deleted = Deleted.NORMAL;
 
     public Event() {
     }
@@ -137,25 +152,48 @@ public class Event {
      * 审批
      */
     public void approval() {
-        if (Status.APPROVAL.equals(this.status)) {
-            throw new BusinessException("该违规事件已经审批 请刷新页面");
-        }
-        this.setStatus(Status.APPROVAL);
-        this.setApprovalTime(LocalDateTime.now());
     }
 
     public void cancel() {
-        this.setStatus(Status.CANCEL);
-        this.setApprovalTime(LocalDateTime.now());
     }
 
 
-    public void setVehicle(Vehicle vehicle) {
+    public void updateVehicle(Vehicle vehicle) {
         this.setLicensePlateNumber(vehicle.getLicensePlateNumber());
         this.setDriverName(vehicle.getDriverName());
         this.setDriverPhone(vehicle.getDriverPhone());
         this.setCollegeName(vehicle.getCollegeName());
         this.setStudstaffno(vehicle.getStudstaffno());
+    }
+
+    /**
+     * 更新扣了多少分
+     */
+    public void updateScore(Score score) {
+        this.setScoreId(score);
+        this.setScore(score.getNumber());
+    }
+
+    /**
+     * 更新扣了多少分
+     */
+    public void updateScore(int score) {
+        this.setScore(score);
+    }
+
+    /**
+     * 更新违规类型
+     */
+    public void updateViolation(ViolationType violationType) {
+        if (violationType == null) {
+            throw new BusinessException("违规类型不能为空");
+        }
+        this.setViolationId(violationType.getId());
+        this.setViolationName(violationType.getName());
+    }
+
+    public void remove() {
+        this.setDeleted(Deleted.DELETED);
     }
 
     public String getId() {
@@ -182,12 +220,12 @@ public class Event {
         this.camera = camera;
     }
 
-    public Status getStatus() {
-        return status;
+    public Deleted getDeleted() {
+        return deleted;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setDeleted(Deleted deleted) {
+        this.deleted = deleted;
     }
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -256,12 +294,36 @@ public class Event {
         this.speed = speed;
     }
 
-    public Score getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(Score score) {
+    protected void setScore(Integer score) {
         this.score = score;
+    }
+
+    public Score getScoreId() {
+        return scoreId;
+    }
+
+    protected void setScoreId(Score scoreId) {
+        this.scoreId = scoreId;
+    }
+
+    public String getViolationId() {
+        return violationId;
+    }
+
+    protected void setViolationId(String violationId) {
+        this.violationId = violationId;
+    }
+
+    public String getViolationName() {
+        return violationName;
+    }
+
+    protected void setViolationName(String violationName) {
+        this.violationName = violationName;
     }
 
     public Long getNum() {
@@ -309,13 +371,11 @@ public class Event {
      *
      * @author liukai
      */
-    public enum Status implements BaseEnum {
+    public enum Deleted implements BaseEnum {
 
-        NORMAL(0, "未处理"),
-        APPROVAL(1, "审批"),
-        CANCEL(2, "作废");
+        NORMAL(0, "正常，未删除"), DELETED(1, "已删除");
 
-        Status(Integer value, String description) {
+        Deleted(Integer value, String description) {
             this.value = value;
             this.description = description;
         }
@@ -342,27 +402,29 @@ public class Event {
     }
 
 
-    public static class StatusConverter implements AttributeConverter<Status, Integer> {
+    public static class DeletedConverter implements AttributeConverter<Deleted, Integer> {
 
         @Override
-        public Integer convertToDatabaseColumn(Status attribute) {
+        public Integer convertToDatabaseColumn(Deleted attribute) {
             if (attribute == null) {
-                throw new BusinessException("Unknown status text  ");
+                throw new BusinessException("Unknown attribute text  ");
             }
             return attribute.getValue();
 
         }
 
         @Override
-        public Status convertToEntityAttribute(Integer dbData) {
-            for (Status status : Status.values()) {
-                if (status.getValue().equals(dbData)) {
-                    return status;
+        public Deleted convertToEntityAttribute(Integer dbData) {
+            for (Deleted deleted : Deleted.values()) {
+                if (deleted.getValue().equals(dbData)) {
+                    return deleted;
                 }
             }
-            throw new BusinessException("Unknown status text : " + dbData);
+            throw new BusinessException("Unknown dbData text : " + dbData);
         }
     }
 
 
 }
+
+

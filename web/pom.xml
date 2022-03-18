@@ -17,7 +17,7 @@
     <dependencies>
 
         <dependency>
-            <groupId>cn.com.goodlan.its</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>core</artifactId>
         </dependency>
 
@@ -83,6 +83,11 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
             <exclusions>
@@ -120,6 +125,7 @@
                 <executions>
                     <execution>
                         <id>repackage</id>
+                        <phase>package</phase>
                         <goals>
                             <goal>repackage</goal>
                         </goals>
