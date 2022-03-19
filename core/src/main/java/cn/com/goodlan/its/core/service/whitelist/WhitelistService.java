@@ -35,8 +35,8 @@ public class WhitelistService {
     }
 
 
-    public void remove(String licensePlateNumber) {
-        whitelistRepository.deleteById(licensePlateNumber);
+    public void remove(String id) {
+        whitelistRepository.deleteById(id);
     }
 
     public Page<Whitelist> search(String licensePlateNumber, Pageable pageable) {

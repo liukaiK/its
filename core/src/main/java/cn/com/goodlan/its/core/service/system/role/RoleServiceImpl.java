@@ -1,15 +1,15 @@
 package cn.com.goodlan.its.core.service.system.role;
 
-import cn.com.goodlan.its.core.exception.BusinessException;
 import cn.com.goodlan.its.core.dao.primary.system.role.RoleRepository;
+import cn.com.goodlan.its.core.exception.BusinessException;
 import cn.com.goodlan.its.core.mapstruct.RoleMapper;
 import cn.com.goodlan.its.core.pojo.dto.RoleDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Menu;
 import cn.com.goodlan.its.core.pojo.entity.primary.Role;
 import cn.com.goodlan.its.core.pojo.vo.RoleVO;
 import cn.hutool.core.convert.Convert;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -22,10 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 @Transactional(rollbackFor = Exception.class)
 public class RoleServiceImpl implements RoleService {
 
-    @Autowired
     private RoleRepository roleRepository;
 
     @Override
