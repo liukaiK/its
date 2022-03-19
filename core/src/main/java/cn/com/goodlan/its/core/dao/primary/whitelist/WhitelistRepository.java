@@ -9,4 +9,6 @@ public interface WhitelistRepository extends CustomizeRepository<Whitelist, Stri
 
     Page<Whitelist> findByLicensePlateNumber(String licensePlateNumber, Pageable pageable);
 
+    Whitelist findByLicensePlateNumber(String licensePlateNumber);
+
 }

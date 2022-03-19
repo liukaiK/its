@@ -17,7 +17,6 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 public class RabbitObtainEventImpl {
@@ -51,9 +50,8 @@ public class RabbitObtainEventImpl {
             return;
         }
 
-        Optional<Whitelist> whitelist = whitelistRepository.findById(trafficEvent.getM_PlateNumber());
-
-        if (whitelist.isPresent()) {
+        if (inWhiteList(trafficEvent)) {
+            log.info("白名单中存在此车辆 不记录:{}", trafficEvent.getM_PlateNumber());
             return;
         }
 
@@ -67,6 +65,14 @@ public class RabbitObtainEventImpl {
 
         log.info("没有可处理 {} 事件的handler", trafficEvent.getM_EventName());
 
+    }
+
+    /**
+     * 在不在白名单里面
+     */
+    private boolean inWhiteList(TrafficEvent trafficEvent) {
+        Whitelist whitelist = whitelistRepository.findByLicensePlateNumber(trafficEvent.getM_PlateNumber().trim());
+        return whitelist != null;
     }
 
     public void addHandler(EventHandler eventHandler) {

@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.core.service.whitelist;
 
 import cn.com.goodlan.its.core.dao.primary.whitelist.WhitelistRepository;
+import cn.com.goodlan.its.core.exception.DataValidException;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Whitelist;
 import cn.com.goodlan.its.core.util.StringUtils;
 import lombok.AllArgsConstructor;
@@ -19,9 +20,18 @@ public class WhitelistService {
 
 
     public void save(String licensePlateNumber) {
+        licensePlateNumber = licensePlateNumber.trim();
+        if (existsLicensePlateNumber(licensePlateNumber)) {
+            throw new DataValidException("此车牌号码已经存在于白名单中");
+        }
         Whitelist whitelist = new Whitelist();
         whitelist.setLicensePlateNumber(licensePlateNumber);
         whitelistRepository.save(whitelist);
+    }
+
+    private boolean existsLicensePlateNumber(String licensePlateNumber) {
+        Whitelist whitelist = whitelistRepository.findByLicensePlateNumber(licensePlateNumber);
+        return whitelist != null;
     }
 
 

@@ -3,8 +3,10 @@ package cn.com.goodlan.its.core.pojo.entity.primary.event;
 import cn.com.goodlan.its.core.pojo.entity.primary.AbstractEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -20,7 +22,10 @@ import javax.persistence.Table;
 public class Whitelist extends AbstractEntity {
 
     @Id
-    private String licensePlateNumber;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    private String id;
 
+    private String licensePlateNumber;
 
 }

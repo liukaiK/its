@@ -2,6 +2,7 @@ package cn.com.goodlan.its.web.configuration;
 
 import cn.com.goodlan.its.core.annotations.ResponseResultBody;
 import cn.com.goodlan.its.core.exception.BusinessException;
+import cn.com.goodlan.its.core.exception.DataValidException;
 import cn.com.goodlan.its.core.pojo.Result;
 import cn.com.goodlan.its.core.util.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -79,7 +80,7 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
 //
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
     public Result handleException(HttpRequestMethodNotSupportedException e) {
-        log.error(e.getMessage(), e);
+        log.warn(e.getMessage(), e);
         return Result.fail(500, "不支持' " + e.getMethod() + "'请求");
     }
 
@@ -103,9 +104,17 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
      */
     @ExceptionHandler(BindException.class)
     public Result validatedBindException(BindException e) {
-        log.debug(e.getMessage(), e);
+        log.warn(e.getMessage(), e);
         String message = e.getAllErrors().get(0).getDefaultMessage();
         return Result.fail(500, message);
+    }
+
+    /**
+     * 数据校验异常
+     */
+    @ExceptionHandler(DataValidException.class)
+    public Result dataValidException(DataValidException e) {
+        return Result.fail(400, e.getMessage());
     }
 
 //    /**
@@ -117,13 +126,5 @@ public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
 //        return Result.fail(400, message);
 //    }
 //
-//
-//    /**
-//     * 数据校验异常
-//     */
-//    @ExceptionHandler(DataValidException.class)
-//    public Result dataValidException(DataValidException e) {
-//        return Result.fail(400, e.getMessage());
-//    }
 //
 }
