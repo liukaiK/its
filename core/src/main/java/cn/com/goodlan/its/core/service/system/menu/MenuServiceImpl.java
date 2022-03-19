@@ -1,12 +1,13 @@
 package cn.com.goodlan.its.core.service.system.menu;
 
-import cn.com.goodlan.its.core.exception.BusinessException;
 import cn.com.goodlan.its.core.dao.primary.system.menu.MenuRepository;
+import cn.com.goodlan.its.core.exception.BusinessException;
+import cn.com.goodlan.its.core.mapstruct.MenuMapper;
 import cn.com.goodlan.its.core.pojo.dto.MenuDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Menu;
+import cn.com.goodlan.its.core.pojo.entity.primary.Role;
 import cn.com.goodlan.its.core.pojo.vo.MenuVO;
 import cn.com.goodlan.its.core.pojo.vo.Ztree;
-import cn.com.goodlan.its.core.mapstruct.MenuMapper;
 import cn.hutool.core.collection.CollectionUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +113,7 @@ public class MenuServiceImpl implements MenuService {
                 throw new BusinessException("存在子菜单,不允许删除");
             }
             if (menu.get().hasRole()) {
-                throw new BusinessException("菜单已分配角色,不允许删除");
+                throw new BusinessException("菜单已分配" + StringUtils.join(menu.get().getRoleList().stream().map(Role::getName).toArray(), ",") + "角色,不允许删除 ");
             }
             menuRepository.deleteById(menuId);
         }
