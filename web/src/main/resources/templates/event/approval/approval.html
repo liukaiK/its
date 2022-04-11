@@ -109,15 +109,7 @@
                 },
                 {
                     field: 'num',
-                    title: '次序',
-                    formatter: function (value, row, index) {
-                        if (row.violationName.startsWith("超速")) {
-                            return '第' + row.num + '次超速' ;
-                        }else{
-                            return '第' + row.num + '次违停';
-                        }
-
-                    },
+                    title: '次序'
                 },
                 {
                     field: 'violationName',
@@ -125,13 +117,7 @@
                 },
                 {
                     field: 'score',
-                    title: '扣分',
-                    formatter: function (value, row, index) {
-                        if (row.score === 0) {
-                            return '第一次不扣分';
-                        }
-                        return row.score + '分';
-                    }
+                    title: '扣分'
                 },
                 {
                     field: 'time',

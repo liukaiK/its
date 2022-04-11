@@ -15,43 +15,6 @@ public class EventVO {
     @Excel(name = "车牌号", sort = 1)
     private String vehicleNumber;
 
-    private String regionName;
-
-    /**
-     * 违规分类
-     */
-    private String violationName;
-
-    private String laneNumber;
-
-    private String vehicleColor;
-
-    private String vehicleSize;
-
-    /**
-     * 扣了多少分
-     */
-    @Excel(name = "扣分", cellType = Excel.ColumnType.NUMERIC, sort = 9)
-    private Integer score;
-
-    /**
-     * 违规地点
-     */
-    @Excel(name = "违规地点", sort = 4)
-    private String place;
-
-    @Excel(name = "车速", suffix = "km/h", sort = 8)
-    private Integer speed;
-
-
-    @Excel(name = "违规时间", dateFormat = "yyyy-MM-dd HH:mm:ss", sort = 5)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime time;
-
-    private String imageUrl;
-
-    private Long num;
-
     /**
      * 车主姓名
      */
@@ -61,14 +24,51 @@ public class EventVO {
     /**
      * 车主电话
      */
-    @Excel(name = "车主电话", sort = 10)
+    @Excel(name = "车主电话", cellType = Excel.ColumnType.STRING, sort = 3)
     private String driverPhone;
 
     /**
      * 部门名称
      */
-    @Excel(name = "所属单位", defaultValue = "未知", sort = 3)
+    @Excel(name = "所属单位", defaultValue = "未知", sort = 4)
     private String bmmc;
+
+    @Excel(name = "次序", cellType = Excel.ColumnType.STRING, sort = 5)
+    private String num;
+
+    /**
+     * 违规分类
+     */
+    @Excel(name = "违规分类", cellType = Excel.ColumnType.STRING, sort = 6)
+    private String violationName;
+
+    /**
+     * 扣了多少分
+     */
+    @Excel(name = "扣分", cellType = Excel.ColumnType.STRING, sort = 7)
+    private String score;
+
+    @Excel(name = "违规时间", dateFormat = "yyyy-MM-dd HH:mm:ss", sort = 8)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime time;
+
+    /**
+     * 违规地点
+     */
+    @Excel(name = "违规地点", sort = 9)
+    private String place;
+
+    private String regionName;
+
+    private String laneNumber;
+
+    private String vehicleColor;
+
+    private String vehicleSize;
+
+    private Integer speed;
+
+    private String imageUrl;
 
     public String getId() {
         return id;
@@ -126,11 +126,11 @@ public class EventVO {
         this.vehicleSize = vehicleSize;
     }
 
-    public Integer getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(String score) {
         this.score = score;
     }
 
@@ -166,11 +166,11 @@ public class EventVO {
         this.imageUrl = imageUrl;
     }
 
-    public Long getNum() {
+    public String getNum() {
         return num;
     }
 
-    public void setNum(Long num) {
+    public void setNum(String num) {
         this.num = num;
     }
 
