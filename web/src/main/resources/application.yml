@@ -64,4 +64,7 @@ management:
 logging:
   level:
     web: off
-    org.hibernate.type.descriptor.sql.BasicBinder: off
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+knife4j:
+  enable: true                             # 开启增强配置
+  production: false                        # 开启生产环境屏蔽

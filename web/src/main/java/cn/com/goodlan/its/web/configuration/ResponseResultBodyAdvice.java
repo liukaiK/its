@@ -29,32 +29,12 @@ import java.lang.annotation.Annotation;
  */
 @Slf4j
 @RestControllerAdvice
-public class ResponseResultBodyAdvice implements ResponseBodyAdvice<Object> {
+public class ResponseResultBodyAdvice {
 
     private static final Class<? extends Annotation> ANNOTATION_TYPE = ResponseResultBody.class;
 
 
-    /**
-     * 判断类或者方法是否使用了 @ResponseResultBody
-     */
-    @Override
-    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return AnnotatedElementUtils.hasAnnotation(returnType.getContainingClass(), ANNOTATION_TYPE) || returnType.hasMethodAnnotation(ANNOTATION_TYPE);
-    }
 
-    @Override
-    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        // 防止重复包裹的问题出现
-
-        if (body instanceof Boolean) {
-            return body;
-        }
-
-        if (body instanceof Result) {
-            return body;
-        }
-        return Result.success(body);
-    }
 
     /**
      * Exception异常处理

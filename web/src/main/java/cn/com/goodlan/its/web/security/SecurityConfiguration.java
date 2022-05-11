@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.web.security;
 
 import cn.com.goodlan.its.core.constant.SystemConstant;
+import com.github.xiaoymin.knife4j.spring.configuration.Knife4jProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,7 +17,7 @@ import org.springframework.security.web.authentication.RememberMeServices;
  *
  * @author liukai
  */
-@EnableWebSecurity(debug = false)
+@EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -32,8 +33,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private RememberMeServices rememberMeServices;
 
+    @Autowired
+    private Knife4jProperties knife4jProperties;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        if (!knife4jProperties.isProduction()) {
+            http.csrf().disable();
+        }
+
         http
                 .authorizeRequests()
                 .antMatchers(SystemConstant.LOGIN_PAGE).permitAll()

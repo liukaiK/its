@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +45,8 @@ public class RabbitObtainEventImpl {
         } catch (JsonProcessingException e) {
             log.error("解析mq消息失败:", e);
             return;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
         if (StringUtils.isEmpty(trafficEvent.getM_PlateNumber())) {

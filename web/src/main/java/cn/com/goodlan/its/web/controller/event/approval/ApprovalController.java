@@ -1,12 +1,16 @@
 package cn.com.goodlan.its.web.controller.event.approval;
 
-import cn.com.goodlan.its.core.annotations.ResponseResultBody;
+import cn.com.goodlan.its.core.pojo.Result;
 import cn.com.goodlan.its.core.pojo.dto.EventDTO;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.service.event.approval.EventService;
 import cn.com.goodlan.its.core.service.system.violation.ViolationTypeService;
 import cn.com.goodlan.its.core.util.ExcelUtil;
 import cn.com.goodlan.its.core.util.StringUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +19,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +31,7 @@ import java.util.Map;
  * @author liukai
  */
 @RestController
-@ResponseResultBody
+@Api(tags = "违规审批")
 @AllArgsConstructor
 @RequestMapping("/event/approval")
 public class ApprovalController {
@@ -52,9 +57,16 @@ public class ApprovalController {
      * 分页查询
      */
     @PostMapping("/search")
+    @ApiOperation("违规审批查询")
+    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "type", value = "", paramType = "form"),
+//            @ApiImplicitParam(name = "pType", value = "", paramType = "form"),
+            @ApiImplicitParam(name = "page", value = "当前页码", defaultValue = "0", dataType = "int", paramType = "form"),
+            @ApiImplicitParam(name = "size", value = "每页数据条数", defaultValue = "10", dataType = "int", paramType = "form"),
+    })
     @PreAuthorize("hasAuthority('event:approval:search')")
-    public Page<EventVO> search(EventDTO eventDTO, @PageableDefault Pageable pageable) {
-        return eventService.search(eventDTO, pageable);
+    public Result<Page<EventVO>> search(EventDTO eventDTO, @ApiIgnore @PageableDefault Pageable pageable) {
+        return Result.success(eventService.search(eventDTO, pageable));
     }
 
 

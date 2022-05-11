@@ -3,6 +3,7 @@ package cn.com.goodlan.its.core.pojo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,8 @@ import java.time.LocalDateTime;
  * @author liukai
  */
 @Getter
-public class Result {
+@Setter
+public class Result<T> {
 
     private static final Integer SUCCESSFUL_CODE = 0;
 
@@ -30,7 +32,7 @@ public class Result {
     private final String message;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Object data;
+    private T data;
 
     /**
      * 时间戳
@@ -42,7 +44,7 @@ public class Result {
     /**
      * 内部使用，用于构造成功的结果
      */
-    private Result(Integer code, String message, Object data) {
+    private Result(Integer code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
@@ -61,8 +63,8 @@ public class Result {
     /**
      * 快速创建成功结果并返回结果数据
      */
-    public static Result success(Object data) {
-        return new Result(SUCCESSFUL_CODE, SUCCESSFUL_MESSAGE, data);
+    public static <T> Result<T> success(T data) {
+        return new Result<>(SUCCESSFUL_CODE, SUCCESSFUL_MESSAGE, data);
     }
 
     /**
@@ -70,12 +72,12 @@ public class Result {
      *
      * @return Result
      */
-    public static Result success() {
+    public static <T> Result<T> success() {
         return success(null);
     }
 
-    public static Result fail(Integer code, String message) {
-        return new Result(code, message);
+    public static <T> Result<T> fail(Integer code, String message) {
+        return new Result<T>(code, message);
     }
 
 }
