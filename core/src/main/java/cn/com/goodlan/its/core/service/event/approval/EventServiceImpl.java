@@ -19,6 +19,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.time.LocalDateTime;
@@ -113,7 +114,12 @@ public class EventServiceImpl implements EventService {
                 list.add(criteriaBuilder.like(root.get("collegeName").as(String.class), eventQuery.getCollegeName() + "%"));
             }
             if (StringUtils.isNotEmpty(eventQuery.getViolationTypeId())) {
-                list.add(criteriaBuilder.equal(root.get("violationId").as(String.class), eventQuery.getViolationTypeId()));
+                CriteriaBuilder.In<String> violationIdIn = criteriaBuilder.in(root.get("violationId").as(String.class));
+                String[] violationIds = StringUtils.split(eventQuery.getViolationTypeId(), ',');
+                for (String violationId : violationIds) {
+                    violationIdIn.value(violationId);
+                }
+                list.add(violationIdIn);
             }
             if (StringUtils.isNotEmpty(eventQuery.getDriverName())) {
                 list.add(criteriaBuilder.like(root.get("driverName").as(String.class), eventQuery.getDriverName() + "%"));

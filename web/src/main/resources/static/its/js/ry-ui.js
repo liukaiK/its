@@ -649,6 +649,10 @@ var table = {
                 $("#" + currentId).find('input:text').each(function () {
                     this.value = '';
                 })
+                // 清空多选下拉框的值
+                $("#" + currentId).find('div.filter-option-inner-inner').each(function () {
+                    this.innerHTML = '';
+                })
                 if (table.options.type == table_type.bootstrapTable) {
                     if ($.common.isEmpty(tableId)) {
                         $("#" + table.options.id).bootstrapTable('refresh');
