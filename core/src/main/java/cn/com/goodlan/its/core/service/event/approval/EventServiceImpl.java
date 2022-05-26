@@ -3,9 +3,9 @@ package cn.com.goodlan.its.core.service.event.approval;
 import cn.com.goodlan.its.core.dao.primary.event.EventRepository;
 import cn.com.goodlan.its.core.mapstruct.EventMapper;
 import cn.com.goodlan.its.core.pojo.Params;
-import cn.com.goodlan.its.core.pojo.dto.EventDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
+import cn.com.goodlan.its.core.pojo.query.EventQuery;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.service.system.vehicle.VehicleService;
 import cn.hutool.core.convert.Convert;
@@ -40,16 +40,16 @@ public class EventServiceImpl implements EventService {
     private EventMapper eventMapper;
 
     @Override
-    public Page<EventVO> search(EventDTO eventDTO, Pageable pageable) {
-        Specification<Event> specification = querySpecification(eventDTO);
+    public Page<EventVO> search(EventQuery eventQuery, Pageable pageable) {
+        Specification<Event> specification = querySpecification(eventQuery);
         Page<Event> page = eventRepository.findAll(specification, pageable);
         List<EventVO> list = eventMapper.convertList(page.getContent());
         return new PageImpl<>(list, page.getPageable(), page.getTotalElements());
     }
 
     @Override
-    public List<EventVO> export(EventDTO eventDTO) {
-        Specification<Event> specification = querySpecification(eventDTO);
+    public List<EventVO> export(EventQuery eventQuery) {
+        Specification<Event> specification = querySpecification(eventQuery);
         List<Event> list = eventRepository.findAll(specification);
         return eventMapper.convertList(list);
     }
@@ -103,29 +103,29 @@ public class EventServiceImpl implements EventService {
         }
     }
 
-    private Specification<Event> querySpecification(EventDTO eventDTO) {
+    private Specification<Event> querySpecification(EventQuery eventQuery) {
         return (root, query, criteriaBuilder) -> {
             if (!query.getResultType().equals(Long.class)) {
                 root.fetch("camera", JoinType.LEFT);
             }
             List<Predicate> list = new ArrayList<>();
-            if (StringUtils.isNotEmpty(eventDTO.getCollegeName())) {
-                list.add(criteriaBuilder.like(root.get("collegeName").as(String.class), eventDTO.getCollegeName() + "%"));
+            if (StringUtils.isNotEmpty(eventQuery.getCollegeName())) {
+                list.add(criteriaBuilder.like(root.get("collegeName").as(String.class), eventQuery.getCollegeName() + "%"));
             }
-            if (StringUtils.isNotEmpty(eventDTO.getViolationTypeId())) {
-                list.add(criteriaBuilder.equal(root.get("violationId").as(String.class), eventDTO.getViolationTypeId()));
+            if (StringUtils.isNotEmpty(eventQuery.getViolationTypeId())) {
+                list.add(criteriaBuilder.equal(root.get("violationId").as(String.class), eventQuery.getViolationTypeId()));
             }
-            if (StringUtils.isNotEmpty(eventDTO.getDriverName())) {
-                list.add(criteriaBuilder.like(root.get("driverName").as(String.class), eventDTO.getDriverName() + "%"));
+            if (StringUtils.isNotEmpty(eventQuery.getDriverName())) {
+                list.add(criteriaBuilder.like(root.get("driverName").as(String.class), eventQuery.getDriverName() + "%"));
             }
-            if (StringUtils.isNotEmpty(eventDTO.getVehicleNumber())) {
-                list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), "%" + eventDTO.getVehicleNumber() + "%"));
+            if (StringUtils.isNotEmpty(eventQuery.getVehicleNumber())) {
+                list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), "%" + eventQuery.getVehicleNumber() + "%"));
             }
-            if (StringUtils.isNotEmpty(eventDTO.getStartTime())) {
-                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("time").as(String.class), eventDTO.getStartTime()));
+            if (StringUtils.isNotEmpty(eventQuery.getStartTime())) {
+                list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("time").as(String.class), eventQuery.getStartTime()));
             }
-            if (StringUtils.isNotEmpty(eventDTO.getEndTime())) {
-                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("time").as(String.class), eventDTO.getEndTime()));
+            if (StringUtils.isNotEmpty(eventQuery.getEndTime())) {
+                list.add(criteriaBuilder.lessThanOrEqualTo(root.get("time").as(String.class), eventQuery.getEndTime()));
             }
             list.add(criteriaBuilder.equal(root.get("deleted").as(Event.Deleted.class), Event.Deleted.NORMAL));
             Predicate[] p = new Predicate[list.size()];

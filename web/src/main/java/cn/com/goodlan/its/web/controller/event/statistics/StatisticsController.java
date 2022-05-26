@@ -2,7 +2,7 @@ package cn.com.goodlan.its.web.controller.event.statistics;
 
 import cn.com.goodlan.its.core.annotations.ResponseResultBody;
 import cn.com.goodlan.its.core.pojo.dto.EventDTO;
-import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
+import cn.com.goodlan.its.core.pojo.query.EventQuery;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.pojo.vo.StatisticsExcel;
 import cn.com.goodlan.its.core.service.event.approval.EventService;
@@ -57,9 +57,9 @@ public class StatisticsController {
      */
     @PostMapping("/search")
     @PreAuthorize("hasAuthority('event:statistics:search')")
-    public Page<EventVO> search(EventDTO eventDTO, @PageableDefault Pageable pageable) {
+    public Page<EventVO> search(EventQuery eventQuery, @PageableDefault Pageable pageable) {
 //        eventDTO.setStatus(Event.Deleted.APPROVAL);
-        return eventService.search(eventDTO, pageable);
+        return eventService.search(eventQuery, pageable);
     }
 
     /**

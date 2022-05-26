@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.web.controller.event.approval;
 
 import cn.com.goodlan.its.core.annotations.ResponseResultBody;
-import cn.com.goodlan.its.core.pojo.dto.EventDTO;
+import cn.com.goodlan.its.core.pojo.query.EventQuery;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.service.event.approval.EventService;
 import cn.com.goodlan.its.core.service.system.violation.ViolationTypeService;
@@ -53,8 +53,8 @@ public class ApprovalController {
      */
     @PostMapping("/search")
     @PreAuthorize("hasAuthority('event:approval:search')")
-    public Page<EventVO> search(EventDTO eventDTO, @PageableDefault Pageable pageable) {
-        return eventService.search(eventDTO, pageable);
+    public Page<EventVO> search(EventQuery eventQuery, @PageableDefault Pageable pageable) {
+        return eventService.search(eventQuery, pageable);
     }
 
 
@@ -84,9 +84,9 @@ public class ApprovalController {
      */
     @PostMapping("/export")
     @PreAuthorize("hasAuthority('event:approval:export')")
-    public Map<String, Object> export(EventDTO eventDTO) {
+    public Map<String, Object> export(EventQuery eventQuery) {
         Map<String, Object> map = new HashMap<>(1);
-        List<EventVO> list = eventService.export(eventDTO);
+        List<EventVO> list = eventService.export(eventQuery);
         ExcelUtil<EventVO> util = new ExcelUtil<>(EventVO.class);
         String fileName = util.exportExcel(list, "审批数据");
         map.put("fileName", fileName);
