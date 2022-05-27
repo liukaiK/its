@@ -148,15 +148,21 @@ public class Event {
         return camera.getRegion();
     }
 
-    /**
-     * 审批
-     */
-    public void approval() {
+    public boolean isSpeed1() {
+        return this.getScoreId().isSpeed1();
     }
 
-    public void cancel() {
+    public boolean isSpeed2() {
+        return this.getScoreId().isSpeed2();
     }
 
+    public boolean isSpeed3() {
+        return this.getScoreId().isSpeed3();
+    }
+
+    public boolean isStop() {
+        return this.getScoreId().isStop();
+    }
 
     public void updateVehicle(Vehicle vehicle) {
         this.setLicensePlateNumber(vehicle.getLicensePlateNumber());

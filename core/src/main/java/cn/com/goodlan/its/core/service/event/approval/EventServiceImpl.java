@@ -95,11 +95,14 @@ public class EventServiceImpl implements EventService {
         }
         for (Event event : list) {
             if (event.getNum() == 1) {
-                if (event.getScoreId().isSpeed1() || event.getScoreId().isSpeed2() || event.getScoreId().isStop()) {
+                if (event.isSpeed1() || event.isSpeed2() || event.isStop()) {
                     event.updateScore(0);
-                } else {
+                    break;
+                }
+                if (event.isSpeed3()) {
                     event.updateScore(event.getScoreId());
                 }
+                log.error("未知的违规类型:{}", event.getViolationName());
             }
         }
     }
