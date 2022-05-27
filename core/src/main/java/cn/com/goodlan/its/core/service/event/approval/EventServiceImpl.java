@@ -8,6 +8,7 @@ import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.query.EventQuery;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.service.system.vehicle.VehicleService;
+import cn.com.goodlan.its.core.util.DateUtils;
 import cn.hutool.core.convert.Convert;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +24,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -70,11 +69,9 @@ public class EventServiceImpl implements EventService {
             }
 
 
-            // 年的第一天
-            LocalDateTime firstDay = LocalDateTime.of(event.getTime().toLocalDate().with(TemporalAdjusters.firstDayOfYear()), LocalTime.MIN);
+            LocalDateTime firstDay = DateUtils.getFirstDayOfYear(event.getTime());
 
-            // 年的最后一天
-            LocalDateTime lastDay = LocalDateTime.of(event.getTime().toLocalDate().with(TemporalAdjusters.lastDayOfYear()), LocalTime.MAX);
+            LocalDateTime lastDay = DateUtils.getLastDayOfYear(event.getTime());
 
             // 查询需要刷新的历史数据
             List<Event> list = eventRepository.findByTimeGreaterThanEqualAndTimeLessThanEqualAndViolationName(firstDay, lastDay, violationName + "%", event.getLicensePlateNumber(), Event.Deleted.NORMAL);
@@ -85,6 +82,7 @@ public class EventServiceImpl implements EventService {
 
 
     }
+
 
     /**
      * 刷新历史数据

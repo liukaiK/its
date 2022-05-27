@@ -6,7 +6,9 @@ import java.lang.management.ManagementFactory;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
 /**
@@ -146,4 +148,19 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         // long sec = diff % nd % nh % nm / ns;
         return day + "天" + hour + "小时" + min + "分钟";
     }
+
+    /**
+     * 获取这一年的第一天
+     */
+    public static LocalDateTime getLastDayOfYear(LocalDateTime localDateTime) {
+        return LocalDateTime.of(localDateTime.toLocalDate().with(TemporalAdjusters.lastDayOfYear()), LocalTime.MAX);
+    }
+
+    /**
+     * 获取这一年的最后一天
+     */
+    public static LocalDateTime getFirstDayOfYear(LocalDateTime localDateTime) {
+        return LocalDateTime.of(localDateTime.toLocalDate().with(TemporalAdjusters.firstDayOfYear()), LocalTime.MIN);
+    }
+
 }
