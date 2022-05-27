@@ -4,6 +4,7 @@ import cn.com.goodlan.its.core.constant.SystemConstant;
 import cn.com.goodlan.its.core.exception.authentication.UsernameMoreThanOneException;
 import cn.com.goodlan.its.core.pojo.Result;
 import cn.com.goodlan.its.core.util.HttpUtil;
+import cn.com.goodlan.its.core.util.ResponseUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * @author liukai
@@ -31,21 +31,11 @@ public class SecurityAuthenticationEntryPoint implements AuthenticationEntryPoin
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         if (HttpUtil.isAjaxRequest(request)) {
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.setStatus(HttpServletResponse.SC_OK);
-            PrintWriter writer = response.getWriter();
             if (authException instanceof UsernameMoreThanOneException) {
-                Result responseBody = Result.fail(500, "用户数据出现异常,请联系管理员");
-                writer.write(objectMapper.writeValueAsString(responseBody));
-                writer.close();
+                ResponseUtil.write(response, objectMapper.writeValueAsString(Result.fail(500, "用户数据出现异常,请联系管理员")), MediaType.APPLICATION_JSON_VALUE);
                 return;
             }
-
-            Result responseBody = Result.fail(403, "认证已失效,需要重新登录");
-
-            writer.write(objectMapper.writeValueAsString(responseBody));
-            writer.close();
+            ResponseUtil.write(response, objectMapper.writeValueAsString(Result.fail(403, "页面已经过期 请手动刷新页面")), MediaType.APPLICATION_JSON_VALUE);
         } else {
             response.sendRedirect(SystemConstant.LOGIN_PAGE);
         }
