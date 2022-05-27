@@ -10,7 +10,6 @@ import cn.com.goodlan.its.core.pojo.TrafficEvent;
 import cn.com.goodlan.its.core.pojo.entity.primary.Camera;
 import cn.com.goodlan.its.core.pojo.entity.primary.Score;
 import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
-import cn.com.goodlan.its.core.pojo.entity.primary.ViolationType;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.service.event.CountService;
 import cn.com.goodlan.its.core.util.DateUtils;
@@ -78,7 +77,7 @@ public class StopEventHandlerImpl implements EventHandler {
             Long count = countService.queryCount(vehicle.getLicensePlateNumber(), STOP);
             Score score = scoreRepository.getOne("0f647018-2c28-4bfe-ae10-e9586cfb66b0");
             if (count == 1) {
-                event = warn(camera, trafficEvent, imageUrl, vehicle, score.getViolation());
+                event = warn(camera, trafficEvent, imageUrl, vehicle, score);
                 sendSmsAndWeLink(event);
                 return;
             }
@@ -160,9 +159,9 @@ public class StopEventHandlerImpl implements EventHandler {
         smsService.sendWelink(messageParam);
     }
 
-    private Event warn(Camera camera, TrafficEvent trafficEvent, String imageUrl, Vehicle vehicle, ViolationType violationType) {
+    private Event warn(Camera camera, TrafficEvent trafficEvent, String imageUrl, Vehicle vehicle, Score score) {
         Event event = new Event();
-
+        event.updateScore(score);
         event.setNum(1L);
         event.setCamera(camera);
         event.setPlace(camera.getPosition());
@@ -174,7 +173,7 @@ public class StopEventHandlerImpl implements EventHandler {
         event.setSpeed(trafficEvent.getNSpeed());
         event.updateVehicle(vehicle);
         event.updateScore(0);
-        event.updateViolation(violationType);
+        event.updateViolation(score.getViolation());
         return eventRepository.save(event);
 
 

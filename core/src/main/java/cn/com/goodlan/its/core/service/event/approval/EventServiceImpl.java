@@ -70,8 +70,10 @@ public class EventServiceImpl implements EventService {
             }
 
 
+            // 年的第一天
             LocalDateTime firstDay = LocalDateTime.of(event.getTime().toLocalDate().with(TemporalAdjusters.firstDayOfYear()), LocalTime.MIN);
 
+            // 年的最后一天
             LocalDateTime lastDay = LocalDateTime.of(event.getTime().toLocalDate().with(TemporalAdjusters.lastDayOfYear()), LocalTime.MAX);
 
             // 查询需要刷新的历史数据
