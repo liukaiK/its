@@ -119,17 +119,17 @@ public class SpeedEventHandlerImpl implements EventHandler {
             Long count = countService.queryCount(vehicle.getLicensePlateNumber(), SPEED);
             Event event;
             if (count == 1) {
-                if (score.isScore1()) {
+                if (score.isSpeed1()) {
                     event = warn(camera, trafficEvent, imageUrl, vehicle, score.getViolation(), score);
                     sendSmsAndWeLink(event);
                     return;
                 }
-                if (score.isScore2()) {
+                if (score.isSpeed2()) {
                     event = warn(camera, trafficEvent, imageUrl, vehicle, score.getViolation(), score);
                     sendSmsAndWeLink(event);
                     return;
                 }
-                if (score.isScore3()) {
+                if (score.isSpeed3()) {
                     event = warnAndCalculateScoreAndHitBack(trafficEvent, score, vehicle, camera, count, imageUrl);
                     sendSmsAndWeLink(event);
                 }
@@ -137,17 +137,17 @@ public class SpeedEventHandlerImpl implements EventHandler {
             }
 
             if (count == 2) {
-                if (score.isScore1()) {
+                if (score.isSpeed1()) {
                     event = calculateScore(trafficEvent, score, vehicle, camera, count, imageUrl);
                     sendSmsAndWeLink(event);
                     return;
                 }
-                if (score.isScore2()) {
+                if (score.isSpeed2()) {
                     event = calculateScoreAndHitBack(trafficEvent, score, vehicle, camera, count, imageUrl);
                     sendSmsAndWeLink(event);
                     return;
                 }
-                if (score.isScore3()) {
+                if (score.isSpeed3()) {
                     event = calculateScoreAndHitBack(trafficEvent, score, vehicle, camera, count, imageUrl);
                     sendSmsAndWeLink(event);
                 }
@@ -155,17 +155,17 @@ public class SpeedEventHandlerImpl implements EventHandler {
             }
 
             if (count >= 3) {
-                if (score.isScore1()) {
+                if (score.isSpeed1()) {
                     event = calculateScoreAndHitBack(trafficEvent, score, vehicle, camera, count, imageUrl);
                     sendSmsAndWeLink(event);
                     return;
                 }
-                if (score.isScore2()) {
+                if (score.isSpeed2()) {
                     event = calculateScoreAndHitBack(trafficEvent, score, vehicle, camera, count, imageUrl);
                     sendSmsAndWeLink(event);
                     return;
                 }
-                if (score.isScore3()) {
+                if (score.isSpeed3()) {
                     event = calculateScoreAndHitBack(trafficEvent, score, vehicle, camera, count, imageUrl);
                     sendSmsAndWeLink(event);
                 }

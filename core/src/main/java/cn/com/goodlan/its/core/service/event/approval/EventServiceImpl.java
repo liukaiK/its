@@ -95,7 +95,7 @@ public class EventServiceImpl implements EventService {
         }
         for (Event event : list) {
             if (event.getNum() == 1) {
-                if (event.getScoreId().isScore1() || event.getScoreId().isScore2() || event.getScoreId().isStop()) {
+                if (event.getScoreId().isSpeed1() || event.getScoreId().isSpeed2() || event.getScoreId().isStop()) {
                     event.updateScore(0);
                 } else {
                     event.updateScore(event.getScoreId());
