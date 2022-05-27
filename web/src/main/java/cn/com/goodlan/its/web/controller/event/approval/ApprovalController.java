@@ -103,4 +103,16 @@ public class ApprovalController {
         return new ModelAndView("event/approval/approvaldetail");
     }
 
+
+    @GetMapping("/vehicleNumberModal")
+    @PreAuthorize("hasAuthority('event:approval:search')")
+    public ModelAndView vehicleNumberModal(Model model, String vehicleNumber) {
+        model.addAttribute("violationTypeList", violationTypeService.findAll());
+        model.addAttribute("vehicleNumber", vehicleNumber);
+        return new ModelAndView("event/approval/vehicleNumberModal");
+    }
+
+
+
+
 }

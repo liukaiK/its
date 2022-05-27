@@ -15,20 +15,7 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                车牌号：<input type="text" name="vehicleNumber"/>
-                            </li>
-                            <li>
-                                车主：<input type="text" name="driverName"/>
-                            </li>
-                            <li>
-                                所属单位：<input type="text" name="collegeName" th:value="${collageName}"/>
-                            </li>
-                            <li>
-                                违规分类：
-                                <select name="violationTypeId" class="selectpicker" data-none-selected-text="请选择" multiple>
-                                        <option th:each="violationType : ${violationTypeList}" th:text="${violationType.name}" th:value="${violationType.id}"></option>
-                                </select>
-
+                                车牌号：<input type="text" name="vehicleNumber" th:value="${vehicleNumber}" readonly/>
                             </li>
                             <li class="select-time">
                                 <label>违规时间： </label>
@@ -46,11 +33,11 @@
                 </form>
             </div>
 
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" sec:authorize="hasAuthority('event:approval:export')">
-                    <i class="fa fa-download"></i> 导出
-                </a>
-            </div>
+<!--            <div class="btn-group-sm" id="toolbar" role="group">-->
+<!--                <a class="btn btn-warning" onclick="$.table.exportExcel()" sec:authorize="hasAuthority('event:approval:export')">-->
+<!--                    <i class="fa fa-download"></i> 导出-->
+<!--                </a>-->
+<!--            </div>-->
 
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -93,12 +80,7 @@
             columns: [
                 {
                     field: 'vehicleNumber',
-                    title: '车牌号',
-                    formatter: function (value, row, index) {
-                        var vehicleNumber = [];
-                        vehicleNumber.push('<a href="javascript:void(0)" onclick="openVehicleNumberModal(\'' + row.vehicleNumber + '\')">' + row.vehicleNumber + '</a>');
-                        return vehicleNumber.join('');
-                    },
+                    title: '车牌号'
                 },
                 {
                     field: 'driverName',
@@ -138,37 +120,21 @@
                 {
                     field: 'place',
                     title: '违规地点'
-                },
+                }
 
-                {
-                    title: '操作',
-                    align: 'center',
-                    formatter: function (value, row, index) {
-                        var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + detailFlag + '" href="javascript:void(0)" onclick="$.operate.detailTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>查看详情</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a> ');
-                        return actions.join('');
-                    }
-                }]
+                // {
+                //     title: '操作',
+                //     align: 'center',
+                //     formatter: function (value, row, index) {
+                //         var actions = [];
+                //         actions.push('<a class="btn btn-success btn-xs ' + detailFlag + '" href="javascript:void(0)" onclick="$.operate.detailTab(\'' + row.id + '\')"><i class="fa fa-edit"></i>查看详情</a> ');
+                //         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a> ');
+                //         return actions.join('');
+                //     }
+                // }
+                ]
         };
         $.table.init(options);
-    }
-
-    let openUrl = /*[[@{/event/approval/vehicleNumberModal}]]*/ "";
-
-    function openVehicleNumberModal(vehicleNumber) {
-        let url = openUrl + "?vehicleNumber=" + vehicleNumber;
-        let openOptions = {
-            url : url,
-            title: vehicleNumber + "违章记录",
-            width: 1400,
-            yes:function (index, layero) {
-                layer.close(index);
-                return true;
-            },
-            btn: ['<i class="fa fa-close"></i> 关闭'],
-        }
-        $.modal.openOptions(openOptions);
     }
 
 
