@@ -150,14 +150,14 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     /**
-     * 获取这一年的第一天
+     * 获取这一年的最后一天
      */
     public static LocalDateTime getLastDayOfYear(LocalDateTime localDateTime) {
         return LocalDateTime.of(localDateTime.toLocalDate().with(TemporalAdjusters.lastDayOfYear()), LocalTime.MAX);
     }
 
     /**
-     * 获取这一年的最后一天
+     * 获取这一年的第一天
      */
     public static LocalDateTime getFirstDayOfYear(LocalDateTime localDateTime) {
         return LocalDateTime.of(localDateTime.toLocalDate().with(TemporalAdjusters.firstDayOfYear()), LocalTime.MIN);

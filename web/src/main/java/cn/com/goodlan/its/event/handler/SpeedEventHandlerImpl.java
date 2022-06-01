@@ -116,7 +116,7 @@ public class SpeedEventHandlerImpl implements EventHandler {
             }
 
 
-            Long count = countService.queryCount(vehicle.getLicensePlateNumber(), SPEED);
+            Long count = countService.queryCountThisYear(vehicle.getLicensePlateNumber(), SPEED);
             Event event;
             if (count == 1) {
                 if (score.isSpeed1()) {
