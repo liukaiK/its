@@ -64,9 +64,9 @@ public class SpeedEventHandlerImpl implements EventHandler {
     @Override
     public void handler(TrafficEvent trafficEvent) {
         // 判断是否和上一条数据相同 相同的话直接跳过不记录
-//        if (isSameWithPrevious(trafficEvent)) {
-//            return;
-//        }
+        if (isSameWithPrevious(trafficEvent)) {
+            return;
+        }
 
         Camera camera = cameraRepository.getByIp(trafficEvent.getIp());
 
@@ -195,13 +195,13 @@ public class SpeedEventHandlerImpl implements EventHandler {
         String phone = event.getDriverPhone();
         String smsMessageContent = buildSmsMessageContent(event);
         String smsSuccessResult = smsService.sendSms(phone, smsMessageContent);
-        saveSmsHistory(phone, smsMessageContent, smsSuccessResult);
+        saveSmsHistory(phone, smsMessageContent, smsSuccessResult, event.getId());
 
     }
 
-    private void saveSmsHistory(String phone, String smsMessageContent, String smsSuccessResult) {
+    private void saveSmsHistory(String phone, String smsMessageContent, String smsSuccessResult, String eventId) {
         try {
-            SmsHistory smsHistory = new SmsHistory(phone, smsMessageContent, smsSuccessResult);
+            SmsHistory smsHistory = new SmsHistory(phone, smsMessageContent, smsSuccessResult, eventId);
             smsHistoryRepository.save(smsHistory);
         } catch (Exception e) {
             log.error("save sms history error ", e);

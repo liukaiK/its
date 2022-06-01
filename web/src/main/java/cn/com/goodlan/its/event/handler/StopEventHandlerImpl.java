@@ -120,13 +120,13 @@ public class StopEventHandlerImpl implements EventHandler {
         String phone = event.getDriverPhone();
         String smsMessageContent = buildSmsMessageContent(event);
         String smsSuccessResult = smsService.sendSms(phone, smsMessageContent);
-        saveSmsHistory(phone, smsMessageContent, smsSuccessResult);
+        saveSmsHistory(phone, smsMessageContent, smsSuccessResult, event.getId());
 
     }
 
-    private void saveSmsHistory(String phone, String smsMessageContent, String smsSuccessResult) {
+    private void saveSmsHistory(String phone, String smsMessageContent, String smsSuccessResult, String eventId) {
         try {
-            SmsHistory smsHistory = new SmsHistory(phone, smsMessageContent, smsSuccessResult);
+            SmsHistory smsHistory = new SmsHistory(phone, smsMessageContent, smsSuccessResult, eventId);
             smsHistoryRepository.save(smsHistory);
         } catch (Exception e) {
             log.error("save sms history error ", e);

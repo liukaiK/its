@@ -32,10 +32,13 @@ public class SmsHistory {
 
     private String result;
 
-    public SmsHistory(String phoneNumber, String content, String result) {
+    private String eventId;
+
+    public SmsHistory(String phoneNumber, String content, String result, String eventId) {
         this.phoneNumber = phoneNumber;
         this.content = content;
         this.result = result;
+        this.eventId = eventId;
     }
 
 }
