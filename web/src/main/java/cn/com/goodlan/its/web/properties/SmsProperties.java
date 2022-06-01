@@ -30,5 +30,10 @@ public class SmsProperties {
 
     private String template;
 
+    /**
+     * 拉黑模版
+     */
+    private String blackTemplate;
+
 
 }

@@ -22,16 +22,20 @@ public class SmsServiceImpl implements SmsService {
 
 
     @Override
-    public void sendSms(String mobilePhone, String content) {
+    public String sendSms(String mobilePhone, String content) {
         SmsPar smsPar = new SmsPar(mobilePhone, content, smsProperties);
+        String result;
         try {
-            String result = HttpUtil.post(smsProperties.getSendSmsUrl(), objectMapper.writeValueAsString(smsPar), 2000);
+            result = HttpUtil.post(smsProperties.getSendSmsUrl(), objectMapper.writeValueAsString(smsPar), 2000);
             log.info("手机号码:{},短信内容:{},短信状态:{}", mobilePhone, content, result);
         } catch (RuntimeException e) {
+            result = e.getMessage();
             log.error("发送短信出现异常", e);
         } catch (JsonProcessingException e) {
+            result = e.getMessage();
             log.error("序列化JSON失败", e);
         }
+        return result;
     }
 
     /**

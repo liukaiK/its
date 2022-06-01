@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.event.handler;
 
 import cn.com.goodlan.its.core.dao.primary.event.EventRepository;
+import cn.com.goodlan.its.core.dao.primary.sms.SmsHistoryRepository;
 import cn.com.goodlan.its.core.dao.primary.system.camera.CameraRepository;
 import cn.com.goodlan.its.core.dao.primary.system.score.ScoreRepository;
 import cn.com.goodlan.its.core.dao.primary.system.vehicle.VehicleRepository;
@@ -9,6 +10,7 @@ import cn.com.goodlan.its.core.pojo.MessageParam;
 import cn.com.goodlan.its.core.pojo.TrafficEvent;
 import cn.com.goodlan.its.core.pojo.entity.primary.Camera;
 import cn.com.goodlan.its.core.pojo.entity.primary.Score;
+import cn.com.goodlan.its.core.pojo.entity.primary.SmsHistory;
 import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.service.event.CountService;
@@ -58,6 +60,9 @@ public class StopEventHandlerImpl implements EventHandler {
 
     @Autowired
     private SmsMessageTemplate smsMessageTemplate;
+
+    @Autowired
+    private SmsHistoryRepository smsHistoryRepository;
 
     @Override
     public void handler(TrafficEvent trafficEvent) {
@@ -114,7 +119,18 @@ public class StopEventHandlerImpl implements EventHandler {
     private void sendSmsMessage(Event event) {
         String phone = event.getDriverPhone();
         String smsMessageContent = buildSmsMessageContent(event);
-        smsService.sendSms(phone, smsMessageContent);
+        String smsSuccessResult = smsService.sendSms(phone, smsMessageContent);
+        saveSmsHistory(phone, smsMessageContent, smsSuccessResult);
+
+    }
+
+    private void saveSmsHistory(String phone, String smsMessageContent, String smsSuccessResult) {
+        try {
+            SmsHistory smsHistory = new SmsHistory(phone, smsMessageContent, smsSuccessResult);
+            smsHistoryRepository.save(smsHistory);
+        } catch (Exception e) {
+            log.error("save sms history error ", e);
+        }
     }
 
 
@@ -123,7 +139,7 @@ public class StopEventHandlerImpl implements EventHandler {
      */
     private String buildSmsMessageContent(Event event) {
         String smsTemplate = smsMessageTemplate.getSmsTemplate();
-
+        String content = null;
         String violationType = event.getViolationName();
         if ("违章停车".equals(violationType)) {
             violationType = "违章停车";
@@ -131,12 +147,24 @@ public class StopEventHandlerImpl implements EventHandler {
             violationType = "超速";
         }
         String punish;
-        if (event.getNum() > 1) {
-            punish = "扣校内安全考核分";
-        } else {
+        Long count = event.getNum();
+
+        if (count == 1) {
             punish = "警告";
+            content = MessageFormat.format(smsTemplate, event.getLicensePlateNumber(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getPlace(), violationType, punish);
         }
-        return MessageFormat.format(smsTemplate, event.getLicensePlateNumber(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getPlace(), violationType, punish);
+
+        if (count == 2) {
+            punish = "扣校内安全考核分";
+            content = MessageFormat.format(smsTemplate, event.getLicensePlateNumber(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getPlace(), violationType, punish);
+        }
+
+        if (count >= 3) {
+            String backSmsTemplate = smsMessageTemplate.getBlackTemplate();
+            content = MessageFormat.format(backSmsTemplate, event.getLicensePlateNumber());
+        }
+
+        return content;
     }
 
     private void sendWeLink(Event event) {

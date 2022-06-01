@@ -10,7 +10,7 @@ public interface SmsService {
      * @param mobilePhone 手机号
      * @param content     短信内容
      */
-    void sendSms(String mobilePhone, String content);
+    String sendSms(String mobilePhone, String content);
 
     /**
      * welink推送

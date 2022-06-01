@@ -15,4 +15,9 @@ public class InMemorySmsMessageTemplate implements SmsMessageTemplate {
         return smsProperties.getTemplate();
     }
 
+    @Override
+    public String getBlackTemplate() {
+        return smsProperties.getBlackTemplate();
+    }
+
 }
