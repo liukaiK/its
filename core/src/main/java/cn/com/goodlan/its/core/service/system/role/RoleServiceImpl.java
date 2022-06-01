@@ -45,14 +45,14 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleVO getById(String roleId) {
-        Role role = roleRepository.getOne(roleId);
+        Role role = roleRepository.getById(roleId);
         return RoleMapper.INSTANCE.convert(role);
     }
 
     @Override
     public void update(RoleDTO roleDTO) {
         String[] menuIds = Convert.toStrArray(roleDTO.getMenuIds());
-        Role role = roleRepository.getOne(roleDTO.getId());
+        Role role = roleRepository.getById(roleDTO.getId());
         role.updateName(roleDTO.getRoleName());
         role.updateRemark(roleDTO.getRemark());
         role.removeAllMenu();
@@ -109,7 +109,7 @@ public class RoleServiceImpl implements RoleService {
     public void remove(String ids) {
         String[] roleIds = Convert.toStrArray(ids);
         for (String roleId : roleIds) {
-            Role role = roleRepository.getOne(roleId);
+            Role role = roleRepository.getById(roleId);
             if (role.hasUser()) {
                 throw new BusinessException(String.format("%1$s已分配,不能删除", role.getName()));
             }

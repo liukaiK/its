@@ -42,7 +42,7 @@ public class CollegeServiceImpl implements CollegeService {
 
     @Override
     public CollegeVO getCollegeById(String id) {
-        College college = collegeRepository.getOne(id);
+        College college = collegeRepository.getById(id);
         return CollegeMapper.INSTANCE.convert(college);
     }
 

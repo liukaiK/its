@@ -43,7 +43,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public MenuVO getMenuById(String id) {
-        Menu menu = menuRepository.getOne(id);
+        Menu menu = menuRepository.getById(id);
         return MenuMapper.INSTANCE.convert(menu);
     }
 

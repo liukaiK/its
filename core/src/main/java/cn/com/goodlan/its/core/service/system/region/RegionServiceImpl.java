@@ -69,7 +69,7 @@ public class RegionServiceImpl implements RegionService {
 
     @Override
     public RegionVO getById(String id) {
-        Region region = regionRepository.getOne(id);
+        Region region = regionRepository.getById(id);
         return RegionMapper.INSTANCE.convert(region);
     }
 
@@ -81,7 +81,7 @@ public class RegionServiceImpl implements RegionService {
 
     @Override
     public void update(RegionDTO regionDTO) {
-        Region region = regionRepository.getOne(regionDTO.getId());
+        Region region = regionRepository.getById(regionDTO.getId());
         region.updateName(regionDTO.getName());
         regionRepository.save(region);
     }

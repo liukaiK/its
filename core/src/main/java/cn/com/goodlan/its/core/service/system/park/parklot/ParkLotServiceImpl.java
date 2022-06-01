@@ -45,13 +45,13 @@ public class ParkLotServiceImpl implements ParkLotService {
 
     @Override
     public ParkLotVO getById(String id) {
-        ParkLot parkLot = parkLotRepository.getOne(id);
+        ParkLot parkLot = parkLotRepository.getById(id);
         return ParkLotMapper.INSTANCE.convert(parkLot);
     }
 
     @Override
     public void update(ParkLotDTO parkLotDTO) {
-        ParkLot parkLot = parkLotRepository.getOne(parkLotDTO.getId());
+        ParkLot parkLot = parkLotRepository.getById(parkLotDTO.getId());
         parkLot.setName(parkLotDTO.getName());
         parkLot.setCount(parkLotDTO.getCount());
         parkLotRepository.save(parkLot);

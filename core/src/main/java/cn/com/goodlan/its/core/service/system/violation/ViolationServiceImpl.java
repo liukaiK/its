@@ -55,13 +55,13 @@ public class ViolationServiceImpl implements ViolationTypeService {
 
     @Override
     public ViolationTypeVO getById(String id) {
-        ViolationType violation = violationTypeRepository.getOne(id);
+        ViolationType violation = violationTypeRepository.getById(id);
         return ViolationMapper.INSTANCE.convert(violation);
     }
 
     @Override
     public void update(ViolationTypeDTO violationDTO) {
-        ViolationType violation = violationTypeRepository.getOne(violationDTO.getId());
+        ViolationType violation = violationTypeRepository.getById(violationDTO.getId());
         violation.setCode(violationDTO.getCode());
         violation.setName(violationDTO.getName());
         violation.setRemark(violationDTO.getRemark());

@@ -58,7 +58,7 @@ public class EventServiceImpl implements EventService {
     public void remove(String ids) {
         String[] eventIds = Convert.toStrArray(ids);
         for (String id : eventIds) {
-            Event event = eventRepository.getOne(id);
+            Event event = eventRepository.getById(id);
             event.remove();
 
             String violationName = event.getViolationName();
@@ -144,7 +144,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public EventVO getById(String id) {
-        Event event = eventRepository.getOne(id);
+        Event event = eventRepository.getById(id);
         return eventMapper.convert(event);
     }
 

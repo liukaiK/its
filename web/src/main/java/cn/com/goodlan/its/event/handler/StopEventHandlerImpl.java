@@ -80,7 +80,7 @@ public class StopEventHandlerImpl implements EventHandler {
         if (optionalVehicle.isPresent()) {
             Vehicle vehicle = optionalVehicle.get();
             Long count = countService.queryCountThisYear(vehicle.getLicensePlateNumber(), STOP);
-            Score score = scoreRepository.getOne("0f647018-2c28-4bfe-ae10-e9586cfb66b0");
+            Score score = scoreRepository.getById("0f647018-2c28-4bfe-ae10-e9586cfb66b0");
             if (count == 1) {
                 event = warn(camera, trafficEvent, imageUrl, vehicle, score);
                 sendSmsAndWeLink(event);

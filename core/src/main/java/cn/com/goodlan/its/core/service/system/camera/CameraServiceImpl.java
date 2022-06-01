@@ -67,7 +67,7 @@ public class CameraServiceImpl implements CameraService {
 
     @Override
     public void update(CameraDTO cameraDTO) {
-        Camera camera = cameraRepository.getOne(cameraDTO.getId());
+        Camera camera = cameraRepository.getById(cameraDTO.getId());
         camera.setName(cameraDTO.getName());
         camera.setIp(cameraDTO.getIp());
         camera.setPosition(cameraDTO.getPosition());
@@ -85,7 +85,7 @@ public class CameraServiceImpl implements CameraService {
 
     @Override
     public CameraVO getById(String id) {
-        Camera camera = cameraRepository.getOne(id);
+        Camera camera = cameraRepository.getById(id);
         return CameraMapper.INSTANCE.convert(camera);
     }
 

@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(UserDTO userDTO) {
-        User user = userRepository.getOne(userDTO.getId());
+        User user = userRepository.getById(userDTO.getId());
         user.updateRemark(userDTO.getRemark());
         user.updateSex(userDTO.getSex());
         user.updateEmail(userDTO.getEmail());
@@ -117,20 +117,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVO getById(String id) {
-        User user = userRepository.getOne(id);
+        User user = userRepository.getById(id);
         return UserMapper.INSTANCE.convert(user);
     }
 
     @Override
     public void resetPassword(ResetPasswordDTO resetPasswordDTO) {
-        User user = userRepository.getOne(resetPasswordDTO.getId());
+        User user = userRepository.getById(resetPasswordDTO.getId());
         user.updatePassword(new Password(resetPasswordDTO.getPassword()));
         userRepository.save(user);
     }
 
     @Override
     public void updateProfile(UpdateProfileDTO updateProfileDTO) {
-        User user = userRepository.getOne(SecurityUtil.getUserId());
+        User user = userRepository.getById(SecurityUtil.getUserId());
         user.updateEmail(updateProfileDTO.getEmail());
         user.updateSex(updateProfileDTO.getSex());
         user.updatePhoneNumber(new PhoneNumber(updateProfileDTO.getPhoneNumber()));
@@ -150,7 +150,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePassword(ChangePasswordDTO changePasswordDTO) {
-        User user = userRepository.getOne(SecurityUtil.getUserId());
+        User user = userRepository.getById(SecurityUtil.getUserId());
         if (passwordIsError(changePasswordDTO, user)) {
             throw new BusinessException("原密码错误!");
         }

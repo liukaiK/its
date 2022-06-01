@@ -62,7 +62,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public VehicleVO getById(String id) {
-        Vehicle vehicle = vehicleRepository.getOne(id);
+        Vehicle vehicle = vehicleRepository.getById(id);
         return VehicleMapper.INSTANCE.convert(vehicle);
     }
 
