@@ -1,6 +1,11 @@
 {
   "properties": [
     {
+      "name": "sms.enable",
+      "type": "java.lang.String",
+      "description": "发送短信开关."
+    },
+    {
       "name": "sms.application-id",
       "type": "java.lang.String",
       "description": "发送短信application-id."

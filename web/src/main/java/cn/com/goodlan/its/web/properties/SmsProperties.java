@@ -12,6 +12,11 @@ import org.springframework.stereotype.Component;
 public class SmsProperties {
 
     /**
+     * 短信发送开关
+     */
+    private boolean enable;
+
+    /**
      * 应用id
      */
     private String applicationId;

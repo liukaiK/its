@@ -16,6 +16,7 @@ import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.service.event.CountService;
 import cn.com.goodlan.its.core.util.DateUtils;
+import cn.com.goodlan.its.web.properties.SmsProperties;
 import cn.com.goodlan.its.web.sms.SmsService;
 import cn.com.goodlan.its.web.sms.template.SmsMessageTemplate;
 import cn.hutool.core.date.DateUtil;
@@ -65,6 +66,9 @@ public class StopEventHandlerImpl implements EventHandler {
     @Autowired
     private SmsHistoryRepository smsHistoryRepository;
 
+    @Autowired
+    private SmsProperties smsProperties;
+
     @Override
     public void handler(TrafficEvent trafficEvent) {
 
@@ -109,7 +113,9 @@ public class StopEventHandlerImpl implements EventHandler {
     }
 
     private void sendSmsAndWeLink(Event event) {
-        sendSmsMessage(event);
+        if (smsProperties.isEnable()) {
+            sendSmsMessage(event);
+        }
         sendWeLink(event);
     }
 

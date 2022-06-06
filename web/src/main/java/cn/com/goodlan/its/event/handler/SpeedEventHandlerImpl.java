@@ -12,6 +12,7 @@ import cn.com.goodlan.its.core.pojo.entity.primary.*;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.service.event.CountService;
 import cn.com.goodlan.its.core.util.DateUtils;
+import cn.com.goodlan.its.web.properties.SmsProperties;
 import cn.com.goodlan.its.web.sms.SmsService;
 import cn.com.goodlan.its.web.sms.template.SmsMessageTemplate;
 import cn.hutool.core.date.DateUtil;
@@ -58,6 +59,9 @@ public class SpeedEventHandlerImpl implements EventHandler {
 
     @Autowired
     private SmsHistoryRepository smsHistoryRepository;
+
+    @Autowired
+    private SmsProperties smsProperties;
 
 
     private String status = "";
@@ -185,7 +189,9 @@ public class SpeedEventHandlerImpl implements EventHandler {
     }
 
     private void sendSmsAndWeLink(Event event) {
-        sendSmsMessage(event);
+        if (smsProperties.isEnable()) {
+            sendSmsMessage(event);
+        }
         sendWeLink(event);
     }
 
