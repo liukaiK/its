@@ -5,7 +5,6 @@ import cn.com.goodlan.its.core.dao.primary.sms.SmsHistoryRepository;
 import cn.com.goodlan.its.core.dao.primary.system.camera.CameraRepository;
 import cn.com.goodlan.its.core.dao.primary.system.score.ScoreRepository;
 import cn.com.goodlan.its.core.dao.primary.system.vehicle.VehicleRepository;
-import cn.com.goodlan.its.core.exception.BusinessException;
 import cn.com.goodlan.its.core.file.FileUpload;
 import cn.com.goodlan.its.core.pojo.MessageParam;
 import cn.com.goodlan.its.core.pojo.TrafficEvent;
@@ -145,32 +144,24 @@ public class StopEventHandlerImpl implements EventHandler {
      * 构建短信内容
      */
     private String buildSmsMessageContent(Event event) {
-        String violationType = event.getViolationName();
-        if ("违章停车".equals(violationType)) {
-            violationType = "违章停车";
-        } else {
-            violationType = "超速";
-        }
         String punish;
         Long count = event.getNum();
 
-        if (count % 4 == 1L) {
+        if (count == 1L) {
             punish = "警告";
             String smsTemplate = smsMessageTemplate.getSmsTemplate();
-            return MessageFormat.format(smsTemplate, event.getLicensePlateNumber(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getPlace(), violationType, punish);
-        }
-
-        if (count % 4 == 2L || count % 4 == 3L) {
-            punish = "扣校内安全考核分";
-            String smsTemplate = smsMessageTemplate.getSmsTemplate();
-            return MessageFormat.format(smsTemplate, event.getLicensePlateNumber(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getPlace(), violationType, punish);
+            return MessageFormat.format(smsTemplate, event.getLicensePlateNumber(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getPlace(), STOP, punish);
         }
 
         if (count % 4 == 0L) {
             String backSmsTemplate = smsMessageTemplate.getBlackTemplate();
             return MessageFormat.format(backSmsTemplate, event.getLicensePlateNumber());
         }
-        throw new BusinessException("发送短信系统出现异常 count: " + count);
+
+        punish = "扣校内安全考核分";
+        String smsTemplate = smsMessageTemplate.getSmsTemplate();
+        return MessageFormat.format(smsTemplate, event.getLicensePlateNumber(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getPlace(), STOP, punish);
+
     }
 
     private void sendWeLink(Event event) {
