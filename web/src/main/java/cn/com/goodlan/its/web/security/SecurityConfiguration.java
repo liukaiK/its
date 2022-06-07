@@ -39,6 +39,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(SystemConstant.LOGIN_PAGE).permitAll()
                 .anyRequest().authenticated()
                 .and()
+                .csrf().ignoringAntMatchers("/druid/**")
+                .and()
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .rememberMe().rememberMeServices(rememberMeServices);

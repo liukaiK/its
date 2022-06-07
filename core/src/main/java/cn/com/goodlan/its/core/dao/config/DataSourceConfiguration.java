@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.dao.config;
 
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -19,15 +19,15 @@ public class DataSourceConfiguration {
 
     @Primary
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.primary")
+    @ConfigurationProperties(prefix = "spring.datasource.druid.primary")
     public DataSource primaryDataSource() {
-        return DataSourceBuilder.create().build();
+        return DruidDataSourceBuilder.create().build();
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.secondary")
+    @ConfigurationProperties(prefix = "spring.datasource.druid.secondary")
     public DataSource secondaryDataSource() {
-        return DataSourceBuilder.create().build();
+        return DruidDataSourceBuilder.create().build();
     }
 
 }

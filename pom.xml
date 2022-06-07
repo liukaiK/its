@@ -35,6 +35,7 @@
         <poi.version>4.1.2</poi.version>
         <log4j.version>2.17.0</log4j.version>
         <os-maven-plugin.version>1.7.0</os-maven-plugin.version>
+        <druid-spring-boot-starter.version>1.2.9</druid-spring-boot-starter.version>
     </properties>
 
     <modules>
@@ -120,6 +121,12 @@
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-api</artifactId>
                 <version>${log4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-spring-boot-starter.version}</version>
             </dependency>
 
         </dependencies>
