@@ -58,15 +58,7 @@ public abstract class EventMapper {
         if (event == null) {
             return null;
         }
-        Camera camera = event.getCamera();
-        if (camera == null) {
-            return null;
-        }
-        Region region = camera.getRegion();
-        if (region == null) {
-            return null;
-        }
-        String name = region.getName();
+        String name = event.getRegionName();
         if (name == null) {
             return null;
         }

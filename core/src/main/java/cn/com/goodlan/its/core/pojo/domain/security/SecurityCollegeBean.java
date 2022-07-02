@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.core.pojo;
+package cn.com.goodlan.its.core.pojo.domain.security;
 
 import cn.com.goodlan.its.core.pojo.entity.primary.College;
 import lombok.Data;

@@ -90,13 +90,6 @@ public class Event {
     private String vehicleSize;
 
     /**
-     * 摄像头
-     */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "camera_id")
-    private Camera camera;
-
-    /**
      * 违规地点
      */
     private String place;
@@ -105,11 +98,6 @@ public class Event {
      * 违规发生的时间
      */
     private LocalDateTime time;
-
-    /**
-     * 处理时间
-     */
-    private LocalDateTime approvalTime;
 
     /**
      * 事件图片url
@@ -126,10 +114,27 @@ public class Event {
      */
     private Long num;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id")
+    private Region region;
+
+    /**
+     * 冗余字段
+     */
+    private String regionName;
+
+
+    @Convert(converter = SourceConverter.class)
+    private Source source = Source.AUTO;
+
     @Convert(converter = DeletedConverter.class)
     private Deleted deleted = Deleted.NORMAL;
 
-    public Event() {
+    protected Event() {
+    }
+
+    public Event(Source source) {
+        this.source = source;
     }
 
     public Event(String id) {
@@ -141,11 +146,7 @@ public class Event {
      * 获取当前违规事件发生在哪个区域
      */
     public Region getRegion() {
-        Camera camera = getCamera();
-        if (camera == null) {
-            return null;
-        }
-        return camera.getRegion();
+        return region;
     }
 
     public boolean isSpeed1() {
@@ -187,6 +188,11 @@ public class Event {
         this.setScore(score);
     }
 
+    public void updateRegion(Region region) {
+        this.setRegion(region);
+        this.setRegionName(region.getName());
+    }
+
     /**
      * 更新违规类型
      */
@@ -214,23 +220,27 @@ public class Event {
         return place;
     }
 
-    public void setPlace(String place) {
+    protected void setPlace(String place) {
         this.place = place;
     }
 
-    public Camera getCamera() {
-        return camera;
+    public void updatePlace(String place) {
+        this.setPlace(place);
     }
 
-    public void setCamera(Camera camera) {
-        this.camera = camera;
-    }
+//    public Camera getCamera() {
+//        return camera;
+//    }
+//
+//    public void setCamera(Camera camera) {
+//        this.camera = camera;
+//    }
 
     public Deleted getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Deleted deleted) {
+    protected void setDeleted(Deleted deleted) {
         this.deleted = deleted;
     }
 
@@ -239,8 +249,8 @@ public class Event {
         return time;
     }
 
-    public void updateHappenTime(LocalDateTime time) {
-        this.time = time;
+    public void updateHappenTime(LocalDateTime happenTime) {
+        this.setTime(time);
     }
 
     protected void setTime(LocalDateTime time) {
@@ -269,15 +279,6 @@ public class Event {
 
     public void setVehicleColor(String vehicleColor) {
         this.vehicleColor = vehicleColor;
-    }
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    public LocalDateTime getApprovalTime() {
-        return approvalTime;
-    }
-
-    public void setApprovalTime(LocalDateTime approvalTime) {
-        this.approvalTime = approvalTime;
     }
 
     public String getVehicleSize() {
@@ -380,6 +381,26 @@ public class Event {
         this.studstaffno = studstaffno;
     }
 
+    public Source getSource() {
+        return source;
+    }
+
+    protected void setSource(Source source) {
+        this.source = source;
+    }
+
+    public String getRegionName() {
+        return regionName;
+    }
+
+    protected void setRegionName(String regionName) {
+        this.regionName = regionName;
+    }
+
+    protected void setRegion(Region region) {
+        this.region = region;
+    }
+
     /**
      * 一定要实现BaseEnum
      *
@@ -438,6 +459,63 @@ public class Event {
         }
     }
 
+
+    /**
+     * 一定要实现BaseEnum
+     *
+     * @author liukai
+     */
+    public enum Source implements BaseEnum {
+
+        AUTO(0, "自动录入"), MANUAL(1, "手动录入");
+
+        Source(Integer value, String description) {
+            this.value = value;
+            this.description = description;
+        }
+
+        private Integer value;
+        private String description;
+
+        @Override
+        public Integer getValue() {
+            return value;
+        }
+
+        public void setValue(Integer value) {
+            this.value = value;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+    }
+
+    public static class SourceConverter implements AttributeConverter<Source, Integer> {
+
+        @Override
+        public Integer convertToDatabaseColumn(Source attribute) {
+            if (attribute == null) {
+                throw new BusinessException("Unknown attribute text  ");
+            }
+            return attribute.getValue();
+
+        }
+
+        @Override
+        public Source convertToEntityAttribute(Integer dbData) {
+            for (Source source : Source.values()) {
+                if (source.getValue().equals(dbData)) {
+                    return source;
+                }
+            }
+            throw new BusinessException("Unknown dbData text : " + dbData);
+        }
+    }
 
 }
 

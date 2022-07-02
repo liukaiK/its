@@ -32,4 +32,9 @@ public class EventDTO {
     private String vehicleSize;
 
     private String studentNum;
+
+    private String regionId;
+
+    private String speed;
+
 }

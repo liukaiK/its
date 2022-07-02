@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.web.security;
 
 import cn.com.goodlan.its.core.dao.primary.system.user.UserRepository;
-import cn.com.goodlan.its.core.pojo.SecurityUserBean;
+import cn.com.goodlan.its.core.pojo.domain.security.SecurityUserBean;
 import cn.com.goodlan.its.core.pojo.entity.primary.user.User;
 import cn.com.goodlan.its.core.pojo.entity.primary.user.Username;
 import lombok.AllArgsConstructor;

@@ -1,14 +1,18 @@
 package cn.com.goodlan.its.core.service.event.approval;
 
 import cn.com.goodlan.its.core.dao.primary.event.EventRepository;
+import cn.com.goodlan.its.core.dao.primary.system.region.RegionRepository;
 import cn.com.goodlan.its.core.mapstruct.EventMapper;
 import cn.com.goodlan.its.core.pojo.Params;
 import cn.com.goodlan.its.core.pojo.dto.EventDTO;
+import cn.com.goodlan.its.core.pojo.entity.primary.Region;
+import cn.com.goodlan.its.core.pojo.entity.primary.Score;
 import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.query.EventQuery;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.service.event.CountService;
+import cn.com.goodlan.its.core.service.system.score.ScoreService;
 import cn.com.goodlan.its.core.service.system.vehicle.VehicleService;
 import cn.com.goodlan.its.core.util.DateUtils;
 import cn.hutool.core.convert.Convert;
@@ -39,9 +43,13 @@ public class EventServiceImpl implements EventService {
 
     private EventRepository eventRepository;
 
+    private RegionRepository regionRepository;
+
     private VehicleService vehicleService;
 
     private CountService countService;
+
+    private ScoreService scoreService;
 
     private EventMapper eventMapper;
 
@@ -59,7 +67,12 @@ public class EventServiceImpl implements EventService {
 
         Long count = countService.queryCountThisYear(eventDTO.getVehicleNumber(), eventDTO.getViolationTypeName());
 
-        Event event = new Event();
+        Region region = regionRepository.getById(eventDTO.getRegionId());
+
+        Score score = scoreService.getScore(region.getScoreList(), Integer.valueOf(eventDTO.getSpeed()));
+
+
+        Event event = new Event(Event.Source.MANUAL);
         event.updateVehicle(vehicle);
         event.updateCount(count);
         event.updateHappenTime(LocalDateTimeUtil.parse(eventDTO.getHappenTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));

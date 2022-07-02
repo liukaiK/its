@@ -2,16 +2,10 @@ package cn.com.goodlan.its.event.handler;
 
 import cn.com.goodlan.its.core.dao.primary.event.EventRepository;
 import cn.com.goodlan.its.core.dao.primary.sms.SmsHistoryRepository;
-import cn.com.goodlan.its.core.dao.primary.system.camera.CameraRepository;
 import cn.com.goodlan.its.core.dao.primary.system.score.ScoreRepository;
-import cn.com.goodlan.its.core.dao.primary.system.vehicle.VehicleRepository;
-import cn.com.goodlan.its.core.file.FileUpload;
 import cn.com.goodlan.its.core.pojo.MessageParam;
-import cn.com.goodlan.its.core.pojo.TrafficEvent;
-import cn.com.goodlan.its.core.pojo.entity.primary.Camera;
 import cn.com.goodlan.its.core.pojo.entity.primary.Score;
 import cn.com.goodlan.its.core.pojo.entity.primary.SmsHistory;
-import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.service.event.CountService;
 import cn.com.goodlan.its.core.util.DateUtils;
@@ -24,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
-import java.time.ZoneId;
-import java.util.Optional;
 
 /**
  * 处理违章停车事件
@@ -40,15 +32,6 @@ public class StopEventHandlerImpl implements EventHandler {
 
     @Autowired
     private ScoreRepository scoreRepository;
-
-    @Autowired
-    private CameraRepository cameraRepository;
-
-    @Autowired
-    private FileUpload fileUpload;
-
-    @Autowired
-    private VehicleRepository vehicleRepository;
 
     @Autowired
     private CountService countService;
@@ -69,46 +52,28 @@ public class StopEventHandlerImpl implements EventHandler {
     private SmsProperties smsProperties;
 
     @Override
-    public void handler(TrafficEvent trafficEvent) {
-
-        Camera camera = cameraRepository.getByIp(trafficEvent.getIp());
-        if (camera == null) {
-            log.warn("没有ip为{}的摄像头", trafficEvent.getIp());
+    public void handler(Event event) {
+        Long count = countService.queryCountThisYear(event.getLicensePlateNumber(), STOP);
+        Score score = scoreRepository.getById("0f647018-2c28-4bfe-ae10-e9586cfb66b0");
+        if (count == 1) {
+            event = warn(event, score);
+            sendSmsAndWeLink(event);
             return;
         }
-
-        String imageUrl = fileUpload.uploadImage(trafficEvent.getBigImage());
-
-        Optional<Vehicle> optionalVehicle = vehicleRepository.findById(trafficEvent.getM_PlateNumber());
-        Event event;
-        if (optionalVehicle.isPresent()) {
-            Vehicle vehicle = optionalVehicle.get();
-            Long count = countService.queryCountThisYear(vehicle.getLicensePlateNumber(), STOP);
-            Score score = scoreRepository.getById("0f647018-2c28-4bfe-ae10-e9586cfb66b0");
-            if (count == 1) {
-                event = warn(camera, trafficEvent, imageUrl, vehicle, score);
-                sendSmsAndWeLink(event);
-                return;
-            }
-            if (count == 2) {
-                event = calculateScore(trafficEvent, score, vehicle, camera, count, imageUrl);
-                sendSmsAndWeLink(event);
-                return;
-            }
-            if (count == 3) {
-                event = calculateScore(trafficEvent, score, vehicle, camera, count, imageUrl);
-                sendSmsAndWeLink(event);
-                return;
-            }
-            if (count >= 4) {
-                event = calculateScore(trafficEvent, score, vehicle, camera, count, imageUrl);
-                sendSmsAndWeLink(event);
-            }
-        } else {
-            log.warn("此车牌号系统中不存在:{}", trafficEvent.getM_PlateNumber());
+        if (count == 2) {
+            event = calculateScore(event, score, count);
+            sendSmsAndWeLink(event);
+            return;
         }
-
-
+        if (count == 3) {
+            event = calculateScore(event, score, count);
+            sendSmsAndWeLink(event);
+            return;
+        }
+        if (count >= 4) {
+            event = calculateScore(event, score, count);
+            sendSmsAndWeLink(event);
+        }
     }
 
     private void sendSmsAndWeLink(Event event) {
@@ -184,38 +149,16 @@ public class StopEventHandlerImpl implements EventHandler {
         smsService.sendWelink(messageParam);
     }
 
-    private Event warn(Camera camera, TrafficEvent trafficEvent, String imageUrl, Vehicle vehicle, Score score) {
-        Event event = new Event();
+    private Event warn(Event event, Score score) {
         event.updateScore(score);
         event.updateCount(1L);
-        event.setCamera(camera);
-        event.setPlace(camera.getPosition());
-        event.updateHappenTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
-        event.setLaneNumber(trafficEvent.getM_LaneNumber());
-        event.setVehicleColor(trafficEvent.getM_VehicleColor());
-        event.setImageUrl(imageUrl);
-        event.setVehicleSize(trafficEvent.getM_VehicleSize());
-        event.setSpeed(trafficEvent.getNSpeed());
-        event.updateVehicle(vehicle);
         event.updateScore(0);
         event.updateViolation(score.getViolation());
         return eventRepository.save(event);
-
-
     }
 
-    protected Event calculateScore(TrafficEvent trafficEvent, Score score, Vehicle vehicle, Camera camera, Long count, String imageUrl) {
-        Event event = new Event();
+    protected Event calculateScore(Event event, Score score, Long count) {
         event.updateCount(count);
-        event.setCamera(camera);
-        event.setPlace(camera.getPosition());
-        event.updateHappenTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
-        event.setLaneNumber(trafficEvent.getM_LaneNumber());
-        event.setVehicleColor(trafficEvent.getM_VehicleColor());
-        event.setImageUrl(imageUrl);
-        event.setVehicleSize(trafficEvent.getM_VehicleSize());
-        event.setSpeed(trafficEvent.getNSpeed());
-        event.updateVehicle(vehicle);
         event.updateScore(score);
         event.updateViolation(score.getViolation());
         return eventRepository.save(event);

@@ -2,12 +2,10 @@ package cn.com.goodlan.its.event.handler;
 
 import cn.com.goodlan.its.core.dao.primary.event.EventRepository;
 import cn.com.goodlan.its.core.dao.primary.sms.SmsHistoryRepository;
-import cn.com.goodlan.its.core.dao.primary.system.camera.CameraRepository;
-import cn.com.goodlan.its.core.dao.primary.system.vehicle.VehicleRepository;
-import cn.com.goodlan.its.core.file.FileUpload;
 import cn.com.goodlan.its.core.pojo.MessageParam;
-import cn.com.goodlan.its.core.pojo.TrafficEvent;
-import cn.com.goodlan.its.core.pojo.entity.primary.*;
+import cn.com.goodlan.its.core.pojo.entity.primary.Score;
+import cn.com.goodlan.its.core.pojo.entity.primary.SmsHistory;
+import cn.com.goodlan.its.core.pojo.entity.primary.ViolationType;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.service.event.CountService;
 import cn.com.goodlan.its.core.service.system.score.ScoreService;
@@ -21,8 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
-import java.time.ZoneId;
-import java.util.Optional;
 
 /**
  * 处理超速事件
@@ -37,15 +33,6 @@ public class SpeedEventHandlerImpl implements EventHandler {
 
     @Autowired
     private CountService countService;
-
-    @Autowired
-    private CameraRepository cameraRepository;
-
-    @Autowired
-    private FileUpload fileUpload;
-
-    @Autowired
-    private VehicleRepository vehicleRepository;
 
     @Autowired
     private EventRepository eventRepository;
@@ -69,102 +56,75 @@ public class SpeedEventHandlerImpl implements EventHandler {
     private String status = "";
 
     @Override
-    public void handler(TrafficEvent trafficEvent) {
+    public void handler(Event event) {
         // 判断是否和上一条数据相同 相同的话直接跳过不记录
-        if (isSameWithPrevious(trafficEvent)) {
+        if (isSameWithPrevious(event)) {
             return;
         }
 
-        Camera camera = cameraRepository.getByIp(trafficEvent.getIp());
+        int speed = event.getSpeed();
 
-        if (camera == null) {
-            log.warn("没有ip为{}的摄像头", trafficEvent.getIp());
-            return;
-        }
+        // 与数据库中设置的速度 判断是否超速了
+        Score score = scoreService.getScore(event.getRegion().getScoreList(), speed);
 
-        Region region = camera.getRegion();
-
-        if (region == null) {
-            log.warn("此摄像头{}没有配置区域", camera.getIp());
+        if (score == null) {
+            log.trace("-------车辆的速度{}不存在与系统范围中 没有超速---------", speed);
             return;
         }
 
 
-        String imageUrl = fileUpload.uploadImage(trafficEvent.getBigImage());
-
-        Optional<Vehicle> optionalVehicle = vehicleRepository.findById(trafficEvent.getM_PlateNumber());
-
-        if (optionalVehicle.isPresent()) {
-            Vehicle vehicle = optionalVehicle.get();
-            int speed = trafficEvent.getNSpeed();
-
-            // 与数据库中设置的速度 判断是否超速了
-            Score score = scoreService.getScore(region.getScoreList(), speed);
-
-            if (score == null) {
-                log.trace("-------车辆的速度{}不存在与系统范围中 没有超速---------", speed);
+        Long count = countService.queryCountThisYear(event.getLicensePlateNumber(), SPEED);
+        if (count == 1) {
+            if (score.isSpeed1()) {
+                event = warn(event, score.getViolation(), score);
+                sendSmsAndWeLink(event);
                 return;
             }
-
-
-            Long count = countService.queryCountThisYear(vehicle.getLicensePlateNumber(), SPEED);
-            Event event;
-            if (count == 1) {
-                if (score.isSpeed1()) {
-                    event = warn(camera, trafficEvent, imageUrl, vehicle, score.getViolation(), score);
-                    sendSmsAndWeLink(event);
-                    return;
-                }
-                if (score.isSpeed2()) {
-                    event = warn(camera, trafficEvent, imageUrl, vehicle, score.getViolation(), score);
-                    sendSmsAndWeLink(event);
-                    return;
-                }
-                if (score.isSpeed3()) {
-                    event = warnAndCalculateScoreAndHitBack(trafficEvent, score, vehicle, camera, count, imageUrl);
-                    sendSmsAndWeLink(event);
-                }
+            if (score.isSpeed2()) {
+                event = warn(event, score.getViolation(), score);
+                sendSmsAndWeLink(event);
                 return;
             }
+            if (score.isSpeed3()) {
+                event = warnAndCalculateScoreAndHitBack(event, score, count);
+                sendSmsAndWeLink(event);
+            }
+            return;
+        }
 
-            if (count == 2) {
-                if (score.isSpeed1()) {
-                    event = calculateScore(trafficEvent, score, vehicle, camera, count, imageUrl);
-                    sendSmsAndWeLink(event);
-                    return;
-                }
-                if (score.isSpeed2()) {
-                    event = calculateScoreAndHitBack(trafficEvent, score, vehicle, camera, count, imageUrl);
-                    sendSmsAndWeLink(event);
-                    return;
-                }
-                if (score.isSpeed3()) {
-                    event = calculateScoreAndHitBack(trafficEvent, score, vehicle, camera, count, imageUrl);
-                    sendSmsAndWeLink(event);
-                }
+        if (count == 2) {
+            if (score.isSpeed1()) {
+                event = calculateScore(event, score, count);
+                sendSmsAndWeLink(event);
                 return;
             }
-
-            if (count >= 3) {
-                if (score.isSpeed1()) {
-                    event = calculateScoreAndHitBack(trafficEvent, score, vehicle, camera, count, imageUrl);
-                    sendSmsAndWeLink(event);
-                    return;
-                }
-                if (score.isSpeed2()) {
-                    event = calculateScoreAndHitBack(trafficEvent, score, vehicle, camera, count, imageUrl);
-                    sendSmsAndWeLink(event);
-                    return;
-                }
-                if (score.isSpeed3()) {
-                    event = calculateScoreAndHitBack(trafficEvent, score, vehicle, camera, count, imageUrl);
-                    sendSmsAndWeLink(event);
-                }
+            if (score.isSpeed2()) {
+                event = calculateScoreAndHitBack(event, score, count);
+                sendSmsAndWeLink(event);
+                return;
             }
+            if (score.isSpeed3()) {
+                event = calculateScoreAndHitBack(event, score, count);
+                sendSmsAndWeLink(event);
+            }
+            return;
+        }
 
-
-        } else {
-            log.warn("此车牌号系统中不存在:{}", trafficEvent.getM_PlateNumber());
+        if (count >= 3) {
+            if (score.isSpeed1()) {
+                event = calculateScoreAndHitBack(event, score, count);
+                sendSmsAndWeLink(event);
+                return;
+            }
+            if (score.isSpeed2()) {
+                event = calculateScoreAndHitBack(event, score, count);
+                sendSmsAndWeLink(event);
+                return;
+            }
+            if (score.isSpeed3()) {
+                event = calculateScoreAndHitBack(event, score, count);
+                sendSmsAndWeLink(event);
+            }
         }
 
 
@@ -247,18 +207,8 @@ public class SpeedEventHandlerImpl implements EventHandler {
     /**
      * 扣分+拉黑3个月
      */
-    private Event calculateScoreAndHitBack(TrafficEvent trafficEvent, Score score, Vehicle vehicle, Camera camera, Long count, String imageUrl) {
-        Event event = new Event();
+    private Event calculateScoreAndHitBack(Event event, Score score, Long count) {
         event.updateCount(count);
-        event.setCamera(camera);
-        event.setPlace(camera.getPosition());
-        event.updateHappenTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
-        event.setLaneNumber(trafficEvent.getM_LaneNumber());
-        event.setVehicleColor(trafficEvent.getM_VehicleColor());
-        event.setImageUrl(imageUrl);
-        event.setVehicleSize(trafficEvent.getM_VehicleSize());
-        event.setSpeed(trafficEvent.getNSpeed());
-        event.updateVehicle(vehicle);
         event.updateScore(score);
         event.updateViolation(score.getViolation());
         return eventRepository.save(event);
@@ -267,18 +217,8 @@ public class SpeedEventHandlerImpl implements EventHandler {
     /**
      * 警告+扣分+拉黑6个月
      */
-    private Event warnAndCalculateScoreAndHitBack(TrafficEvent trafficEvent, Score score, Vehicle vehicle, Camera camera, Long count, String imageUrl) {
-        Event event = new Event();
+    private Event warnAndCalculateScoreAndHitBack(Event event, Score score, Long count) {
         event.updateCount(count);
-        event.setCamera(camera);
-        event.setPlace(camera.getPosition());
-        event.updateHappenTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
-        event.setLaneNumber(trafficEvent.getM_LaneNumber());
-        event.setVehicleColor(trafficEvent.getM_VehicleColor());
-        event.setImageUrl(imageUrl);
-        event.setVehicleSize(trafficEvent.getM_VehicleSize());
-        event.setSpeed(trafficEvent.getNSpeed());
-        event.updateVehicle(vehicle);
         event.updateScore(score);
         event.updateViolation(score.getViolation());
         return eventRepository.save(event);
@@ -288,34 +228,21 @@ public class SpeedEventHandlerImpl implements EventHandler {
     /**
      * 警告
      */
-    private Event warn(Camera camera, TrafficEvent trafficEvent, String imageUrl, Vehicle vehicle, ViolationType violationType, Score score) {
-        Event event = new Event();
-
+    private Event warn(Event event, ViolationType violationType, Score score) {
         event.updateCount(1L);
-        event.setCamera(camera);
-        event.setPlace(camera.getPosition());
-        event.updateHappenTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
-        event.setLaneNumber(trafficEvent.getM_LaneNumber());
-        event.setVehicleColor(trafficEvent.getM_VehicleColor());
-        event.setImageUrl(imageUrl);
-        event.setVehicleSize(trafficEvent.getM_VehicleSize());
-        event.setSpeed(trafficEvent.getNSpeed());
-        event.updateVehicle(vehicle);
         // 先设置分数 防止null
         event.updateScore(score);
         // 然后在刷新为0分
         event.updateScore(0);
         event.updateViolation(violationType);
         return eventRepository.save(event);
-
-
     }
 
     /**
      * 会收到多条一样的消息 所以要过滤
      */
-    private boolean isSameWithPrevious(TrafficEvent trafficEvent) {
-        String tempStatus = trafficEvent.getM_PlateNumber() + trafficEvent.getIp();
+    private boolean isSameWithPrevious(Event event) {
+        String tempStatus = event.getLicensePlateNumber() + event.getRegion().getId();
         if (status.equals(tempStatus)) {
             return true;
         } else {
@@ -333,18 +260,8 @@ public class SpeedEventHandlerImpl implements EventHandler {
     /**
      * 扣分
      */
-    protected Event calculateScore(TrafficEvent trafficEvent, Score score, Vehicle vehicle, Camera camera, Long count, String imageUrl) {
-        Event event = new Event();
+    protected Event calculateScore(Event event, Score score, Long count) {
         event.updateCount(count);
-        event.setCamera(camera);
-        event.setPlace(camera.getPosition());
-        event.updateHappenTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
-        event.setLaneNumber(trafficEvent.getM_LaneNumber());
-        event.setVehicleColor(trafficEvent.getM_VehicleColor());
-        event.setImageUrl(imageUrl);
-        event.setVehicleSize(trafficEvent.getM_VehicleSize());
-        event.setSpeed(trafficEvent.getNSpeed());
-        event.updateVehicle(vehicle);
         event.updateScore(score);
         event.updateViolation(score.getViolation());
         return eventRepository.save(event);
