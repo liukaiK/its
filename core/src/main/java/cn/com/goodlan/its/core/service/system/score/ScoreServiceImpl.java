@@ -83,4 +83,29 @@ public class ScoreServiceImpl implements ScoreService {
         scoreRepository.save(score);
     }
 
+    @Override
+    public Score getScore(List<Score> scoreList, int speed) {
+        Score score = null;
+
+        for (Score tempScore : scoreList) {
+            Integer min = tempScore.getMinRange();
+            Integer max = tempScore.getMaxRange();
+
+            if (min == null) {
+                min = Integer.MIN_VALUE;
+            }
+
+            if (max == null) {
+                max = Integer.MAX_VALUE;
+            }
+
+            if (min <= speed && speed <= max) {
+                score = tempScore;
+                break;
+            }
+        }
+        return score;
+    }
+
+
 }

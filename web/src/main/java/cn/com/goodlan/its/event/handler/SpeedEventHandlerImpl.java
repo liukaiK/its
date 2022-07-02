@@ -10,6 +10,7 @@ import cn.com.goodlan.its.core.pojo.TrafficEvent;
 import cn.com.goodlan.its.core.pojo.entity.primary.*;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.service.event.CountService;
+import cn.com.goodlan.its.core.service.system.score.ScoreService;
 import cn.com.goodlan.its.core.util.DateUtils;
 import cn.com.goodlan.its.web.properties.SmsProperties;
 import cn.com.goodlan.its.web.sms.SmsService;
@@ -21,7 +22,6 @@ import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -62,6 +62,9 @@ public class SpeedEventHandlerImpl implements EventHandler {
     @Autowired
     private SmsProperties smsProperties;
 
+    @Autowired
+    private ScoreService scoreService;
+
 
     private String status = "";
 
@@ -93,30 +96,10 @@ public class SpeedEventHandlerImpl implements EventHandler {
 
         if (optionalVehicle.isPresent()) {
             Vehicle vehicle = optionalVehicle.get();
-
-            List<Score> scoreList = region.getScoreList();
-
             int speed = trafficEvent.getNSpeed();
 
             // 与数据库中设置的速度 判断是否超速了
-            Score score = null;
-            for (Score tempScore : scoreList) {
-                Integer min = tempScore.getMinRange();
-                Integer max = tempScore.getMaxRange();
-
-                if (min == null) {
-                    min = Integer.MIN_VALUE;
-                }
-
-                if (max == null) {
-                    max = Integer.MAX_VALUE;
-                }
-
-                if (min <= speed && speed <= max) {
-                    score = tempScore;
-                    break;
-                }
-            }
+            Score score = scoreService.getScore(region.getScoreList(), speed);
 
             if (score == null) {
                 log.trace("-------车辆的速度{}不存在与系统范围中 没有超速---------", speed);
@@ -186,6 +169,7 @@ public class SpeedEventHandlerImpl implements EventHandler {
 
 
     }
+
 
     private void sendSmsAndWeLink(Event event) {
         if (smsProperties.isEnable()) {
