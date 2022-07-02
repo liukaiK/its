@@ -1,6 +1,7 @@
 package cn.com.goodlan.its.web.controller.event.approval;
 
 import cn.com.goodlan.its.core.annotations.ResponseResultBody;
+import cn.com.goodlan.its.core.pojo.dto.EventDTO;
 import cn.com.goodlan.its.core.pojo.query.EventQuery;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import cn.com.goodlan.its.core.service.event.approval.EventService;
@@ -67,6 +68,24 @@ public class ApprovalController {
         eventService.remove(ids);
     }
 
+    /**
+     * 跳转到新增页面
+     */
+    @GetMapping("/add")
+    @PreAuthorize("hasAuthority('event:approval:add')")
+    public ModelAndView add(Model model) {
+        return new ModelAndView("event/approval/add");
+    }
+
+    /**
+     * 新增违规数据
+     */
+    @PostMapping("/add")
+    @PreAuthorize("hasAuthority('event:approval:add')")
+    public void add(EventDTO eventDTO, Model model) {
+        eventService.create(eventDTO);
+    }
+
 
     /**
      * 跳转到查看详情页面
@@ -111,8 +130,6 @@ public class ApprovalController {
         model.addAttribute("vehicleNumber", vehicleNumber);
         return new ModelAndView("event/approval/vehicleNumberModal");
     }
-
-
 
 
 }

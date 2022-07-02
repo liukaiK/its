@@ -3,13 +3,16 @@ package cn.com.goodlan.its.core.service.event.approval;
 import cn.com.goodlan.its.core.dao.primary.event.EventRepository;
 import cn.com.goodlan.its.core.mapstruct.EventMapper;
 import cn.com.goodlan.its.core.pojo.Params;
+import cn.com.goodlan.its.core.pojo.dto.EventDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.query.EventQuery;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
+import cn.com.goodlan.its.core.service.event.CountService;
 import cn.com.goodlan.its.core.service.system.vehicle.VehicleService;
 import cn.com.goodlan.its.core.util.DateUtils;
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.date.LocalDateTimeUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +27,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -37,6 +41,8 @@ public class EventServiceImpl implements EventService {
 
     private VehicleService vehicleService;
 
+    private CountService countService;
+
     private EventMapper eventMapper;
 
     @Override
@@ -45,6 +51,20 @@ public class EventServiceImpl implements EventService {
         Page<Event> page = eventRepository.findAll(specification, pageable);
         List<EventVO> list = eventMapper.convertList(page.getContent());
         return new PageImpl<>(list, page.getPageable(), page.getTotalElements());
+    }
+
+    @Override
+    public void create(EventDTO eventDTO) {
+        Vehicle vehicle = new Vehicle(eventDTO.getVehicleNumber(), eventDTO.getDriverName(), eventDTO.getDriverPhone(), eventDTO.getCollegeName(), eventDTO.getStudentNum());
+
+        Long count = countService.queryCountThisYear(eventDTO.getVehicleNumber(), eventDTO.getViolationTypeName());
+
+        Event event = new Event();
+        event.updateVehicle(vehicle);
+        event.updateCount(count);
+        event.updateHappenTime(LocalDateTimeUtil.parse(eventDTO.getHappenTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+
+        eventRepository.save(event);
     }
 
     @Override
@@ -90,7 +110,7 @@ public class EventServiceImpl implements EventService {
     private void refreshNumAndScore(List<Event> list) {
         long num = 1;
         for (Event event : list) {
-            event.setNum(num);
+            event.updateCount(num);
             num++;
         }
         for (Event event : list) {

@@ -46,12 +46,20 @@ public class Vehicle {
      */
     private String studstaffno;
 
-    public Vehicle() {
+    protected Vehicle() {
 
     }
 
     public Vehicle(String id) {
         this.id = id;
+    }
+
+    public Vehicle(String licensePlateNumber, String driverName, String driverPhone, String collegeName, String studstaffno) {
+        this.licensePlateNumber = licensePlateNumber;
+        this.driverName = driverName;
+        this.driverPhone = driverPhone;
+        this.collegeName = collegeName;
+        this.studstaffno = studstaffno;
     }
 
     @Id
@@ -61,7 +69,7 @@ public class Vehicle {
         return id;
     }
 
-    public void setId(String id) {
+    protected void setId(String id) {
         this.id = id;
     }
 

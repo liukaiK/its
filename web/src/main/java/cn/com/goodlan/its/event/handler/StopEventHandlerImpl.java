@@ -187,10 +187,10 @@ public class StopEventHandlerImpl implements EventHandler {
     private Event warn(Camera camera, TrafficEvent trafficEvent, String imageUrl, Vehicle vehicle, Score score) {
         Event event = new Event();
         event.updateScore(score);
-        event.setNum(1L);
+        event.updateCount(1L);
         event.setCamera(camera);
         event.setPlace(camera.getPosition());
-        event.setTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
+        event.updateHappenTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
         event.setLaneNumber(trafficEvent.getM_LaneNumber());
         event.setVehicleColor(trafficEvent.getM_VehicleColor());
         event.setImageUrl(imageUrl);
@@ -206,10 +206,10 @@ public class StopEventHandlerImpl implements EventHandler {
 
     protected Event calculateScore(TrafficEvent trafficEvent, Score score, Vehicle vehicle, Camera camera, Long count, String imageUrl) {
         Event event = new Event();
-        event.setNum(count);
+        event.updateCount(count);
         event.setCamera(camera);
         event.setPlace(camera.getPosition());
-        event.setTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
+        event.updateHappenTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
         event.setLaneNumber(trafficEvent.getM_LaneNumber());
         event.setVehicleColor(trafficEvent.getM_VehicleColor());
         event.setImageUrl(imageUrl);

@@ -40,10 +40,7 @@ public class XssTest {
         // MD5("abc:20170416142030:123456") = c2d404708a925d563fb794929e04f36c
         String sign = DigestUtil.md5Hex(KEY + ":" + yyyyMMddHHmmss + ":" + SECRET);
 
-        Vehicle vehicle = new Vehicle();
-        vehicle.setDriverName("刘凯");
-        vehicle.setDriverPhone("13384614120");
-        vehicle.setLicensePlateNumber("粤AT2Q80");
+        Vehicle vehicle = new Vehicle("粤AT2Q80", "刘凯", "13384614120", "航天学院", "110");
         String body = new ObjectMapper().writeValueAsString(RequestBody.from(vehicle));
         System.out.println("body = " + body);
         HttpResponse response = HttpRequest.post(String.format(URL, sign))

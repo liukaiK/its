@@ -47,6 +47,9 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.addTab()" sec:authorize="hasAuthority('event:approval:add')">
+                    <i class="fa fa-plus"></i> 新增
+                </a>
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" sec:authorize="hasAuthority('event:approval:export')">
                     <i class="fa fa-download"></i> 导出
                 </a>
@@ -71,7 +74,7 @@
         search();
     });
 
-
+    let createUrl = /*[[@{/event/approval/add}]]*/ "";
     let searchUrl = /*[[@{/event/approval/search}]]*/ "";
     let detailUrl = /*[[@{/event/approval/detail/{id}}]]*/ "";
     let removeUrl = /*[[@{/event/approval/remove}]]*/ "";
@@ -83,6 +86,7 @@
     function search() {
         var options = {
             url: searchUrl,
+            createUrl: createUrl,
             detailUrl: detailUrl,
             removeUrl: removeUrl,
             exportUrl: exportUrl,

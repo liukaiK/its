@@ -239,7 +239,11 @@ public class Event {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void updateHappenTime(LocalDateTime time) {
+        this.time = time;
+    }
+
+    protected void setTime(LocalDateTime time) {
         this.time = time;
     }
 
@@ -336,7 +340,11 @@ public class Event {
         return num;
     }
 
-    public void setNum(Long num) {
+    public void updateCount(Long count) {
+        this.setNum(count);
+    }
+
+    protected void setNum(Long num) {
         this.num = num;
     }
 

@@ -45,7 +45,7 @@ public class EventServiceTest {
             }
 
             long count = eventRepository.countByTimeGreaterThanEqualAndTimeLessThanEqualAndLicensePlateNumberAndViolationNameLikeAndDeleted(fistDateOfYear, event.getTime(), event.getLicensePlateNumber(), violationName + '%', Event.Deleted.NORMAL);
-            event.setNum(count);
+            event.updateCount(count);
             if (count == 1) {
                 event.updateScore(0);
             }
