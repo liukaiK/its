@@ -142,9 +142,6 @@ public class EventServiceImpl implements EventService {
 
     private Specification<Event> querySpecification(EventQuery eventQuery) {
         return (root, query, criteriaBuilder) -> {
-            if (!query.getResultType().equals(Long.class)) {
-                root.fetch("camera", JoinType.LEFT);
-            }
             List<Predicate> list = new ArrayList<>();
             if (StringUtils.isNotEmpty(eventQuery.getCollegeName())) {
                 list.add(criteriaBuilder.like(root.get("collegeName").as(String.class), eventQuery.getCollegeName() + "%"));
