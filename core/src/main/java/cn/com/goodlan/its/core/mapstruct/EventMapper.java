@@ -2,13 +2,19 @@ package cn.com.goodlan.its.core.mapstruct;
 
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
+import cn.com.goodlan.its.core.util.StringUtils;
+import com.github.tobato.fastdfs.domain.conn.FdfsWebServer;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = {}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public abstract class EventMapper {
+
+    @Autowired
+    private FdfsWebServer fdfsWebServer;
 
     public abstract List<EventVO> convertList(List<Event> eventList);
 
@@ -45,7 +51,11 @@ public abstract class EventMapper {
         eventVO.setPlace(event.getPlace());
         eventVO.setSpeed(event.getSpeed());
         eventVO.setTime(event.getTime());
-        eventVO.setImageUrl(event.getImageUrl());
+        if (!StringUtils.startsWith(event.getImageUrl(), "/")) {
+            eventVO.setImageUrl(fdfsWebServer.getWebServerUrl() + "/" + event.getImageUrl());
+        } else {
+            eventVO.setImageUrl(fdfsWebServer.getWebServerUrl() + event.getImageUrl());
+        }
         eventVO.setNum(convertNum(event.getViolationName(), event.getNum()));
         eventVO.setSource(event.getSource().getDescription());
 

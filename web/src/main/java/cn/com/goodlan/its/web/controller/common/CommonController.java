@@ -1,18 +1,29 @@
 package cn.com.goodlan.its.web.controller.common;
 
 
+import cn.com.goodlan.its.core.pojo.Result;
 import cn.com.goodlan.its.core.util.StringUtils;
 import cn.com.goodlan.its.core.util.file.FileUtils;
+import com.github.tobato.fastdfs.domain.fdfs.StorePath;
+import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Controller
 public class CommonController {
+
+    @Autowired
+    private FastFileStorageClient storageClient;
 
 
     /**
@@ -40,4 +51,22 @@ public class CommonController {
             log.error("下载文件失败", e);
         }
     }
+
+    /**
+     * 通用上传请求（单个）
+     */
+    @ResponseBody
+    @PostMapping("/common/upload")
+    public Result uploadFile(MultipartFile file) {
+        try {
+            String originalFilename = file.getOriginalFilename();
+            String extension = FilenameUtils.getExtension(originalFilename);
+            StorePath storePath = storageClient.uploadFile(file.getInputStream(), file.getSize(), extension, null);
+            return Result.success(storePath.getFullPath());
+        } catch (Exception e) {
+            log.error("上传文件出现异常", e);
+            return Result.fail(500, "上传文件出现异常");
+        }
+    }
+
 }

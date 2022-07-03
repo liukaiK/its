@@ -453,7 +453,7 @@ public class Event {
      */
     public enum Source implements BaseEnum {
 
-        AUTO(0, "自动录入"), MANUAL(1, "手动录入");
+        AUTO(0, "设备抓拍"), MANUAL(1, "手动录入");
 
         Source(Integer value, String description) {
             this.value = value;

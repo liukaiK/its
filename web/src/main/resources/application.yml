@@ -51,10 +51,15 @@ spring:
     password: its@123456
     virtual-host: /its
     connection-timeout: 1000ms
+  servlet:
+    multipart:
+      max-file-size: 10MB                 # 单个文件大小
+      max-request-size: 20MB              # 设置总上传的文件大小
 fdfs:
+  web-server-url: http://127.0.0.1:8084
   connect-timeout: 10000                  # 毫秒
   tracker-list:                           # TrackerList参数,支持多个
-    - 192.168.3.112:22122
+    - 192.168.3.192:22122
   pool:
     max-total: 100                        # 从池中借出的对象的最大数目
     max-total-per-key: 50                 # 每个tracker地址的最大连接数

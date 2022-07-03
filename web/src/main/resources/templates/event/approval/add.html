@@ -2,6 +2,7 @@
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
 	<th:block th:include="include :: header('新增违章记录')" />
+    <th:block th:include="include :: bootstrap-fileinput-css" />
 </head>
 <body>
 <div class="main-content">
@@ -12,9 +13,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label is-required">车牌号码：</label>
                     <div class="col-sm-8">
-                        <div class="input-group">
-                            <input name="vehicleNumber" placeholder="请输入车牌号码" class="form-control" type="text" maxlength="5" required>
-                        </div>
+                        <input name="vehicleNumber" placeholder="请输入车牌号码" class="form-control" type="text" maxlength="10" required>
                     </div>
                 </div>
             </div>
@@ -24,9 +23,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label is-required">车辆类型：</label>
                     <div class="col-sm-8">
-                        <div class="input-group">
-                            <input name="vehicleSize" placeholder="请输入车辆类型" class="form-control" type="text" maxlength="10" required>
-                        </div>
+                        <input name="vehicleSize" placeholder="请输入车辆类型" class="form-control" type="text" maxlength="10" required>
                     </div>
                 </div>
             </div>
@@ -36,9 +33,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label is-required">车主姓名：</label>
                     <div class="col-sm-8">
-                        <div class="input-group">
-                            <input id="driverName" name="driverName" placeholder="请输入车主姓名" class="form-control" type="text" maxlength="5" required>
-                        </div>
+                        <input id="driverName" name="driverName" placeholder="请输入车主姓名" class="form-control" type="text" maxlength="5" required>
                     </div>
                 </div>
             </div>
@@ -48,9 +43,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label is-required">工号：</label>
                     <div class="col-sm-8">
-                        <div class="input-group">
-                            <input id="studentNum" name="studentNum" placeholder="请输入工号" class="form-control" type="text" maxlength="5" required>
-                        </div>
+                        <input id="studentNum" name="studentNum" placeholder="请输入工号" class="form-control" type="text" maxlength="5" required>
                     </div>
                 </div>
             </div>
@@ -60,9 +53,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label is-required">所属单位：</label>
                     <div class="col-sm-8">
-                        <div class="input-group">
-                            <input id="collegeName" name="collegeName" class="form-control" type="text" maxlength="30" placeholder="请输入所属单位" required>
-                        </div>
+                        <input id="collegeName" name="collegeName" class="form-control" type="text" maxlength="30" placeholder="请输入所属单位" required>
                     </div>
                 </div>
             </div>
@@ -72,9 +63,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label is-required">联系电话：</label>
                     <div class="col-sm-8">
-                        <div class="input-group">
-                            <input id="driverPhone" name="driverPhone" class="form-control" type="text" maxlength="30" placeholder="请输入联系电话" required>
-                        </div>
+                        <input id="driverPhone" name="driverPhone" class="form-control" type="text" maxlength="30" placeholder="请输入联系电话" required>
                     </div>
                 </div>
             </div>
@@ -138,24 +127,22 @@
                     <div class="col-sm-8">
                         <div class="input-group">
                             <select name="regionId" class="form-control m-b">
+                                <option value="cfb2f9e4-9c45-4c81-80c9-71aabe1d3d5a">限速20公里道路</option>
                                 <option value="779d6d9b-fa7f-4eac-8d22-3c7020c1c5c0">限速30公里道路</option>
                                 <option value="94f8e85d-da22-47ca-b311-c9b9c71dc03a">违停区域</option>
-                                <option value="cfb2f9e4-9c45-4c81-80c9-71aabe1d3d5a">限速20公里道路</option>
                             </select>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <h4 class="form-header h4">附件</h4>
+        <input type="text" name="imageUrl" id="imageUrl">
         <div class="row">
             <div class="col-sm-3">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">违章照片：</label>
-                    <div class="col-xs-10">
-                        <textarea name="remark" maxlength="500" class="form-control" rows="3"></textarea>
+                    <label class="col-sm-4 control-label">附件：</label>
+                    <div class="col-sm-8">
+                        <input id="fileinput-demo-1" name="file" type="file" data-min-file-count="1">
                     </div>
                 </div>
             </div>
@@ -170,7 +157,38 @@
 </div>
 </body>
 <th:block th:include="include :: footer" />
+<th:block th:include="include :: bootstrap-fileinput-js" />
 <script type="text/javascript" th:inline="javascript">
+
+    let uploadUrl = /*[[@{/common/upload}]]*/ "";
+
+    $(document).ready(function () {
+        $("#fileinput-demo-1").fileinput({
+            'theme': 'fa',
+            'uploadUrl': uploadUrl,
+            overwriteInitial: false,
+            initialPreviewAsData: false,
+            showPreview: false,
+            showRemove: false,
+            dropZoneEnabled: false,
+            maxFileSize: 10240,
+            maxFileCount: 1
+        });
+
+        $("#fileinput-demo-1").on("fileuploaded", function(event, data, proviewId, index) {
+            console.info(event);
+            if (data.response.code === web_status.SUCCESS) {
+                $("#imageUrl").val(data.response.data);
+            }
+
+            console.info();
+            console.info(data);
+            console.info(proviewId);
+            console.info(index);
+        });
+
+    });
+
 
     $("#form-user-add").validate({
         onkeyup: false,

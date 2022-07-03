@@ -39,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(SystemConstant.LOGIN_PAGE).permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .csrf().ignoringAntMatchers("/druid/**")
+                .csrf().ignoringAntMatchers("/druid/**", "/common/upload")
                 .and()
                 .headers().frameOptions().sameOrigin()
                 .and()
