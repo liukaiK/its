@@ -10,7 +10,7 @@ import cn.com.goodlan.its.core.pojo.entity.primary.Region;
 import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Whitelist;
-import cn.com.goodlan.its.event.handler.EventHandler;
+import cn.com.goodlan.its.event.HandlerManager;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -19,15 +19,15 @@ import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
+@Component
 public class RabbitObtainEventImpl {
 
     @Autowired
@@ -45,7 +45,11 @@ public class RabbitObtainEventImpl {
     @Autowired
     private FileUpload fileUpload;
 
-    private final List<EventHandler> eventHandlers = new ArrayList<>();
+    @Autowired
+    private HandlerManager handlerManager;
+
+    private String status = "";
+
 
     @RabbitHandler
     @Transactional(rollbackFor = Exception.class)
@@ -65,6 +69,11 @@ public class RabbitObtainEventImpl {
         }
 
         if (StringUtils.isEmpty(trafficEvent.getM_PlateNumber())) {
+            return;
+        }
+
+        // 判断是否和上一条数据相同 相同的话直接跳过不记录
+        if (isSameWithPrevious(trafficEvent)) {
             return;
         }
 
@@ -103,21 +112,11 @@ public class RabbitObtainEventImpl {
         event.updateVehicle(optionalVehicle.get());
         event.setSpeed(trafficEvent.getNSpeed());
         event.updateHappenTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
-        event.setVehicleColor(trafficEvent.getM_VehicleColor());
         event.setVehicleSize(trafficEvent.getM_VehicleSize());
         event.setImageUrl(imageUrl);
-        event.setLaneNumber(trafficEvent.getM_LaneNumber());
 
 
-        for (EventHandler handler : getHandlers()) {
-            if (!handler.support(trafficEvent.getM_EventName())) {
-                continue;
-            }
-            handler.handler(event);
-            return;
-        }
-
-        log.info("没有可处理 {} 事件的handler", trafficEvent.getM_EventName());
+        handlerManager.handler(event, trafficEvent.getM_EventName());
 
     }
 
@@ -129,12 +128,18 @@ public class RabbitObtainEventImpl {
         return whitelist != null;
     }
 
-    public void addHandler(EventHandler eventHandler) {
-        eventHandlers.add(eventHandler);
-    }
 
-    private List<EventHandler> getHandlers() {
-        return this.eventHandlers;
+    /**
+     * 会收到多条一样的消息 所以要过滤
+     */
+    private boolean isSameWithPrevious(TrafficEvent trafficEvent) {
+        String tempStatus = trafficEvent.getM_PlateNumber() + trafficEvent.getIp();
+        if (status.equals(tempStatus)) {
+            return true;
+        } else {
+            status = tempStatus;
+            return false;
+        }
     }
 
 }

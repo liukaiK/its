@@ -1,7 +1,5 @@
 package cn.com.goodlan.its.core.mapstruct;
 
-import cn.com.goodlan.its.core.pojo.entity.primary.Camera;
-import cn.com.goodlan.its.core.pojo.entity.primary.Region;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
 import org.mapstruct.Mapper;
@@ -42,7 +40,6 @@ public abstract class EventMapper {
         eventVO.setRegionName(eventCameraRegionName(event));
         eventVO.setScore(convertScore(event.getScore()));
         eventVO.setId(event.getId());
-        eventVO.setLaneNumber(event.getLaneNumber());
         eventVO.setVehicleColor(event.getVehicleColor());
         eventVO.setVehicleSize(event.getVehicleSize());
         eventVO.setPlace(event.getPlace());
@@ -50,6 +47,7 @@ public abstract class EventMapper {
         eventVO.setTime(event.getTime());
         eventVO.setImageUrl(event.getImageUrl());
         eventVO.setNum(convertNum(event.getViolationName(), event.getNum()));
+        eventVO.setSource(event.getSource().getDescription());
 
         return eventVO;
     }

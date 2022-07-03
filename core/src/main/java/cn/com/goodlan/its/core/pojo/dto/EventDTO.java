@@ -35,6 +35,12 @@ public class EventDTO {
 
     private String regionId;
 
-    private String speed;
+    private Integer speed;
+
+    private String place;
+
+    private String vehicleColor;
+
+    private String imageUrl;
 
 }

@@ -10,6 +10,7 @@ import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.service.event.CountService;
 import cn.com.goodlan.its.core.service.system.score.ScoreService;
 import cn.com.goodlan.its.core.util.DateUtils;
+import cn.com.goodlan.its.core.util.StringUtils;
 import cn.com.goodlan.its.web.properties.SmsProperties;
 import cn.com.goodlan.its.web.sms.SmsService;
 import cn.com.goodlan.its.web.sms.template.SmsMessageTemplate;
@@ -52,15 +53,8 @@ public class SpeedEventHandlerImpl implements EventHandler {
     @Autowired
     private ScoreService scoreService;
 
-
-    private String status = "";
-
     @Override
     public void handler(Event event) {
-        // 判断是否和上一条数据相同 相同的话直接跳过不记录
-        if (isSameWithPrevious(event)) {
-            return;
-        }
 
         int speed = event.getSpeed();
 
@@ -126,7 +120,6 @@ public class SpeedEventHandlerImpl implements EventHandler {
                 sendSmsAndWeLink(event);
             }
         }
-
 
     }
 
@@ -238,23 +231,12 @@ public class SpeedEventHandlerImpl implements EventHandler {
         return eventRepository.save(event);
     }
 
-    /**
-     * 会收到多条一样的消息 所以要过滤
-     */
-    private boolean isSameWithPrevious(Event event) {
-        String tempStatus = event.getLicensePlateNumber() + event.getRegion().getId();
-        if (status.equals(tempStatus)) {
-            return true;
-        } else {
-            status = tempStatus;
-            return false;
-        }
-    }
+
 
 
     @Override
     public boolean support(String violationName) {
-        return SPEED.equals(violationName);
+        return StringUtils.startsWith(violationName, SPEED);
     }
 
     /**

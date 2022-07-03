@@ -4,10 +4,10 @@ import cn.com.goodlan.its.core.annotations.ResponseResultBody;
 import cn.com.goodlan.its.core.pojo.dto.EventDTO;
 import cn.com.goodlan.its.core.pojo.query.EventQuery;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
-import cn.com.goodlan.its.core.service.event.approval.EventService;
 import cn.com.goodlan.its.core.service.system.violation.ViolationTypeService;
 import cn.com.goodlan.its.core.util.ExcelUtil;
 import cn.com.goodlan.its.core.util.StringUtils;
+import cn.com.goodlan.its.event.WebEventService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,7 +32,7 @@ import java.util.Map;
 @RequestMapping("/event/approval")
 public class ApprovalController {
 
-    private EventService eventService;
+    private WebEventService webEventService;
 
     private ViolationTypeService violationTypeService;
 
@@ -55,7 +55,7 @@ public class ApprovalController {
     @PostMapping("/search")
     @PreAuthorize("hasAuthority('event:approval:search')")
     public Page<EventVO> search(EventQuery eventQuery, @PageableDefault Pageable pageable) {
-        return eventService.search(eventQuery, pageable);
+        return webEventService.search(eventQuery, pageable);
     }
 
 
@@ -65,7 +65,7 @@ public class ApprovalController {
     @PostMapping("/remove")
     @PreAuthorize("hasAuthority('event:approval:remove')")
     public void remove(String ids) {
-        eventService.remove(ids);
+        webEventService.remove(ids);
     }
 
     /**
@@ -83,7 +83,7 @@ public class ApprovalController {
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('event:approval:add')")
     public void add(EventDTO eventDTO, Model model) {
-        eventService.create(eventDTO);
+        webEventService.create(eventDTO);
     }
 
 
@@ -93,7 +93,7 @@ public class ApprovalController {
     @GetMapping("/detail/{id}")
     @PreAuthorize("hasAuthority('event:approval:detail')")
     public ModelAndView detail(@PathVariable String id, Model model) {
-        model.addAttribute("event", eventService.getById(id));
+        model.addAttribute("event", webEventService.getById(id));
         return new ModelAndView("event/approval/detail");
     }
 
@@ -105,7 +105,7 @@ public class ApprovalController {
     @PreAuthorize("hasAuthority('event:approval:export')")
     public Map<String, Object> export(EventQuery eventQuery) {
         Map<String, Object> map = new HashMap<>(1);
-        List<EventVO> list = eventService.export(eventQuery);
+        List<EventVO> list = webEventService.export(eventQuery);
         ExcelUtil<EventVO> util = new ExcelUtil<>(EventVO.class);
         String fileName = util.exportExcel(list, "审批数据");
         map.put("fileName", fileName);
@@ -118,7 +118,7 @@ public class ApprovalController {
     @GetMapping("/approvaldetail/{id}")
     @PreAuthorize("hasAuthority('event:approval:approval')")
     public ModelAndView approval(@PathVariable String id, Model model) {
-        model.addAttribute("event", eventService.getById(id));
+        model.addAttribute("event", webEventService.getById(id));
         return new ModelAndView("event/approval/approvaldetail");
     }
 

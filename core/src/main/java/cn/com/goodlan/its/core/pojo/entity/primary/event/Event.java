@@ -51,12 +51,6 @@ public class Event {
      */
     private String studstaffno;
 
-
-    /**
-     * 车道号
-     */
-    private String laneNumber;
-
     /**
      * 分值
      */
@@ -250,7 +244,7 @@ public class Event {
     }
 
     public void updateHappenTime(LocalDateTime happenTime) {
-        this.setTime(time);
+        this.setTime(happenTime);
     }
 
     protected void setTime(LocalDateTime time) {
@@ -263,14 +257,6 @@ public class Event {
 
     protected void setLicensePlateNumber(String licensePlateNumber) {
         this.licensePlateNumber = licensePlateNumber;
-    }
-
-    public String getLaneNumber() {
-        return laneNumber;
-    }
-
-    public void setLaneNumber(String laneNumber) {
-        this.laneNumber = laneNumber;
     }
 
     public String getVehicleColor() {

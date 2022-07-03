@@ -70,6 +70,8 @@ public class EventVO {
 
     private String imageUrl;
 
+    private String source;
+
     public String getId() {
         return id;
     }
@@ -196,5 +198,13 @@ public class EventVO {
 
     public void setBmmc(String bmmc) {
         this.bmmc = bmmc;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }

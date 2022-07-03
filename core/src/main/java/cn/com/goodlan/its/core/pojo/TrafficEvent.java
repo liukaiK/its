@@ -20,26 +20,6 @@ public class TrafficEvent {
     private String m_PlateNumber;
 
     /**
-     * 车牌类型
-     */
-    private String m_PlateType;
-
-    /**
-     * 车牌颜色 Other
-     */
-    private String m_PlateColor;
-
-    /**
-     * 车身颜色 Black
-     */
-    private String m_VehicleColor;
-
-    /**
-     * 车身类型  例Motorcycle
-     */
-    private String m_VehicleType;
-
-    /**
      * 车辆大小 小型车
      */
     private String m_VehicleSize;
@@ -48,11 +28,6 @@ public class TrafficEvent {
      * 违法地点
      */
     private String m_IllegalPlace;
-
-    /**
-     * 通道号
-     */
-    private String m_LaneNumber;
 
     /**
      * 事件时间
@@ -65,38 +40,22 @@ public class TrafficEvent {
     public String bigImage;
 
     /**
-     * 车牌图
-     */
-//    public String plateImage;
-
-    /**
      * 车速
      */
     private int nSpeed;
 
     private String ip;
 
-    /**
-     * 限速范围
-     */
-    private int nUpperSpeedLimit;
-
     @Override
     public String toString() {
         return "{" +
                 "m_EventName='" + m_EventName + '\'' +
                 ", m_PlateNumber='" + m_PlateNumber + '\'' +
-                ", m_PlateType='" + m_PlateType + '\'' +
-                ", m_PlateColor='" + m_PlateColor + '\'' +
-                ", m_VehicleColor='" + m_VehicleColor + '\'' +
-                ", m_VehicleType='" + m_VehicleType + '\'' +
                 ", m_VehicleSize='" + m_VehicleSize + '\'' +
                 ", m_IllegalPlace='" + m_IllegalPlace + '\'' +
-                ", m_LaneNumber='" + m_LaneNumber + '\'' +
                 ", m_Utc=" + m_Utc +
                 ", nSpeed=" + nSpeed +
                 ", ip='" + ip + '\'' +
-                ", nUpperSpeedLimit=" + nUpperSpeedLimit +
                 '}';
     }
 
