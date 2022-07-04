@@ -51,10 +51,12 @@ public abstract class EventMapper {
         eventVO.setPlace(event.getPlace());
         eventVO.setSpeed(event.getSpeed());
         eventVO.setTime(event.getTime());
-        if (!StringUtils.startsWith(event.getImageUrl(), "/")) {
-            eventVO.setImageUrl(fdfsWebServer.getWebServerUrl() + "/" + event.getImageUrl());
-        } else {
-            eventVO.setImageUrl(fdfsWebServer.getWebServerUrl() + event.getImageUrl());
+        if (StringUtils.isNotEmpty(event.getImageUrl())) {
+            if (!StringUtils.startsWith(event.getImageUrl(), "/")) {
+                eventVO.setImageUrl(fdfsWebServer.getWebServerUrl() + "/" + event.getImageUrl());
+            } else {
+                eventVO.setImageUrl(fdfsWebServer.getWebServerUrl() + event.getImageUrl());
+            }
         }
         eventVO.setNum(convertNum(event.getViolationName(), event.getNum()));
         eventVO.setSource(event.getSource().getDescription());
