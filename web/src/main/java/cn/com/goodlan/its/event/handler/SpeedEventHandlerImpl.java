@@ -62,7 +62,7 @@ public class SpeedEventHandlerImpl implements EventHandler {
         Score score = scoreService.getScore(event.getRegion().getScoreList(), speed);
 
         if (score == null) {
-            log.trace("-------车辆的速度{}不存在与系统范围中 没有超速---------", speed);
+            log.info("-------车辆{}的速度{}不存在与系统范围中 没有超速---------", event.getLicensePlateNumber(), speed);
             return;
         }
 

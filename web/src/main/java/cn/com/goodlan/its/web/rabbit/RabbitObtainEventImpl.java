@@ -84,14 +84,14 @@ public class RabbitObtainEventImpl {
 
         Camera camera = cameraRepository.getByIp(trafficEvent.getIp());
         if (camera == null) {
-            log.warn("没有ip为{}的摄像头", trafficEvent.getIp());
+            log.info("没有ip为{}的摄像头", trafficEvent.getIp());
             return;
         }
 
         Optional<Vehicle> optionalVehicle = vehicleRepository.findById(trafficEvent.getM_PlateNumber());
 
         if (!optionalVehicle.isPresent()) {
-            log.warn("此车牌号系统中不存在:{}", trafficEvent.getM_PlateNumber());
+            log.info("此车牌号系统中不存在:{}", trafficEvent.getM_PlateNumber());
             return;
         }
 
@@ -99,7 +99,7 @@ public class RabbitObtainEventImpl {
         Region region = camera.getRegion();
 
         if (region == null) {
-            log.warn("此{}摄像头未配置区域", camera.getIp());
+            log.info("此{}摄像头未配置区域", camera.getIp());
         }
 
         String imageUrl = fileUpload.uploadImage(trafficEvent.getBigImage());
