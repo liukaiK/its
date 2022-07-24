@@ -7,5 +7,6 @@ public class VehicleDTO {
 
     private String id;
 
+    private String licensePlateNumber;
 
 }

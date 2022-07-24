@@ -22,12 +22,13 @@ public class VehicleVO {
 
     private String bmmc;
 
+    private String studstaffno;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
-
 
     public String getId() {
         return id;
@@ -69,6 +70,14 @@ public class VehicleVO {
         this.bmmc = bmmc;
     }
 
+    public String getStudstaffno() {
+        return studstaffno;
+    }
+
+    public void setStudstaffno(String studstaffno) {
+        this.studstaffno = studstaffno;
+    }
+
     public LocalDateTime getCreateTime() {
         return createTime;
     }
@@ -84,5 +93,4 @@ public class VehicleVO {
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
-
 }

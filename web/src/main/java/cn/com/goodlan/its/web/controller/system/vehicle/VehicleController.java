@@ -43,4 +43,9 @@ public class VehicleController {
         return vehicleService.search(vehicleDTO, pageable);
     }
 
+    @GetMapping("/search")
+    public Page<VehicleVO> search2(VehicleDTO vehicleDTO, @PageableDefault Pageable pageable) {
+        return vehicleService.search(vehicleDTO, pageable);
+    }
+
 }
