@@ -1,8 +1,8 @@
 {
   "m_EventName": "超速",
-  "m_PlateNumber": "黑AE999V",
+  "m_PlateNumber": "黑AAX245",
   "m_VehicleSize": "小型车",
   "m_Utc": "2022-07-03T16:02:00.000+0000",
-  "nspeed": 32,
-  "ip": "192.168.89.26"
+  "nspeed": 37,
+  "ip": "192.168.89.22"
 }
