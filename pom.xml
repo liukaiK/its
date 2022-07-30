@@ -33,7 +33,7 @@
         <lombok.version>1.18.24</lombok.version>
         <commons-text.version>1.9</commons-text.version>
         <poi.version>4.1.2</poi.version>
-        <log4j.version>2.17.0</log4j.version>
+        <log4j.version>2.18.0</log4j.version>
         <os-maven-plugin.version>1.7.0</os-maven-plugin.version>
         <druid-spring-boot-starter.version>1.2.9</druid-spring-boot-starter.version>
         <!-- 获取系统信息 -->
