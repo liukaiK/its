@@ -35,7 +35,7 @@ public class FastDFSFileUploadImpl implements FileUpload {
     /**
      * 上传文件
      */
-    private StorePath uploadFile(byte[] b) {
+    private synchronized StorePath uploadFile(byte[] b) {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(b);
         FastImageFile fastImageFile = new FastImageFile.Builder().withFile(inputStream, inputStream.available(), "png").build();
         return storageClient.uploadImage(fastImageFile);
