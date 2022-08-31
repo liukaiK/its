@@ -70,7 +70,7 @@ public class WebEventServiceImpl implements WebEventService {
         event.updateRegion(region.get());
         event.updatePlace(eventDTO.getPlace());
         event.updateVehicle(vehicle);
-        event.setSpeed(eventDTO.getSpeed());
+        event.updateSpeed(eventDTO.getSpeed());
         event.updateHappenTime(LocalDateTimeUtil.parse(eventDTO.getHappenTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         event.setVehicleColor(eventDTO.getVehicleColor());
         event.setVehicleSize(eventDTO.getVehicleSize());

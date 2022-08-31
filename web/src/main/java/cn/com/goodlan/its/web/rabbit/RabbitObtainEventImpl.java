@@ -110,7 +110,7 @@ public class RabbitObtainEventImpl {
         event.updateRegion(region);
         event.updatePlace(camera.getPosition());
         event.updateVehicle(optionalVehicle.get());
-        event.setSpeed(trafficEvent.getNSpeed());
+        event.updateSpeed(trafficEvent.getNSpeed());
         event.updateHappenTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
         event.setVehicleSize(trafficEvent.getM_VehicleSize());
         event.setImageUrl(imageUrl);

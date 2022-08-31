@@ -167,6 +167,10 @@ public class Event {
         this.setStudstaffno(vehicle.getStudstaffno());
     }
 
+    public void updateSpeed(Integer speed) {
+        this.setSpeed(speed);
+    }
+
     /**
      * 更新扣了多少分
      */
@@ -287,7 +291,7 @@ public class Event {
         return speed;
     }
 
-    public void setSpeed(Integer speed) {
+    protected void setSpeed(Integer speed) {
         this.speed = speed;
     }
 
