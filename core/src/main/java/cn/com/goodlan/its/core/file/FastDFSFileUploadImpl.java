@@ -23,7 +23,7 @@ public class FastDFSFileUploadImpl implements FileUpload {
     private FastFileStorageClient storageClient;
 
     @Override
-    public String uploadImage(String base64ImageStr) {
+    public synchronized String uploadImage(String base64ImageStr) {
         if (StringUtils.isEmpty(base64ImageStr)) {
             return null;
         }
