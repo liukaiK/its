@@ -54,7 +54,7 @@ public class SpeedEventHandlerImpl implements EventHandler {
     private ScoreService scoreService;
 
     @Override
-    public void handler(Event event) {
+    public String handler(Event event) {
 
         int speed = event.getSpeed();
 
@@ -63,7 +63,7 @@ public class SpeedEventHandlerImpl implements EventHandler {
 
         if (score == null) {
             log.info("-------车辆{}的速度{}不存在与系统范围中 没有超速---------", event.getLicensePlateNumber(), speed);
-            return;
+            return "未超速";
         }
 
 
@@ -72,55 +72,56 @@ public class SpeedEventHandlerImpl implements EventHandler {
             if (score.isSpeed1()) {
                 event = warn(event, score.getViolation(), score);
                 sendSmsAndWeLink(event);
-                return;
+                return "已记录";
             }
             if (score.isSpeed2()) {
                 event = warn(event, score.getViolation(), score);
                 sendSmsAndWeLink(event);
-                return;
+                return "已记录";
             }
             if (score.isSpeed3()) {
                 event = warnAndCalculateScoreAndHitBack(event, score, count);
                 sendSmsAndWeLink(event);
             }
-            return;
+            return "已记录";
         }
 
         if (count == 2) {
             if (score.isSpeed1()) {
                 event = calculateScore(event, score, count);
                 sendSmsAndWeLink(event);
-                return;
+                return "已记录";
             }
             if (score.isSpeed2()) {
                 event = calculateScoreAndHitBack(event, score, count);
                 sendSmsAndWeLink(event);
-                return;
+                return "已记录";
             }
             if (score.isSpeed3()) {
                 event = calculateScoreAndHitBack(event, score, count);
                 sendSmsAndWeLink(event);
             }
-            return;
+            return "已记录";
         }
 
         if (count >= 3) {
             if (score.isSpeed1()) {
                 event = calculateScoreAndHitBack(event, score, count);
                 sendSmsAndWeLink(event);
-                return;
+                return "已记录";
             }
             if (score.isSpeed2()) {
                 event = calculateScoreAndHitBack(event, score, count);
                 sendSmsAndWeLink(event);
-                return;
+                return "已记录";
             }
             if (score.isSpeed3()) {
                 event = calculateScoreAndHitBack(event, score, count);
                 sendSmsAndWeLink(event);
+                return "已记录";
             }
         }
-
+        return "已记录";
     }
 
 
@@ -230,8 +231,6 @@ public class SpeedEventHandlerImpl implements EventHandler {
         event.updateViolation(violationType);
         return eventRepository.save(event);
     }
-
-
 
 
     @Override

@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.web.rabbit;
 
+import cn.com.goodlan.its.core.dao.primary.event.EventHistoryRepository;
 import cn.com.goodlan.its.core.dao.primary.system.camera.CameraRepository;
 import cn.com.goodlan.its.core.dao.primary.system.vehicle.VehicleRepository;
 import cn.com.goodlan.its.core.dao.primary.whitelist.WhitelistRepository;
@@ -9,6 +10,7 @@ import cn.com.goodlan.its.core.pojo.entity.primary.Camera;
 import cn.com.goodlan.its.core.pojo.entity.primary.Region;
 import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
+import cn.com.goodlan.its.core.pojo.entity.primary.event.EventHistory;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Whitelist;
 import cn.com.goodlan.its.event.HandlerManager;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -43,6 +45,9 @@ public class RabbitObtainEventImpl {
     private VehicleRepository vehicleRepository;
 
     @Autowired
+    private EventHistoryRepository eventHistoryRepository;
+
+    @Autowired
     private FileUpload fileUpload;
 
     @Autowired
@@ -68,16 +73,33 @@ public class RabbitObtainEventImpl {
             return;
         }
 
+        String imageUrl = fileUpload.uploadImage(trafficEvent.getBigImage());
+
+
+        EventHistory eventHistory = new EventHistory();
+        eventHistory.setEventName(trafficEvent.getM_EventName());
+        eventHistory.setIp(trafficEvent.getIp());
+        eventHistory.setImageUrl(imageUrl);
+        eventHistory.setLicensePlateNumber(trafficEvent.getM_PlateNumber());
+        eventHistory.setHappenTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
+        eventHistory.setSpeed(trafficEvent.getNSpeed());
+        eventHistory.setPlace(trafficEvent.getM_IllegalPlace());
+
+
         if (StringUtils.isEmpty(trafficEvent.getM_PlateNumber())) {
+            eventHistory.setResult("设备未能识别出车牌号");
+            eventHistoryRepository.save(eventHistory);
             return;
         }
 
         // 判断是否和上一条数据相同 相同的话直接跳过不记录
-        if (isSameWithPrevious(trafficEvent)) {
-            return;
-        }
+//        if (isSameWithPrevious(trafficEvent)) {
+//            return;
+//        }
 
         if (inWhiteList(trafficEvent)) {
+            eventHistory.setResult("车牌号存在于白名单中,不扣分");
+            eventHistoryRepository.save(eventHistory);
             log.info("白名单中存在此车辆 不记录:{}", trafficEvent.getM_PlateNumber());
             return;
         }
@@ -85,6 +107,8 @@ public class RabbitObtainEventImpl {
         Camera camera = cameraRepository.getByIp(trafficEvent.getIp());
         if (camera == null) {
             log.info("没有ip为{}的摄像头", trafficEvent.getIp());
+            eventHistory.setResult("系统中未录入此摄像头");
+            eventHistoryRepository.save(eventHistory);
             return;
         }
 
@@ -92,6 +116,8 @@ public class RabbitObtainEventImpl {
 
         if (!optionalVehicle.isPresent()) {
             log.info("此车牌号系统中不存在:{}", trafficEvent.getM_PlateNumber());
+            eventHistory.setResult("此车牌号系统中不存在");
+            eventHistoryRepository.save(eventHistory);
             return;
         }
 
@@ -100,9 +126,10 @@ public class RabbitObtainEventImpl {
 
         if (region == null) {
             log.info("此{}摄像头未配置区域", camera.getIp());
+            eventHistory.setResult("此摄像头未配置区域");
+            eventHistoryRepository.save(eventHistory);
+            return;
         }
-
-        String imageUrl = fileUpload.uploadImage(trafficEvent.getBigImage());
 
 
         Event event = new Event(Event.Source.AUTO);
@@ -116,7 +143,12 @@ public class RabbitObtainEventImpl {
         event.setImageUrl(imageUrl);
 
 
-        handlerManager.handler(event, trafficEvent.getM_EventName());
+        String result = handlerManager.handler(event, trafficEvent.getM_EventName());
+        eventHistory.setResult(result);
+        eventHistory.setDriverName(optionalVehicle.get().getDriverName());
+        eventHistory.setDriverPhone(optionalVehicle.get().getDriverPhone());
+        eventHistory.setCollegeName(optionalVehicle.get().getCollegeName());
+        eventHistoryRepository.save(eventHistory);
 
     }
 

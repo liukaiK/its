@@ -52,28 +52,30 @@ public class StopEventHandlerImpl implements EventHandler {
     private SmsProperties smsProperties;
 
     @Override
-    public void handler(Event event) {
+    public String handler(Event event) {
         Long count = countService.queryCountThisYear(event.getLicensePlateNumber(), STOP);
         Score score = scoreRepository.getById("0f647018-2c28-4bfe-ae10-e9586cfb66b0");
         if (count == 1) {
             event = warn(event, score);
             sendSmsAndWeLink(event);
-            return;
+            return "第一次违停,已警告";
         }
         if (count == 2) {
             event = calculateScore(event, score, count);
             sendSmsAndWeLink(event);
-            return;
+            return "第二次违停,已扣分";
         }
         if (count == 3) {
             event = calculateScore(event, score, count);
             sendSmsAndWeLink(event);
-            return;
+            return "第三次违停,已扣分";
         }
         if (count >= 4) {
             event = calculateScore(event, score, count);
             sendSmsAndWeLink(event);
+            return "违停已经超过4次,已扣分";
         }
+        return "";
     }
 
     private void sendSmsAndWeLink(Event event) {

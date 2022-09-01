@@ -8,7 +8,7 @@ public interface HandlerManager {
     /**
      * @param violationName 违规类型 超速（不是超速1超速2）或者是违章停车
      */
-    void handler(Event event, String violationName);
+    String handler(Event event, String violationName);
 
     void addHandler(EventHandler eventHandler);
 

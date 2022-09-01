@@ -1,5 +1,6 @@
 package cn.com.goodlan.its.event;
 
+import cn.com.goodlan.its.core.exception.BusinessException;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.event.handler.EventHandler;
 
@@ -11,14 +12,14 @@ public class HandlerManagerImpl implements HandlerManager {
     private final List<EventHandler> eventHandlers = new ArrayList<>();
 
     @Override
-    public void handler(Event event, String violationName) {
+    public String handler(Event event, String violationName) {
         for (EventHandler handler : getHandlers()) {
             if (!handler.support(violationName)) {
                 continue;
             }
-            handler.handler(event);
-            return;
+            return handler.handler(event);
         }
+        throw new BusinessException("非法的" + violationName);
     }
 
     public void addHandler(EventHandler eventHandler) {

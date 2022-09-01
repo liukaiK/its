@@ -3,6 +3,7 @@ package cn.com.goodlan.its.core.pojo.entity.primary.event;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +25,7 @@ public class EventHistory {
 
     @Id
     @GeneratedValue(generator = "jpa-uuid")
+    @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
     private String id;
 
     private String eventName;
@@ -54,6 +56,8 @@ public class EventHistory {
      */
     private String imageUrl;
 
+    private String collegeName;
+
     /**
      * 车速
      */
@@ -61,9 +65,14 @@ public class EventHistory {
 
     private String ip;
 
+    private String result;
+
     private LocalDateTime happenTime;
 
     private LocalDateTime createTime;
 
+    public EventHistory() {
+        this.createTime = LocalDateTime.now();
+    }
 
 }

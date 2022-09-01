@@ -4,7 +4,10 @@ import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 
 public interface EventHandler {
 
-    void handler(Event event);
+    /**
+     * @return 处理结果
+     */
+    String handler(Event event);
 
     boolean support(String violationName);
 
