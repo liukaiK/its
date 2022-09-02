@@ -24,8 +24,8 @@ import java.time.LocalDateTime;
 public class EventHistory {
 
     @Id
-    @GeneratedValue(generator = "jpa-uuid")
-    @GenericGenerator(name = "jpa-uuid", strategy = "uuid")
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
     private String eventName;
@@ -64,6 +64,8 @@ public class EventHistory {
     private Integer speed;
 
     private String ip;
+
+    private String size;
 
     private String result;
 

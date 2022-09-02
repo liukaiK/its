@@ -84,7 +84,7 @@ public class RabbitObtainEventImpl {
         eventHistory.setHappenTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
         eventHistory.setSpeed(trafficEvent.getNSpeed());
         eventHistory.setPlace(trafficEvent.getM_IllegalPlace());
-
+        eventHistory.setSize(trafficEvent.getM_VehicleSize());
 
         if (StringUtils.isEmpty(trafficEvent.getM_PlateNumber())) {
             eventHistory.setResult("设备未能识别出车牌号");
