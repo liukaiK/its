@@ -1,6 +1,5 @@
 package cn.com.goodlan.its.event;
 
-import cn.com.goodlan.its.core.exception.BusinessException;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.event.handler.EventHandler;
 
@@ -19,7 +18,7 @@ public class HandlerManagerImpl implements HandlerManager {
             }
             return handler.handler(event);
         }
-        throw new BusinessException("非法的" + violationName);
+        return "不能识别的类型";
     }
 
     public void addHandler(EventHandler eventHandler) {

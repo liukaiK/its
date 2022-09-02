@@ -234,8 +234,8 @@ public class SpeedEventHandlerImpl implements EventHandler {
 
 
     @Override
-    public boolean support(String violationName) {
-        return StringUtils.startsWith(violationName, SPEED);
+    public boolean support(String eventName) {
+        return StringUtils.startsWith(eventName, SPEED) || "交通卡口".equals(eventName);
     }
 
     /**
