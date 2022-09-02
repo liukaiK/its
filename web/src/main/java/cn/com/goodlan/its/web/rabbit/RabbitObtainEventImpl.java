@@ -86,6 +86,16 @@ public class RabbitObtainEventImpl {
         eventHistory.setPlace(trafficEvent.getM_IllegalPlace());
         eventHistory.setSize(trafficEvent.getM_VehicleSize());
 
+
+        Camera camera = cameraRepository.getByIp(trafficEvent.getIp());
+        if (camera == null) {
+            log.info("没有ip为{}的摄像头", trafficEvent.getIp());
+            eventHistory.setResult("系统中未录入此摄像头");
+            eventHistoryRepository.save(eventHistory);
+            return;
+        }
+
+        eventHistory.setPlace(camera.getPosition());
         if (StringUtils.isEmpty(trafficEvent.getM_PlateNumber())) {
             eventHistory.setResult("设备未能识别出车牌号");
             eventHistoryRepository.save(eventHistory);
@@ -104,13 +114,7 @@ public class RabbitObtainEventImpl {
             return;
         }
 
-        Camera camera = cameraRepository.getByIp(trafficEvent.getIp());
-        if (camera == null) {
-            log.info("没有ip为{}的摄像头", trafficEvent.getIp());
-            eventHistory.setResult("系统中未录入此摄像头");
-            eventHistoryRepository.save(eventHistory);
-            return;
-        }
+
 
         Optional<Vehicle> optionalVehicle = vehicleRepository.findById(trafficEvent.getM_PlateNumber());
 

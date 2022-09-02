@@ -39,7 +39,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">车主：</label>
                         <div class="col-sm-8">
-                            <p class="form-control-static" th:text="*{driverName==null?'系统中不存在':driverName}"></p>
+                            <p class="form-control-static" th:text="*{driverName==null?'数据中心无此信息':driverName}"></p>
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">所属单位：</label>
                         <div class="col-sm-8">
-                            <p class="form-control-static" th:text="*{collegeName==null?'系统中不存在':collegeName}"></p>
+                            <p class="form-control-static" th:text="*{collegeName==null?'数据中心无此信息':collegeName}"></p>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">联系电话：</label>
                         <div class="col-sm-8">
-                            <p class="form-control-static" th:text="*{driverPhone==null?'系统中不存在':driverPhone}"></p>
+                            <p class="form-control-static" th:text="*{driverPhone==null?'数据中心无此信息':driverPhone}"></p>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                     <div class="form-group">
                         <label class="col-sm-4 control-label">违规地点：</label>
                         <div class="col-sm-8">
-                            <p class="form-control-static" th:text="*{place eq ''?'设备未提供':place}"></p>
+                            <p class="form-control-static" th:text="*{place}"></p>
                         </div>
                     </div>
                 </div>
