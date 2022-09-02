@@ -13,6 +13,8 @@ import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.EventHistory;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Whitelist;
 import cn.com.goodlan.its.event.HandlerManager;
+import cn.hutool.cache.CacheUtil;
+import cn.hutool.cache.impl.TimedCache;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -53,8 +55,11 @@ public class RabbitObtainEventImpl {
     @Autowired
     private HandlerManager handlerManager;
 
-    private String status = "";
+    private final static TimedCache<String, String> timeCache = CacheUtil.newTimedCache(5 * 1000);
 
+    static {
+        timeCache.schedulePrune(5 * 1000);
+    }
 
     @RabbitHandler
     @Transactional(rollbackFor = Exception.class)
@@ -95,6 +100,7 @@ public class RabbitObtainEventImpl {
             return;
         }
 
+
         eventHistory.setPlace(camera.getPosition());
         if (StringUtils.isEmpty(trafficEvent.getM_PlateNumber())) {
             eventHistory.setResult("设备未能识别出车牌号");
@@ -102,26 +108,33 @@ public class RabbitObtainEventImpl {
             return;
         }
 
+        Optional<Vehicle> optionalVehicle = vehicleRepository.findById(trafficEvent.getM_PlateNumber());
+        if (optionalVehicle.isPresent()) {
+            eventHistory.setDriverName(optionalVehicle.get().getDriverName());
+            eventHistory.setDriverPhone(optionalVehicle.get().getDriverPhone());
+            eventHistory.setCollegeName(optionalVehicle.get().getCollegeName());
+        } else {
+            log.info("此车牌号系统中不存在:{}", trafficEvent.getM_PlateNumber());
+            eventHistory.setResult("此车牌号系统中不存在");
+            eventHistoryRepository.save(eventHistory);
+            return;
+        }
+
+
         // 判断是否和上一条数据相同 相同的话直接跳过不记录
-//        if (isSameWithPrevious(trafficEvent)) {
-//            return;
-//        }
+        if (existsCache(trafficEvent)) {
+            eventHistory.setResult("重复数据,不记录");
+            eventHistoryRepository.save(eventHistory);
+            return;
+        } else {
+            timeCache.put(trafficEvent.getM_PlateNumber(), "1");
+        }
+
 
         if (inWhiteList(trafficEvent)) {
             eventHistory.setResult("车牌号存在于白名单中,不扣分");
             eventHistoryRepository.save(eventHistory);
             log.info("白名单中存在此车辆 不记录:{}", trafficEvent.getM_PlateNumber());
-            return;
-        }
-
-
-
-        Optional<Vehicle> optionalVehicle = vehicleRepository.findById(trafficEvent.getM_PlateNumber());
-
-        if (!optionalVehicle.isPresent()) {
-            log.info("此车牌号系统中不存在:{}", trafficEvent.getM_PlateNumber());
-            eventHistory.setResult("此车牌号系统中不存在");
-            eventHistoryRepository.save(eventHistory);
             return;
         }
 
@@ -149,9 +162,7 @@ public class RabbitObtainEventImpl {
 
         String result = handlerManager.handler(event, trafficEvent.getM_EventName());
         eventHistory.setResult(result);
-        eventHistory.setDriverName(optionalVehicle.get().getDriverName());
-        eventHistory.setDriverPhone(optionalVehicle.get().getDriverPhone());
-        eventHistory.setCollegeName(optionalVehicle.get().getCollegeName());
+
         eventHistoryRepository.save(eventHistory);
 
     }
@@ -168,14 +179,8 @@ public class RabbitObtainEventImpl {
     /**
      * 会收到多条一样的消息 所以要过滤
      */
-    private boolean isSameWithPrevious(TrafficEvent trafficEvent) {
-        String tempStatus = trafficEvent.getM_PlateNumber() + trafficEvent.getIp();
-        if (status.equals(tempStatus)) {
-            return true;
-        } else {
-            status = tempStatus;
-            return false;
-        }
+    private boolean existsCache(TrafficEvent trafficEvent) {
+        return timeCache.containsKey(trafficEvent.getM_PlateNumber());
     }
 
 }
