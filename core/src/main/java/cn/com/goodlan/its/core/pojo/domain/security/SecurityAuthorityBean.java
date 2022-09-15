@@ -1,8 +1,6 @@
 package cn.com.goodlan.its.core.pojo.domain.security;
 
 import cn.com.goodlan.its.core.pojo.entity.primary.Menu;
-import lombok.Data;
-import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
@@ -10,8 +8,6 @@ import org.springframework.security.core.GrantedAuthority;
  *
  * @author liukai
  */
-@Data
-@ToString
 public class SecurityAuthorityBean implements GrantedAuthority {
 
     private String id;
@@ -54,4 +50,23 @@ public class SecurityAuthorityBean implements GrantedAuthority {
         return super.hashCode();
     }
 
+    @Override
+    public String toString() {
+        return "SecurityAuthorityBean{" +
+                "id='" + id + '\'' +
+                ", authority='" + authority + '\'' +
+                '}';
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
 }
