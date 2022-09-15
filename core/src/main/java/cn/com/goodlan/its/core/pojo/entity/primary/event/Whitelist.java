@@ -1,8 +1,6 @@
 package cn.com.goodlan.its.core.pojo.entity.primary.event;
 
 import cn.com.goodlan.its.core.pojo.entity.primary.AbstractEntity;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
@@ -15,8 +13,6 @@ import javax.persistence.Table;
  *
  * @author liukai
  */
-@Setter
-@Getter
 @Entity
 @Table(name = "eve_whitelist")
 public class Whitelist extends AbstractEntity {
@@ -27,5 +23,21 @@ public class Whitelist extends AbstractEntity {
     private String id;
 
     private String licensePlateNumber;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getLicensePlateNumber() {
+        return licensePlateNumber;
+    }
+
+    public void setLicensePlateNumber(String licensePlateNumber) {
+        this.licensePlateNumber = licensePlateNumber;
+    }
 
 }

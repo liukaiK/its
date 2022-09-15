@@ -1,10 +1,5 @@
 package cn.com.goodlan.its.web.sms;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Setter
-@Getter
 public class ApplicationInfo {
 
     private String applicationId;
@@ -16,4 +11,19 @@ public class ApplicationInfo {
         this.applicationPassword = applicationPassword;
     }
 
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
+    }
+
+    public String getApplicationPassword() {
+        return applicationPassword;
+    }
+
+    public void setApplicationPassword(String applicationPassword) {
+        this.applicationPassword = applicationPassword;
+    }
 }

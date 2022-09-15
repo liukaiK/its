@@ -1,10 +1,7 @@
 package cn.com.goodlan.its.core.pojo.dto;
 
-import lombok.Data;
-
 import javax.validation.constraints.NotBlank;
 
-@Data
 public class RegionDTO {
 
     private String id;
@@ -12,5 +9,20 @@ public class RegionDTO {
     @NotBlank(message = "区域名称不能为空")
     private String name;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
 }

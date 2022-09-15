@@ -1,11 +1,7 @@
 package cn.com.goodlan.its.web.sms;
 
 import cn.com.goodlan.its.web.properties.SmsProperties;
-import lombok.Getter;
-import lombok.Setter;
 
-@Setter
-@Getter
 public class SmsPar {
 
     /**
@@ -71,5 +67,83 @@ public class SmsPar {
 
     }
 
+    public ApplicationInfo getApplicationInfo() {
+        return applicationInfo;
+    }
 
+    public void setApplicationInfo(ApplicationInfo applicationInfo) {
+        this.applicationInfo = applicationInfo;
+    }
+
+    public String getDestAddresses() {
+        return destAddresses;
+    }
+
+    public void setDestAddresses(String destAddresses) {
+        this.destAddresses = destAddresses;
+    }
+
+    public String getaTTime() {
+        return aTTime;
+    }
+
+    public void setaTTime(String aTTime) {
+        this.aTTime = aTTime;
+    }
+
+    public String getExtendCode() {
+        return extendCode;
+    }
+
+    public void setExtendCode(String extendCode) {
+        this.extendCode = extendCode;
+    }
+
+    public int getMessageFormat() {
+        return messageFormat;
+    }
+
+    public void setMessageFormat(int messageFormat) {
+        this.messageFormat = messageFormat;
+    }
+
+    public String getMessageContent() {
+        return messageContent;
+    }
+
+    public void setMessageContent(String messageContent) {
+        this.messageContent = messageContent;
+    }
+
+    public boolean isRequireReport() {
+        return requireReport;
+    }
+
+    public void setRequireReport(boolean requireReport) {
+        this.requireReport = requireReport;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

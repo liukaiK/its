@@ -1,12 +1,13 @@
 package cn.com.goodlan.its.web.security;
 
-import cn.com.goodlan.its.core.pojo.Result;
 import cn.com.goodlan.its.core.exception.authentication.BadCaptchaException;
 import cn.com.goodlan.its.core.exception.authentication.CaptchaExpiredException;
 import cn.com.goodlan.its.core.exception.authentication.NotDeptException;
 import cn.com.goodlan.its.core.exception.authentication.UsernameMoreThanOneException;
+import cn.com.goodlan.its.core.pojo.Result;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -24,12 +25,13 @@ import java.io.IOException;
  *
  * @author liukai
  */
-@Slf4j
 @Component("loginFailureHandler")
 public class LoginFailureHandler extends AbstractAuthenticationHandler implements AuthenticationFailureHandler {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    private static final Logger log = LoggerFactory.getLogger(LoginFailureHandler.class);
 
 
     @Override
