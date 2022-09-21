@@ -133,7 +133,8 @@ public class EventServiceImpl implements EventService {
                 list.add(criteriaBuilder.like(root.get("driverName").as(String.class), eventQuery.getDriverName() + "%"));
             }
             if (StringUtils.isNotEmpty(eventQuery.getVehicleNumber())) {
-                list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), "%" + eventQuery.getVehicleNumber() + "%"));
+                String licensePlateNumber = "%" + eventQuery.getVehicleNumber() + "%";
+                list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), licensePlateNumber.toUpperCase()));
             }
             if (StringUtils.isNotEmpty(eventQuery.getStartTime())) {
                 list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("time").as(String.class), eventQuery.getStartTime()));

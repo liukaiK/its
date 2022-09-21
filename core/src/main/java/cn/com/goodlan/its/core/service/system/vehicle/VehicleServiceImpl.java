@@ -35,7 +35,8 @@ public class VehicleServiceImpl implements VehicleService {
                 list.add(criteriaBuilder.equal(root.get("id").as(String.class), vehicleDTO.getId()));
             }
             if (StringUtils.isNotEmpty(vehicleDTO.getLicensePlateNumber())) {
-                list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), vehicleDTO.getLicensePlateNumber() + "%"));
+                String licensePlateNumber = "%" + vehicleDTO.getLicensePlateNumber() + "%";
+                list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), licensePlateNumber.toUpperCase()));
             }
             Predicate[] p = new Predicate[list.size()];
             return criteriaBuilder.and(list.toArray(p));
