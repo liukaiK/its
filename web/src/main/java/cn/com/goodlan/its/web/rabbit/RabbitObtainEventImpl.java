@@ -17,8 +17,9 @@ import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.TimedCache;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.StringEscapeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -30,9 +31,10 @@ import org.springframework.util.StringUtils;
 import java.time.ZoneId;
 import java.util.Optional;
 
-@Slf4j
 @Component
 public class RabbitObtainEventImpl {
+
+    private static final Logger log = LoggerFactory.getLogger(RabbitObtainEventImpl.class);
 
     @Autowired
     private ObjectMapper objectMapper;
