@@ -148,7 +148,7 @@ public class WebEventServiceImpl implements WebEventService {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> list = new ArrayList<>();
             if (StringUtils.isNotEmpty(eventQuery.getCollegeName())) {
-                list.add(criteriaBuilder.like(root.get("collegeName").as(String.class), eventQuery.getCollegeName() + "%"));
+                list.add(criteriaBuilder.like(root.get("driver").get("collegeName").as(String.class), eventQuery.getCollegeName() + "%"));
             }
             if (StringUtils.isNotEmpty(eventQuery.getViolationTypeId())) {
                 CriteriaBuilder.In<String> violationIdIn = criteriaBuilder.in(root.get("violationId").as(String.class));
@@ -159,7 +159,7 @@ public class WebEventServiceImpl implements WebEventService {
                 list.add(violationIdIn);
             }
             if (StringUtils.isNotEmpty(eventQuery.getDriverName())) {
-                list.add(criteriaBuilder.like(root.get("driverName").as(String.class), eventQuery.getDriverName() + "%"));
+                list.add(criteriaBuilder.like(root.get("driver").get("driverName").as(String.class), eventQuery.getDriverName() + "%"));
             }
             if (StringUtils.isNotEmpty(eventQuery.getVehicleNumber())) {
                 String licensePlateNumber = "%" + eventQuery.getVehicleNumber() + "%";
