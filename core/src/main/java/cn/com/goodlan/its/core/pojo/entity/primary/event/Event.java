@@ -1,7 +1,10 @@
 package cn.com.goodlan.its.core.pojo.entity.primary.event;
 
 import cn.com.goodlan.its.core.exception.BusinessException;
-import cn.com.goodlan.its.core.pojo.entity.primary.*;
+import cn.com.goodlan.its.core.pojo.entity.primary.BaseEnum;
+import cn.com.goodlan.its.core.pojo.entity.primary.Region;
+import cn.com.goodlan.its.core.pojo.entity.primary.Score;
+import cn.com.goodlan.its.core.pojo.entity.primary.ViolationType;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
@@ -27,29 +30,15 @@ public class Event {
     private String id;
 
     /**
-     * 车主姓名
-     */
-    private String driverName;
-
-    /**
      * 车牌号
      */
     private String licensePlateNumber;
 
     /**
-     * 车主电话
+     * 车主信息
      */
-    private String driverPhone;
-
-    /**
-     * 部门名称
-     */
-    private String collegeName;
-
-    /**
-     * 工号
-     */
-    private String studstaffno;
+    @Embedded
+    private Driver driver;
 
     /**
      * 分值
@@ -72,11 +61,6 @@ public class Event {
      * 违规名称 冗余字段
      */
     private String violationName;
-
-    /**
-     * 违规车辆的颜色
-     */
-    private String vehicleColor;
 
     /**
      * 车辆尺寸 例 小型车
@@ -159,12 +143,12 @@ public class Event {
         return this.getScoreId().isStop();
     }
 
-    public void updateVehicle(Vehicle vehicle) {
-        this.setLicensePlateNumber(vehicle.getLicensePlateNumber());
-        this.setDriverName(vehicle.getDriverName());
-        this.setDriverPhone(vehicle.getDriverPhone());
-        this.setCollegeName(vehicle.getCollegeName());
-        this.setStudstaffno(vehicle.getStudstaffno());
+    public void updateDriver(Driver driver) {
+        this.setDriver(driver);
+    }
+
+    public void updateLicensePlateNumber(String licensePlateNumber) {
+        this.setLicensePlateNumber(licensePlateNumber);
     }
 
     public void updateSpeed(Integer speed) {
@@ -234,14 +218,6 @@ public class Event {
         this.setPlace(place);
     }
 
-//    public Camera getCamera() {
-//        return camera;
-//    }
-//
-//    public void setCamera(Camera camera) {
-//        this.camera = camera;
-//    }
-
     public Deleted getDeleted() {
         return deleted;
     }
@@ -269,14 +245,6 @@ public class Event {
 
     protected void setLicensePlateNumber(String licensePlateNumber) {
         this.licensePlateNumber = licensePlateNumber;
-    }
-
-    public String getVehicleColor() {
-        return vehicleColor;
-    }
-
-    public void setVehicleColor(String vehicleColor) {
-        this.vehicleColor = vehicleColor;
     }
 
     public String getVehicleSize() {
@@ -347,38 +315,6 @@ public class Event {
         this.num = num;
     }
 
-    public String getDriverName() {
-        return driverName;
-    }
-
-    protected void setDriverName(String driverName) {
-        this.driverName = driverName;
-    }
-
-    public String getDriverPhone() {
-        return driverPhone;
-    }
-
-    protected void setDriverPhone(String driverPhone) {
-        this.driverPhone = driverPhone;
-    }
-
-    public String getCollegeName() {
-        return collegeName;
-    }
-
-    protected void setCollegeName(String collegeName) {
-        this.collegeName = collegeName;
-    }
-
-    public String getStudstaffno() {
-        return studstaffno;
-    }
-
-    protected void setStudstaffno(String studstaffno) {
-        this.studstaffno = studstaffno;
-    }
-
     public Source getSource() {
         return source;
     }
@@ -397,6 +333,14 @@ public class Event {
 
     protected void setRegion(Region region) {
         this.region = region;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    protected void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
     /**

@@ -48,7 +48,7 @@ public class Record extends AbstractEntity {
         // 获取要扣除多少分
         this.record = event.getScore();
         this.place = event.getPlace();
-        this.bmmc = event.getCollegeName();
+        this.bmmc = event.getDriver().getCollegeName();
     }
 
 

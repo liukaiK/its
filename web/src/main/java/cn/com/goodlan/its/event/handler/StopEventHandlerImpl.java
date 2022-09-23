@@ -91,7 +91,7 @@ public class StopEventHandlerImpl implements EventHandler {
      * 发送短信
      */
     private void sendSmsMessage(Event event) {
-        String phone = event.getDriverPhone();
+        String phone = event.getDriver().getDriverPhone();
         if (StringUtils.isNotEmpty(phone)) {
             String smsMessageContent = buildSmsMessageContent(event);
             String smsSuccessResult = smsService.sendSms(phone, smsMessageContent);
@@ -135,7 +135,7 @@ public class StopEventHandlerImpl implements EventHandler {
     }
 
     private void sendWeLink(Event event) {
-        String studstaffno = event.getStudstaffno();
+        String studstaffno = event.getDriver().getStudstaffno();
 
         if (StringUtils.isNotEmpty(studstaffno)) {
             String violationType = event.getViolationName();

@@ -6,7 +6,7 @@ import cn.com.goodlan.its.core.exception.DataValidException;
 import cn.com.goodlan.its.core.mapstruct.EventMapper;
 import cn.com.goodlan.its.core.pojo.dto.EventDTO;
 import cn.com.goodlan.its.core.pojo.entity.primary.Region;
-import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
+import cn.com.goodlan.its.core.pojo.entity.primary.event.Driver;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.query.EventQuery;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
@@ -63,16 +63,14 @@ public class WebEventServiceImpl implements WebEventService {
             throw new DataValidException("数据异常,不存在的区域id: " + eventDTO.getRegionId());
         }
 
-        Vehicle vehicle = new Vehicle(eventDTO.getVehicleNumber(), eventDTO.getDriverName(), eventDTO.getDriverPhone(), eventDTO.getCollegeName(), eventDTO.getStudentNum());
-
         Event event = new Event(Event.Source.MANUAL);
 
         event.updateRegion(region.get());
         event.updatePlace(eventDTO.getPlace());
-        event.updateVehicle(vehicle);
+        event.updateDriver(new Driver(eventDTO.getDriverName(), eventDTO.getDriverPhone(), eventDTO.getCollegeName(), eventDTO.getStudentNum()));
+        event.updateLicensePlateNumber(eventDTO.getVehicleNumber());
         event.updateSpeed(eventDTO.getSpeed());
         event.updateHappenTime(LocalDateTimeUtil.parse(eventDTO.getHappenTime(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        event.setVehicleColor(eventDTO.getVehicleColor());
         event.updateVehicleSize(eventDTO.getVehicleSize());
         event.updateImageUrl(eventDTO.getImageUrl());
 

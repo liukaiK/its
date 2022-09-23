@@ -9,6 +9,7 @@ import cn.com.goodlan.its.core.pojo.TrafficEvent;
 import cn.com.goodlan.its.core.pojo.entity.primary.Camera;
 import cn.com.goodlan.its.core.pojo.entity.primary.Region;
 import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
+import cn.com.goodlan.its.core.pojo.entity.primary.event.Driver;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.EventHistory;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Whitelist;
@@ -109,12 +110,13 @@ public class RabbitObtainEventImpl {
             eventHistoryRepository.save(eventHistory);
             return;
         }
-
+        Driver driver;
         Optional<Vehicle> optionalVehicle = vehicleRepository.findById(trafficEvent.getM_PlateNumber());
         if (optionalVehicle.isPresent()) {
             eventHistory.setDriverName(optionalVehicle.get().getDriverName());
             eventHistory.setDriverPhone(optionalVehicle.get().getDriverPhone());
             eventHistory.setCollegeName(optionalVehicle.get().getCollegeName());
+            driver = new Driver(optionalVehicle.get().getDriverName(), optionalVehicle.get().getDriverPhone(), optionalVehicle.get().getCollegeName(), optionalVehicle.get().getStudstaffno());
         } else {
             log.info("此车牌号系统中不存在:{}", trafficEvent.getM_PlateNumber());
             eventHistory.setResult("此车牌号系统中不存在");
@@ -155,7 +157,8 @@ public class RabbitObtainEventImpl {
 
         event.updateRegion(region);
         event.updatePlace(camera.getPosition());
-        event.updateVehicle(optionalVehicle.get());
+        event.updateDriver(driver);
+        event.updateLicensePlateNumber(trafficEvent.getM_PlateNumber());
         event.updateSpeed(trafficEvent.getNSpeed());
         event.updateHappenTime(trafficEvent.getM_Utc().toInstant().atZone(ZoneId.of("Asia/Shanghai")).toLocalDateTime());
         event.updateVehicleSize(trafficEvent.getM_VehicleSize());

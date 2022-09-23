@@ -39,14 +39,13 @@ public abstract class EventMapper {
         EventVO eventVO = new EventVO();
 
         eventVO.setVehicleNumber(event.getLicensePlateNumber());
-        eventVO.setDriverName(event.getDriverName());
-        eventVO.setDriverPhone(event.getDriverPhone());
-        eventVO.setBmmc(event.getCollegeName());
+        eventVO.setDriverName(event.getDriver().getDriverName());
+        eventVO.setDriverPhone(event.getDriver().getDriverPhone());
+        eventVO.setBmmc(event.getDriver().getCollegeName());
         eventVO.setViolationName(event.getViolationName());
         eventVO.setRegionName(eventCameraRegionName(event));
         eventVO.setScore(convertScore(event.getScore()));
         eventVO.setId(event.getId());
-        eventVO.setVehicleColor(event.getVehicleColor());
         eventVO.setVehicleSize(event.getVehicleSize());
         eventVO.setPlace(event.getPlace());
         eventVO.setSpeed(event.getSpeed());
