@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.core.dao.primary.whitelist;
 
 import cn.com.goodlan.its.core.dao.CustomizeRepository;
-import cn.com.goodlan.its.core.pojo.entity.primary.event.Whitelist;
+import cn.com.goodlan.its.core.pojo.entity.primary.whitelist.Whitelist;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

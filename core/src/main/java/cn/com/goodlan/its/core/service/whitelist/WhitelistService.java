@@ -2,7 +2,7 @@ package cn.com.goodlan.its.core.service.whitelist;
 
 import cn.com.goodlan.its.core.dao.primary.whitelist.WhitelistRepository;
 import cn.com.goodlan.its.core.exception.DataValidException;
-import cn.com.goodlan.its.core.pojo.entity.primary.event.Whitelist;
+import cn.com.goodlan.its.core.pojo.entity.primary.whitelist.Whitelist;
 import cn.com.goodlan.its.core.util.StringUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

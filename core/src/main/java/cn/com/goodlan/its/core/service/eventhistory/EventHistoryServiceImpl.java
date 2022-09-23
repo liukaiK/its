@@ -2,7 +2,7 @@ package cn.com.goodlan.its.core.service.eventhistory;
 
 import cn.com.goodlan.its.core.dao.primary.event.EventHistoryRepository;
 import cn.com.goodlan.its.core.mapstruct.EventHistoryMapper;
-import cn.com.goodlan.its.core.pojo.entity.primary.event.EventHistory;
+import cn.com.goodlan.its.core.pojo.entity.primary.eventhistory.EventHistory;
 import cn.com.goodlan.its.core.pojo.query.EventHistoryQuery;
 import cn.com.goodlan.its.core.pojo.vo.EventHistoryVO;
 import org.apache.commons.lang3.StringUtils;

@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.core.pojo.entity.primary.event;
+package cn.com.goodlan.its.core.pojo.entity.primary.eventhistory;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;

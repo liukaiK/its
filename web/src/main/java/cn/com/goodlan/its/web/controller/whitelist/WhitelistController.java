@@ -1,7 +1,7 @@
 package cn.com.goodlan.its.web.controller.whitelist;
 
 import cn.com.goodlan.its.core.annotations.ResponseResultBody;
-import cn.com.goodlan.its.core.pojo.entity.primary.event.Whitelist;
+import cn.com.goodlan.its.core.pojo.entity.primary.whitelist.Whitelist;
 import cn.com.goodlan.its.core.service.whitelist.WhitelistService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;

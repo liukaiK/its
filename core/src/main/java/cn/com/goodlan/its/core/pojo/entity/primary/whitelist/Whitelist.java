@@ -1,4 +1,4 @@
-package cn.com.goodlan.its.core.pojo.entity.primary.event;
+package cn.com.goodlan.its.core.pojo.entity.primary.whitelist;
 
 import cn.com.goodlan.its.core.pojo.entity.primary.AbstractEntity;
 import org.hibernate.annotations.GenericGenerator;
