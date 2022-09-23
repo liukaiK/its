@@ -171,6 +171,14 @@ public class Event {
         this.setSpeed(speed);
     }
 
+    public void updateVehicleSize(String vehicleSize) {
+        this.setVehicleSize(vehicleSize);
+    }
+
+    public void updateImageUrl(String imageUrl) {
+        this.setImageUrl(imageUrl);
+    }
+
     /**
      * 更新扣了多少分
      */
@@ -275,7 +283,7 @@ public class Event {
         return vehicleSize;
     }
 
-    public void setVehicleSize(String vehicleSize) {
+    protected void setVehicleSize(String vehicleSize) {
         this.vehicleSize = vehicleSize;
     }
 
@@ -283,7 +291,7 @@ public class Event {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    protected void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 
