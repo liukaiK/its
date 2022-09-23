@@ -13,9 +13,9 @@ public interface SmsService {
     String sendSms(String mobilePhone, String content);
 
     /**
-     * welink推送
+     * weLink推送
      *
      * @param messageParam
      */
-    void sendWelink(MessageParam messageParam);
+    void sendWeLink(MessageParam messageParam);
 }

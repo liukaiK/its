@@ -9,6 +9,7 @@ import cn.com.goodlan.its.core.pojo.entity.primary.SmsHistory;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.service.event.CountService;
 import cn.com.goodlan.its.core.util.DateUtils;
+import cn.com.goodlan.its.core.util.StringUtils;
 import cn.com.goodlan.its.web.properties.SmsProperties;
 import cn.com.goodlan.its.web.sms.SmsService;
 import cn.com.goodlan.its.web.sms.template.SmsMessageTemplate;
@@ -91,9 +92,11 @@ public class StopEventHandlerImpl implements EventHandler {
      */
     private void sendSmsMessage(Event event) {
         String phone = event.getDriverPhone();
-        String smsMessageContent = buildSmsMessageContent(event);
-        String smsSuccessResult = smsService.sendSms(phone, smsMessageContent);
-        saveSmsHistory(phone, smsMessageContent, smsSuccessResult, event.getId());
+        if (StringUtils.isNotEmpty(phone)) {
+            String smsMessageContent = buildSmsMessageContent(event);
+            String smsSuccessResult = smsService.sendSms(phone, smsMessageContent);
+            saveSmsHistory(phone, smsMessageContent, smsSuccessResult, event.getId());
+        }
 
     }
 
@@ -132,23 +135,27 @@ public class StopEventHandlerImpl implements EventHandler {
     }
 
     private void sendWeLink(Event event) {
-        String violationType = event.getViolationName();
-        if ("违章停车".equals(violationType)) {
-            violationType = "违章停车";
-        } else {
-            violationType = "超速";
-        }
-        String punish;
-        if (event.getNum() > 1) {
-            punish = "扣校内安全考核分";
-        } else {
-            punish = "警告";
-        }
+        String studstaffno = event.getStudstaffno();
 
-        MessageParam messageParam = new MessageParam(event.getStudstaffno(), event.getPlace(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getLicensePlateNumber());
-        messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。", event.getLicensePlateNumber(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getPlace(), violationType, punish));
-        log.info("WeLink:{}", messageParam.getContent());
-        smsService.sendWelink(messageParam);
+        if (StringUtils.isNotEmpty(studstaffno)) {
+            String violationType = event.getViolationName();
+            if ("违章停车".equals(violationType)) {
+                violationType = "违章停车";
+            } else {
+                violationType = "超速";
+            }
+            String punish;
+            if (event.getNum() > 1) {
+                punish = "扣校内安全考核分";
+            } else {
+                punish = "警告";
+            }
+
+            MessageParam messageParam = new MessageParam(studstaffno, event.getPlace(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getLicensePlateNumber());
+            messageParam.setContent(String.format("您的车辆%s于%s在%s，被交通技术监控设备记录了%s的违法行为。给予%s处罚，请知悉。点击查看详情。", event.getLicensePlateNumber(), DateUtil.format(event.getTime(), DateUtils.YYYY_MM_DD_HH_MM_SS), event.getPlace(), violationType, punish));
+            log.info("WeLink:{}", messageParam.getContent());
+            smsService.sendWeLink(messageParam);
+        }
     }
 
     private Event warn(Event event, Score score) {
