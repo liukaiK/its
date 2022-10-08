@@ -43,7 +43,7 @@ public class EventHistoryServiceImpl implements EventHistoryService {
             List<Predicate> list = new ArrayList<>();
             String licensePlateNumber = eventHistoryQuery.getLicensePlateNumber();
             if (StringUtils.isNotEmpty(licensePlateNumber)) {
-                list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), licensePlateNumber.toUpperCase() + "%"));
+                list.add(criteriaBuilder.like(root.get("licensePlateNumber").as(String.class), "%" + licensePlateNumber.toUpperCase() + "%"));
             }
             if (StringUtils.isNotEmpty(eventHistoryQuery.getStartTime())) {
                 list.add(criteriaBuilder.greaterThanOrEqualTo(root.get("happenTime").as(String.class), eventHistoryQuery.getStartTime()));
