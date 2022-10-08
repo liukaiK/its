@@ -14,8 +14,6 @@ import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.entity.primary.eventhistory.EventHistory;
 import cn.com.goodlan.its.core.pojo.entity.primary.whitelist.Whitelist;
 import cn.com.goodlan.its.event.HandlerManager;
-import cn.hutool.cache.CacheUtil;
-import cn.hutool.cache.impl.TimedCache;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.text.StringEscapeUtils;
@@ -58,31 +56,17 @@ public class RabbitObtainEventImpl {
     @Autowired
     private HandlerManager handlerManager;
 
-    private final static TimedCache<String, String> timeCache = CacheUtil.newTimedCache(5 * 1000);
-
-    static {
-        timeCache.schedulePrune(5 * 1000);
-    }
+    @Autowired
+    private VehicleCache vehicleCache;
 
     @RabbitHandler
     @Transactional(rollbackFor = Exception.class)
     @RabbitListener(queuesToDeclare = @Queue(name = "its.traffic.event", durable = "true"))
     public synchronized void obtainEvent(String message) {
-        String content = StringEscapeUtils.unescapeJava(message);
-        if (StringUtils.startsWithIgnoreCase(content, "\"")) {
-            content = content.substring(1, content.length() - 1);
-        }
-        TrafficEvent trafficEvent;
-        try {
-            trafficEvent = objectMapper.readValue(content, TrafficEvent.class);
-            log.info("trafficEvent: {}", trafficEvent.toString());
-        } catch (JsonProcessingException e) {
-            log.error("解析mq消息失败:", e);
-            return;
-        }
+
+        TrafficEvent trafficEvent = convert(message);
 
         String imageUrl = fileUpload.uploadImage(trafficEvent.getBigImage());
-
 
         EventHistory eventHistory = new EventHistory();
         eventHistory.setEventName(trafficEvent.getM_EventName());
@@ -131,7 +115,7 @@ public class RabbitObtainEventImpl {
             eventHistoryRepository.save(eventHistory);
             return;
         } else {
-            timeCache.put(trafficEvent.getM_PlateNumber(), "1");
+            vehicleCache.put(trafficEvent.getM_PlateNumber());
         }
 
 
@@ -172,6 +156,22 @@ public class RabbitObtainEventImpl {
 
     }
 
+    private TrafficEvent convert(String message) {
+        String content = StringEscapeUtils.unescapeJava(message);
+        if (StringUtils.startsWithIgnoreCase(content, "\"")) {
+            content = content.substring(1, content.length() - 1);
+        }
+        TrafficEvent trafficEvent;
+        try {
+            trafficEvent = objectMapper.readValue(content, TrafficEvent.class);
+            log.info("trafficEvent: {}", trafficEvent.toString());
+        } catch (JsonProcessingException e) {
+            log.error("解析mq消息失败:", e);
+            return null;
+        }
+        return trafficEvent;
+    }
+
     /**
      * 在不在白名单里面
      */
@@ -185,7 +185,7 @@ public class RabbitObtainEventImpl {
      * 会收到多条一样的消息 所以要过滤
      */
     private boolean existsCache(TrafficEvent trafficEvent) {
-        return timeCache.containsKey(trafficEvent.getM_PlateNumber());
+        return vehicleCache.exists(trafficEvent.getM_PlateNumber());
     }
 
 }
