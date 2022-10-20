@@ -1,16 +1,11 @@
 package cn.com.goodlan.its.core.service.event.approval;
 
 import cn.com.goodlan.its.core.dao.primary.event.EventRepository;
-import cn.com.goodlan.its.core.dao.primary.system.region.RegionRepository;
 import cn.com.goodlan.its.core.mapstruct.EventMapper;
 import cn.com.goodlan.its.core.pojo.Params;
-import cn.com.goodlan.its.core.pojo.entity.primary.Vehicle;
 import cn.com.goodlan.its.core.pojo.entity.primary.event.Event;
 import cn.com.goodlan.its.core.pojo.query.EventQuery;
 import cn.com.goodlan.its.core.pojo.vo.EventVO;
-import cn.com.goodlan.its.core.service.event.CountService;
-import cn.com.goodlan.its.core.service.system.score.ScoreService;
-import cn.com.goodlan.its.core.service.system.vehicle.VehicleService;
 import cn.com.goodlan.its.core.util.DateUtils;
 import cn.hutool.core.convert.Convert;
 import lombok.AllArgsConstructor;
@@ -36,14 +31,6 @@ import java.util.stream.Collectors;
 public class EventServiceImpl implements EventService {
 
     private EventRepository eventRepository;
-
-    private RegionRepository regionRepository;
-
-    private VehicleService vehicleService;
-
-    private CountService countService;
-
-    private ScoreService scoreService;
 
     private EventMapper eventMapper;
 
@@ -172,11 +159,7 @@ public class EventServiceImpl implements EventService {
             map.put("eventList", new ArrayList<>());
             return map;
         }
-        //根据工号查询车辆集合
-        List<Vehicle> vehicles = vehicleService.findByStudstaffno(studstaffno);
-        List<String> collect = vehicles.stream().map(Vehicle::getLicensePlateNumber).collect(Collectors.toList());
-        //根据车辆车牌集合查询违章事件
-        Page<Event> eventList = eventRepository.findByLicensePlateNumberInAndDeletedOrderByTimeDesc(collect, pageable, Event.Deleted.NORMAL);
+        Page<Event> eventList = eventRepository.findByDriverStudstaffnoAndDeletedOrderByTimeDesc(studstaffno, pageable, Event.Deleted.NORMAL);
         return getStringObjectMap(pageable, eventList);
     }
 

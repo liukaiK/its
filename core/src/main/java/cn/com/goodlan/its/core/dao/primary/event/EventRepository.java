@@ -14,14 +14,7 @@ public interface EventRepository extends CustomizeRepository<Event, String> {
 
     long countByLicensePlateNumberAndViolationNameLikeAndTimeAfterAndDeleted(String licensePlateNumber, String violationName, LocalDateTime localDateTime, Event.Deleted deleted);
 
-    /**
-     * 根据车辆车牌集合查询违章事件
-     *
-     * @param plateNumbers 车牌号集合
-     * @param pageable
-     * @return List<Event>
-     */
-    Page<Event> findByLicensePlateNumberInAndDeletedOrderByTimeDesc(List<String> plateNumbers, Pageable pageable, Event.Deleted deleted);
+    Page<Event> findByDriverStudstaffnoAndDeletedOrderByTimeDesc(String studstaffno, Pageable pageable, Event.Deleted deleted);
 
     /**
      * 查询违章集合
