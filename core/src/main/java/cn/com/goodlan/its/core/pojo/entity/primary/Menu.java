@@ -1,6 +1,8 @@
 package cn.com.goodlan.its.core.pojo.entity.primary;
 
 import cn.hutool.core.collection.CollectionUtil;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.util.StringUtils;
 
@@ -14,6 +16,8 @@ import java.util.List;
  * @author liukai
  */
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Table(name = "sys_menu")
 public class Menu extends AbstractEntity {
 
@@ -78,7 +82,6 @@ public class Menu extends AbstractEntity {
     /**
      * 是否存在子节点
      */
-    @Transient
     public boolean hasChildren() {
         return CollectionUtil.isNotEmpty(this.children);
     }
@@ -86,7 +89,6 @@ public class Menu extends AbstractEntity {
     /**
      * 是否有父节点
      */
-    @Transient
     public boolean hasParent() {
         return this.parent != null;
     }
@@ -94,7 +96,6 @@ public class Menu extends AbstractEntity {
     /**
      * 添加父节点
      */
-    @Transient
     public void addParent(String parentId) {
         this.parent = new Menu(parentId);
     }
@@ -102,7 +103,6 @@ public class Menu extends AbstractEntity {
     /**
      * 是否已经分配了角色
      */
-    @Transient
     public boolean hasRole() {
         return CollectionUtil.isNotEmpty(this.roleList);
     }
