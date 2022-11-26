@@ -23,6 +23,9 @@ public class Menu extends AbstractEntity {
 
     public static final String F = "F";
 
+    @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
     private String name;
@@ -31,6 +34,8 @@ public class Menu extends AbstractEntity {
 
     private String url;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
     private Menu parent;
 
     private String icon;
@@ -56,9 +61,11 @@ public class Menu extends AbstractEntity {
      */
     private String target;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
     private List<Menu> children = new ArrayList<>();
 
-
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "sys_role_menu", joinColumns = @JoinColumn(name = "menu_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roleList = new ArrayList<>();
 
     public Menu() {
@@ -100,9 +107,6 @@ public class Menu extends AbstractEntity {
         return CollectionUtil.isNotEmpty(this.roleList);
     }
 
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     public String getId() {
         return id;
     }
@@ -139,8 +143,6 @@ public class Menu extends AbstractEntity {
         }
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
     public Menu getParent() {
         return parent;
     }
@@ -149,7 +151,6 @@ public class Menu extends AbstractEntity {
         this.parent = parent;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
     public List<Menu> getChildren() {
         return children;
     }
@@ -183,7 +184,6 @@ public class Menu extends AbstractEntity {
         this.target = target;
     }
 
-    @Column(columnDefinition = "char(1)")
     public String getMenuType() {
         return menuType;
     }
@@ -192,9 +192,6 @@ public class Menu extends AbstractEntity {
         this.menuType = menuType;
     }
 
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "sys_role_menu", joinColumns = @JoinColumn(name = "menu_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     public List<Role> getRoleList() {
         return roleList;
     }
@@ -203,7 +200,6 @@ public class Menu extends AbstractEntity {
         this.roleList = roleList;
     }
 
-    @Column(columnDefinition = "char(1)")
     public String getVisible() {
         return visible;
     }
