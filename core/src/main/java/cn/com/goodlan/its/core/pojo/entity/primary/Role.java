@@ -17,6 +17,10 @@ import java.util.List;
 @Table(name = "sys_role")
 public class Role extends AbstractEntity {
 
+
+    @Id
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
 
     private String name;
@@ -26,8 +30,14 @@ public class Role extends AbstractEntity {
      */
     private String remark;
 
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "sys_user_role", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> userList = new ArrayList<>();
 
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "sys_role_menu", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "menu_id"))
     private List<Menu> menuList = new ArrayList<>();
 
 
@@ -38,12 +48,10 @@ public class Role extends AbstractEntity {
         this.id = id;
     }
 
-    @Transient
     public void updateName(String name) {
         this.name = name;
     }
 
-    @Transient
     public void updateRemark(String remark) {
         this.remark = remark;
     }
@@ -51,25 +59,18 @@ public class Role extends AbstractEntity {
     /**
      * 角色下面是否有人
      */
-    @Transient
     public boolean hasUser() {
         return CollectionUtil.isNotEmpty(this.userList);
     }
 
-    @Transient
     public void addMenu(Menu menu) {
         menuList.add(menu);
     }
 
-
-    @Transient
     public void removeAllMenu() {
         this.menuList = new ArrayList<>();
     }
 
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     public String getId() {
         return id;
     }
@@ -86,9 +87,6 @@ public class Role extends AbstractEntity {
         this.name = name;
     }
 
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "sys_role_menu", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "menu_id"))
     public List<Menu> getMenuList() {
         return menuList;
     }
@@ -97,8 +95,6 @@ public class Role extends AbstractEntity {
         this.menuList = menuList;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "sys_user_role", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     public List<User> getUserList() {
         return userList;
     }
